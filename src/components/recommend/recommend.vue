@@ -51,12 +51,7 @@ export default {
     this._getRecommend();
     this._getDiscList();
   },
-  loadImage() {
-    if (!this.checkloaded) {
-      this.checkloaded = true;
-      this.$refs.scroll.refresh();
-    }
-  },
+
   methods: {
     _getRecommend() {
       getRecommend().then(res => {
@@ -71,6 +66,12 @@ export default {
           this.discList = res.data.list;
         }
       });
+    },
+    loadImage() {
+      if (!this.checkloaded) {
+        this.checkloaded = true;
+        this.$refs.scroll.refresh();
+      }
     }
   },
   components: {
