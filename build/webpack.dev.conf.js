@@ -32,9 +32,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
-    before(app) {
-       // 推荐列表
-      app.get('/api/getDiscList', function (req, res) {
+    before(apiRoutes) {
+      // 推荐列表
+      apiRoutes.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg' // 原api
         axios.get(url, {
           headers: {
@@ -46,6 +46,30 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           res.json(response.data)
         }).catch((e) => {
           console.log(e)
+        })
+      })
+      /* 歌词 */
+      apiRoutes.get('/api/lyric', function (req, res) {
+        const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
+        axios.get(url, {
+          headers: {
+            /* 根据访问的网址限制做的一种伪装 */
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          var ret=response.data
+          if(typeof ret==='string'){
+            var reg=/^\w+\(({[^()]+})\)$/
+            var mathes=ret.match(reg)
+            if(mathes){
+              ret=JSON.parse(mathes[1])
+            }
+          }
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e);
         })
       })
     },
@@ -62,12 +86,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
-    overlay: config.dev.errorOverlay ?
-      {
-        warnings: false,
-        errors: true
-      } :
-      false,
+    overlay: config.dev.errorOverlay ? {
+      warnings: false,
+      errors: true
+    } : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
@@ -114,8 +136,7 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors ?
-          utils.createNotifierCallback() :
-          undefined
+          utils.createNotifierCallback() : undefined
       }))
 
       resolve(devWebpackConfig)

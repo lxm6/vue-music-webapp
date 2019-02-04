@@ -1,3 +1,15 @@
+import {
+  getLyric,
+  getSongVkey,
+  getSongURL
+} from 'api/song'
+import {
+  ERR_OK
+} from 'api/config'
+import {
+  Base64
+} from 'js-base64'
+
 export default class Song {
   constructor({
     id,
@@ -16,7 +28,47 @@ export default class Song {
     this.album = album
     this.duration = duration
     this.image = image
-    this.url = url
+    if (url) {
+      this.url = url;
+    }
+  }
+  // 获取歌曲url的方法
+  getSongUrl() {
+    if (this.url) {
+      return Promise.resolve(this.url);
+    }
+    return getSongVkey(this.mid).then((res) => {
+      if (res.code === ERR_OK) {
+        if (res.data.items.length > 0) {
+          let vkey = res.data.items[0].vkey;
+          if (!vkey) {
+            return Promise.reject(new Error('getSongKey function got vkey is null'));
+          }
+          let currentSongUrl = getSongURL(this.mid, vkey);
+          this.url = currentSongUrl;
+          return Promise.resolve(currentSongUrl);
+        }
+      }
+    }).catch((err) => {
+      return Promise.reject(err);
+    });
+  }
+   // 获取歌曲的歌词
+  getLyric() {
+    if (this.lyric) {
+      return Promise.resolve(this.lyric)
+    }
+
+    return new Promise((resolve, reject) => {
+      getLyric(this.mid).then((res) => {
+        if (res.retcode === ERR_OK) {
+          this.lyric = Base64.decode(res.lyric)
+          resolve(this.lyric)
+        } else {
+          reject('no lyric')
+        }
+      })
+    })
   }
 }
 
@@ -30,7 +82,6 @@ export function createSong(musicData) {
     album: musicData.albumname,
     duration: musicData.interval,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46`
   })
 }
 

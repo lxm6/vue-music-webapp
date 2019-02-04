@@ -1,10 +1,15 @@
 <template>
   <div class="song-list">
     <ul>
-      <li v-for="(song,index) in songs" :key="index" class="item">
+      <li
+        v-for="(item,index) in songs"
+        :key="index"
+        class="item"
+        @click="selectSong(item,index)"
+      >
         <div class="content">
-          <h2 class="name">{{song.name}}</h2>
-          <p class="desc">{{getDesc(song)}}</p>
+          <h2 class="name">{{item.name}}</h2>
+          <p class="desc">{{getDesc(item)}}</p>
         </div>
       </li>
     </ul>
@@ -22,6 +27,9 @@ export default {
   methods: {
     getDesc(song) {
       return `${song.singer} · ${song.album}`;
+    },
+    selectSong(item, index) {
+      this.$emit('select', item, index)
     }
   }
 };
@@ -38,28 +46,27 @@ export default {
     height: 64px;
     font-size: $font-size-medium;
 
-      .text {
-        color: $color-theme;
-        font-size: $font-size-large;
-      }
-    }
-
-    .content {
-      flex: 1;
-      line-height: 20px;
-      overflow: hidden;
-
-      .name {
-        no-wrap();
-        color: $color-text;
-      }
-
-      .desc {
-        no-wrap();
-        margin-top: 4px;
-        color: $color-text-d;
-      }
+    .text {
+      color: $color-theme;
+      font-size: $font-size-large;
     }
   }
 
+  .content {
+    flex: 1;
+    line-height: 20px;
+    overflow: hidden;
+
+    .name {
+      no-wrap();
+      color: $color-text;
+    }
+
+    .desc {
+      no-wrap();
+      margin-top: 4px;
+      color: $color-text-d;
+    }
+  }
+}
 </style>
