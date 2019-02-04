@@ -32,9 +32,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
-    before(apiRoutes) {
+    before(app) {
       // 推荐列表
-      apiRoutes.get('/api/getDiscList', function (req, res) {
+      app.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg' // 原api
         axios.get(url, {
           headers: {
@@ -49,7 +49,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         })
       })
       /* 歌词 */
-      apiRoutes.get('/api/lyric', function (req, res) {
+      app.get('/api/lyric', function (req, res) {
         const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
         axios.get(url, {
           headers: {
