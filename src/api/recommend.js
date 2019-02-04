@@ -48,6 +48,7 @@ export function getDiscList() {
 
 }
 
+//获取热门歌单数据
 export function getSongList(disstid) {
   const url = '/api/getSongList'
   const data = Object.assign({}, commonParams, {
@@ -59,7 +60,6 @@ export function getSongList(disstid) {
     platform: 'yqq',
     hostUin: 0,
     needNewCode: 0,
-    g_tk: 67232076
   })
   return axios.get(url, {
     params: data
