@@ -1,7 +1,5 @@
 import {
   getLyric,
-  getSongVkey,
-  getSongURL
 } from 'api/song'
 import {
   ERR_OK
@@ -28,9 +26,7 @@ export default class Song {
     this.album = album
     this.duration = duration
     this.image = image
-    if (url) {
-      this.url = url;
-    }
+    this.url = url;
   }
   // 获取歌曲url的方法
   getSongUrl() {
@@ -53,7 +49,7 @@ export default class Song {
       return Promise.reject(err);
     });
   }
-   // 获取歌曲的歌词
+  // 获取歌曲的歌词
   getLyric() {
     if (this.lyric) {
       return Promise.resolve(this.lyric)
@@ -82,6 +78,7 @@ export function createSong(musicData) {
     album: musicData.albumname,
     duration: musicData.interval,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
+    url: `http://isure.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=32`,
   })
 }
 

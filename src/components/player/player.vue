@@ -127,10 +127,14 @@ export default {
     return {
       songReady: false,
       currentTime: 0,
+      // 环形进度条大小
       radius: 32,
       currentLyric: null,
+      // 当前歌词所在行,用来高亮
       currentLineNum: 0,
+      // 唱片碟界面与歌词界面
       currentShow: "cd",
+      // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: ""
     };
   },
@@ -154,9 +158,11 @@ export default {
     disableCls() {
       return this.songReady ? "" : "disable";
     },
+    // 进度条播放的比例
     percent() {
       return this.currentTime / this.currentSong.duration;
     },
+    // 传入 vuex 的 state
     ...mapGetters([
       "fullScreen",
       "playlist",
@@ -171,12 +177,15 @@ export default {
     this.touch = {};
   },
   methods: {
+    // 唱片界面缩小到底部
     back() {
       this.setFullScreen(false);
     },
+    // 底部界面放大到唱片界面
     open() {
       this.setFullScreen(true);
     },
+    // create-keyframe-animation
     enter(el, done) {
       const { x, y, scale } = this._getPosAndScale();
 
@@ -196,7 +205,7 @@ export default {
         name: "move",
         animation,
         presets: {
-          duration: 400,
+          duration: 500,
           easing: "linear"
         }
       });
@@ -208,11 +217,12 @@ export default {
       this.$refs.cdWrapper.style.animation = "";
     },
     leave(el, done) {
-      this.$refs.cdWrapper.style.transition = "all 0.4s";
       const { x, y, scale } = this._getPosAndScale();
+      this.$refs.cdWrapper.style.transition = "all 0.4s";
       this.$refs.cdWrapper.style[
         transform
-      ] = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+      ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+      // 监听事件
       this.$refs.cdWrapper.addEventListener("transitionend", done);
     },
     afterLeave() {
@@ -224,6 +234,7 @@ export default {
         return;
       }
       this.setPlayingState(!this.playing);
+      // 当歌词滚动时才能播放,防止停止播放时歌词还在滚动
       if (this.currentLyric) {
         this.currentLyric.togglePlay();
       }
@@ -238,6 +249,12 @@ export default {
     loop() {
       this.$refs.audio.currentTime = 0;
       this.$refs.audio.play();
+      this.setPlayingState(true);
+      // 进入循环播放时，歌曲一开始就要求歌词位于最开始
+      if (this.currentLyric) {
+        // 歌曲跳到最开始
+        this.currentLyric.seek(0);
+      }
     },
     next() {
       if (!this.songReady) {
@@ -251,6 +268,7 @@ export default {
         if (index === this.playlist.length) {
           index = 0;
         }
+        // setCurrentIndex: mutation
         this.setCurrentIndex(index);
         if (!this.playing) {
           this.togglePlaying();
@@ -262,40 +280,35 @@ export default {
       if (!this.songReady) {
         return;
       }
-      let index = this.currentIndex - 1;
-      if (index === -1) {
-        index = this.playlist.length - 1;
-      }
-      this.setCurrentIndex(index);
-      if (!this.playing) {
-        this.togglePlaying();
+      if (this.playlist.length === 1) {
+        this.loop();
+        return;
+      } else {
+        let index = this.currentIndex - 1;
+        if (index === -1) {
+          index = this.playlist.length - 1;
+        }
+        this.setCurrentIndex(index);
+        if (!this.playing) {
+          this.togglePlaying();
+        }
       }
       this.songReady = false;
     },
+    // audio,防止极限点击操作报错
     ready() {
       this.songReady = true;
     },
-
+    // audio,防止极限点击操作报错
     error() {
       this.songReady = true;
     },
     updateTime(e) {
       this.currentTime = e.target.currentTime;
     },
-    format(interval) {
-      interval = interval | 0;
-      const minute = (interval / 60) | 0;
-      const second = this._pad(interval % 60);
-      return `${minute}:${second}`;
-    },
-    _pad(num, n = 2) {
-      let len = num.toString().length;
-      while (len < n) {
-        num = "0" + num;
-        len++;
-      }
-      return num;
-    },
+
+    // 进度条进度改变
+
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
       this.$refs.audio.currentTime = currentTime;
@@ -303,10 +316,12 @@ export default {
         this.togglePlaying();
       }
       if (this.currentLyric) {
+        // 歌词追随进度条滚动而一一对应
         this.currentLyric.seek(currentTime * 1000);
       }
     },
     changeMode() {
+      //mode 有 3 种状态
       const mode = (this.mode + 1) % 3;
       this.setPlayMode(mode);
       let list = null;
@@ -315,15 +330,21 @@ export default {
       } else {
         list = this.sequenceList;
       }
+      // 播放模式变化时, 当前歌曲下标重新设置
       this.resetCurrentIndex(list);
+      // mutation: setPlayList
       this.setPlaylist(list);
     },
+    // 确保切换模式的时候，当前歌曲是不变的
     resetCurrentIndex(list) {
+      // findIndex: es6
       let index = list.findIndex(item => {
         return item.id === this.currentSong.id;
       });
+      // mutation: setCurrentIndex
       this.setCurrentIndex(index);
     },
+    // 获取歌词
     getLyric() {
       this.currentSong
         .getLyric()
@@ -342,20 +363,31 @@ export default {
           this.currentLineNum = 0;
         });
     },
+    // handleLyric: 歌词改变的时候调用
+    // lineNum: 当前歌词所在行,高亮
+    // txt: 歌词文案
     handleLyric({ lineNum, txt }) {
       this.currentLineNum = lineNum;
       if (lineNum > 5) {
+        // 保证高亮歌词在中间, 当前歌词，往上偏移5行
         let lineEl = this.$refs.lyricLine[lineNum - 5];
         this.$refs.lyricList.scrollToElement(lineEl, 1000);
       } else {
+        // 前五行歌词不发生滚动, 位于顶部
         this.$refs.lyricList.scrollTo(0, 0, 1000);
       }
       this.playingLyric = txt;
     },
+    // 点击唱片部分
     middleTouchStart(e) {
+      // 用来判断是否是一次移动
+
       this.touch.initiated = true;
+      // 手指点击
       const touch = e.touches[0];
+      // 手指点击位置x
       this.touch.startX = touch.pageX;
+      // 手指点击位置y
       this.touch.startY = touch.pageY;
     },
     middleTouchMove(e) {
@@ -363,17 +395,25 @@ export default {
         return;
       }
       const touch = e.touches[0];
+      // 移动的位置
       const deltaX = touch.pageX - this.touch.startX;
       const deltaY = touch.pageY - this.touch.startY;
+      // 是否发生横向滚动切换唱片界面和歌词界面，取决于横向滚动比纵向滚动多
       if (Math.abs(deltaY) > Math.abs(deltaX)) {
         return;
       }
+      if (!this.touch.moved) {
+        this.touch.moved = true;
+      }
+      // 歌词界面还是唱片界面，二选一
       const left = this.currentShow === "cd" ? 0 : -window.innerWidth;
+      // 歌词露出的宽带, 左滑动取负值
       const offsetWidth = Math.min(
         0,
         Math.max(-window.innerWidth, left + deltaX)
       );
       this.touch.percent = Math.abs(offsetWidth / window.innerWidth);
+      // lyricList: vue组件, $el来访问dom
       this.$refs.lyricList.$el.style[
         transform
       ] = `translate3d(${offsetWidth}px,0,0)`;
@@ -382,6 +422,9 @@ export default {
       this.$refs.middleL.style[transitionDuration] = 0;
     },
     middleTouchEnd() {
+      if (!this.touch.moved) {
+        return;
+      }
       let offsetWidth;
       let opacity;
       if (this.currentShow === "cd") {
@@ -412,13 +455,35 @@ export default {
       this.$refs.middleL.style[transitionDuration] = `${time}ms`;
       this.touch.initiated = false;
     },
+    format(interval) {
+      interval = interval | 0;
+      const minute = (interval / 60) | 0;
+      const second = this._pad(interval % 60);
+      return `${minute}:${second}`;
+    },
+    // 用 0 补位(补 2 位)
+    _pad(num, n = 2) {
+      let len = num.toString().length;
+      while (len < n) {
+        num = "0" + num;
+        len++;
+      }
+      return num;
+    },
     _getPosAndScale() {
+      // 缩小后的唱片圆图大小
       const targetWidth = 40;
+      // 缩小后的唱片圆图paddingLeft
       const paddingLeft = 40;
+      // 缩小后的唱片圆图paddingBottom
       const paddingBottom = 30;
+      // 大唱片距离容器顶部paddingTop
       const paddingTop = 80;
       const width = window.innerWidth * 0.8;
+      // 大唱片缩小到小唱片的比例
       const scale = targetWidth / width;
+      // 目标点(x,y)位于大圆图的中间
+      // 第四象限,小圆图x位置为负方向
       const x = -(window.innerWidth / 2 - paddingLeft);
       const y = window.innerHeight - paddingTop - width / 2 - paddingBottom;
       return {
@@ -427,7 +492,7 @@ export default {
         scale
       };
     },
-
+    // 数据通过mutations设置到state上
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
       setPlayingState: "SET_PLAYING_STATE",
@@ -437,6 +502,7 @@ export default {
     })
   },
   watch: {
+    // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
       if (!newSong.id) {
         return;
@@ -444,23 +510,36 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
+      // currentLyric里面有计时器，当切下一首歌时，该计时器会代入下一首歌
       if (this.currentLyric) {
         this.currentLyric.stop();
         this.currentTime = 0;
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
+      // setTimeout: 解决DOM异常
+      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
+      // setTimeout: 保证手机从后台切到前台js执行能正常播放
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.$refs.audio.play();
         this.getLyric();
       }, 1000);
     },
+    // 监听playing(state数据), 真正控制播放的是audio播放器
     playing(newPlaying) {
       const audio = this.$refs.audio;
+      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
       });
+    },
+    fullScreen(newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          this.$refs.lyricList.refresh();
+        }, 20);
+      }
     }
   },
   components: {
