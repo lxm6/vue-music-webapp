@@ -63,7 +63,7 @@ export function createSong(musicData) {
 }
 
 // 如果有多个歌手名，则用/隔开
-function filterSinger(singer) {
+export function filterSinger(singer) {
   let ret = []
   if (!singer) {
     return ''
