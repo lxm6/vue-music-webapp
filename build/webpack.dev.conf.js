@@ -86,7 +86,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           if (typeof ret === 'string') {
             // var reg = /^\w+\(({[^()]+})\)$/
             var reg = /{.*}/
-            var matches = ret.match(reg)           
+            var matches = ret.match(reg)
             if (matches) {
               ret = JSON.parse(matches[0])
             }
@@ -96,51 +96,66 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       })
-    },
-    clientLogLevel: 'warning',
-    historyApiFallback: {
-      rewrites: [{
-        from: /.*/,
-        to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
-      }, ],
-    },
-    hot: true,
-    contentBase: false, // since we use CopyWebpackPlugin.
-    compress: true,
-    host: HOST || config.dev.host,
-    port: PORT || config.dev.port,
-    open: config.dev.autoOpenBrowser,
-    overlay: config.dev.errorOverlay ? {
-      warnings: false,
-      errors: true
-    } : false,
-    publicPath: config.dev.assetsPublicPath,
-    proxy: config.dev.proxyTable,
-    quiet: true, // necessary for FriendlyErrorsPlugin
-    watchOptions: {
-      poll: config.dev.poll,
-    }
+      //搜索结果数据
+      app.get('/api/search', (req, res) => {
+        var url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+        axios.get(url, {
+          headers: {
+            referer: 'https://y.qq.com/m/index.html',
+            host: 'c.y.qq.com'
+          },
+          params: req.query // 通过req从浏览器端发过来的一堆参数(platform，sin，ein等)透传给qq的服务端
+        }).then((response) => { // qq服务端的响应数据，再通过res将响应数据输出到浏览器端
+          res.json(response.data)
+        }).catch((error) => {
+          console.log(error)
+        })
+      })
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': require('../config/dev.env')
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
-    new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
-    }),
-    // copy custom static assets
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: config.dev.assetsSubDirectory,
-      ignore: ['.*']
-    }])
-  ]
+  clientLogLevel: 'warning',
+  historyApiFallback: {
+    rewrites: [{
+      from: /.*/,
+      to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
+    }, ],
+  },
+  hot: true,
+  contentBase: false, // since we use CopyWebpackPlugin.
+  compress: true,
+  host: HOST || config.dev.host,
+  port: PORT || config.dev.port,
+  open: config.dev.autoOpenBrowser,
+  overlay: config.dev.errorOverlay ? {
+    warnings: false,
+    errors: true
+  } : false,
+  publicPath: config.dev.assetsPublicPath,
+  proxy: config.dev.proxyTable,
+  quiet: true, // necessary for FriendlyErrorsPlugin
+  watchOptions: {
+    poll: config.dev.poll,
+  }
+},
+plugins: [
+  new webpack.DefinePlugin({
+    'process.env': require('../config/dev.env')
+  }),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+  new webpack.NoEmitOnErrorsPlugin(),
+  // https://github.com/ampedandwired/html-webpack-plugin
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: 'index.html',
+    inject: true
+  }),
+  // copy custom static assets
+  new CopyWebpackPlugin([{
+    from: path.resolve(__dirname, '../static'),
+    to: config.dev.assetsSubDirectory,
+    ignore: ['.*']
+  }])
+]
 })
 
 module.exports = new Promise((resolve, reject) => {
