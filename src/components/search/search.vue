@@ -4,12 +4,12 @@
       <search-box ref="searchBox" @query="onQueryChange"></search-box>
     </div>
     <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
-      <scroll ref="shortcut" class="shortcut" :data="shortcut">
+      <scroll  :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
         <div>
           <div class="hot-key">
             <h1 class="title">热门搜索</h1>
             <ul>
-              <li @click="addQuery(item.k)" class="item" v-for="item in hotKey">
+              <li @click="addQuery(item.k)" class="item" v-for="(item,index) in hotKey" :key="index">
                 <span>{{item.k}}</span>
               </li>
             </ul>
@@ -72,18 +72,6 @@ mixins: [playlistMixin, searchMixin],
       this.$refs.shortcutWrapper.style.bottom = bottom;
       this.$refs.shortcut.refresh();
     },
-    addQuery(query) {
-      this.$refs.searchBox.setQuery(query);
-    },
-    onQueryChange(query) {
-      this.query = "query";
-    },
-    blurInput() {
-      this.$refs.searchBox.blur();
-    },
-    saveSearch() {
-      this.saveSearchHistory(this.query);
-    },
     showConfirm() {
       this.$refs.confirm.show();
     },
@@ -95,8 +83,6 @@ mixins: [playlistMixin, searchMixin],
       });
     },
     ...mapActions([
-      "saveSearchHistory",
-      "deleteSearchHistory",
       "clearSearchHistory"
     ])
   },

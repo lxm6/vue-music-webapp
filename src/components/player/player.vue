@@ -74,7 +74,7 @@
               <i @click="next" class="icon-next"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon icon-not-favorite"></i>
+                 <i @click="toggleFavorite(currentSong)" class="icon" :class="getFavoriteIcon(currentSong)"></i>
             </div>
           </div>
         </div>
@@ -94,11 +94,12 @@
             <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
           </progress-circle>
         </div>
-        <div class="control">
+        <div class="control" @click.stop="showPlaylist">
           <i class="icon-playlist"></i>
         </div>
       </div>
     </transition>
+    <playlist ref="playlist"></playlist>
     <audio
       ref="audio"
       :src="currentSong.url"
@@ -112,17 +113,21 @@
 <script>
 import animations from "create-keyframe-animation";
 import { prefixStyle } from "common/js/dom";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
 import ProgressCircle from "base/progress-circle/progress-circle";
 import { playMode } from "common/js/config";
 import { shuffle } from "common/js/util";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
+import Playlist from "components/playlist/playlist";
+import { playerMixin } from "common/js/mixin";
+
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
 
 export default {
+  mixins: [playerMixin],
   data() {
     return {
       songReady: false,
@@ -163,15 +168,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters([
-      "fullScreen",
-      "playlist",
-      "currentSong",
-      "playing",
-      "currentIndex",
-      "mode",
-      "sequenceList"
-    ])
+    ...mapGetters(["fullScreen", "playing", "currentIndex"])
   },
   created() {
     this.touch = {};
@@ -298,6 +295,7 @@ export default {
     // audio,防止极限点击操作报错
     ready() {
       this.songReady = true;
+      this.savePlayHistory(this.currentSong);
     },
     // audio,防止极限点击操作报错
     error() {
@@ -377,6 +375,9 @@ export default {
         this.$refs.lyricList.scrollTo(0, 0, 1000);
       }
       this.playingLyric = txt;
+    },
+    showPlaylist() {
+      this.$refs.playlist.show();
     },
     // 点击唱片部分
     middleTouchStart(e) {
@@ -494,12 +495,9 @@ export default {
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN",
-      setPlayingState: "SET_PLAYING_STATE",
-      setCurrentIndex: "SET_CURRENT_INDEX",
-      setPlayMode: "SET_PLAY_MODE",
-      setPlaylist: "SET_PLAYLIST"
-    })
+      setFullScreen: "SET_FULL_SCREEN"
+    }),
+    ...mapActions(["savePlayHistory"])
   },
   watch: {
     // 监听,当currentSong变化时调用
@@ -545,7 +543,8 @@ export default {
   components: {
     ProgressBar,
     ProgressCircle,
-    Scroll
+    Scroll,
+    Playlist
   }
 };
 </script>
