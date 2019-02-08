@@ -74,7 +74,11 @@
               <i @click="next" class="icon-next"></i>
             </div>
             <div class="icon i-right">
-                 <i @click="toggleFavorite(currentSong)" class="icon" :class="getFavoriteIcon(currentSong)"></i>
+              <i
+                @click="toggleFavorite(currentSong)"
+                class="icon"
+                :class="getFavoriteIcon(currentSong)"
+              ></i>
             </div>
           </div>
         </div>
@@ -100,14 +104,7 @@
       </div>
     </transition>
     <playlist ref="playlist"></playlist>
-    <audio
-      ref="audio"
-      :src="currentSong.url"
-      @play="ready"
-      @error="error"
-      @timeupdate="updateTime"
-      @ended="end"
-    ></audio>
+    <audio ref="audio" @play="ready" @error="error" @timeupdate="updateTime" @ended="end"></audio>
   </div>
 </template>
 <script>
@@ -140,7 +137,8 @@ export default {
       // 唱片碟界面与歌词界面
       currentShow: "cd",
       // playingLyric: 唱碟下面显示的一行歌词
-      playingLyric: ""
+      playingLyric: "",
+      currentSongUrl: ""
     };
   },
   computed: {
@@ -299,6 +297,9 @@ export default {
     },
     // audio,防止极限点击操作报错
     error() {
+      if (this.currentLyrics) {
+        this.currentLyrics.stop();
+      }
       this.songReady = true;
     },
     updateTime(e) {
@@ -508,7 +509,7 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
-      // currentLyric里面有计时器，当切下一首歌时，该计时器会代入下一首歌
+      // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
         this.currentTime = 0;
@@ -518,16 +519,26 @@ export default {
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
-        this.$refs.audio.play();
-        this.getLyric();
-      }, 1000);
+      newSong
+        .getSongUrl()
+        .then(url => {
+          this.currentSongUrl = url;
+          this.$refs.audio.src = newSong.url;
+          this.$refs.audio.play();
+        })
+        .then(() => {
+          this.getLyric();
+        })
+        .catch(err => {
+          console.log(err);
+          this.songReady = true;
+        });
     },
+
     // 监听playing(state数据), 真正控制播放的是audio播放器
     playing(newPlaying) {
+
       const audio = this.$refs.audio;
-      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
       });
@@ -540,6 +551,7 @@ export default {
       }
     }
   },
+
   components: {
     ProgressBar,
     ProgressCircle,
