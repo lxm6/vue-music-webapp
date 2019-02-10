@@ -20,52 +20,52 @@ import { getSongList } from "api/recommend";
 import { ERR_OK } from "api/config";
 import { createSong } from "common/js/song";
 export default {
-    mixins: [sheetMixin],
-    computed: {
-      title() {
-        return this.disc.dissname
-      },
-      bgImage() {
-        return this.disc.imgurl
-      },
-      ...mapGetters([
-        'disc'
-      ])
+  mixins: [sheetMixin],
+  computed: {
+    title() {
+      return this.disc.dissname;
     },
-    data() {
-      return {
-        songs: []
+    bgImage() {
+      return this.disc.imgurl;
+    },
+    ...mapGetters(["disc"])
+  },
+
+  data() {
+    return {
+      songs: []
+    };
+  },
+  created() {
+    this._getSongList();
+  },
+
+  methods: {
+    _getSongList() {
+      if (!this.disc.dissid) {
+        this.$router.push("/recommend");
+        return;
       }
-    },
-    created() {
-      this._getSongList()
-    },
-    methods: {
-      _getSongList() {
-        if (!this.disc.dissid) {
-          this.$router.push('/recommend')
-          return
+      getSongList(this.disc.dissid).then(res => {
+        if (res.code === ERR_OK) {
+          this.songs = this._normalizeSongs(res.cdlist[0].songlist);
         }
-        getSongList(this.disc.dissid).then((res) => {
-          if (res.code === ERR_OK) {
-            this.songs = this._normalizeSongs(res.cdlist[0].songlist)
-          }
-        })
-      },
-      _normalizeSongs(list) {
-        let ret = []
-        list.forEach((musicData) => {
-          if (musicData.songid && musicData.albummid) {
-            ret.push(createSong(musicData))
-          }
-        })
-        return ret
-      }
+      });
     },
-    components: {
-      MusicList
+    _normalizeSongs(list) {
+      let ret = [];
+      list.forEach(musicData => {
+        if (musicData.songid && musicData.albummid) {
+          ret.push(createSong(musicData));
+        }
+      });
+      return ret;
     }
+  },
+  components: {
+    MusicList
   }
+};
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">

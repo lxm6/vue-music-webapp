@@ -55,51 +55,82 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/recommend'
+      redirect: '/recommend',
+      meta: {
+        keepAlive: true, 
+      },
+
     },
     {
       path: '/recommend',
       component: Recommend,
+      meta: {
+        keepAlive: true, 
+      },
       children: [
         {
           path: ':id',
-          component: Disc
+          component: Disc,
+          meta: {
+            keepAlive: true, 
+          },
         }
       ]
     },
     {
       path: '/singer',
       component: Singer,
+      meta: {
+        keepAlive: true, 
+      },
       children: [
         {
           path: ':id',
-          component: SingerDetail
+          component: SingerDetail,
+          meta: {
+            keepAlive: true, 
+          },
         }
       ]
     },
     {
       path: '/rank',
       component: Rank,
+      meta: {
+        keepAlive: true, 
+      },
       children: [
         {
           path: ':id',
-          component: TopList
+          component: TopList,
+          meta: {
+            keepAlive: true, 
+          },
         }
       ]
     },
     {
       path: '/search',
       component: Search,
+      meta: {
+        keepAlive: true, 
+      },
       children: [
         {
           path: ':id',
-          component: SingerDetail
+          component: SingerDetail,
+          meta: {
+            keepAlive: true, 
+          },
         }
       ]
     },
     {
       path: '/user',
-      component: UserCenter
+      component: UserCenter,
+      meta: {
+        keepAlive: false, 
+      },
     }
   ]
 })

@@ -114,6 +114,8 @@ export default {
     },
     switchItem(index) {
       this.currentIndex = index;
+      this.$refs.favoriteListList.refresh();
+
     },
     selectSong(song) {
       this.insertSong(new Song(song));
@@ -145,6 +147,7 @@ export default {
     }),
     ...mapActions(["insertSong", "randomPlay"])
   },
+
   components: {
     Switches,
     Scroll,
