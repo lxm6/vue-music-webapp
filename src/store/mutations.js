@@ -37,6 +37,13 @@ const matutaions = {
   },
   [types.SET_FAVORITE_LIST](state, list) {
     state.favoriteList = list
-  }
+  },
+  [types.SET_FAVORITE_LIST_LIST](state, list) {
+    state.favoriteListList = list;
+  },
+  [types.SET_USER_CENTER_VISIBLE](state, visible) {
+    state.userCenterVisible = visible;
+  },
+
 }
 export default matutaions

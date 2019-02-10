@@ -3,11 +3,24 @@
  */
 
 import * as types from './mutation-types'
-import {playMode} from 'common/js/config'
-import {shuffle} from 'common/js/util'
-import {saveSearch, clearSearch, deleteSearch, savePlay, saveFavorite, deleteFavorite} from 'common/js/cache'
+import {
+  playMode
+} from 'common/js/config'
+import {
+  shuffle
+} from 'common/js/util'
+import {
+  saveSearch,
+  clearSearch,
+  deleteSearch,
+  savePlay,
+  saveFavorite,
+  deleteFavorite,
+  saveFavoriteList as saveFavoriteSheet,
+  deleteFavoriteList as deleteFavoriteSheet,
+} from 'common/js/cache'
 
-function findIndex (list, song) {
+function findIndex(list, song) {
   return list.findIndex((item) => {
     return item.id === song.id
   })
@@ -17,7 +30,13 @@ function findIndex (list, song) {
 // 定义动作, action执行, mutation就会改变, 映射state数据
 // {commit, state} : 提交和获取数据
 // {list, index} : 修改的歌曲列表对象
-export const selectPlay = function ({commit, state}, {list, index}) {
+export const selectPlay = function ({
+  commit,
+  state
+}, {
+  list,
+  index
+}) {
   // 提交mutation, 改变歌曲顺序列表
   commit(types.SET_SEQUENCE_LIST, list)
   // 如果播放模式是随机模式
@@ -41,7 +60,11 @@ export const selectPlay = function ({commit, state}, {list, index}) {
 }
 
 // 随机播放, 没有索引
-export const randomPlay = function ({commit}, {list}) {
+export const randomPlay = function ({
+  commit
+}, {
+  list
+}) {
   // 改变播放模式为随机模式
   commit(types.SET_PLAY_MODE, playMode.random)
   // 提交mutation, 改变歌曲顺序列表
@@ -58,7 +81,10 @@ export const randomPlay = function ({commit}, {list}) {
 }
 
 // 插入一首歌
-export const insertSong = function ({commit, state}, song) {
+export const insertSong = function ({
+  commit,
+  state
+}, song) {
   let playlist = state.playlist.slice()
   let sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
@@ -91,7 +117,7 @@ export const insertSong = function ({commit, state}, song) {
     }
   }
 
-   // 提交修改
+  // 提交修改
   commit(types.SET_PLAYLIST, playlist)
   commit(types.SET_SEQUENCE_LIST, sequenceList)
   commit(types.SET_CURRENT_INDEX, currentIndex)
@@ -100,22 +126,31 @@ export const insertSong = function ({commit, state}, song) {
 }
 
 //保存搜索历史
-export const saveSearchHistory = function ({commit}, query) {
+export const saveSearchHistory = function ({
+  commit
+}, query) {
   commit(types.SET_SEARCH_HISTORY, saveSearch(query))
 }
 
 //删除搜索历史
-export const deleteSearchHistory = function ({commit}, query) {
+export const deleteSearchHistory = function ({
+  commit
+}, query) {
   commit(types.SET_SEARCH_HISTORY, deleteSearch(query))
 }
 
 //清空搜索历史
-export const clearSearchHistory = function ({commit}) {
+export const clearSearchHistory = function ({
+  commit
+}) {
   commit(types.SET_SEARCH_HISTORY, clearSearch())
 }
 
 // 删除一首歌
-export const deleteSong = function ({commit, state}, song) {
+export const deleteSong = function ({
+  commit,
+  state
+}, song) {
   let playlist = state.playlist.slice()
   let sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
@@ -131,13 +166,15 @@ export const deleteSong = function ({commit, state}, song) {
   commit(types.SET_SEQUENCE_LIST, sequenceList)
   commit(types.SET_CURRENT_INDEX, currentIndex)
 
-  const playingState=playlist.length>0
-    commit(types.SET_PLAYING_STATE, playingState)
-  
+  const playingState = playlist.length > 0
+  commit(types.SET_PLAYING_STATE, playingState)
+
 }
 
 // 清空所有歌曲
-export const deleteSongList = function ({commit}) {
+export const deleteSongList = function ({
+  commit
+}) {
   commit(types.SET_CURRENT_INDEX, -1)
   commit(types.SET_PLAYLIST, [])
   commit(types.SET_SEQUENCE_LIST, [])
@@ -145,14 +182,29 @@ export const deleteSongList = function ({commit}) {
 }
 
 // 保存播放历史
-export const savePlayHistory = function ({commit}, song) {
+export const savePlayHistory = function ({
+  commit
+}, song) {
   commit(types.SET_PLAY_HISTORY, savePlay(song))
 }
 // 保存喜爱的歌曲
-export const saveFavoriteList = function ({commit}, song) {
+export const saveFavoriteList = function ({
+  commit
+}, song) {
   commit(types.SET_FAVORITE_LIST, saveFavorite(song))
 }
 // 删除喜爱的歌曲
-export const deleteFavoriteList = function ({commit}, song) {
+export const deleteFavoriteList = function ({
+  commit
+}, song) {
   commit(types.SET_FAVORITE_LIST, deleteFavorite(song))
+}
+
+//保存喜爱歌单
+export function saveFavoriteListList({ commit }, list) {
+  commit(types.SET_FAVORITE_LIST_LIST, saveFavoriteSheet(list));
+}
+//删除喜爱歌单
+export function deleteFavoriteListList({ commit }, list) {
+  commit(types.SET_FAVORITE_LIST_LIST, deleteFavoriteSheet(list));
 }

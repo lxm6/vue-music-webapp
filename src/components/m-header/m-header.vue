@@ -1,7 +1,8 @@
 <template>
   <div class="m-header">
+ <div class="icon" @click.stop="toggleUserCenter">menu</div>
     <div class="icon"></div>
-    <h1 class="text">Chicken Music</h1>
+    <h1 class="text">Lemon Music</h1>
     <router-link tag="div" class="mine" to="/user">
       <i class="icon-mine"></i>
     </router-link>
@@ -9,7 +10,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-export default {};
+export default {
+    methods: {
+        toggleUserCenter() {
+            this.$emit('userCenterVisibleChange');
+        }
+    }
+};
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -53,5 +60,9 @@ export default {};
       color: $color-theme;
     }
   }
+  .icon-menu{
+    
+    }
+  
 }
 </style>

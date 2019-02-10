@@ -5,10 +5,14 @@
     </div>
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
-      <div class="play-wrapper">
-        <div ref="playBtn" v-show="songs.length>0" class="play" @click="random">
+      <div class="play-wrapper" v-show="songs.length>0">
+        <div ref="playBtn" class="play" @click="random">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
+        </div>
+        <div ref="favorBtn"  @click="toggleFavorite" class="favor">
+          <i :class="isFavorite?'icon-favorite':'icon-not-favorite'" ></i>
+          <span class="text">{{isFavorite?'取消收藏':'收藏此歌单'}}</span>
         </div>
       </div>
       <div class="filter" ref="filter"></div>
@@ -58,9 +62,17 @@ export default {
       type: String,
       default: ""
     },
-    rank:{
-      type:Boolean,
-      default:false
+    rank: {
+      type: Boolean,
+      default: false
+    },
+    isDisc: {
+      type: Boolean,
+      default: false
+    },
+    isFavorite: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -89,6 +101,7 @@ export default {
       this.$refs.list.$el.style.bottom = bottom;
       this.$refs.list.refresh();
     },
+
     scroll(pos) {
       this.scrollY = pos.y;
     },
@@ -105,6 +118,9 @@ export default {
       this.randomPlay({
         list: this.songs
       });
+    },
+    toggleFavorite() {
+      this.$emit("favoriteChange");
     },
     ...mapActions(["selectPlay", "randomPlay"])
   },
@@ -129,10 +145,12 @@ export default {
         this.$refs.bgImage.style.paddingTop = 0;
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
         this.$refs.playBtn.style.display = "none";
+        this.$refs.favorBtn.style.display = "none";
       } else {
         this.$refs.bgImage.style.paddingTop = "70%";
         this.$refs.bgImage.style.height = 0;
         this.$refs.playBtn.style.display = "";
+        this.$refs.favorBtn.style.display = "";
       }
       this.$refs.bgImage.style[transform] = `scale(${scale})`;
       this.$refs.bgImage.style.zIndex = zIndex;
@@ -198,8 +216,10 @@ export default {
       bottom: 20px;
       z-index: 50;
       width: 100%;
+      display: flex;
+      justify-content: center;
 
-      .play {
+      .favor, .play {
         box-sizing: border-box;
         width: 135px;
         padding: 7px 0;
@@ -210,7 +230,7 @@ export default {
         border-radius: 100px;
         font-size: 0;
 
-        .icon-play {
+        .icon-play,.icon-favorite,.icon-not-favorite {
           display: inline-block;
           vertical-align: middle;
           margin-right: 6px;

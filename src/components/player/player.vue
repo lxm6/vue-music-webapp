@@ -351,7 +351,12 @@ export default {
           if (this.currentSong.lyric !== lyric) {
             return;
           }
+          // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
+          if (!this.currentLyric.lines.length) {
+            this.playingLyric = "此歌曲为没有歌词的纯音乐";
+          }
+
           if (this.playing) {
             this.currentLyric.play();
           }
@@ -519,25 +524,27 @@ export default {
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      newSong
-        .getSongUrl()
-        .then(url => {
-          this.currentSongUrl = url;
-          this.$refs.audio.src = newSong.url;
-          this.$refs.audio.play();
-        })
-        .then(() => {
-          this.getLyric();
-        })
-        .catch(err => {
-          console.log(err);
-          this.songReady = true;
-        });
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        newSong
+          .getSongUrl()
+          .then(url => {
+            this.currentSongUrl = url;
+            this.$refs.audio.src = newSong.url;
+            this.$refs.audio.play();
+          })
+          .then(() => {
+            this.getLyric();
+          })
+          .catch(err => {
+            console.log(err);
+            this.songReady = true;
+          });
+      }, 500);
     },
 
     // 监听playing(state数据), 真正控制播放的是audio播放器
     playing(newPlaying) {
-
       const audio = this.$refs.audio;
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();

@@ -13,3 +13,5 @@ export const topList = state => state.topList
 export const searchHistory = state => state.searchHistory
 export const playHistory = state => state.playHistory
 export const favoriteList = state => state.favoriteList
+export const favoriteListList = state => state.favoriteListList;
+export const userCenterVisible = state => state.userCenterVisible;

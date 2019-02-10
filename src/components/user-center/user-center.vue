@@ -17,9 +17,35 @@
             <song-list :songs="favoriteList" @select="selectSong"></song-list>
           </div>
         </scroll>
+
         <scroll ref="playList" class="list-scroll" v-if="currentIndex===1" :data="playHistory">
           <div class="list-inner">
             <song-list :songs="playHistory" @select="selectSong"></song-list>
+          </div>
+        </scroll>
+        <scroll
+          ref="favoriteListList"
+          class="list-scroll"
+          v-if="currentIndex===2"
+          :data="favoriteListList"
+        >
+          <div class="list-inner">
+            <ul>
+              <li
+                @click="selectItem(item)"
+                v-for="(item,index) in favoriteListList"
+                :key="index"
+                class="item"
+              >
+                <div class="icon">
+                  <img v-lazy="item.imgurl" width="60" height="60">
+                </div>
+                <div class="text">
+                  <h2 class="name" v-html="item.creator.name"></h2>
+                  <p class="desc" v-html="item.dissname"></p>
+                </div>
+              </li>
+            </ul>
           </div>
         </scroll>
       </div>
@@ -36,7 +62,7 @@ import Scroll from "base/scroll/scroll";
 import SongList from "base/song-list/song-list";
 import NoResult from "base/no-result/no-result";
 import Song from "common/js/song";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 
 export default {
@@ -49,7 +75,10 @@ export default {
           name: "我喜欢的"
         },
         {
-          name: "最近听的"
+          name: "最近收听"
+        },
+        {
+          name: "收藏歌单"
         }
       ]
     };
@@ -58,6 +87,8 @@ export default {
     noResult() {
       if (this.currentIndex === 0) {
         return !this.favoriteList.length;
+      } else if (this.currentIndex === 1) {
+        return !this.playHistory.length;
       } else {
         return !this.playHistory.length;
       }
@@ -65,11 +96,13 @@ export default {
     noResultDesc() {
       if (this.currentIndex === 0) {
         return "暂无收藏歌曲";
-      } else {
+      } else if (this.currentIndex === 1) {
         return "你还没有听过歌曲";
+      } else {
+        return "暂无收藏歌单";
       }
     },
-    ...mapGetters(["favoriteList", "playHistory"])
+    ...mapGetters(["favoriteList", "playHistory", "favoriteListList"])
   },
   methods: {
     handlePlaylist(playlist) {
@@ -99,6 +132,15 @@ export default {
         list
       });
     },
+    selectItem(item) {
+      this.$router.push({
+        path: `/recommend/${item.id}`
+      });
+      this.setDisc(item);
+    },
+    ...mapMutations({
+      setDisc: "SET_DISC"
+    }),
     ...mapActions(["insertSong", "randomPlay"])
   },
   components: {
@@ -184,6 +226,38 @@ export default {
 
       .list-inner {
         padding: 20px 30px;
+
+        .item {
+          display: flex;
+          box-sizing: border-box;
+          align-items: center;
+          padding: 0 20px 20px 20px;
+
+          .icon {
+            flex: 0 0 60px;
+            width: 60px;
+            padding-right: 20px;
+          }
+
+          .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            line-height: 20px;
+            overflow: hidden;
+            font-size: $font-size-medium;
+
+            .name {
+              margin-bottom: 10px;
+              color: $color-text;
+            }
+
+            .desc {
+              color: $color-text-d;
+            }
+          }
+        }
       }
     }
   }

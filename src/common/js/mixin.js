@@ -71,6 +71,7 @@ export const playerMixin = {
       }
       return 'icon-not-favorite'
     },
+
     isFavorite(song) {
       const index = this.favoriteList.findIndex((item) => {
         return item.id === song.id
@@ -121,3 +122,30 @@ export const searchMixin = {
     ])
   }
 }
+
+export const sheetMixin = {
+  computed: {
+      isFavorite() {
+          const list = this.disc;
+          if (!list) {
+              return false;
+          }
+          const index = this.favoriteListList.findIndex(
+              item => item.id === list.id
+          );
+          return index > -1;
+      },
+      ...mapGetters(['disc', 'favoriteListList'])
+  },
+  methods: {
+      toggleFavorite() {
+          const list = this.disc;
+          if (this.isFavorite) {
+              this.deleteFavoriteListList(list);
+          } else {
+              this.saveFavoriteListList(list);
+          }
+      },
+      ...mapActions(['saveFavoriteListList', 'deleteFavoriteListList'])
+  }
+};

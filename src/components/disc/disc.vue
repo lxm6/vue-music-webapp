@@ -1,17 +1,26 @@
 <template>
   <transition name="slide">
-    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+    <music-list
+      :title="title"
+      :bg-image="bgImage"
+      :songs="songs"
+      :isDisc="true"
+      :isFavorite="isFavorite"
+      @favoriteChange="toggleFavorite"
+    ></music-list>
   </transition>
 </template>
 
 <script>
+import { sheetMixin } from "common/js/mixin";
 import MusicList from "components/music-list/music-list";
-import { mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import { getSongList } from "api/recommend";
 import { ERR_OK } from "api/config";
 import { createSong } from "common/js/song";
 
 export default {
+  mixins: [sheetMixin],
   data() {
     return {
       songs: []
@@ -50,7 +59,8 @@ export default {
         }
       });
       return ret;
-    }
+    },
+    ...mapMutations({ setDisc: "SET_DISC" })
   },
 
   components: {

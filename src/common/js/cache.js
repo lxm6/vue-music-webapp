@@ -9,7 +9,9 @@ const PLAY_KEY = '__play__'
 const PLAY_MAX_LEN = 100    
 
 const FAVORITE_KEY = '__favorite__'
+const FAVORITE_LIST_KEY = '__favoritelist__';
 const FAVORITE_MAX_LEN = 100
+
 
 function insertArray(arr, val, compare, maxLen) {
   const index = arr.findIndex(compare)
@@ -93,4 +95,21 @@ export function deleteFavorite(song) {
 export function loadFavorite() {
   return storage.get(FAVORITE_KEY, [])
 }
-
+// 载入收藏的歌单
+export function loadFavoriteList() {
+  return storage.get(FAVORITE_LIST_KEY, []);
+}
+// 保存收藏的歌单
+export function saveFavoriteList(list) {
+  const lists = storage.get(FAVORITE_LIST_KEY, []);
+  insertArray(lists, list, item => item.id === list.id, FAVORITE_MAX_LEN);
+  storage.set(FAVORITE_LIST_KEY, lists);
+  return lists;
+}
+// 取消某个歌单的收藏状态
+export function deleteFavoriteList(list) {
+  const lists = storage.get(FAVORITE_LIST_KEY, []);
+  deleteFromArray(lists, item => item.id === list.id);
+  storage.set(FAVORITE_LIST_KEY, lists);
+  return lists;
+}
