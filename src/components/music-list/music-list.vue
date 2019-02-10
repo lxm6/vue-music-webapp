@@ -10,7 +10,7 @@
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
         </div>
-        <div ref="favorBtn"  @click="toggleFavorite" class="favor">
+        <div ref="favorBtn" v-show="isDisc" @click="toggleFavorite" class="favor">
           <i :class="isFavorite?'icon-favorite':'icon-not-favorite'" ></i>
           <span class="text">{{isFavorite?'取消收藏':'收藏此歌单'}}</span>
         </div>

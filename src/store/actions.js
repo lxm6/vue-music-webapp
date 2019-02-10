@@ -201,10 +201,14 @@ export const deleteFavoriteList = function ({
 }
 
 //保存喜爱歌单
-export function saveFavoriteListList({ commit }, list) {
+export const saveFavoriteListList = function ({
+  commit
+}, list) {
   commit(types.SET_FAVORITE_LIST_LIST, saveFavoriteSheet(list));
 }
 //删除喜爱歌单
-export function deleteFavoriteListList({ commit }, list) {
+export const deleteFavoriteListList = function ({
+  commit
+}, list) {
   commit(types.SET_FAVORITE_LIST_LIST, deleteFavoriteSheet(list));
 }

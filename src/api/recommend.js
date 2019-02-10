@@ -21,12 +21,10 @@ export function getRecommend() {
 }
 
 /**
- * 获取推荐列表数据
+ * 获取推荐歌单数据
  */
 export function getDiscList() {
   const url = '/api/getDiscList'
-
-
   const data = Object.assign({}, commonParams, {
     platform: 'yqq', // 加引号
     hostUin: 0,
@@ -38,7 +36,6 @@ export function getDiscList() {
     rnd: Math.random(),
     format: 'json'
   })
-
 
   return axios.get(url, {
     params: data

@@ -7,7 +7,7 @@
       <div class="switches-wrapper">
         <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
       </div>
-      <div ref="playBtn" class="play-btn" @click="random">
+      <div ref="playBtn" class="play-btn" @click="random" v-if="currentIndex===1||currentIndex===0">
         <i class="icon-play"></i>
         <span class="text">随机播放全部</span>
       </div>
@@ -90,7 +90,7 @@ export default {
       } else if (this.currentIndex === 1) {
         return !this.playHistory.length;
       } else {
-        return !this.playHistory.length;
+        return !this.favoriteListList.length;
       }
     },
     noResultDesc() {
@@ -110,6 +110,7 @@ export default {
       this.$refs.listWrapper.style.bottom = bottom;
       this.$refs.favoriteList && this.$refs.favoriteList.refresh();
       this.$refs.playList && this.$refs.playList.refresh();
+      this.$refs.favoriteListList && this.$refs.favoriteListList.refresh();
     },
     switchItem(index) {
       this.currentIndex = index;
@@ -122,6 +123,7 @@ export default {
     },
     random() {
       let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory;
+
       if (list.length === 0) {
         return;
       }

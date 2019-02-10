@@ -131,7 +131,7 @@ export const sheetMixin = {
               return false;
           }
           const index = this.favoriteListList.findIndex(
-              item => item.id === list.id
+              item => item.dissid === list.dissid
           );
           return index > -1;
       },

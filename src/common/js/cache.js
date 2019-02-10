@@ -102,14 +102,14 @@ export function loadFavoriteList() {
 // 保存收藏的歌单
 export function saveFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
-  insertArray(lists, list, item => item.id === list.id, FAVORITE_MAX_LEN);
+  insertArray(lists, list, item =>  item.dissid === list.dissid, FAVORITE_MAX_LEN);
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
 }
 // 取消某个歌单的收藏状态
 export function deleteFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
-  deleteFromArray(lists, item => item.id === list.id);
+  deleteFromArray(lists, item =>  item.dissid === list.dissid);
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
 }

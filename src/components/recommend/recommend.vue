@@ -2,6 +2,7 @@
   <div class="recommend" ref="recommend">
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
+        <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
         <div v-if="recommends.length" class="slider-wrapper">
           <slider>
             <!-- 作为插槽插入组件内部的slot之中 -->
@@ -69,10 +70,11 @@ export default {
       this.$refs.scroll.refresh();
     },
     selectItem(item) {
-      this.$router.push({
+         this.$router.push({
         path: `/recommend/${item.dissid}`
       });
       this.setDisc(item);
+
     },
     _getRecommend() {
       getRecommend().then(res => {

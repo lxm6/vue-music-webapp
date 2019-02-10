@@ -354,7 +354,7 @@ export default {
           // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
-            this.playingLyric = "此歌曲为没有歌词的纯音乐";
+            this.playingLyric = "此歌曲没有歌词的纯音乐";
           }
 
           if (this.playing) {

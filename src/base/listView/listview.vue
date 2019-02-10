@@ -29,6 +29,7 @@
           :data-index="index"
           class="item"
           :class="{'current':currentIndex===index}"
+          :key="index"
         >{{item}}</li>
       </ul>
     </div>
