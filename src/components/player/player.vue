@@ -18,6 +18,7 @@
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
         </div>
+        <!-- <div class="line"></div> -->
         <div
           class="middle"
           @touchstart.prevent="middleTouchStart"
@@ -26,7 +27,7 @@
         >
           <div class="middle-l" ref="middleL">
             <div class="cd-wrapper" ref="cdWrapper">
-              <div class="triger">
+              <div class="triger" :class="trCls">
                 <img src="./triger.png">
               </div>
               <div class="cd" :class="cdCls">
@@ -148,6 +149,9 @@ export default {
   computed: {
     cdCls() {
       return this.playing ? "play" : "play pause";
+    },
+    trCls() {
+      return this.playing ? "triger" : "triger pause";
     },
     playIcon() {
       return this.playing ? "icon-pause" : "icon-play";
@@ -618,27 +622,34 @@ export default {
         width: 70%;
         margin: 0 auto;
         line-height: 40px;
-        text-align: left;
+        text-align: center;
         no-wrap();
         font-size: $font-size-large;
         color: $color-text;
       }
 
       .subtitle {
-        line-height: 20px;
-        text-align: left;
-        margin-left: 15%;
+        line-height: 14px;
+        text-align: center;
+        // margin-left: 15%;
         line-height: 15px;
         font-size: $font-size-medium;
-        color: $color-text-l;
+        color: $color-text;
       }
     }
+    .line{
+      margin:10px auto 0 auto
+      height:0.5px
+      background-color:$color-text-l
+      width 70%
+
+      }
 
     .middle {
       position: fixed;
       width: 100%;
-      top: 70px;
-      bottom: 170px;
+      top: 65px;
+      bottom: 185px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -662,8 +673,19 @@ export default {
             position: absolute;
             height: 40%;
             top: -20%;
-            left: 40%;
+            left: 45%;
             z-index: 1;
+            transform-origin: 22% -2%;
+            transition: all .6s;
+
+            &.play {
+              animation-play-state: paused;
+            }
+
+            &.pause {
+              transform: rotate(-28deg);
+
+            }
 
             img {
               height: 100%;
@@ -707,7 +729,7 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 40px auto 0 auto;
+          margin: 45px auto 0 auto;
           overflow: hidden;
           text-align: center;
 

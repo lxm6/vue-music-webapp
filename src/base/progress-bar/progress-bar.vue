@@ -93,7 +93,7 @@ export default {
   .bar-inner {
     position: relative;
     top: 13px;
-    height: 4px;
+    height: 3px;
     background: rgba(0, 0, 0, 0.3);
 
     .progress {
@@ -114,8 +114,8 @@ export default {
         top: 7px;
         left: 7px;
         box-sizing: border-box;
-        width: 16px;
-        height: 16px;
+        width: 15px;
+        height: 15px;
         border: 3px solid $color-text;
         border-radius: 50%;
         background: $color-theme;
