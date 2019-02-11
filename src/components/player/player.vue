@@ -354,7 +354,7 @@ export default {
           // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
-            this.playingLyric = "此歌曲没有歌词的纯音乐";
+            this.playingLyric = "此歌曲为没有歌词的纯音乐";
           }
 
           if (this.playing) {
@@ -646,16 +646,16 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 10%;
-          top: 0;
+          left: 15%;
+          top: 10px;
           width: 80%;
           height: 100%;
 
           .cd {
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            height: 90%;
             box-sizing: border-box;
-            border: 10px solid rgba(255, 255, 255, 0.1);
+            border: 7px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
 
             &.play {
