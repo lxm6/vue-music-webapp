@@ -588,8 +588,8 @@ export default {
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.6;
-      filter: blur(20px);
+      opacity: 0.5;
+      filter: blur(50px);
     }
 
     .top {
@@ -607,7 +607,6 @@ export default {
           padding: 9px;
           font-size: $font-size-large-x;
           color: $color-theme;
-          transform: rotate(-90deg);
         }
       }
 

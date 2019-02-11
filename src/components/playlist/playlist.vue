@@ -246,7 +246,7 @@ export default {
         .like {
           extend-click();
           margin-right: 15px;
-          font-size: $font-size-small;
+          font-size: $font-size-medium;
           color: $color-theme;
 
           .icon-favorite {
