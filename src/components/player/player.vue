@@ -26,8 +26,12 @@
         >
           <div class="middle-l" ref="middleL">
             <div class="cd-wrapper" ref="cdWrapper">
+              <div class="triger">
+                <img src="./triger.png">
+              </div>
               <div class="cd" :class="cdCls">
-                <img class="image" :src="currentSong.image">
+                <img class="albumImg" :src="currentSong.image">
+                <img class="cdImg" src="./cd.png">
               </div>
             </div>
             <div class="playing-lyric-wrapper">
@@ -594,7 +598,7 @@ export default {
 
     .top {
       position: relative;
-      margin-bottom: 25px;
+      z-index: 100;
 
       .back {
         position: absolute;
@@ -614,7 +618,7 @@ export default {
         width: 70%;
         margin: 0 auto;
         line-height: 40px;
-        text-align: center;
+        text-align: left;
         no-wrap();
         font-size: $font-size-large;
         color: $color-text;
@@ -622,23 +626,26 @@ export default {
 
       .subtitle {
         line-height: 20px;
-        text-align: center;
+        text-align: left;
+        margin-left: 15%;
+        line-height: 15px;
         font-size: $font-size-medium;
-        color: $color-text;
+        color: $color-text-l;
       }
     }
 
     .middle {
       position: fixed;
       width: 100%;
-      top: 80px;
+      top: 70px;
       bottom: 170px;
       white-space: nowrap;
       font-size: 0;
+      overflow: hidden;
 
       .middle-l {
         display: inline-block;
-        vertical-align: top;
+        vertical-align: center;
         position: relative;
         width: 100%;
         height: 0;
@@ -646,17 +653,29 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 15%;
-          top: 10px;
+          left: 12%;
+          top: 15%;
           width: 80%;
           height: 100%;
 
+          .triger {
+            position: absolute;
+            height: 40%;
+            top: -20%;
+            left: 40%;
+            z-index: 1;
+
+            img {
+              height: 100%;
+            }
+          }
+
           .cd {
-            width: 90%;
-            height: 90%;
+            width: 94%;
+            height: 94%;
             box-sizing: border-box;
-            border: 7px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            position: absolute;
+            top: -3%;
 
             &.play {
               animation: rotate 20s linear infinite;
@@ -666,7 +685,7 @@ export default {
               animation-play-state: paused;
             }
 
-            .image {
+            .cdImg {
               position: absolute;
               left: 0;
               top: 0;
@@ -674,12 +693,21 @@ export default {
               height: 100%;
               border-radius: 50%;
             }
+
+            .albumImg {
+              position: absolute;
+              left: 10%;
+              top: 10%;
+              width: 80%;
+              height: 80%;
+              border-radius: 50%;
+            }
           }
         }
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 30px auto 0 auto;
+          margin: 40px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
