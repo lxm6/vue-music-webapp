@@ -395,14 +395,12 @@ export default {
     },
     // 点击唱片部分
     middleTouchStart(e) {
-      // 用来判断是否是一次移动
-
+      // 触控标志位
       this.touch.initiated = true;
-      // 手指点击
+      // 用来判断是否是一次移动
+      this.touch.moved = false;
       const touch = e.touches[0];
-      // 手指点击位置x
       this.touch.startX = touch.pageX;
-      // 手指点击位置y
       this.touch.startY = touch.pageY;
     },
     middleTouchMove(e) {
@@ -522,6 +520,10 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
+      // 如果是付费歌曲
+      if (newSong.isPay) {
+        this.next();
+      }
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -546,7 +548,7 @@ export default {
           })
           .catch(err => {
             console.log(err);
-            this.songReady = true;
+            this.songReady = false;
           });
       }, 500);
     },
@@ -637,13 +639,13 @@ export default {
         color: $color-text;
       }
     }
-    .line{
-      margin:10px auto 0 auto
-      height:0.5px
-      background-color:$color-text-l
-      width 70%
 
-      }
+    .line {
+      margin: 10px auto 0 auto;
+      height: 0.5px;
+      background-color: $color-text-l;
+      width: 70%;
+    }
 
     .middle {
       position: fixed;
@@ -676,7 +678,7 @@ export default {
             left: 45%;
             z-index: 1;
             transform-origin: 22% -2%;
-            transition: all .6s;
+            transition: all 0.6s;
 
             &.play {
               animation-play-state: paused;
@@ -684,7 +686,6 @@ export default {
 
             &.pause {
               transform: rotate(-28deg);
-
             }
 
             img {

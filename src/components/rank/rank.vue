@@ -85,8 +85,8 @@ export default {
 
     .item {
       display: flex;
-      margin: 0 20px;
-      padding-top: 20px;
+      margin: 0 15px;
+      padding-top: 15px;
       height: 100px;
 
       &:last-child {

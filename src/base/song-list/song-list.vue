@@ -59,6 +59,9 @@ export default {
     box-sizing: border-box;
     height: 64px;
     font-size: $font-size-medium;
+    margin: 10px 0 10px 0;
+    padding: 20px;
+    background: $color-highlight-background;
 
     .rank {
       flex: 0 0 25px;

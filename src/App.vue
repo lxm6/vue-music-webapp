@@ -7,8 +7,8 @@
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
-
     <player></player>
+
   </div>
 </template>
 
@@ -16,15 +16,31 @@
 import MHeader from "components/m-header/m-header";
 import Player from "components/player/player";
 import Tab from "components/tab/tab";
+import TopTip from "base/top-tip/top-tip";
 
 export default {
+
   components: {
     MHeader,
     Tab,
-    Player
+    Player,
+    TopTip
   }
 };
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+@import '~common/stylus/variable';
+@import '~common/stylus/mixin';
+
+.tip-title {
+  text-align: center;
+  padding: 18px 0;
+  font-size: 0;
+
+  .text {
+    font-size: $font-size-medium;
+    color: $color-text;
+  }
+}
 </style>

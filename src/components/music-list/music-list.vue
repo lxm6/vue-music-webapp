@@ -11,7 +11,7 @@
           <span class="text">随机播放全部</span>
         </div>
         <div ref="favorBtn" v-show="isDisc" @click="toggleFavorite" class="favor">
-          <i :class="isFavorite?'icon-favorite':'icon-not-favorite'" ></i>
+          <i :class="isFavorite?'icon-favorite':'icon-not-favorite'"></i>
           <span class="text">{{isFavorite?'取消收藏':'收藏此歌单'}}</span>
         </div>
       </div>
@@ -33,6 +33,11 @@
         <loading></loading>
       </div>
     </scroll>
+    <top-tip ref="topTip">
+      <div class="tip-title">
+        <span class="text">付费歌曲不能播放</span>
+      </div>
+    </top-tip>
   </div>
 </template>
 
@@ -43,6 +48,8 @@ import SongList from "base/song-list/song-list";
 import { prefixStyle } from "common/js/dom";
 import { mapActions } from "vuex";
 import { playlistMixin } from "common/js/mixin";
+import TopTip from "base/top-tip/top-tip";
+
 const RESERVED_HEIGHT = 40;
 const transform = prefixStyle("transform");
 const backdrop = prefixStyle("backdrop-filter");
@@ -96,6 +103,12 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
+    show() {
+      this.showFlag = true;
+    },
+    hide() {
+      this.showFlag = false;
+    },
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.list.$el.style.bottom = bottom;
@@ -109,6 +122,11 @@ export default {
       this.$router.back();
     },
     selectItem(item, index) {
+      if (item.isPay) {
+        console.log("付费歌曲不能播放");
+        this.$refs.topTip.show();
+        return;
+      }
       this.selectPlay({
         list: this.songs,
         index
@@ -159,7 +177,8 @@ export default {
   components: {
     Scroll,
     Loading,
-    SongList
+    SongList,
+    TopTip
   }
 };
 </script>
@@ -230,7 +249,7 @@ export default {
         border-radius: 100px;
         font-size: 0;
 
-        .icon-play,.icon-favorite,.icon-not-favorite {
+        .icon-play, .icon-favorite, .icon-not-favorite {
           display: inline-block;
           vertical-align: middle;
           margin-right: 6px;
@@ -269,7 +288,7 @@ export default {
     background: $color-background;
 
     .song-list-wrapper {
-      padding: 20px 30px;
+      padding: 10px 15px;
     }
 
     .loading-container {
@@ -277,6 +296,17 @@ export default {
       width: 100%;
       top: 50%;
       transform: translateY(-50%);
+    }
+  }
+
+  .tip-title {
+    text-align: center;
+    padding: 18px 0;
+    font-size: 0;
+
+    .text {
+      font-size: $font-size-medium-x;
+      color: $color-text;
     }
   }
 }

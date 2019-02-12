@@ -11,7 +11,7 @@ export default {
   props: {
     delay: {
       type: Number,
-      default: 2000
+      default: 1000
     }
   },
   data() {

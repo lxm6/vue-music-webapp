@@ -70,11 +70,10 @@ export default {
       this.$refs.scroll.refresh();
     },
     selectItem(item) {
-         this.$router.push({
+      this.$router.push({
         path: `/recommend/${item.dissid}`
       });
       this.setDisc(item);
-
     },
     _getRecommend() {
       getRecommend().then(res => {
@@ -139,7 +138,9 @@ export default {
         display: flex;
         box-sizing: border-box;
         align-items: center;
-        padding: 0 20px 20px 20px;
+        margin: 0 15px 10px;
+        padding: 10px;
+        background: $color-highlight-background;
 
         .icon {
           flex: 0 0 60px;

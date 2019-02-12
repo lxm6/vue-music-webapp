@@ -114,8 +114,6 @@ export default {
     },
     switchItem(index) {
       this.currentIndex = index;
-      this.$refs.favoriteListList.refresh();
-
     },
     selectSong(song) {
       this.insertSong(new Song(song));
@@ -230,13 +228,15 @@ export default {
       overflow: hidden;
 
       .list-inner {
-        padding: 20px 30px;
+        padding: 10px 15px;
 
         .item {
           display: flex;
           box-sizing: border-box;
           align-items: center;
-          padding: 0 20px 20px 20px;
+          margin-bottom: 10px
+          padding: 10px;
+          background: $color-highlight-background;
 
           .icon {
             flex: 0 0 60px;
@@ -274,4 +274,4 @@ export default {
     transform: translateY(-50%);
   }
 }
-</style> 
+</style>

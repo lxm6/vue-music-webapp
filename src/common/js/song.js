@@ -14,7 +14,8 @@ export default class Song {
     album,
     duration,
     image,
-    url
+    url,
+    isPay = false
   }) {
     this.id = id
     this.mid = mid
@@ -23,6 +24,7 @@ export default class Song {
     this.album = album
     this.duration = duration
     this.image = image
+    this.isPay = isPay;
     if (url) {
       this.url = url;
     }
@@ -77,6 +79,7 @@ export function createSong(musicData) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
+    isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
   })
 }

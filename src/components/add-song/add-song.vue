@@ -207,13 +207,13 @@ export default {
     font-size: 0;
 
     .icon-ok {
-      font-size: $font-size-medium;
+      font-size: $font-size-medium-x;
       color: $color-theme;
-      margin-right: 4px;
+      margin-right: 6px;
     }
 
     .text {
-      font-size: $font-size-medium;
+      font-size: $font-size-medium-x;
       color: $color-text;
     }
   }
