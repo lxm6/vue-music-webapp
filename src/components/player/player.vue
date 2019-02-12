@@ -11,6 +11,7 @@
         <div class="background">
           <img width="100%" height="100%" :src="currentSong.image">
         </div>
+
         <div class="top">
           <div class="back" @click="back">
             <i class="icon-back"></i>
@@ -191,7 +192,6 @@ export default {
     // create-keyframe-animation
     enter(el, done) {
       const { x, y, scale } = this._getPosAndScale();
-
       let animation = {
         0: {
           transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
@@ -203,7 +203,6 @@ export default {
           transform: `translate3d(0,0,0) scale(1)`
         }
       };
-
       animations.registerAnimation({
         name: "move",
         animation,
@@ -212,7 +211,6 @@ export default {
           easing: "linear"
         }
       });
-
       animations.runAnimation(this.$refs.cdWrapper, "move", done);
     },
     afterEnter() {
@@ -300,7 +298,10 @@ export default {
     },
     // audio,防止极限点击操作报错
     ready() {
-      this.songReady = true;
+      // 延时避免快速切换歌曲导致 DOM 会报错
+      setTimeout(() => {
+        this.songReady = true;
+      }, 500);
       this.savePlayHistory(this.currentSong);
     },
     // audio,防止极限点击操作报错
@@ -313,9 +314,7 @@ export default {
     updateTime(e) {
       this.currentTime = e.target.currentTime;
     },
-
     // 进度条进度改变
-
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
       this.$refs.audio.currentTime = currentTime;
@@ -364,7 +363,6 @@ export default {
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲为没有歌词的纯音乐";
           }
-
           if (this.playing) {
             this.currentLyric.play();
           }
@@ -523,6 +521,7 @@ export default {
       // 如果是付费歌曲
       if (newSong.isPay) {
         this.next();
+        return;
       }
       // 初始化
       if (this.currentLyric) {
@@ -534,8 +533,7 @@ export default {
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
+      this.$nextTick(() => {
         newSong
           .getSongUrl()
           .then(url => {
@@ -550,7 +548,7 @@ export default {
             console.log(err);
             this.songReady = false;
           });
-      }, 500);
+      });
     },
 
     // 监听playing(state数据), 真正控制播放的是audio播放器
@@ -560,6 +558,7 @@ export default {
         newPlaying ? audio.play() : audio.pause();
       });
     },
+
     fullScreen(newVal) {
       if (newVal) {
         setTimeout(() => {
@@ -605,6 +604,7 @@ export default {
     .top {
       position: relative;
       z-index: 100;
+      margin-bottom: 5px;
 
       .back {
         position: absolute;
@@ -634,7 +634,6 @@ export default {
         line-height: 14px;
         text-align: center;
         // margin-left: 15%;
-        line-height: 15px;
         font-size: $font-size-medium;
         color: $color-text;
       }
@@ -667,25 +666,25 @@ export default {
         .cd-wrapper {
           position: absolute;
           left: 12%;
-          top: 15%;
+          top: 12%;
           width: 80%;
           height: 100%;
 
           .triger {
             position: absolute;
+            top: -17%;
             height: 40%;
-            top: -20%;
-            left: 45%;
+            left: 44%;
             z-index: 1;
-            transform-origin: 22% -2%;
-            transition: all 0.6s;
+            transform-origin: 17% 8%;
+            transition: all 0.5s;
 
             &.play {
               animation-play-state: paused;
             }
 
             &.pause {
-              transform: rotate(-28deg);
+              transform: rotate(-26deg);
             }
 
             img {
@@ -698,7 +697,6 @@ export default {
             height: 94%;
             box-sizing: border-box;
             position: absolute;
-            top: -3%;
 
             &.play {
               animation: rotate 20s linear infinite;
@@ -894,6 +892,7 @@ export default {
     width: 100%;
     height: 60px;
     background: $color-highlight-background;
+    box-shadow: 0 -2px 14px 2px rgba(0,0,0,.2);
 
     &.mini-enter-active, &.mini-leave-active {
       transition: all 0.4s;

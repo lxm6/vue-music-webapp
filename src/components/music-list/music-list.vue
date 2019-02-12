@@ -123,7 +123,6 @@ export default {
     },
     selectItem(item, index) {
       if (item.isPay) {
-        console.log("付费歌曲不能播放");
         this.$refs.topTip.show();
         return;
       }
