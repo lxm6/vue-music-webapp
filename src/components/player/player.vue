@@ -111,6 +111,11 @@
     </transition>
     <playlist ref="playlist"></playlist>
     <audio ref="audio" @play="ready" @error="error" @timeupdate="updateTime" @ended="end"></audio>
+    <top-tip ref="topTip">
+      <div class="tip-title">
+        <span class="text">已跳过付费歌曲</span>
+      </div>
+    </top-tip>
   </div>
 </template>
 <script>
@@ -124,10 +129,12 @@ import { shuffle } from "common/js/util";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
 import Playlist from "components/playlist/playlist";
+import TopTip from "base/top-tip/top-tip";
 import { playerMixin } from "common/js/mixin";
 
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
+let nextFlag = true;
 
 export default {
   mixins: [playerMixin],
@@ -181,6 +188,12 @@ export default {
     this.touch = {};
   },
   methods: {
+    show() {
+      this.showFlag = true;
+    },
+    hide() {
+      this.showFlag = false;
+    },
     // 唱片界面缩小到底部
     back() {
       this.setFullScreen(false);
@@ -258,6 +271,7 @@ export default {
       }
     },
     next() {
+      nextFlag = true;
       if (!this.songReady) {
         return;
       }
@@ -278,6 +292,7 @@ export default {
       this.songReady = false;
     },
     prev() {
+      nextFlag = false;
       if (!this.songReady) {
         return;
       }
@@ -520,8 +535,13 @@ export default {
       }
       // 如果是付费歌曲
       if (newSong.isPay) {
-        this.songReady=true;
-        this.next();
+        this.$refs.topTip.show();
+        this.songReady = true;
+        if (nextFlag) {
+          this.next();
+        } else {
+          this.prev();
+        }
         return;
       }
       // 初始化
@@ -573,7 +593,8 @@ export default {
     ProgressBar,
     ProgressCircle,
     Scroll,
-    Playlist
+    Playlist,
+    TopTip
   }
 };
 </script>
@@ -893,7 +914,7 @@ export default {
     width: 100%;
     height: 60px;
     background: $color-highlight-background;
-    box-shadow: 0 -2px 14px 2px rgba(0,0,0,.2);
+    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.2);
 
     &.mini-enter-active, &.mini-leave-active {
       transition: all 0.4s;
@@ -959,6 +980,17 @@ export default {
         left: 0;
         top: 0;
       }
+    }
+  }
+
+  .tip-title {
+    text-align: center;
+    padding: 18px 0;
+    font-size: 0;
+
+    .text {
+      font-size: $font-size-medium-x;
+      color: $color-text;
     }
   }
 }
