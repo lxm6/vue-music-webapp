@@ -208,7 +208,7 @@ export default {
 
     .icon-ok {
       font-size: $font-size-medium-x;
-      color: $color-theme;
+      color: $color-text;
       margin-right: 6px;
     }
 
