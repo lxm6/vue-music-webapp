@@ -94,7 +94,7 @@ export default {
     position: relative;
     top: 13px;
     height: 3px;
-    background: rgba(0, 0, 0, 0.3);
+    background: $color-text-d
 
     .progress {
       position: absolute;

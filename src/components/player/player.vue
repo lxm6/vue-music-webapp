@@ -520,6 +520,7 @@ export default {
       }
       // 如果是付费歌曲
       if (newSong.isPay) {
+        this.songReady=true;
         this.next();
         return;
       }
