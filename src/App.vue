@@ -16,7 +16,6 @@
 import MHeader from "components/m-header/m-header";
 import Player from "components/player/player";
 import Tab from "components/tab/tab";
-import TopTip from "base/top-tip/top-tip";
 
 export default {
 
@@ -24,7 +23,6 @@ export default {
     MHeader,
     Tab,
     Player,
-    TopTip
   }
 };
 </script>
@@ -33,14 +31,4 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
-.tip-title {
-  text-align: center;
-  padding: 18px 0;
-  font-size: 0;
-
-  .text {
-    font-size: $font-size-medium;
-    color: $color-text;
-  }
-}
 </style>
