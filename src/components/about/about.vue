@@ -15,16 +15,32 @@
           <span class="text">清除缓存成功</span>
         </div>
       </top-tip>
-      <div class="dialog">
-        <h1>关于</h1>
-        <ul>
-          <li>软件名称<span>柠檬音乐</span></li>
-          <li>版本<span>1.0.0</span></li>
-          <li>作者<span>林秀梅</span></li>
-          <li href="https://github.com/Charlotte666/vue-music-webapp">GitHub<span><img src="~@/common/image/github.svg" width="35"></span></li>
-        </ul>
-
-      </div>
+      <transition name="drop">
+        <div class="dialog" ref="dialog" @click.stop>
+          <i class="icon-delete" @click="close"></i>
+          <h1>关于</h1>
+          <ul>
+            <li>
+              软件名称
+              <span>柠檬音乐</span>
+            </li>
+            <li>
+              版本
+              <span>1.0.0</span>
+            </li>
+            <li>
+              作者
+              <span>林秀梅</span>
+            </li>
+            <li @click="openUrl">
+              GitHub
+              <span>
+                <i>&#xe600;</i>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </transition>
     </div>
   </transition>
 </template>
@@ -50,6 +66,7 @@ export default {
     },
     hide() {
       this.showFlag = false;
+      this.$refs.dialog.style.display = "none";
     },
 
     clearStorage() {
@@ -61,7 +78,13 @@ export default {
       window.location.reload();
     },
     openDialog() {
-      console.log("弹出");
+      this.$refs.dialog.style.display = "block";
+    },
+    openUrl() {
+      window.location.href = "https://github.com/Charlotte666/vue-music-webapp";
+    },
+    close() {
+      this.$refs.dialog.style.display = "none";
     }
   },
   components: {
@@ -140,14 +163,6 @@ export default {
   }
 }
 
-.leftNav-enter, .leftNav-leave-to {
-  transform: translateX(-100%);
-}
-
-.leftNav-enter-active, .leftNav-leave-active {
-  transition: all 0.5s ease-out;
-}
-
 .dialog {
   padding: 40px;
   position: absolute;
@@ -161,6 +176,13 @@ export default {
   border-radius: 5px;
   font-size: 18px;
   color: $color-theme;
+  display: none;
+  transition: all 1s;
+
+  .icon-delete {
+    padding 5px
+    float: right;
+  }
 
   h1 {
     font-size: 28px;
@@ -173,16 +195,23 @@ export default {
     float: left;
 
     li {
-      padding 0  10px
-      height 50px
-      line-height 50px
+      padding: 0 10px;
+      height: 50px;
+      line-height: 50px;
 
-      span{
-        margin-left 60px
-        display inline-block
-        float right;
+      span {
+        margin-left: 60px;
+        display: inline-block;
+        float: right;
         color: #d5d5d5;
 
+        i {
+          
+          font-family: 'iconfont' !important;
+          font-weight: normal;
+          font-style: normal;
+          font-size 36px
+        }
       }
 
       &:hover {
@@ -194,5 +223,13 @@ export default {
       margin: 10px auto;
     }
   }
+}
+
+.drop-enter-active, &.drop-leave-active {
+  transition: all 0.3s;
+}
+
+.drop-enter, &.drop-leave-to {
+  transform: translate3d(0, -100%, 0);
 }
 </style>

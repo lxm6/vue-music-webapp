@@ -1,6 +1,6 @@
 <template>
   <div id="app" @touchmove.prevent>
-    <i class="menu" @click="show">&#xe605;</i>
+    <i class="menu" @click="show">&#xe790;</i>
     <about ref="about"></about>
     <m-header></m-header>
     <tab></tab>
@@ -41,10 +41,10 @@ export default {
 
 .menu {
   position: absolute;
-  top: 6px;
-  left: 20px;
+  top: -3px;
+  left: 15px;
   padding: 12px;
-  font-size: 20px;
+  font-size: 26px;
   z-index 200
   color: $color-text;
   font-family: 'iconfont' !important;
