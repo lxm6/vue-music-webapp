@@ -18,11 +18,12 @@
       <div class="dialog">
         <h1>关于</h1>
         <ul>
-          <li>软件名称</li>
-          <li>版本</li>
-          <li>作者</li>
-          <li>GitHub</li>
+          <li>软件名称<span>柠檬音乐</span></li>
+          <li>版本<span>1.0.0</span></li>
+          <li>作者<span>林秀梅</span></li>
+          <li href="https://github.com/Charlotte666/vue-music-webapp">GitHub<span><img src="~@/common/image/github.svg" width="35"></span></li>
         </ul>
+
       </div>
     </div>
   </transition>
@@ -107,17 +108,17 @@ export default {
   color: #fff;
 
   ul {
-    padding-top 100px
+    padding-top: 100px;
 
     li {
-      padding-left 30px;
+      padding-left: 30px;
       color: #fff;
       height: 60px;
       line-height: 60px;
 
-      &:hover{
-        background-color #333937
-        }
+      &:hover {
+        background-color: #333937;
+      }
     }
   }
 }
@@ -148,31 +149,50 @@ export default {
 }
 
 .dialog {
-  padding 35px
+  padding: 40px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 230px;
-  height: 300px;
+  height: 265px;
   background-color: #000;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.6);
-  border-radius 5px
-  font-size 20px
+  border-radius: 5px;
+  font-size: 18px;
+  color: $color-theme;
 
-  h1{
-    font-size 30px
-    padding-bottom 20px
-    border-bottom :1px solid $color-theme-d
-    color:$color-theme;
-    margin-bottom 20px
+  h1 {
+    font-size: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $color-theme-d;
+    margin-bottom: 20px;
   }
 
-  li{
-    padding 10px 0
-  }
+  ul {
+    float: left;
 
-  
+    li {
+      padding 0  10px
+      height 50px
+      line-height 50px
+
+      span{
+        margin-left 60px
+        display inline-block
+        float right;
+        color: #d5d5d5;
+
+      }
+
+      &:hover {
+        background-color: #333937;
+      }
+    }
+
+    img {
+      margin: 10px auto;
+    }
+  }
 }
-
 </style>
