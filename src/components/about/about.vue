@@ -1,21 +1,31 @@
 <template>
-  <!-- <transition name="slide"> -->
-  <div class="wrapper" v-show="showFlag" @click="hide">
-    <div @click.stop class="leftNav">
-      <div @click="clearStorage">刷新刷新刷新</div>
-      <div @click="refreshPage">刷刷新刷新新</div>
-      <div @click="openDialog">关刷新刷新于</div>
-    </div>
-
-    <top-tip ref="topTip">
-      <div class="tip-title">
-        <i class="icon-ok"></i>
-        <span class="text">清除缓存成功</span>
+  <transition name="slide">
+    <div class="wrapper" v-show="showFlag" @click="hide">
+      <div @click.stop class="leftNav">
+        <ul>
+          <li @click="clearStorage">清除缓存</li>
+          <li @click="refreshPage">刷新页面</li>
+          <li @click="openDialog">关于</li>
+          <li></li>
+        </ul>
       </div>
-    </top-tip>
-    <!-- <div class="dialog"></div> -->
-  </div>
-  <!-- </transition> -->
+      <top-tip ref="topTip">
+        <div class="tip-title">
+          <i class="icon-ok"></i>
+          <span class="text">清除缓存成功</span>
+        </div>
+      </top-tip>
+      <div class="dialog">
+        <h1>关于</h1>
+        <ul>
+          <li>软件名称</li>
+          <li>版本</li>
+          <li>作者</li>
+          <li>GitHub</li>
+        </ul>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -30,7 +40,7 @@ export default {
   },
   data() {
     return {
-      showFlag: true
+      showFlag: false
     };
   },
   methods: {
@@ -66,7 +76,7 @@ export default {
   position: fixed;
   top: 0px;
   bottom: 0;
-  z-index: 220;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -89,22 +99,26 @@ export default {
 }
 
 .leftNav {
-  background-color: #000;
-  width: 60%;
+  background-color: #111;
+  width: 50%;
   height: 100%;
   opacity: 0.95;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);
   color: #fff;
-  z-index: 100000;
 
-  div {
-    position: absolute;
-    top: 100px;
-    left: 100px;
-    color: #fff;
-    height: 50px;
-    width: 100px;
-    border-top: 0.5px solid #fff;
+  ul {
+    padding-top 100px
+
+    li {
+      padding-left 30px;
+      color: #fff;
+      height: 60px;
+      line-height: 60px;
+
+      &:hover{
+        background-color #333937
+        }
+    }
   }
 }
 
@@ -134,13 +148,31 @@ export default {
 }
 
 .dialog {
+  padding 35px
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 270px;
-  height: 340px;
+  width: 230px;
+  height: 300px;
   background-color: #000;
-  box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.6);
+  border-radius 5px
+  font-size 20px
+
+  h1{
+    font-size 30px
+    padding-bottom 20px
+    border-bottom :1px solid $color-theme-d
+    color:$color-theme;
+    margin-bottom 20px
+  }
+
+  li{
+    padding 10px 0
+  }
+
+  
 }
+
 </style>

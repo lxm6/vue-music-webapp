@@ -913,7 +913,7 @@ export default {
     z-index: 180;
     width: 100%;
     height: 60px;
-    background: $color-highlight-background;
+    background: #111;
     box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.2);
 
     &.mini-enter-active, &.mini-leave-active {
