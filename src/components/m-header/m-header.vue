@@ -1,6 +1,7 @@
 <template>
   <div class="m-header">
- <!-- <div class="icon" @click.stop="toggleUserCenter">menu</div> -->
+    <about ref="about"></about>
+    <i class="menu" @click="show">ss</i>
     <div class="icon"></div>
     <h1 class="text">Lemon Music</h1>
     <router-link tag="div" class="mine" to="/user">
@@ -10,14 +11,16 @@
 </template>
 
 <script>
+import about from "components/about/about";
 export default {
-    methods: {
-        toggleUserCenter() {
-            this.$emit('userCenterVisibleChange');
-        },
-      
-    },
-    
+  methods: {
+    show() {
+      this.$refs.about.showFlag = true;
+    }
+  },
+  components: {
+    about
+  }
 };
 </script>
 
@@ -44,6 +47,22 @@ export default {
     background-size: 30px 32px;
   }
 
+  .menu {
+    position: absolute;
+    top: 6px;
+    left: 20px;
+    padding: 12px;
+    font-size: 20px;
+    color: $color-text;
+    font-family: 'iconfont' !important;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .menu::before {
+    content: '\e605';
+  }
+
   .text {
     display: inline-block;
     vertical-align: top;
@@ -63,9 +82,25 @@ export default {
       color: $color-text;
     }
   }
-  .icon-menu{
-    
-    }
-  
+}
+
+.tip-title {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  text-align: center;
+  padding: 18px 0;
+  font-size: 0;
+
+  .icon-ok {
+    font-size: $font-size-medium-x;
+    color: $color-text;
+    margin-right: 6px;
+  }
+
+  .text {
+    font-size: $font-size-medium-x;
+    color: $color-text;
+  }
 }
 </style>

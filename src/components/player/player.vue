@@ -395,7 +395,7 @@ export default {
       this.currentLineNum = lineNum;
       if (lineNum > 5) {
         // 保证高亮歌词在中间, 当前歌词，往上偏移5行
-        let lineEl = this.$refs.lyricLine[lineNum - 5];
+        let lineEl = this.$refs.lyricLine[lineNum - 3];
         this.$refs.lyricList.scrollToElement(lineEl, 1000);
       } else {
         // 前五行歌词不发生滚动, 位于顶部
