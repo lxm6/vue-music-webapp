@@ -3,7 +3,7 @@
     <div class="wrapper" v-show="showFlag" @click="hide">
       <div @click.stop class="leftNav">
         <ul>
-          <li @click="clearStorage">清除缓存</li>
+          <li @click="showConfirm">清除缓存</li>
           <li @click="refreshPage">刷新页面</li>
           <li @click="openDialog">关于</li>
           <li></li>
@@ -40,12 +40,14 @@
           </ul>
         </div>
       </div>
+      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清空"></confirm>
     </div>
   </transition>
 </template>
 
 <script>
 import TopTip from "base/top-tip/top-tip";
+import Confirm from "base/confirm/confirm";
 
 export default {
   props: {
@@ -66,10 +68,6 @@ export default {
     hide() {
       this.showFlag = false;
     },
-    clearStorage() {
-      localStorage.clear();
-      this.$refs.topTip.show();
-    },
     // 强制刷新页面
     refreshPage() {
       window.location.reload();
@@ -79,15 +77,23 @@ export default {
     },
     hideDialog() {
       this.$refs.dialog.style.display = "none";
-
     },
     openUrl() {
       window.location.href = "https://github.com/Charlotte666/vue-music-webapp";
+    },
+    showConfirm() {
+      this.$refs.confirm.show();
+    },
+    confirmClear() {
+      localStorage.clear();
+      this.$refs.topTip.show();
+      this.refreshPage()
     }
   },
 
   components: {
-    TopTip
+    TopTip,
+    Confirm
   }
 };
 </script>
@@ -243,7 +249,5 @@ export default {
   0% {
     transform: translate(-50%, -70%);
   }
-
 }
-
 </style>

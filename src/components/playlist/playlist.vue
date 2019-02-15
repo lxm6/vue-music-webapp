@@ -46,7 +46,7 @@
           <span>关闭</span>
         </div>
       </div>
-      <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表" confirmBtnText="清空"></confirm>
+      <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
       <add-song ref="addSong"></add-song>
     </div>
   </transition>
@@ -177,7 +177,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: $color-highlight-background;
+    background-color: $color-background;
 
     .list-header {
       position: relative;
@@ -203,7 +203,7 @@ export default {
           extend-click();
 
           .icon-clear {
-            font-size: $font-size-medium;
+            font-size: $font-size-medium-x;
             color: $color-text-d;
           }
         }
@@ -288,7 +288,7 @@ export default {
     .list-close {
       text-align: center;
       line-height: 50px;
-      background: $color-background;
+      background: $color-background-dd;
       font-size: $font-size-medium-x;
       color: $color-text-l;
     }

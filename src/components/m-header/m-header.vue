@@ -1,5 +1,6 @@
 <template>
   <div class="m-header">
+    <i class="menu" @click="show">&#xe790;</i>
     <div class="icon"></div>
     <h1 class="text">Lemon Music</h1>
     <router-link tag="div" class="mine" to="/user">
@@ -9,8 +10,17 @@
 </template>
 
 <script>
-export default {
+import about from "components/about/about";
 
+export default {
+  methods: {
+    show() {
+      this.$emit("show");
+    }
+  },
+  components: {
+    about
+  }
 };
 </script>
 
@@ -24,7 +34,21 @@ export default {
   text-align: center;
   color: $color-text;
   background-color: $color-theme;
-  font-size: 0;
+
+  .menu {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 30px;
+    height: 32px;
+    font-size: 26px;
+    margin-top: 6px;
+    color: $color-text;
+    font-family: 'iconfont' !important;
+    font-weight: normal;
+    font-style: normal;
+  }
 
   .icon {
     display: inline-block;
@@ -36,7 +60,6 @@ export default {
     bg-image('logo');
     background-size: 30px 32px;
   }
-
 
   .text {
     display: inline-block;

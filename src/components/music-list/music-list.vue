@@ -161,7 +161,7 @@ export default {
         zIndex = 10;
         this.$refs.bgImage.style.paddingTop = 0;
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
-        this.$refs.playBtn.style.display = "none";
+        this.$refsBtn.style.display = "none";
         this.$refs.favorBtn.style.display = "none";
       } else {
         this.$refs.bgImage.style.paddingTop = "70%";
@@ -246,6 +246,7 @@ export default {
         border: 1px solid $color-theme;
         color: $color-theme;
         border-radius: 100px;
+        background-color rgba(0,0,0,0.1)
         font-size: 0;
 
         .icon-play, .icon-favorite, .icon-not-favorite {

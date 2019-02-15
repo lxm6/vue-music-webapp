@@ -188,7 +188,7 @@ export default {
         overflow: hidden;
 
         .list-inner {
-          padding: 20px 30px;
+          padding: 20px 20px;
         }
       }
     }

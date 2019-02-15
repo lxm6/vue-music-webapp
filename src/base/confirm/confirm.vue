@@ -105,7 +105,7 @@ export default {
           line-height: 22px;
           padding: 10px 0;
           border-top: 1px solid $color-background-d;
-          color: $color-text-d;
+          color: $color-text-l;
 
           &.left {
             border-right: 1px solid $color-background-d;
