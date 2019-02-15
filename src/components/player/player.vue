@@ -671,7 +671,7 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 65px;
+      top: 75px;
       bottom: 185px;
       white-space: nowrap;
       font-size: 0;
