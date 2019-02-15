@@ -1,8 +1,11 @@
 <template>
   <div id="app" @touchmove.prevent>
     <i class="menu" @click="show">&#xe790;</i>
+
     <about ref="about"></about>
-    <m-header></m-header>
+    <m-header>
+
+    </m-header>
     <tab></tab>
     <!-- 可将dom缓存在内存中,不会每次切换都加载 -->
     <keep-alive>
@@ -45,7 +48,7 @@ export default {
   left: 15px;
   padding: 12px;
   font-size: 26px;
-  z-index 200
+  z-index 1
   color: $color-text;
   font-family: 'iconfont' !important;
   font-weight: normal;

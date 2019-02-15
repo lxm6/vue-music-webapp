@@ -15,33 +15,31 @@
           <span class="text">清除缓存成功</span>
         </div>
       </top-tip>
-      <transition name="drop">
-        <div class="dialog-wrapper" ref="dialog" @click.stop="hideDialog">
-          <div class="dialog">
-            <h1>关于</h1>
-            <ul>
-              <li>
-                软件名称
-                <span>柠檬音乐</span>
-              </li>
-              <li>
-                版本
-                <span>1.0.0</span>
-              </li>
-              <li>
-                作者
-                <span>林秀梅</span>
-              </li>
-              <li @click="openUrl">
-                GitHub
-                <span>
-                  <i>&#xe600;</i>
-                </span>
-              </li>
-            </ul>
-          </div>
+      <div class="dialog-wrapper" ref="dialog" @click.stop="hideDialog">
+        <div class="dialog" @click.stop>
+          <h1>关于</h1>
+          <ul>
+            <li>
+              软件名称
+              <span>柠檬音乐</span>
+            </li>
+            <li>
+              版本
+              <span>1.0.0</span>
+            </li>
+            <li>
+              作者
+              <span>林秀梅</span>
+            </li>
+            <li @click="openUrl">
+              GitHub
+              <span>
+                <i>&#xe600;</i>
+              </span>
+            </li>
+          </ul>
         </div>
-      </transition>
+      </div>
     </div>
   </transition>
 </template>
@@ -58,8 +56,7 @@ export default {
   },
   data() {
     return {
-      showFlag: false,
-      flag: false
+      showFlag: false
     };
   },
   methods: {
@@ -79,11 +76,10 @@ export default {
     },
     openDialog() {
       this.$refs.dialog.style.display = "block";
-      this.$refs.dialog.style.opacity = 1;
     },
     hideDialog() {
       this.$refs.dialog.style.display = "none";
-      this.$refs.dialog.style.opacity = 0.1;
+
     },
     openUrl() {
       window.location.href = "https://github.com/Charlotte666/vue-music-webapp";
@@ -168,15 +164,13 @@ export default {
 
 .dialog-wrapper {
   position: fixed;
-  left: 0;
   top: 0;
-  right: 0;
   bottom: 0;
-  display: flex;
+  width: 100%;
+  height: 100%;
   background-color: rgba(255, 255, 255, 0.1);
-  opacity: 0.1;
   display: none;
-  transition: all 1s;
+  animation: fadein 0.3s;
 
   .dialog {
     padding: 30px;
@@ -192,6 +186,7 @@ export default {
     border-radius: 5px;
     font-size: 18px;
     color: $color-theme;
+    animation: slide-in 0.3s;
 
     h1 {
       font-size: 28px;
@@ -234,11 +229,21 @@ export default {
   }
 }
 
-.drop-enter-active, &.drop-leave-active {
-  transition: all 0.3s;
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-.drop-enter, &.drop-leave-to {
-  transform: translate3d(0, -100%, 0);
+@keyframes slide-in {
+  0% {
+    transform: translate(-50%, -70%);
+  }
+
 }
+
 </style>
