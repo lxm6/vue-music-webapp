@@ -671,7 +671,7 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 75px;
+      top: 65px;
       bottom: 185px;
       white-space: nowrap;
       font-size: 0;
@@ -791,12 +791,13 @@ export default {
 
     .bottom {
       position: absolute;
-      bottom: 50px;
+      bottom: 30px;
       width: 100%;
 
       .dot-wrapper {
         text-align: center;
         font-size: 0;
+
 
         .dot {
           display: inline-block;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @touchmove.prevent >
+  <div id="app" @touchmove.prevent>
     <about ref="about"></about>
     <m-header @show="show"></m-header>
     <tab></tab>
