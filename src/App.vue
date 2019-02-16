@@ -19,7 +19,39 @@ import Tab from "components/tab/tab";
 import about from "components/about/about";
 
 export default {
+  data() {
+    return {
+      fullscreen: false
+    };
+  },
   methods: {
+    // handleFullScreen() {
+    //   let element = document.documentElement;
+    //   if (this.fullscreen) {
+    //     if (document.exitFullscreen) {
+    //       document.exitFullscreen();
+    //     } else if (document.webkitCancelFullScreen) {
+    //       document.webkitCancelFullScreen();
+    //     } else if (document.mozCancelFullScreen) {
+    //       document.mozCancelFullScreen();
+    //     } else if (document.msExitFullscreen) {
+    //       document.msExitFullscreen();
+    //     }
+    //   } else {
+    //     if (element.requestFullscreen) {
+    //       element.requestFullscreen();
+    //     } else if (element.webkitRequestFullScreen) {
+    //       element.webkitRequestFullScreen();
+    //     } else if (element.mozRequestFullScreen) {
+    //       element.mozRequestFullScreen();
+    //     } else if (element.msRequestFullscreen) {
+    //       // IE11
+    //       element.msRequestFullscreen();
+    //     }
+    //   }
+    //   this.fullscreen = !this.fullscreen;
+    // },
+
     show() {
       this.$refs.about.showFlag = true;
     }

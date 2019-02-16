@@ -671,8 +671,8 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 65px;
-      bottom: 185px;
+      top: 62px;
+      bottom:155px
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -683,13 +683,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 80%;
+        padding-top: 75%;
 
         .cd-wrapper {
           position: absolute;
-          left: 12%;
+          left: 15%;
           top: 12%;
-          width: 80%;
+          width: 75%;
           height: 100%;
 
           .triger {
@@ -699,14 +699,14 @@ export default {
             left: 44%;
             z-index: 1;
             transform-origin: 17% 8%;
-            transition: all 0.5s;
+            transition: all 0.4s;
 
             &.play {
               animation-play-state: paused;
             }
 
             &.pause {
-              transform: rotate(-26deg);
+              transform: rotate(-30deg);
             }
 
             img {
@@ -750,7 +750,7 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 45px auto 0 auto;
+          margin: 30px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
@@ -973,7 +973,7 @@ export default {
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;
-        color: $color-theme-d;
+        color: $color-theme;
       }
 
       .icon-mini {
