@@ -213,13 +213,16 @@ export default {
     .list-content {
       max-height: 240px;
       overflow: hidden;
+      padding 0 15px
 
       .item {
         display: flex;
         align-items: center;
-        height: 40px;
-        padding: 0 30px 0 20px;
+        height: 45px;
+        padding: 0 15px 0 5px;
         overflow: hidden;
+        border-top 0.5px solid rgba(255,255,255,0.07)
+
 
         &.list-enter-active, &.list-leave-active {
           transition: all 0.1s;
@@ -256,7 +259,7 @@ export default {
 
         .delete {
           extend-click();
-          font-size: $font-size-small;
+          font-size: $font-size-medium;
           color: $color-theme;
         }
       }
@@ -264,7 +267,7 @@ export default {
 
     .list-operate {
       width: 140px;
-      margin: 20px auto 30px auto;
+      margin: 10px auto 20px auto;
 
       .add {
         display: flex;

@@ -931,6 +931,7 @@ export default {
 
       img {
         border-radius: 50%;
+        border:2px solid rgba(255,255,255,0.2)
 
         &.play {
           animation: rotate 10s linear infinite;
@@ -960,7 +961,7 @@ export default {
       .desc {
         no-wrap();
         font-size: $font-size-small;
-        color: $color-text-d;
+        color: $color-text-l;
       }
     }
 

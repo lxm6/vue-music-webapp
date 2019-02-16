@@ -177,7 +177,8 @@ export default {
     .suggest-item {
       display: flex;
       align-items: center;
-      padding-bottom: 20px;
+      padding: 15px 0;
+      border-top 0.5px solid rgba(255,255,255,0.07)
     }
 
     .icon {

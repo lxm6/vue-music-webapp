@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 路由懒加载
 Vue.use(Router)
 // 首页-推荐页
 const Recommend = (resolve) => {
@@ -45,6 +46,7 @@ const TopList = (resolve) => {
   })
 }
 
+//用户中心
 const UserCenter = (resolve) => {
   import('components/user-center/user-center').then((module) => {
     resolve(module)

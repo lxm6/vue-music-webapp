@@ -79,7 +79,7 @@ export default {
       this.$refs.dialog.style.display = "none";
     },
     openUrl() {
-      window.location.href = "https://github.com/Charlotte666/vue-music-webapp";
+      window.location.href = "https://github.com/lxm6/vue-music-webapp";
     },
     showConfirm() {
       this.$refs.confirm.show();
@@ -185,20 +185,20 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 3000;
-    width: 220px;
-    height: 265px;
+    width: 200px;
+    height: 245px;
     background-color: #000;
     box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.6);
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 16px;
     color: $color-theme;
     animation: slide-in 0.3s;
 
     h1 {
-      font-size: 28px;
+      font-size: 22px;
       padding-bottom: 20px;
       border-bottom: 1px solid $color-theme-d;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     ul {
