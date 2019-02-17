@@ -13,7 +13,7 @@
         </div>
 
         <div class="top">
-          <div class="back" @click="back">
+          <div class="back" @click="back" ref="back">
             <i class="icon-back"></i>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
@@ -145,6 +145,17 @@ let nextFlag = true;
 
 export default {
   mixins: [playerMixin],
+  mounted() {
+    //点击返回
+    history.pushState(null, null, document.URL);
+    window.onpopstate = () => {
+      if (this.fullScreen) {
+        this.setFullScreen(false);
+      history.pushState(null, null, document.URL);
+        console.log("dd");
+      }
+    };
+  },
   data() {
     return {
       songReady: false,
@@ -189,7 +200,12 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex"])
+    ...mapGetters([
+      "fullScreen",
+      "playing",
+      "currentIndex",
+      "miniPlayerVisible"
+    ])
   },
   created() {
     this.touch = {};
@@ -383,7 +399,7 @@ export default {
           // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
-            this.playingLyric = "此歌曲为没有歌词的纯音乐";
+            this.playingLyric = "此歌曲没有歌词";
           }
           if (this.playing) {
             this.currentLyric.play();
@@ -926,7 +942,7 @@ export default {
     width: 100%;
     height: 60px;
     background: $color-background-dd;
-    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.1);
 
     &.mini-enter-active, &.mini-leave-active {
       transition: all 0.4s;

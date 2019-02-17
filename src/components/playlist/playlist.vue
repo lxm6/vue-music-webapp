@@ -181,7 +181,7 @@ export default {
 
     .list-header {
       position: relative;
-      padding: 20px 30px 10px 20px;
+      padding: 10px 30px 10px 20px;
 
       .title {
         display: flex;
@@ -211,7 +211,7 @@ export default {
     }
 
     .list-content {
-      max-height: 240px;
+      max-height: 270px;
       overflow: hidden;
       padding 0 15px
 

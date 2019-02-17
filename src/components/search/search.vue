@@ -115,7 +115,7 @@ mixins: [playlistMixin, searchMixin],
 
   .shortcut-wrapper {
     position: fixed;
-    top: 178px;
+    top: 165px;
     bottom: 0;
     width: 100%;
 
@@ -174,7 +174,7 @@ mixins: [playlistMixin, searchMixin],
   .search-result {
     position: fixed;
     width: 100%;
-    top: 178px;
+    top: 165px;
     bottom: 0;
   }
 }

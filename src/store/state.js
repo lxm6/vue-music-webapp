@@ -21,6 +21,5 @@ const state = {
   playHistory: loadPlay(),
   favoriteList: loadFavorite(),
   favoriteListList: loadFavoriteList(),
-  userCenterVisible: false,
 }
 export default state

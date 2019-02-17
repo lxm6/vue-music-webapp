@@ -141,38 +141,38 @@ export default {
     },
     ...mapActions(["selectPlay", "randomPlay"])
   },
-  watch: {
-    scrollY(newVal) {
-      let translateY = Math.max(this.minTransalteY, newVal);
-      let scale = 1;
-      let zIndex = 0;
-      let blur = 0;
-      const percent = Math.abs(newVal / this.imageHeight);
-      if (newVal > 0) {
-        scale = 1 + percent;
-        zIndex = 10;
-      } else {
-        blur = Math.min(20, percent * 20);
-      }
+   watch: {
+      scrollY(newVal) {
+        let translateY = Math.max(this.minTransalteY, newVal)
+        let scale = 1
+        let zIndex = 0
+        let blur = 0
+        const percent = Math.abs(newVal / this.imageHeight)
+        if (newVal > 0) {
+          scale = 1 + percent
+          zIndex = 10
+        } else {
+          blur = Math.min(20, percent * 20)
+        }
 
-      this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`;
-      this.$refs.filter.style[backdrop] = `blur(${blur}px)`;
-      if (newVal < this.minTransalteY) {
-        zIndex = 10;
-        this.$refs.bgImage.style.paddingTop = 0;
-        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
-        this.$refsBtn.style.display = "none";
-        this.$refs.favorBtn.style.display = "none";
-      } else {
-        this.$refs.bgImage.style.paddingTop = "70%";
-        this.$refs.bgImage.style.height = 0;
-        this.$refs.playBtn.style.display = "";
-        this.$refs.favorBtn.style.display = "";
+        this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`
+        this.$refs.filter.style[backdrop] = `blur(${blur}px)`
+        if (newVal < this.minTransalteY) {
+          zIndex = 10
+          this.$refs.bgImage.style.paddingTop = 0
+          this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+          this.$refs.playBtn.style.display = 'none'
+          this.$refs.favorBtn.style.display = 'none'
+        } else {
+          this.$refs.bgImage.style.paddingTop = '70%'
+          this.$refs.bgImage.style.height = 0
+          this.$refs.playBtn.style.display = ''
+          this.$refs.favorBtn.style.display = ''
+        }
+        this.$refs.bgImage.style[transform] = `scale(${scale})`
+        this.$refs.bgImage.style.zIndex = zIndex
       }
-      this.$refs.bgImage.style[transform] = `scale(${scale})`;
-      this.$refs.bgImage.style.zIndex = zIndex;
-    }
-  },
+    },
   components: {
     Scroll,
     Loading,

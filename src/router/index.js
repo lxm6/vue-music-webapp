@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
+import store from '@/store';
 
 // 路由懒加载
-Vue.use(Router)
+
 // 首页-推荐页
 const Recommend = (resolve) => {
   import('components/recommend/recommend').then((module) => {
@@ -52,8 +53,8 @@ const UserCenter = (resolve) => {
     resolve(module)
   })
 }
-
-export default new Router({
+Vue.use(Router)
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -136,3 +137,5 @@ export default new Router({
     }
   ]
 })
+
+export default router;
