@@ -189,14 +189,14 @@ export default {
   }
 
   .switches-wrapper {
-    margin: 10px 0 30px 0;
+    margin: 10px 0 15px 0;
   }
 
   .play-btn {
     box-sizing: border-box;
     width: 135px;
     padding: 7px 0;
-    margin: 0 auto;
+    margin: 5px auto;
     text-align: center;
     border: 1px solid $color-text-l;
     color: $color-text-l;
@@ -218,9 +218,6 @@ export default {
   }
 
   .list-wrapper {
-    position: absolute;
-    top: 110px;
-    bottom: 0;
     width: 100%;
 
     .list-scroll {

@@ -56,7 +56,7 @@ export default {
 
   .icon-search {
     font-size: 24px;
-    color: $color-background;
+    color: $color-text-d;
   }
 
   .box {
@@ -74,7 +74,7 @@ export default {
 
   .icon-dismiss {
     font-size: 16px;
-    color: $color-background;
+    color: $color-text-d;
   }
 }
 </style>

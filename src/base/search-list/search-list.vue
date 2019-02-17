@@ -39,6 +39,7 @@ export default {
     align-items: center;
     height: 40px;
     overflow: hidden;
+    border-bottom: 1px solid $color-border;
 
     &.list-enter-active, &.list-leave-active {
       transition: all 0.1s;

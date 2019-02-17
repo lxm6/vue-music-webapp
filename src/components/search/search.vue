@@ -124,20 +124,22 @@ mixins: [playlistMixin, searchMixin],
       overflow: hidden;
 
       .hot-key {
-        margin: 0 20px 20px 20px;
+        margin: 0 20px 10px 20px;
 
         .title {
-          margin-bottom: 20px;
+          margin-bottom: 15px;
           font-size: $font-size-medium;
           color: $color-text-l;
+
         }
 
         .item {
           display: inline-block;
           padding: 5px 10px;
-          margin: 0 20px 10px 0;
-          border-radius: 6px;
-          background: $color-highlight-background;
+          margin: 0 12px 10px 0;
+          border-radius: 15px;
+          border 1px solid $color-text-d
+          // background: $color-highlight-background;
           font-size: $font-size-medium;
           color: $color-text-d;
         }
@@ -153,6 +155,7 @@ mixins: [playlistMixin, searchMixin],
           height: 40px;
           font-size: $font-size-medium;
           color: $color-text-l;
+          border-bottom: 1px solid $color-border;
 
           .text {
             flex: 1;

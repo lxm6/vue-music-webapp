@@ -139,7 +139,7 @@ export default {
         box-sizing: border-box;
         align-items: center;
         margin: 0 15px 10px;
-        padding: 10px;
+        padding: 10px 10px 8px 10px;
         background: $color-highlight-background;
 
         .icon {
