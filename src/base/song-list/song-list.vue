@@ -53,16 +53,14 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
+  
   .item {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    height: 64px;
     font-size: $font-size-medium;
-    margin: 10px 0 10px 0;
-    padding: 20px;
-    background: $color-highlight-background;
-
+    padding: 10px 10px;
+    border-top: 0.5px solid rgba(255,255,255,0.07);
     .rank {
       flex: 0 0 25px;
       width: 25px;
