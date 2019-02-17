@@ -145,17 +145,7 @@ let nextFlag = true;
 
 export default {
   mixins: [playerMixin],
-  mounted() {
-    //点击返回
-    history.pushState(null, null, document.URL);
-    window.onpopstate = () => {
-      if (this.fullScreen) {
-        this.setFullScreen(false);
-      history.pushState(null, null, document.URL);
-        console.log("dd");
-      }
-    };
-  },
+
   data() {
     return {
       songReady: false,

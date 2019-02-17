@@ -1,6 +1,6 @@
 <template>
   <transition name="list-fade">
-    <div class="playlist" @click="hide" v-show="showFlag">
+    <div class="playlist" @click="hide" v-show="playListVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-header">
           <h1 class="title">
@@ -52,7 +52,7 @@
   </transition>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { playMode } from "common/js/config";
 import Scroll from "base/scroll/scroll";
 import Confirm from "base/confirm/confirm";
@@ -63,7 +63,6 @@ export default {
   mixins: [playerMixin],
   data() {
     return {
-      showFlag: false,
       refreshDelay: 120
     };
   },
@@ -74,21 +73,22 @@ export default {
         : this.mode === playMode.random
         ? "随机播放"
         : "单曲循环";
-    }
+    },
+    ...mapGetters(["playListVisible"])
   },
   methods: {
     show() {
-      this.showFlag = true;
+      this.setPlayListVisible(true);
       setTimeout(() => {
         this.$refs.listContent.refresh();
         this.scrollToCurrent(this.currentSong);
       }, 20);
     },
     hide() {
-      this.showFlag = false;
+      this.setPlayListVisible(false);
     },
     showConfirm() {
-      this.$refs.confirm.show();
+      this.setPlayListVisible(false);
     },
     confirmClear() {
       this.deleteSongList();
@@ -124,11 +124,14 @@ export default {
     addSong() {
       this.$refs.addSong.show();
     },
-    ...mapActions(["deleteSong", "deleteSongList"])
+    ...mapActions(["deleteSong", "deleteSongList"]),
+    ...mapMutations({
+      setPlayListVisible: "SET_PLAY_LIST_VISIBLE"
+    })
   },
   watch: {
     currentSong(newSong, oldSong) {
-      if (!this.showFlag || newSong.id === oldSong.id) {
+      if (!this.playListVisible || newSong.id === oldSong.id) {
         return;
       }
       setTimeout(() => {
@@ -213,7 +216,7 @@ export default {
     .list-content {
       max-height: 270px;
       overflow: hidden;
-      padding 0 15px
+      padding: 0 15px;
 
       .item {
         display: flex;
@@ -221,8 +224,7 @@ export default {
         height: 45px;
         padding: 0 15px 0 5px;
         overflow: hidden;
-        border-top 0.5px solid rgba(255,255,255,0.07)
-
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
 
         &.list-enter-active, &.list-leave-active {
           transition: all 0.1s;

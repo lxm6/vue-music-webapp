@@ -41,6 +41,8 @@ const matutaions = {
   [types.SET_FAVORITE_LIST_LIST](state, list) {
     state.favoriteListList = list;
   },
-
+  [types.SET_PLAY_LIST_VISIBLE](state, visible) {
+    state.playListVisible = visible;
+  },
 }
 export default matutaions

@@ -55,12 +55,11 @@ const UserCenter = (resolve) => {
 }
 Vue.use(Router)
 const router = new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       redirect: '/recommend',
       meta: {
-        keepAlive: true, 
+        keepAlive: true,
       },
 
     },
@@ -68,74 +67,80 @@ const router = new Router({
       path: '/recommend',
       component: Recommend,
       meta: {
-        keepAlive: true, 
+        keepAlive: true,
       },
-      children: [
-        {
-          path: ':id',
-          component: Disc,
-          meta: {
-            keepAlive: true, 
-          },
-        }
-      ]
+      children: [{
+        path: ':id',
+        component: Disc,
+        meta: {
+          keepAlive: true,
+        },
+      }]
     },
     {
       path: '/singer',
       component: Singer,
       meta: {
-        keepAlive: true, 
+        keepAlive: true,
       },
-      children: [
-        {
-          path: ':id',
-          component: SingerDetail,
-          meta: {
-            keepAlive: true, 
-          },
-        }
-      ]
+      children: [{
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          keepAlive: true,
+        },
+      }]
     },
     {
       path: '/rank',
       component: Rank,
       meta: {
-        keepAlive: true, 
+        keepAlive: true,
       },
-      children: [
-        {
-          path: ':id',
-          component: TopList,
-          meta: {
-            keepAlive: true, 
-          },
-        }
-      ]
+      children: [{
+        path: ':id',
+        component: TopList,
+        meta: {
+          keepAlive: true,
+        },
+      }]
     },
     {
       path: '/search',
       component: Search,
       meta: {
-        keepAlive: true, 
+        keepAlive: true,
       },
-      children: [
-        {
-          path: ':id',
-          component: SingerDetail,
-          meta: {
-            keepAlive: true, 
-          },
-        }
-      ]
+      children: [{
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          keepAlive: true,
+        },
+      }]
     },
     {
       path: '/user',
       component: UserCenter,
       meta: {
-        keepAlive: false, 
+        keepAlive: false,
       },
     }
   ]
 })
+
+
+router.beforeEach((to, from, next) => {
+  const {fullScreen,playListVisible} = store.getters;
+  if (fullScreen) {
+    store.commit('SET_FULL_SCREEN', false);
+    next(false);
+  } else if (playListVisible) {
+    store.commit('SET_PLAY_LIST_VISIBLE', false);
+    next(false);
+  } else {
+    next(true);
+  }
+});
 
 export default router;
