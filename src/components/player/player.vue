@@ -110,7 +110,14 @@
       </div>
     </transition>
     <playlist ref="playlist"></playlist>
-    <audio ref="audio" @play="ready" @error="error" @timeupdate="updateTime" @ended="end"></audio>
+    <audio
+      ref="audio"
+      :src="currentSongUrl"
+      @play="ready"
+      @error="error"
+      @timeupdate="updateTime"
+      @ended="end"
+    ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
         <span class="text">已跳过付费歌曲</span>
@@ -527,7 +534,7 @@ export default {
   watch: {
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-      if (!newSong.id) {
+      if (!newSong || !newSong.id) {
         return;
       }
       if (newSong.id === oldSong.id) {
@@ -554,30 +561,35 @@ export default {
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
+      newSong
+        .getSongUrl()
+        .then(url => {
+          this.currentSongUrl = url;
+        })
+        .then(() => {
+          this.getLyric();
+        })
+        .catch(err => {
+          console.log(err);
+          this.songReady = true;
+        });
+    },
+    currentSongUrl() {
       this.$nextTick(() => {
-        newSong
-          .getSongUrl()
-          .then(url => {
-            this.currentSongUrl = url;
-            this.$refs.audio.src = newSong.url;
-            this.$refs.audio.play();
-          })
-          .then(() => {
-            this.getLyric();
-          })
-          .catch(err => {
-            console.log(err);
-            this.songReady = false;
-          });
+        this.$refs.audio.play();
       });
     },
 
     // 监听playing(state数据), 真正控制播放的是audio播放器
-    playing(newPlaying) {
-      const audio = this.$refs.audio;
-      this.$nextTick(() => {
-        newPlaying ? audio.play() : audio.pause();
-      });
+    playing(newState) {
+      setTimeout(() => {
+        let audio = this.$refs.audio;
+        if (newState) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }, 500);
     },
 
     fullScreen(newVal) {
@@ -672,7 +684,7 @@ export default {
       position: fixed;
       width: 100%;
       top: 62px;
-      bottom:155px
+      bottom: 155px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -797,7 +809,6 @@ export default {
       .dot-wrapper {
         text-align: center;
         font-size: 0;
-
 
         .dot {
           display: inline-block;
@@ -932,7 +943,7 @@ export default {
 
       img {
         border-radius: 50%;
-        border:2px solid rgba(255,255,255,0.2)
+        border: 2px solid rgba(255, 255, 255, 0.2);
 
         &.play {
           animation: rotate 10s linear infinite;
