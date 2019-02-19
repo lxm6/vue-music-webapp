@@ -69,4 +69,7 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+#app{
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
 </style>
