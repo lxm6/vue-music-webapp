@@ -5,6 +5,7 @@ import {
 import {
   Base64
 } from 'js-base64'
+let isEmpty=false;
 export default class Song {
   constructor({
     id,
@@ -15,7 +16,7 @@ export default class Song {
     duration,
     image,
     url,
-    isPay = false
+    isPay = false,
   }) {
     this.id = id
     this.mid = mid
@@ -56,7 +57,10 @@ export default class Song {
       if (res.code === ERR_OK) {
         if (res.data.items.length > 0) {
           let vkey = res.data.items[0].vkey;
-          if (!vkey) { return Promise.reject(new Error('getSongKey function got vkey is null')); }
+          if (!vkey) { 
+            isEmpty=true;
+            return Promise.reject(new Error('getSongKey function got vkey is null')); 
+          }
           let currentSongUrl = getSongURL(this.mid, vkey);
           this.url = currentSongUrl;
           return Promise.resolve(currentSongUrl);

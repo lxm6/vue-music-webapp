@@ -120,7 +120,7 @@
     ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
-        <span class="text">已跳过付费歌曲</span>
+        <span class="text">{{msg}}</span>
       </div>
     </top-tip>
   </div>
@@ -142,7 +142,6 @@ import { playerMixin } from "common/js/mixin";
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
 let nextFlag = true;
-
 export default {
   mixins: [playerMixin],
 
@@ -159,7 +158,8 @@ export default {
       currentShow: "cd",
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
-      currentSongUrl: ""
+      currentSongUrl: "",
+      msg:""
     };
   },
   computed: {
@@ -548,6 +548,7 @@ export default {
       }
       // 如果是付费歌曲
       if (newSong.isPay) {
+        this.msg="已跳过付费歌曲"
         this.$refs.topTip.show();
         this.songReady = true;
         if (nextFlag) {
@@ -577,7 +578,15 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.msg="此歌曲无法播放"
+          this.$refs.topTip.show();
           this.songReady = true;
+          // this.next()
+          this.togglePlaying();
+          this.currentLyric = null;
+          this.playingLyric = "";
+          this.$refs.audio.currentTime = 0;
+
         });
     },
     currentSongUrl() {
@@ -701,13 +710,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 80%;
+        padding-top: 80%;  //75
 
         .cd-wrapper {
           position: absolute;
-          left: 12.5%;
+          left: 12.5%;  //15%
           top: 12%;
-          width: 80%;
+          width: 80%;  //75
           height: 100%;
 
           .triger {
@@ -757,10 +766,10 @@ export default {
 
             .albumImg {
               position: absolute;
-              left: 10%;
-              top: 10%;
-              width: 80%;
-              height: 80%;
+              left: 17%;
+              top: 17%;
+              width: 65%;
+              height: 65%;
               border-radius: 50%;
             }
           }
