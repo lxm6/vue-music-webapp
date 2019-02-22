@@ -22,6 +22,11 @@
     <div class="no-result-wrapper" v-show="!hasMore && !result.length">
       <no-result title="抱歉，暂无搜索结果"></no-result>
     </div>
+    <top-tip ref="topTip">
+      <div class="tip-title">
+        <span class="text">付费歌曲不能播放</span>
+      </div>
+    </top-tip>
   </scroll>
 </template>
 
@@ -34,7 +39,7 @@ import { ERR_OK } from "api/config";
 import { createSong } from "common/js/song";
 import { mapMutations, mapActions } from "vuex";
 import Singer from "common/js/singer";
-
+import TopTip from "base/top-tip/top-tip";
 const TYPE_SINGER = "singer";
 const perpage = 20;
 
@@ -59,6 +64,12 @@ export default {
     };
   },
   methods: {
+    show() {
+      this.showFlag = true;
+    },
+    hide() {
+      this.showFlag = false;
+    },
     refresh() {
       this.$refs.suggest.refresh();
     },
@@ -89,20 +100,24 @@ export default {
       this.$emit("listScroll");
     },
     selectItem(item) {
-        if (item.type === TYPE_SINGER) {
-          const singer = new Singer({
-            id: item.singermid,
-            name: item.singername
-          });
-          this.$router.push({
-            path: `/search/${singer.id}`
-          });
-          this.setSinger(singer);
-        } else {
-          this.insertSong(item);
-        }
-        this.$emit("select", item);
-      
+      if (item.isPay) {
+        console.log("dd");
+        this.$refs.topTip.show();
+        return;
+      }
+      if (item.type === TYPE_SINGER) {
+        const singer = new Singer({
+          id: item.singermid,
+          name: item.singername
+        });
+        this.$router.push({
+          path: `/search/${singer.id}`
+        });
+        this.setSinger(singer);
+      } else {
+        this.insertSong(item);
+      }
+      this.$emit("select", item);
     },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
@@ -159,7 +174,8 @@ export default {
   components: {
     Scroll,
     Loading,
-    NoResult
+    NoResult,
+    TopTip
   }
 };
 </script>
@@ -209,6 +225,17 @@ export default {
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .tip-title {
+    text-align: center;
+    padding: 18px 0;
+    font-size: 0;
+
+    .text {
+      font-size: $font-size-medium-x;
+      color: $color-text;
+    }
   }
 }
 </style>

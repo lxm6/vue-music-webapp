@@ -159,7 +159,7 @@ export default {
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
       currentSongUrl: "",
-      msg:""
+      msg: ""
     };
   },
   computed: {
@@ -546,9 +546,10 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
+
       // 如果是付费歌曲
       if (newSong.isPay) {
-        this.msg="已跳过付费歌曲"
+        this.msg = "已跳过付费歌曲";
         this.$refs.topTip.show();
         this.songReady = true;
         if (nextFlag) {
@@ -578,15 +579,14 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          this.msg="此歌曲无法播放"
+          this.msg = "此歌曲无法播放";
           this.$refs.topTip.show();
           this.songReady = true;
-          // this.next()
-          this.togglePlaying();
-          this.currentLyric = null;
+          this.setPlayingState(false);
+          this.currentTime = 0;
           this.playingLyric = "";
-          this.$refs.audio.currentTime = 0;
-
+          this.currentLineNum = 0;
+          this.currentSongUrl = "";
         });
     },
     currentSongUrl() {
@@ -710,13 +710,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 80%;  //75
+        padding-top: 80%; // 75
 
         .cd-wrapper {
           position: absolute;
-          left: 12.5%;  //15%
+          left: 12.5%; // 15%
           top: 12%;
-          width: 80%;  //75
+          width: 80%; // 75
           height: 100%;
 
           .triger {
