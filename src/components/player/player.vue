@@ -701,13 +701,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 75%;
+        padding-top: 80%;
 
         .cd-wrapper {
           position: absolute;
-          left: 15%;
+          left: 12.5%;
           top: 12%;
-          width: 75%;
+          width: 80%;
           height: 100%;
 
           .triger {
