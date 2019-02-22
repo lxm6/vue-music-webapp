@@ -89,19 +89,20 @@ export default {
       this.$emit("listScroll");
     },
     selectItem(item) {
-      if (item.type === TYPE_SINGER) {
-        const singer = new Singer({
-          id: item.singermid,
-          name: item.singername
-        });
-        this.$router.push({
-          path: `/search/${singer.id}`
-        });
-        this.setSinger(singer);
-      } else {
-        this.insertSong(item);
-      }
-      this.$emit("select", item);
+        if (item.type === TYPE_SINGER) {
+          const singer = new Singer({
+            id: item.singermid,
+            name: item.singername
+          });
+          this.$router.push({
+            path: `/search/${singer.id}`
+          });
+          this.setSinger(singer);
+        } else {
+          this.insertSong(item);
+        }
+        this.$emit("select", item);
+      
     },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
@@ -178,7 +179,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 15px 0;
-      border-top 0.5px solid rgba(255,255,255,0.07)
+      border-top: 0.5px solid rgba(255, 255, 255, 0.07);
     }
 
     .icon {
