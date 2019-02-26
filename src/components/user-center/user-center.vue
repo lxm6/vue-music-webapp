@@ -196,7 +196,7 @@ export default {
     box-sizing: border-box;
     width: 135px;
     padding: 7px 0;
-    margin: 5px auto;
+    margin: 0 auto;
     text-align: center;
     border: 1px solid $color-text-l;
     color: $color-text-l;
@@ -218,6 +218,9 @@ export default {
   }
 
   .list-wrapper {
+    position: absolute;
+    top: 94px;
+    bottom: 0;
     width: 100%;
 
     .list-scroll {
