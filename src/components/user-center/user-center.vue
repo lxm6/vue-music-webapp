@@ -218,8 +218,10 @@ export default {
   }
 
   .list-wrapper {
+    position: absolute;
+    top: 93px;
+    bottom: 0;
     width: 100%;
-
     .list-scroll {
       height: 100%;
       overflow: hidden;

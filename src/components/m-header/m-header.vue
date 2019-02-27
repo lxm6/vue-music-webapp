@@ -1,6 +1,6 @@
 <template>
   <div class="m-header">
-    <i class="menu" @click="show">&#xe790;</i>
+    <i class="menu" @click="show"><img src="~@/common/image/menu.svg" alt="github" width="28"></i>
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
     <router-link tag="div" class="mine" to="/user">
@@ -44,10 +44,6 @@ export default {
     height: 32px;
     font-size: 26px;
     margin-top: 6px;
-    color: $color-text;
-    font-family: 'iconfont' !important;
-    font-weight: normal;
-    font-style: normal;
   }
 
   .icon {

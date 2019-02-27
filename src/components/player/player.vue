@@ -806,7 +806,7 @@ export default {
           .text {
             line-height: 32px;
             color: $color-text-l;
-            font-size: $font-size-medium-x;
+            font-size: $font-size-medium;
 
             &.current {
               color: $color-text;

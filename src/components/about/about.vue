@@ -34,7 +34,7 @@
             <li @click="openUrl">
               GitHub
               <span>
-                <i>&#xe600;</i>
+                  <img src="~@/common/image/github.svg" alt="github" width="35">
               </span>
             </li>
           </ul>
@@ -215,12 +215,6 @@ export default {
           float: right;
           color: #d5d5d5;
 
-          i {
-            font-family: 'iconfont' !important;
-            font-weight: normal;
-            font-style: normal;
-            font-size: 36px;
-          }
         }
 
         &:hover {
