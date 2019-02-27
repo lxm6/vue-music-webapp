@@ -793,6 +793,7 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
+        margin-top:7px
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -804,12 +805,12 @@ export default {
           text-align: center;
 
           .text {
-            line-height: 32px;
+            line-height: 35px;
             color: $color-text-l;
-            font-size: $font-size-medium;
+            font-size: $font-size-medium-x;
 
             &.current {
-              color: $color-text;
+              color: $color-theme;
             }
           }
         }
