@@ -11,6 +11,7 @@ import { ERR_OK } from "api/config";
 import { mapGetters } from "vuex";
 import { createSong } from "common/js/song";
 export default {
+
   computed: {
     title() {
       return this.topList.topTitle;
@@ -26,7 +27,7 @@ export default {
   data() {
     return {
       songs: [],
-      rank: true
+      rank: true,
     };
   },
   created() {

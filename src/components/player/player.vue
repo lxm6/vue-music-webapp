@@ -51,6 +51,9 @@
                   :key="index"
                 >{{line.txt}}</p>
               </div>
+              <div class="pure-music">
+                <p>此歌曲为没有歌词的纯音乐</p>
+              </div>
             </div>
           </scroll>
         </div>
@@ -389,7 +392,7 @@ export default {
           // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
-            this.playingLyric = "此歌曲没有歌词";
+            this.playingLyric = "此歌曲为没有歌词的纯音乐";
           }
           if (this.playing) {
             this.currentLyric.play();
@@ -803,6 +806,12 @@ export default {
           margin: 0 auto;
           overflow: hidden;
           text-align: center;
+
+          .pure-music{
+            padding-top: 50%;
+            color: $color-text-l;
+            font-size: $font-size-medium-x
+          }
 
           .text {
             line-height: 35px;

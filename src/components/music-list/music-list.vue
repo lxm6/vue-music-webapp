@@ -5,7 +5,7 @@
     </div>
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
-      <div class="play-wrapper" v-show="songs.length>0">
+      <div class="play-wrapper" v-show="songs.length>0" ref="wrapperBtn">
         <div ref="playBtn" class="play" @click="random">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
@@ -161,13 +161,15 @@ export default {
           zIndex = 10
           this.$refs.bgImage.style.paddingTop = 0
           this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
-          this.$refs.playBtn.style.display = 'none'
-          this.$refs.favorBtn.style.display = 'none'
+          // this.$refs.playBtn.style.display = 'none'
+          // this.$refs.favorBtn.style.display = 'none'
+          this.$refs.wrapperBtn.style.display = 'none'
         } else {
           this.$refs.bgImage.style.paddingTop = '70%'
           this.$refs.bgImage.style.height = 0
-          this.$refs.playBtn.style.display = ''
-          this.$refs.favorBtn.style.display = ''
+          // this.$refs.playBtn.style.display = ''
+          this.$refs.wrapperBtn.style.display = ''
+   
         }
         this.$refs.bgImage.style[transform] = `scale(${scale})`
         this.$refs.bgImage.style.zIndex = zIndex

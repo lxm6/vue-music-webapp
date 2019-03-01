@@ -88,7 +88,7 @@ export default {
       this.setPlayListVisible(false);
     },
     showConfirm() {
-      this.setPlayListVisible(false);
+      this.$refs.confirm.show()
     },
     confirmClear() {
       this.deleteSongList();
