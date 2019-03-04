@@ -18,6 +18,13 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
+          <div class="favorite">
+            <i
+              @click="toggleFavorite(currentSong)"
+              class="icon"
+              :class="getFavoriteIcon(currentSong)"
+            ></i>
+          </div>
         </div>
         <!-- <div class="line"></div> -->
         <div
@@ -82,12 +89,8 @@
             <div class="icon i-right" :class="disableCls">
               <i @click="next" class="icon-next"></i>
             </div>
-            <div class="icon i-right">
-              <i
-                @click="toggleFavorite(currentSong)"
-                class="icon"
-                :class="getFavoriteIcon(currentSong)"
-              ></i>
+            <div class="icon i-right" @click.stop="showPlaylist">
+              <i class="icon-playlist"></i>
             </div>
           </div>
         </div>
@@ -657,6 +660,7 @@ export default {
       position: relative;
       z-index: 100;
       margin-bottom: 5px;
+      color: $color-theme;
 
       .back {
         position: absolute;
@@ -668,7 +672,6 @@ export default {
           display: block;
           padding: 9px;
           font-size: $font-size-large-x;
-          color: $color-theme;
         }
       }
 
@@ -688,6 +691,17 @@ export default {
         // margin-left: 15%;
         font-size: $font-size-medium;
         color: $color-text;
+      }
+
+      .favorite {
+        font-size: $font-size-large-xx;
+        position: absolute;
+        top: 11px;
+        right: 18px;
+
+        .icon-favorite {                                                         
+          color: $color-sub-theme;
+        }
       }
     }
 
@@ -796,7 +810,7 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
-        margin-top:7px
+        margin-top: 7px;
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -807,10 +821,10 @@ export default {
           overflow: hidden;
           text-align: center;
 
-          .pure-music{
+          .pure-music {
             padding-top: 50%;
             color: $color-text-l;
-            font-size: $font-size-medium-x
+            font-size: $font-size-medium-x;
           }
 
           .text {
@@ -912,10 +926,6 @@ export default {
 
         .i-right {
           text-align: left;
-        }
-
-        .icon-favorite {
-          color: $color-sub-theme;
         }
       }
     }

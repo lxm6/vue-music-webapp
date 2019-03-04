@@ -133,8 +133,13 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const {fullScreen,playListVisible} = store.getters;
   if (fullScreen) {
-    store.commit('SET_FULL_SCREEN', false);
-    next(false);
+    if(playListVisible){
+      store.commit('SET_PLAY_LIST_VISIBLE', false);
+      next(false);
+    }else{
+      store.commit('SET_FULL_SCREEN', false);
+      next(false);
+    }
   } else if (playListVisible) {
     store.commit('SET_PLAY_LIST_VISIBLE', false);
     next(false);
