@@ -59,7 +59,7 @@
                 >{{line.txt}}</p>
               </div>
               <div class="pure-music">
-                <p>此歌曲为没有歌词的纯音乐</p>
+                <p>此歌曲没有歌词</p>
               </div>
             </div>
           </scroll>
@@ -395,7 +395,7 @@ export default {
           // 解析歌词
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
-            this.playingLyric = "此歌曲为没有歌词的纯音乐";
+            this.playingLyric = "此歌曲没有歌词";
           }
           if (this.playing) {
             this.currentLyric.play();
