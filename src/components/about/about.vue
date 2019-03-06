@@ -31,7 +31,7 @@
               作者
               <span>林秀梅</span>
             </li>
-            <li @click="openUrl">
+            <li @click="openUrl" class="url">
               GitHub
               <span>
                   <img src="~@/common/image/github.svg" alt="github" width="35">
@@ -79,7 +79,8 @@ export default {
       this.$refs.dialog.style.display = "none";
     },
     openUrl() {
-      window.location.href = "https://github.com/lxm6/vue-music-webapp";
+      // window.location.href = "https://github.com/lxm6/vue-music-webapp";
+
     },
     showConfirm() {
       this.$refs.confirm.show();
@@ -200,7 +201,9 @@ export default {
       border-bottom: 1px solid $color-theme-d;
       margin-bottom: 15px;
     }
-
+    .url:hover {
+          background-color: #333937;
+        }
     ul {
       float: left;
 
@@ -217,9 +220,6 @@ export default {
 
         }
 
-        &:hover {
-          background-color: #333937;
-        }
       }
 
       img {

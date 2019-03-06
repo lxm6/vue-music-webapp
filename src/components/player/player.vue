@@ -105,7 +105,7 @@
           <h2 class="name" v-html="currentSong.name"></h2>
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
-        <div class="control">
+         <div class="control">
           <progress-circle :radius="radius" :percent="percent">
             <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
           </progress-circle>
@@ -981,7 +981,7 @@ export default {
         border: 2px solid rgba(255, 255, 255, 0.2);
 
         &.play {
-          animation: rotate 10s linear infinite;
+          animation: rotate 20s linear infinite;
         }
 
         &.pause {
@@ -1019,7 +1019,7 @@ export default {
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;
-        color: $color-theme;
+        color: $color-theme-d
       }
 
       .icon-mini {

@@ -21,6 +21,7 @@
     "jsonp": "^0.2.1",
     "lyric-parser": "^1.0.1",
     "vue": "2.3.3",
+    "vue-awesome-mui": "^1.7.3",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.1.0"
