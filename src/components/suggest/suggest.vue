@@ -195,7 +195,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 15px 0;
-      border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .icon {

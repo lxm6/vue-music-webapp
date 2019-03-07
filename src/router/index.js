@@ -53,6 +53,7 @@ const UserCenter = (resolve) => {
     resolve(module)
   })
 }
+
 Vue.use(Router)
 const router = new Router({
   routes: [{
@@ -125,13 +126,14 @@ const router = new Router({
       meta: {
         keepAlive: false,
       },
-    }
+    },
+     
   ]
 })
 
 
 router.beforeEach((to, from, next) => {
-  const {fullScreen,playListVisible} = store.getters;
+  const {fullScreen,playListVisible,addSongVisible} = store.getters;
   if (fullScreen) {
     if(playListVisible){
       store.commit('SET_PLAY_LIST_VISIBLE', false);
@@ -143,9 +145,15 @@ router.beforeEach((to, from, next) => {
   } else if (playListVisible) {
     store.commit('SET_PLAY_LIST_VISIBLE', false);
     next(false);
-  } else {
+  }else {
     next(true);
   }
+  // if (addSongVisible) {
+  //   store.commit('SET_ADD_SONG_VISIBLE', false);
+  //   next(false);
+  // } else {
+  //   next(true);
+  // }
 });
 
 export default router;

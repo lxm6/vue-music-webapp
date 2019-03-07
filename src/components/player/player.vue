@@ -58,7 +58,7 @@
                   :key="index"
                 >{{line.txt}}</p>
               </div>
-              <div class="pure-music">
+              <div class="pure-music" v-if="isPure">
                 <p>此歌曲没有歌词</p>
               </div>
             </div>
@@ -165,7 +165,8 @@ export default {
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
       currentSongUrl: "",
-      msg: ""
+      msg: "",
+      isPure:false
     };
   },
   computed: {
@@ -396,6 +397,9 @@ export default {
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
+            this.isPure=true;
+          }else{
+            this.isPure=false;
           }
           if (this.playing) {
             this.currentLyric.play();
@@ -810,7 +814,7 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
-        margin-top: 7px;
+        margin-top: 16px;
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -828,7 +832,7 @@ export default {
           }
 
           .text {
-            line-height: 35px;
+            line-height: 38px;
             color: $color-text-l;
             font-size: $font-size-medium-x;
 

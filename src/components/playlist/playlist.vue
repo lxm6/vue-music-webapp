@@ -58,7 +58,6 @@ import Scroll from "base/scroll/scroll";
 import Confirm from "base/confirm/confirm";
 import AddSong from "components/add-song/add-song";
 import { playerMixin } from "common/js/mixin";
-
 export default {
   mixins: [playerMixin],
   data() {
@@ -157,7 +156,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 200;
-  background-color: $color-background-d;
+  background-color: rgba(0,0,0,0.4);
 
   &.list-fade-enter-active, &.list-fade-leave-active {
     transition: opacity 0.3s;
@@ -180,7 +179,8 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: $color-background;
+    background-color: #18251f;
+    // background-color: $color-background;
 
     .list-header {
       position: relative;
@@ -224,7 +224,7 @@ export default {
         height: 45px;
         padding: 0 15px 0 5px;
         overflow: hidden;
-        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
 
         &.list-enter-active, &.list-leave-active {
           transition: all 0.1s;
@@ -274,7 +274,7 @@ export default {
       .add {
         display: flex;
         align-items: center;
-        padding: 8px 16px;
+        padding: 10px 16px;
         border: 1px solid $color-text-l;
         border-radius: 100px;
         color: $color-text-l;

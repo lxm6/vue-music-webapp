@@ -242,7 +242,7 @@ export default {
       .favor, .play {
         box-sizing: border-box;
         width: 135px;
-        padding: 7px 0;
+        padding: 10px 0;
         margin: 0 auto;
         text-align: center;
         border: 1px solid $color-theme;

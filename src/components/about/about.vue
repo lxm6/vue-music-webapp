@@ -3,6 +3,7 @@
     <div class="wrapper" v-show="showFlag" @click="hide">
       <div @click.stop class="leftNav">
         <ul>
+          <li @click="download">App下载</li>
           <li @click="showConfirm">清除缓存</li>
           <li @click="refreshPage">刷新页面</li>
           <li @click="openDialog">关于</li>
@@ -62,6 +63,7 @@ export default {
     };
   },
   methods: {
+
     show() {
       this.showFlag = true;
     },
@@ -72,6 +74,9 @@ export default {
     refreshPage() {
       window.location.reload();
     },
+    download(){
+      window.location.href = "https://www.lxm6.top/download/download.html";
+    },
     openDialog() {
       this.$refs.dialog.style.display = "block";
     },
@@ -79,7 +84,9 @@ export default {
       this.$refs.dialog.style.display = "none";
     },
     openUrl() {
+       window.open('https://github.com/lxm6/vue-music-webapp');
       // window.location.href = "https://github.com/lxm6/vue-music-webapp";
+      // plus.runtime.openURL('https://github.com/lxm6/vue-music-webapp');  
 
     },
     showConfirm() {

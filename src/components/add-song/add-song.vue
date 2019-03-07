@@ -3,8 +3,8 @@
     <div class="add-song" v-show="showFlag" @click.stop>
       <div class="header">
         <h1 class="title">添加歌曲到列表</h1>
-        <div class="close" @click="hide">
-          <i class="icon-close"></i>
+        <div class="back" @click="hide">
+          <i class="icon-back"></i>
         </div>
       </div>
       <div class="search-box-wrapper">
@@ -64,7 +64,6 @@ import Suggest from "components/suggest/suggest";
 import { searchMixin } from "common/js/mixin";
 import { mapGetters, mapActions } from "vuex";
 import Song from "common/js/song";
-
 export default {
   mixins: [searchMixin],
   data() {
@@ -126,7 +125,6 @@ export default {
   }
 };
 </script>
-
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
@@ -157,19 +155,20 @@ export default {
       font-size: $font-size-large;
       color: $color-text;
     }
+      .back {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        z-index: 50;
 
-    .close {
-      position: absolute;
-      top: 0;
-      right: 8px;
-
-      .icon-close {
-        display: block;
-        padding: 12px;
-        font-size: 20px;
-        color: $color-theme;
+        .icon-back {
+          display: block;
+          padding: 9px;
+          font-size: $font-size-large-x;
+           color: $color-theme;
+        }
       }
-    }
+
   }
 
   .search-box-wrapper {
