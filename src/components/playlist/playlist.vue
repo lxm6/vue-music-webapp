@@ -175,6 +175,8 @@ export default {
   }
 
   &.list-fade-enter, .list-wrapper {
+    border-top-left-radius :10px;
+    border-top-right-radius :10px;
     position: absolute;
     left: 0;
     bottom: 0;
