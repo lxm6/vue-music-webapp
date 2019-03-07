@@ -148,12 +148,13 @@ router.beforeEach((to, from, next) => {
   }else {
     next(true);
   }
-  // if (addSongVisible) {
-  //   store.commit('SET_ADD_SONG_VISIBLE', false);
-  //   next(false);
-  // } else {
-  //   next(true);
-  // }
+  if (addSongVisible) {
+    store.commit('SET_ADD_SONG_VISIBLE', false);
+    store.commit('SET_PLAY_LIST_VISIBLE', true);
+    next(false);
+  } else {
+    next(true);
+  }
 });
 
 export default router;

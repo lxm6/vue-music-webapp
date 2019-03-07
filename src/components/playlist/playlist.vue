@@ -47,7 +47,7 @@
         </div>
       </div>
       <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
-      <add-song ref="addSong"></add-song>
+      <add-song ref="addSong" ></add-song>
     </div>
   </transition>
 </template>
@@ -78,6 +78,7 @@ export default {
   methods: {
     show() {
       this.setPlayListVisible(true);
+
       setTimeout(() => {
         this.$refs.listContent.refresh();
         this.scrollToCurrent(this.currentSong);
@@ -85,6 +86,7 @@ export default {
     },
     hide() {
       this.setPlayListVisible(false);
+
     },
     showConfirm() {
       this.$refs.confirm.show()

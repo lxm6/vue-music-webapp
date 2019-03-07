@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="add-song" v-show="showFlag" @click.stop>
+    <div class="add-song" v-show="addSongVisible" @click.stop>
       <div class="header">
         <h1 class="title">添加歌曲到列表</h1>
         <div class="back" @click="hide">
@@ -62,13 +62,12 @@ import Switches from "base/switches/switches";
 import TopTip from "base/top-tip/top-tip";
 import Suggest from "components/suggest/suggest";
 import { searchMixin } from "common/js/mixin";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions,mapMutations } from "vuex";
 import Song from "common/js/song";
 export default {
   mixins: [searchMixin],
   data() {
     return {
-      showFlag: false,
       showSinger: false,
       currentIndex: 0,
       songs: [],
@@ -83,11 +82,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["playHistory"])
+    ...mapGetters(["playHistory","addSongVisible"])
   },
   methods: {
     show() {
-      this.showFlag = true;
+      this.setAddSongVisible(true);
       setTimeout(() => {
         if (this.currentIndex === 0) {
           this.$refs.songList.refresh();
@@ -97,7 +96,8 @@ export default {
       }, 20);
     },
     hide() {
-      this.showFlag = false;
+      this.setAddSongVisible(false);
+
     },
     selectSong(song, index) {
       if (index !== 0) {
@@ -112,7 +112,10 @@ export default {
     switchItem(index) {
       this.currentIndex = index;
     },
-    ...mapActions(["insertSong"])
+    ...mapActions(["insertSong"]),
+    ...mapMutations({
+      setAddSongVisible: "SET_ADD_SONG_VISIBLE"
+    })
   },
   components: {
     SearchBox,

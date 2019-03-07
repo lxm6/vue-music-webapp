@@ -127,8 +127,8 @@ export default {
 
     .recommend-list {
       .list-title {
-        height: 60px;
-        line-height: 60px;
+        height: 50px;
+        line-height: 50px;
         text-align: center;
         font-size: $font-size-medium;
         color: $color-theme;

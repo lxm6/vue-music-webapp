@@ -44,8 +44,8 @@ const matutaions = {
   [types.SET_PLAY_LIST_VISIBLE](state, visible) {
     state.playListVisible = visible;
   },
-  // [types.SET_ADD_SONG_VISIBLE](state, visible) {
-  //   state.addSongVisible = visible;
-  // },
+  [types.SET_ADD_SONG_VISIBLE](state, visible) {
+    state.addSongVisible = visible;
+  },
 }
 export default matutaions

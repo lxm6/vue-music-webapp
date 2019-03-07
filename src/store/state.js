@@ -12,6 +12,7 @@ const state = {
   playing: false,
   fullScreen: false,
   playListVisible: false,
+  addSongVisible: false,
   playlist: [],
   sequenceList: [],
   mode: playMode.sequence,

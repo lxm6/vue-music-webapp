@@ -49,7 +49,7 @@ export default {
   .icon {
     display: inline-block;
     vertical-align: top;
-    margin-top: 6px;
+    margin-top: 4px;
     width: 30px;
     height: 32px;
     margin-right: 9px;
