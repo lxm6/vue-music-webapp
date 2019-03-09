@@ -3,7 +3,7 @@
     <i class="menu" @click="show"><img src="~@/common/image/menu.svg" alt="github" width="28"></i>
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
-    <router-link tag="div" class="mine" to="/user">
+    <router-link tag="div" class="mine" to="/User">
       <i class="icon-mine"></i>
     </router-link>
   </div>

@@ -3,7 +3,7 @@
     <div class="wrapper" v-show="showFlag" @click="hide">
       <div @click.stop class="leftNav">
         <ul>
-          <li @click="download">App下载</li>
+          <li @click="download" id="goto_baidu">App下载</li>
           <li @click="showConfirm">清除缓存</li>
           <li @click="refreshPage">刷新页面</li>
           <li @click="openDialog">关于</li>
@@ -35,7 +35,7 @@
             <li @click="openUrl" class="url">
               GitHub
               <span>
-                  <img src="~@/common/image/github.svg" alt="github" width="35">
+                <img src="~@/common/image/github.svg" alt="github" width="35">
               </span>
             </li>
           </ul>
@@ -51,6 +51,7 @@ import TopTip from "base/top-tip/top-tip";
 import Confirm from "base/confirm/confirm";
 
 export default {
+
   props: {
     delay: {
       type: Number,
@@ -63,7 +64,6 @@ export default {
     };
   },
   methods: {
-
     show() {
       this.showFlag = true;
     },
@@ -74,8 +74,15 @@ export default {
     refreshPage() {
       window.location.reload();
     },
-    download(){
-      window.location.href = "https://www.lxm6.top/download/download.html";
+    download() {
+      // this.hide();
+      // this.$router.push({
+      //   name: "target",
+      //   params: {
+      //     data: "https://www.lxm6.top/download/download.html"
+      //   }
+      // });
+
     },
     openDialog() {
       this.$refs.dialog.style.display = "block";
@@ -84,10 +91,14 @@ export default {
       this.$refs.dialog.style.display = "none";
     },
     openUrl() {
-       window.open('https://github.com/lxm6/vue-music-webapp');
-      // window.location.href = "https://github.com/lxm6/vue-music-webapp";
-      // plus.runtime.openURL('https://github.com/lxm6/vue-music-webapp');  
-
+      this.hide();
+      this.hideDialog();
+      this.$router.push({
+        name: "target",
+        params: {
+          data: "https://github.com/lxm6/vue-music-webapp"
+        }
+      });
     },
     showConfirm() {
       this.$refs.confirm.show();
@@ -95,7 +106,7 @@ export default {
     confirmClear() {
       localStorage.clear();
       this.$refs.topTip.show();
-      this.refreshPage()
+      this.refreshPage();
     }
   },
 
@@ -208,9 +219,11 @@ export default {
       border-bottom: 1px solid $color-theme-d;
       margin-bottom: 15px;
     }
+
     .url:hover {
-          background-color: #333937;
-        }
+      background-color: #333937;
+    }
+
     ul {
       float: left;
 
@@ -224,9 +237,7 @@ export default {
           display: inline-block;
           float: right;
           color: #d5d5d5;
-
         }
-
       }
 
       img {

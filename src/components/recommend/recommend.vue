@@ -95,6 +95,15 @@ export default {
         this.$refs.scroll.refresh();
       }
     },
+    openUrl() {
+      // this.$router.push({
+      //   name: "target",
+      //   params: {
+      //     data: "http://y.qq.com/w/album.html"
+      //   }
+      // });
+    
+    },
     ...mapMutations({
       setDisc: "SET_DISC"
     })
