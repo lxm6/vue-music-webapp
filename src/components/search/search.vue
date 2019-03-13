@@ -1,36 +1,47 @@
 <template>
-  <div class="search">
-    <div class="search-box-wrapper">
-      <search-box ref="searchBox" @query="onQueryChange"></search-box>
-    </div>
-    <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
-      <scroll  :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
-        <div>
-          <div class="hot-key">
-            <h1 class="title">热门搜索</h1>
-            <ul>
-              <li @click="addQuery(item.k)" class="item" v-for="(item,index) in hotKey" :key="index">
-                <span>{{item.k}}</span>
-              </li>
-            </ul>
+  <div class="searchWrapper" ref="search">
+    <div class="search">
+      <div class="search-box-wrapper">
+        <search-box ref="searchBox" @query="onQueryChange"></search-box>
+      </div>
+      <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
+        <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
+          <div>
+            <div class="hot-key">
+              <h1 class="title">热门搜索</h1>
+              <ul>
+                <li
+                  @click="addQuery(item.k)"
+                  class="item"
+                  v-for="(item,index) in hotKey"
+                  :key="index"
+                >
+                  <span>{{item.k}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="search-history" v-show="searchHistory.length">
+              <h1 class="title">
+                <span class="text">搜索历史</span>
+                <span @click="showConfirm" class="clear">
+                  <i class="icon-clear"></i>
+                </span>
+              </h1>
+              <search-list
+                @delete="deleteSearchHistory"
+                @select="addQuery"
+                :searches="searchHistory"
+              ></search-list>
+            </div>
           </div>
-          <div class="search-history" v-show="searchHistory.length">
-            <h1 class="title">
-              <span class="text">搜索历史</span>
-              <span @click="showConfirm" class="clear">
-                <i class="icon-clear"></i>
-              </span>
-            </h1>
-            <search-list @delete="deleteSearchHistory" @select="addQuery" :searches="searchHistory"></search-list>
-          </div>
-        </div>
-      </scroll>
+        </scroll>
+      </div>
+      <div class="search-result" v-show="query" ref="searchResult">
+        <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
+      </div>
+      <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
+      <router-view></router-view>
     </div>
-    <div class="search-result" v-show="query" ref="searchResult">
-      <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
-    </div>
-    <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -43,10 +54,31 @@ import Confirm from "base/confirm/confirm";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
 import { mapActions, mapGetters } from "vuex";
-import { playlistMixin,searchMixin } from "common/js/mixin";
+import { playlistMixin, searchMixin } from "common/js/mixin";
 
 export default {
-mixins: [playlistMixin, searchMixin],
+  mounted() {
+    var router = this.$router;
+    this.$refs.search.addEventListener("touchstart", e => {
+      this.startX = e.touches[0].pageX;
+    });
+    this.$refs.search.addEventListener("touchmove", e => {
+      var moveEndX = e.changedTouches[0].pageX;
+      var X = moveEndX - this.startX;
+      if (X > 100) {
+        this.$refs.search.style.left = X - 100 + "px";
+      }
+    });
+    this.$refs.search.addEventListener("touchend", e => {
+      if (this.$refs.search.offsetLeft > 100) {
+        router.push("./rank");
+        this.$refs.search.style.left = 0 + "px";
+      } else {
+        this.$refs.search.style.left = 0 + "px";
+      }
+    });
+  },
+  mixins: [playlistMixin, searchMixin],
   created() {
     this._getHotKey();
   },
@@ -82,9 +114,7 @@ mixins: [playlistMixin, searchMixin],
         }
       });
     },
-    ...mapActions([
-      "clearSearchHistory"
-    ])
+    ...mapActions(["clearSearchHistory"])
   },
   watch: {
     query(newQuery) {
@@ -108,6 +138,13 @@ mixins: [playlistMixin, searchMixin],
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.searchWrapper {
+  position: fixed;
+  width: 100%;
+  top: 88px;
+  bottom: 0;
+}
+
 .search {
   .search-box-wrapper {
     margin: 20px;
@@ -130,7 +167,6 @@ mixins: [playlistMixin, searchMixin],
           margin-bottom: 15px;
           font-size: $font-size-medium;
           color: $color-text-l;
-
         }
 
         .item {
@@ -138,7 +174,7 @@ mixins: [playlistMixin, searchMixin],
           padding: 5px 10px;
           margin: 0 12px 10px 0;
           border-radius: 15px;
-          border 1px solid $color-text-d
+          border: 1px solid $color-text-d;
           // background: $color-highlight-background;
           font-size: $font-size-medium;
           color: $color-text-d;

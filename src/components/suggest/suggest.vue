@@ -18,6 +18,7 @@
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
+      <div class="tip" v-show="!hasMore">没有更多数据了</div>
     </ul>
     <div class="no-result-wrapper" v-show="!hasMore && !result.length">
       <no-result title="抱歉，暂无搜索结果"></no-result>
@@ -203,21 +204,27 @@ export default {
       width: 30px;
 
       [class^='icon-'] {
-        font-size: 14px;
-        color: $color-text-d;
+        font-size: $font-size-medium-x;
+        color: $color-text-l;
       }
     }
 
     .name {
       flex: 1;
-      font-size: $font-size-medium;
-      color: $color-text-d;
+      font-size: $font-size-medium-x;
+      color: $color-text-l;
       overflow: hidden;
 
       .text {
         no-wrap();
       }
+      
     }
+    .tip{
+        color: $color-text-ll;
+        text-align center;
+        padding 20px 0
+        }
   }
 
   .no-result-wrapper {

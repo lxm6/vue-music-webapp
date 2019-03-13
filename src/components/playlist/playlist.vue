@@ -160,6 +160,7 @@ export default {
   z-index: 200;
   background-color: rgba(0,0,0,0.4);
 
+
   &.list-fade-enter-active, &.list-fade-leave-active {
     transition: opacity 0.3s;
 
@@ -183,7 +184,8 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #18251f;
+    background-color: rgba(0,0,0,0.85);
+    // background-color: #18251f;
     // background-color: $color-background;
 
     .list-header {
@@ -249,7 +251,7 @@ export default {
           flex: 1;
           no-wrap();
           font-size: $font-size-medium;
-          color: $color-text-d;
+          color: $color-text-l;
         }
 
         .like {
@@ -297,7 +299,8 @@ export default {
     .list-close {
       text-align: center;
       line-height: 50px;
-      background: $color-background-dd;
+      // background: $color-background-dd;
+      background: $color-background;
       font-size: $font-size-medium-x;
       color: $color-text-l;
     }

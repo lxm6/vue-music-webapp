@@ -146,6 +146,8 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const {fullScreen,playListVisible,addSongVisible} = store.getters;
   if (fullScreen) {
+    store.commit('SET_FULL_SCREEN', false);
+    next(false);
     if(playListVisible){
       store.commit('SET_PLAY_LIST_VISIBLE', false);
       next(false);
@@ -163,9 +165,7 @@ router.beforeEach((to, from, next) => {
     store.commit('SET_ADD_SONG_VISIBLE', false);
     store.commit('SET_PLAY_LIST_VISIBLE', true);
     next(false);
-  } else {
-    next(true);
-  }
+  } 
 });
 
 export default router;

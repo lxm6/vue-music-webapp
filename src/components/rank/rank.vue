@@ -30,6 +30,32 @@ import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
 export default {
+  mounted() {
+    var router = this.$router;
+    this.$refs.rank.addEventListener("touchstart", e => {
+      this.startX = e.touches[0].pageX;
+    });
+    this.$refs.rank.addEventListener("touchmove", e => {
+      var moveEndX = e.changedTouches[0].pageX;
+      var X = moveEndX - this.startX;
+      if (X < -100) {
+        this.$refs.rank.style.left = X + "px";
+      } else if (X > 100) {
+        this.$refs.rank.style.left = X - 100 + "px";
+      }
+    });
+    this.$refs.rank.addEventListener("touchend", e => {
+      if (this.$refs.rank.offsetLeft < -100) {
+        router.push("./search");
+        this.$refs.rank.style.left = 0 + "px";
+      } else if (this.$refs.rank.offsetLeft > 100) {
+        router.push("./singer");
+        this.$refs.rank.style.left = 0 + "px";
+      } else {
+        this.$refs.rank.style.left = 0 + "px";
+      }
+    });
+  },
   mixins: [playlistMixin],
   created() {
     this._getTopList();

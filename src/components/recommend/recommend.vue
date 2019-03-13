@@ -13,7 +13,7 @@
             </div>
           </slider>
         </div>
-        <div class="recommend-list">
+        <div class="recommend-list" ref="recommendList">
           <h1 class="list-title">热门歌单推荐</h1>
           <ul>
             <li
@@ -51,6 +51,27 @@ import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
 
 export default {
+  mounted() {
+    var router = this.$router;
+    this.$refs.recommendList.addEventListener("touchstart", e => {
+      this.startX = e.touches[0].pageX;
+    });
+    this.$refs.recommendList.addEventListener("touchmove", e => {
+      var moveEndX = e.changedTouches[0].pageX;
+      var X = moveEndX - this.startX;
+      if (X < -100) {
+        this.$refs.recommend.style.left = X - 100 + "px";
+      }
+    });
+    this.$refs.recommendList.addEventListener("touchend", e => {
+      if (this.$refs.recommend.offsetLeft < -100) {
+        router.push("./singer");
+        this.$refs.recommend.style.left = 0 + "px";
+      } else {
+        this.$refs.recommend.style.left = 0 + "px";
+      }
+    });
+  },
   mixins: [playlistMixin],
   data() {
     return {
@@ -102,7 +123,6 @@ export default {
       //     data: "http://y.qq.com/w/album.html"
       //   }
       // });
-    
     },
     ...mapMutations({
       setDisc: "SET_DISC"

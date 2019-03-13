@@ -75,6 +75,7 @@ export default {
       window.location.reload();
     },
     download() {
+      
       // this.hide();
       // this.$router.push({
       //   name: "target",

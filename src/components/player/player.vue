@@ -105,7 +105,7 @@
           <h2 class="name" v-html="currentSong.name"></h2>
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
-         <div class="control">
+        <div class="control">
           <progress-circle :radius="radius" :percent="percent">
             <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
           </progress-circle>
@@ -166,7 +166,7 @@ export default {
       playingLyric: "",
       currentSongUrl: "",
       msg: "",
-      isPure:false
+      isPure: false
     };
   },
   computed: {
@@ -208,6 +208,20 @@ export default {
     this.touch = {};
   },
   methods: {
+    triggerDownload() {
+      setTimeout(() => {
+        if (this.currentSongUrl) {
+          const a = document.createElement("a");
+          a.href = `http://dl.stream.qqmusic.qq.com${
+            this.currentSongUrl.match(/^https?\:\/\/[\w\.]+(.+)$/)[1]
+          }`;
+             a.download = `${this.currentSong.name}${this.url.match(
+                        /^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/
+                    )[1]}`;
+          a.click();
+        }
+      }, 400);
+    },
     show() {
       this.showFlag = true;
     },
@@ -397,9 +411,9 @@ export default {
           this.currentLyric = new Lyric(lyric, this.handleLyric);
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
-            this.isPure=true;
-          }else{
-            this.isPure=false;
+            this.isPure = true;
+          } else {
+            this.isPure = false;
           }
           if (this.playing) {
             this.currentLyric.play();
@@ -703,7 +717,7 @@ export default {
         top: 11px;
         right: 18px;
 
-        .icon-favorite {                                                         
+        .icon-favorite {
           color: $color-sub-theme;
         }
       }
@@ -798,7 +812,7 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 30px auto 0 auto;
+          margin: 40px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
@@ -846,7 +860,7 @@ export default {
 
     .bottom {
       position: absolute;
-      bottom: 30px;
+      bottom: 25px;
       width: 100%;
 
       .dot-wrapper {
@@ -911,7 +925,7 @@ export default {
           }
 
           i {
-            font-size: 30px;
+            font-size: 35px;
           }
         }
 
@@ -924,7 +938,7 @@ export default {
           text-align: center;
 
           i {
-            font-size: 40px;
+            font-size: 55px;
           }
         }
 
@@ -965,14 +979,15 @@ export default {
     width: 100%;
     height: 60px;
     background: $color-background-dd;
-    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.2);
 
     &.mini-enter-active, &.mini-leave-active {
       transition: all 0.4s;
     }
 
     &.mini-enter, &.mini-leave-to {
-      opacity: 0;
+      // opacity: 0;
+     transform: translate3d(0, 100%, 0);
     }
 
     .icon {
@@ -1023,7 +1038,7 @@ export default {
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;
-        color: $color-theme-d
+        color: $color-theme-d;
       }
 
       .icon-mini {
