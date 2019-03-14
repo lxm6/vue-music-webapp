@@ -55,7 +55,8 @@ export default {
     data: {
       type: Array,
       default: []
-    }
+    },
+    
   },
   computed: {
     shortcutList() {
@@ -186,7 +187,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: $color-background;
+  background: $color-highlight-background;
 
   .list-group {
     padding-bottom: 30px;
@@ -197,7 +198,7 @@ export default {
       padding-left: 20px;
       font-size: $font-size-small;
       color: $color-text-l;
-      background: $color-highlight-background;
+      background: $color-background;
     }
 
     .list-group-item {
@@ -213,7 +214,7 @@ export default {
 
       .name {
         margin-left: 20px;
-        color: $color-text-l;
+        color: $color-text;
         font-size: $font-size-medium;
       }
     }
@@ -229,7 +230,7 @@ export default {
     padding: 20px 0;
     border-radius: 10px;
     text-align: center;
-    background: $color-background-d;
+    background: $color-background-dd;
     font-family: Helvetica;
 
     .item {
@@ -256,7 +257,7 @@ export default {
       padding-left: 20px;
       font-size: $font-size-small;
       color: $color-text-l;
-      background: $color-highlight-background;
+      background: $color-background;
     }
   }
 

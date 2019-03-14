@@ -156,7 +156,7 @@ export default {
     .title {
       line-height: 44px;
       font-size: $font-size-large;
-      color: $color-text;
+      color: $color-theme;
     }
       .back {
         position: absolute;
@@ -210,13 +210,13 @@ export default {
 
     .icon-ok {
       font-size: $font-size-medium-x;
-      color: $color-text;
+      color: #fff;
       margin-right: 6px;
     }
 
     .text {
       font-size: $font-size-medium-x;
-      color: $color-text;
+      color: #fff;
     }
   }
 }

@@ -40,7 +40,7 @@ export default {
   align-items: center;
   width: 240px;
   margin: 0 auto;
-  border: 1px solid $color-highlight-background;
+  border: 1px solid $color-theme;
   border-radius: 5px;
 
   .switch-item {
@@ -48,11 +48,16 @@ export default {
     padding: 8px;
     text-align: center;
     font-size: $font-size-medium;
-    color: $color-text-d;
+    color: $color-theme;
+    border-right: 1px solid $color-theme;
+
+    &:last-child {
+      border: none;
+    }
 
     &.active {
-      background: $color-highlight-background;
-      color: $color-text;
+      background: $color-theme;
+      color: $color-highlight-background;
     }
   }
 }

@@ -3,6 +3,7 @@
     <div class="confirm" v-show="showFlag" @click.stop>
       <div class="confirm-wrapper">
         <div class="confirm-content">
+          <p><img src="~@/common/image/tip.svg" width="35" ></p>
           <p class="text">{{text}}</p>
           <div class="operate">
             <div @click="cancel" class="operate-btn left">{{cancelBtnText}}</div>
@@ -64,7 +65,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 998;
-  background-color: $color-background-d;
+  background-color: rgba(0, 0, 0, 0.3);
 
   &.confirm-fade-enter-active {
     animation: confirm-fadein 0.3s;
@@ -83,15 +84,19 @@ export default {
 
     .confirm-content {
       width: 270px;
-      border-radius: 13px;
+      border-radius: 5px;
       background: $color-highlight-background;
-
+      p{
+        text-align center
+        padding-top 15px
+        }
+ 
       .text {
         padding: 19px 15px;
         line-height: 22px;
         text-align: center;
         font-size: $font-size-large;
-        color: $color-text-l;
+        color: $color-text-ll;
       }
 
       .operate {
@@ -109,6 +114,7 @@ export default {
 
           &.left {
             border-right: 1px solid $color-background-d;
+            color: $color-theme;
           }
         }
       }

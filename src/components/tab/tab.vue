@@ -35,13 +35,14 @@ export default {};
 
     .tab-link {
       padding-bottom: 5px;
-      color: $color-text;
+      color: $color-text-h;
     }
 
     &.router-link-active {
       .tab-link {
-        color: $color-text;
-        border-bottom: 2px solid $color-text;
+        font-weight bold
+        color: $color-text-h;
+        border-bottom: 2px solid $color-text-h;
       }
     }
   }

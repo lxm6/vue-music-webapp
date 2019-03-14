@@ -58,12 +58,8 @@ export default {
     align-items: center;
     box-sizing: border-box;
     font-size: $font-size-medium;
-    padding: 10px 10px;
+    padding: 10px 0px;
     border-bottom: 1px solid $color-border;
-
-    &:first-child {
-      border-top: 1px solid $color-border;
-    }
 
     .rank {
       flex: 0 0 25px;
@@ -109,7 +105,7 @@ export default {
       .desc {
         no-wrap();
         margin-top: 4px;
-        color: $color-text-d;
+        color: $color-text-l;
       }
     }
   }

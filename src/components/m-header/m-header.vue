@@ -32,7 +32,7 @@ export default {
   position: relative;
   height: 44px;
   text-align: center;
-  color: $color-text;
+  color: $color-text-h;
   background-color: $color-theme;
 
   .menu {
@@ -61,6 +61,7 @@ export default {
     display: inline-block;
     vertical-align: top;
     line-height: 44px;
+    font-style  bold
     font-size: $font-size-large;
   }
 
@@ -73,7 +74,7 @@ export default {
       display: block;
       padding: 12px;
       font-size: 20px;
-      color: $color-text;
+      color: #fff;
     }
   }
 }

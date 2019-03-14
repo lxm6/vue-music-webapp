@@ -18,7 +18,7 @@
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
-      <div class="tip" v-show="!hasMore">没有更多数据了</div>
+      <div class="tip" v-show="!hasMore && result.length">没有更多数据了</div>
     </ul>
     <div class="no-result-wrapper" v-show="!hasMore && !result.length">
       <no-result title="抱歉，暂无搜索结果"></no-result>
@@ -196,7 +196,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 15px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      border-bottom: 1px solid $color-border;
     }
 
     .icon {
@@ -212,7 +212,7 @@ export default {
     .name {
       flex: 1;
       font-size: $font-size-medium-x;
-      color: $color-text-l;
+      color: $color-text-ll;
       overflow: hidden;
 
       .text {

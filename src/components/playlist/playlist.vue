@@ -26,7 +26,7 @@
               @click="selectItem(item,index)"
             >
               <i class="current" :class="getCurrentIcon(item)"></i>
-              <span class="text">{{item.name}}</span>
+              <span class="text" :class="getCurrent(item)">{{item.name}}</span>
               <span @click.stop="toggleFavorite(item)" class="like">
                 <i :class="getFavoriteIcon(item)"></i>
               </span>
@@ -98,6 +98,12 @@ export default {
     getCurrentIcon(item) {
       if (this.currentSong.id === item.id) {
         return "icon-play";
+      }
+      return "";
+    },
+    getCurrent(item) {
+      if (this.currentSong.id === item.id) {
+        return "current-play";
       }
       return "";
     },
@@ -184,9 +190,8 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgba(0,0,0,0.85);
-    // background-color: #18251f;
-    // background-color: $color-background;
+    background-color: $color-playlist-bg
+
 
     .list-header {
       position: relative;
@@ -199,13 +204,13 @@ export default {
         .icon {
           margin-right: 10px;
           font-size: 30px;
-          color: $color-theme-d;
+          color: $color-theme;
         }
 
         .text {
           flex: 1;
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: $color-theme;
         }
 
         .clear {
@@ -228,9 +233,8 @@ export default {
         display: flex;
         align-items: center;
         height: 45px;
-        padding: 0 15px 0 5px;
         overflow: hidden;
-        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        border-top: 1px solid $color-border;
 
         &.list-enter-active, &.list-leave-active {
           transition: all 0.1s;
@@ -239,25 +243,30 @@ export default {
         &.list-enter, &.list-leave-to {
           height: 0;
         }
+      
 
         .current {
           flex: 0 0 20px;
           width: 20px;
-          font-size: $font-size-small;
-          color: $color-theme-d;
+          font-size: $font-size-medium;
+          color: $color-theme;
         }
+        
 
         .text {
           flex: 1;
           no-wrap();
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: $color-text-ll;
+        }
+        .current-play{
+          color: $color-theme;
         }
 
         .like {
           extend-click();
           margin-right: 15px;
-          font-size: $font-size-medium;
+          font-size: $font-size-medium-x;
           color: $color-theme;
 
           .icon-favorite {
@@ -268,22 +277,22 @@ export default {
         .delete {
           extend-click();
           font-size: $font-size-medium;
-          color: $color-theme;
+          color: rgba(0,0,0,0.3);
         }
       }
     }
 
     .list-operate {
       width: 140px;
-      margin: 10px auto 20px auto;
+      margin: 10px auto 15px auto;
 
       .add {
         display: flex;
         align-items: center;
         padding: 10px 16px;
-        border: 1px solid $color-text-l;
+        border: 1px solid $color-theme;
         border-radius: 100px;
-        color: $color-text-l;
+        color: $color-theme;
 
         .icon-add {
           margin-right: 5px;
@@ -299,10 +308,9 @@ export default {
     .list-close {
       text-align: center;
       line-height: 50px;
-      // background: $color-background-dd;
-      background: $color-background;
+      background: $color-theme;
       font-size: $font-size-medium-x;
-      color: $color-text-l;
+      color: #fff;
     }
   }
 }

@@ -51,27 +51,7 @@ import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
 
 export default {
-  mounted() {
-    var router = this.$router;
-    this.$refs.recommendList.addEventListener("touchstart", e => {
-      this.startX = e.touches[0].pageX;
-    });
-    this.$refs.recommendList.addEventListener("touchmove", e => {
-      var moveEndX = e.changedTouches[0].pageX;
-      var X = moveEndX - this.startX;
-      if (X < -100) {
-        this.$refs.recommend.style.left = X - 100 + "px";
-      }
-    });
-    this.$refs.recommendList.addEventListener("touchend", e => {
-      if (this.$refs.recommend.offsetLeft < -100) {
-        router.push("./singer");
-        this.$refs.recommend.style.left = 0 + "px";
-      } else {
-        this.$refs.recommend.style.left = 0 + "px";
-      }
-    });
-  },
+
   mixins: [playlistMixin],
   data() {
     return {
@@ -159,7 +139,7 @@ export default {
         height: 50px;
         line-height: 50px;
         text-align: center;
-        font-size: $font-size-medium;
+        font-size: $font-size-medium-x;
         color: $color-theme;
       }
 
@@ -192,7 +172,7 @@ export default {
           }
 
           .desc {
-            color: $color-text-d;
+            color: $color-text-l;
           }
         }
       }

@@ -54,17 +54,17 @@ export default {
   position: relative;
 
   circle {
-    stroke-width: 8px;
+    stroke-width: 12px;
     transform-origin: center;
 
     &.progress-background {
-      transform: scale(0.9);
-      stroke: $color-theme-d;
+      transform: scale(0.85);
     }
 
     &.progress-bar {
-      transform: scale(0.9) rotate(-90deg);
+      transform: scale(0.85) rotate(-90deg);
       stroke: $color-theme;
+
     }
   }
 }

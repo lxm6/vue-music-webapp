@@ -18,6 +18,10 @@
       <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
+    <div class="backTop" v-show="showBackTop" @click="backTop">
+      <i class="icon-back"></i>
+    </div>
+
     <scroll
       @scroll="scroll"
       :listen-scroll="listenScroll"
@@ -84,7 +88,8 @@ export default {
   },
   data() {
     return {
-      scrollY: 0
+      scrollY: 0,
+      showBackTop: false
     };
   },
   computed: {
@@ -103,6 +108,9 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
+    backTop() {
+      this.$refs.list.scrollTo(0, 0, 500);
+    },
     show() {
       this.showFlag = true;
     },
@@ -141,40 +149,45 @@ export default {
     },
     ...mapActions(["selectPlay", "randomPlay"])
   },
-   watch: {
-      scrollY(newVal) {
-        let translateY = Math.max(this.minTransalteY, newVal)
-        let scale = 1
-        let zIndex = 0
-        let blur = 0
-        const percent = Math.abs(newVal / this.imageHeight)
-        if (newVal > 0) {
-          scale = 1 + percent
-          zIndex = 10
-        } else {
-          blur = Math.min(20, percent * 20)
-        }
-
-        this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`
-        this.$refs.filter.style[backdrop] = `blur(${blur}px)`
-        if (newVal < this.minTransalteY) {
-          zIndex = 10
-          this.$refs.bgImage.style.paddingTop = 0
-          this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
-          // this.$refs.playBtn.style.display = 'none'
-          // this.$refs.favorBtn.style.display = 'none'
-          this.$refs.wrapperBtn.style.display = 'none'
-        } else {
-          this.$refs.bgImage.style.paddingTop = '70%'
-          this.$refs.bgImage.style.height = 0
-          // this.$refs.playBtn.style.display = ''
-          this.$refs.wrapperBtn.style.display = ''
-   
-        }
-        this.$refs.bgImage.style[transform] = `scale(${scale})`
-        this.$refs.bgImage.style.zIndex = zIndex
+  watch: {
+    scrollY(newVal) {
+      let translateY = Math.max(this.minTransalteY, newVal);
+      let scale = 1;
+      let zIndex = 0;
+      let blur = 0;
+      const percent = Math.abs(newVal / this.imageHeight);
+      if (newVal < -400) {
+        this.showBackTop = true;
+      } else {
+        this.showBackTop = false;
       }
-    },
+      if (newVal > 0) {
+        scale = 1 + percent;
+        zIndex = 10;
+      } else {
+        blur = Math.min(20, percent * 20);
+      }
+
+      this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`;
+      this.$refs.filter.style[backdrop] = `blur(${blur}px)`;
+
+      if (newVal < this.minTransalteY) {
+        zIndex = 10;
+        this.$refs.bgImage.style.paddingTop = 0;
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
+        // this.$refs.playBtn.style.display = 'none'
+        // this.$refs.favorBtn.style.display = 'none'
+        this.$refs.wrapperBtn.style.display = "none";
+      } else {
+        this.$refs.bgImage.style.paddingTop = "70%";
+        this.$refs.bgImage.style.height = 0;
+        // this.$refs.playBtn.style.display = ''
+        this.$refs.wrapperBtn.style.display = "";
+      }
+      this.$refs.bgImage.style[transform] = `scale(${scale})`;
+      this.$refs.bgImage.style.zIndex = zIndex;
+    }
+  },
   components: {
     Scroll,
     Loading,
@@ -220,7 +233,7 @@ export default {
     text-align: center;
     line-height: 40px;
     font-size: $font-size-large;
-    color: $color-text;
+    color: #fff;
   }
 
   .bg-image {
@@ -248,7 +261,7 @@ export default {
         border: 1px solid $color-theme;
         color: $color-theme;
         border-radius: 100px;
-        background-color rgba(0,0,0,0.1)
+        background-color: rgba(0, 0, 0, 0.1);
         font-size: 0;
 
         .icon-play, .icon-favorite, .icon-not-favorite {
@@ -279,7 +292,7 @@ export default {
   .bg-layer {
     position: relative;
     height: 100%;
-    background: $color-background;
+    background: #fff;
   }
 
   .list {
@@ -287,10 +300,10 @@ export default {
     top: 0;
     bottom: 0;
     width: 100%;
-    background: $color-background;
+    background: #fff;
 
     .song-list-wrapper {
-      padding: 10px 15px;
+      padding: 10px 25px 0 25px;
     }
 
     .loading-container {
@@ -301,6 +314,25 @@ export default {
     }
   }
 
+  .backTop {
+    z-index: 999;
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    background: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 54px;
+    color: #9E9E9E;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 12px rgba(190, 190, 190, 0.35);
+    box-shadow: 0 0 12px rgba(190, 190, 190, 0.35);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    border: 1px solid #ebebeb;
+  }
+
   .tip-title {
     text-align: center;
     padding: 18px 0;
@@ -308,7 +340,7 @@ export default {
 
     .text {
       font-size: $font-size-medium-x;
-      color: $color-text;
+      color: #fff;
     }
   }
 }

@@ -94,7 +94,7 @@ export default {
     position: relative;
     top: 13px;
     height: 3px;
-    background: $color-text-d
+    background: rgba(255,255,255,0.3);
 
     .progress {
       position: absolute;
@@ -116,7 +116,7 @@ export default {
         box-sizing: border-box;
         width: 15px;
         height: 15px;
-        border: 3px solid $color-text;
+        border: 3px solid #fff;
         border-radius: 50%;
         background: $color-theme;
       }

@@ -156,7 +156,7 @@ export default {
       songReady: false,
       currentTime: 0,
       // 环形进度条大小
-      radius: 32,
+      radius: 36,
       currentLyric: null,
       // 当前歌词所在行,用来高亮
       currentLineNum: 0,
@@ -607,9 +607,7 @@ export default {
           this.$refs.topTip.show();
           this.songReady = true;
           this.setPlayingState(false);
-          this.currentTime = 0;
-          this.playingLyric = "";
-          this.currentLineNum = 0;
+          this.currentLyric=""
           this.currentSongUrl = "";
         });
     },
@@ -661,7 +659,7 @@ export default {
     top: 0;
     bottom: 0;
     z-index: 150;
-    background: $color-background;
+    background: #222;
 
     .background {
       position: absolute;
@@ -690,6 +688,7 @@ export default {
           display: block;
           padding: 9px;
           font-size: $font-size-large-x;
+          transform: rotate(-90deg)
         }
       }
 
@@ -700,7 +699,7 @@ export default {
         text-align: center;
         no-wrap();
         font-size: $font-size-large;
-        color: $color-text;
+        color: #fff;
       }
 
       .subtitle {
@@ -708,7 +707,7 @@ export default {
         text-align: center;
         // margin-left: 15%;
         font-size: $font-size-medium;
-        color: $color-text;
+        color: #fff;
       }
 
       .favorite {
@@ -820,7 +819,7 @@ export default {
             height: 20px;
             line-height: 20px;
             font-size: $font-size-medium-x;
-            color: $color-text-l;
+            color: rgba(255, 255, 255, 0.5);
           }
         }
       }
@@ -841,13 +840,13 @@ export default {
 
           .pure-music {
             padding-top: 50%;
-            color: $color-text-l;
+            color: rgba(255, 255, 255, 0.5);;
             font-size: $font-size-medium-x;
           }
 
           .text {
             line-height: 38px;
-            color: $color-text-l;
+            color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
 
             &.current {
@@ -874,12 +873,12 @@ export default {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: $color-text-l;
+          background: rgba(255, 255, 255, 0.5);
 
           &.active {
             width: 20px;
             border-radius: 5px;
-            background: $color-text-ll;
+            background: rgba(255,255,255,0.8);
           }
         }
       }
@@ -892,7 +891,7 @@ export default {
         padding: 10px 0;
 
         .time {
-          color: $color-text;
+          color: #fff;
           font-size: $font-size-small;
           flex: 0 0 30px;
           line-height: 30px;
@@ -978,8 +977,8 @@ export default {
     z-index: 180;
     width: 100%;
     height: 60px;
-    background: $color-background-dd;
-    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    box-shadow: 0 -2px 14px 2px rgba(0, 0, 0, 0.1);
 
     &.mini-enter-active, &.mini-leave-active {
       transition: all 0.4s;
@@ -997,7 +996,7 @@ export default {
 
       img {
         border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.2);
+        border: 3px solid #ddd;
 
         &.play {
           animation: rotate 20s linear infinite;
@@ -1033,19 +1032,19 @@ export default {
 
     .control {
       flex: 0 0 30px;
-      width: 30px;
+      width: 36px;
       padding: 0 10px;
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;
-        color: $color-theme-d;
+        color: $color-theme;
       }
 
       .icon-mini {
-        font-size: 32px;
+        font-size: 36px;
         position: absolute;
         left: 0;
-        top: 0;
+        top: 1px;
       }
     }
   }
@@ -1057,7 +1056,7 @@ export default {
 
     .text {
       font-size: $font-size-medium-x;
-      color: $color-text;
+      color:#fff
     }
   }
 }

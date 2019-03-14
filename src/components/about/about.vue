@@ -41,7 +41,7 @@
           </ul>
         </div>
       </div>
-      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清空"></confirm>
+      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
     </div>
   </transition>
 </template>
@@ -148,25 +148,21 @@ export default {
 }
 
 .leftNav {
-  background-color: #111;
-  width: 50%;
+  background-color: $color-highlight-background;
+  width: 60%;
   height: 100%;
   opacity: 0.95;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);
-  color: #fff;
 
   ul {
     padding-top: 100px;
 
     li {
       padding-left: 30px;
-      color: #fff;
+      color: $color-text;
       height: 60px;
       line-height: 60px;
 
-      &:hover {
-        background-color: #333937;
-      }
     }
   }
 }
@@ -178,13 +174,13 @@ export default {
 
   .icon-ok {
     font-size: $font-size-medium-x;
-    color: $color-text;
+    color: #fff;
     margin-right: 6px;
   }
 
   .text {
     font-size: $font-size-medium-x;
-    color: $color-text;
+    color: #fff;
   }
 }
 
@@ -207,8 +203,8 @@ export default {
     z-index: 3000;
     width: 200px;
     height: 245px;
-    background-color: #000;
-    box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.6);
+    background-color: #fff;
+    box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     font-size: 16px;
     color: $color-theme;
@@ -222,7 +218,7 @@ export default {
     }
 
     .url:hover {
-      background-color: #333937;
+      background-color: rgba(255,255,255,0.5);
     }
 
     ul {
@@ -237,7 +233,7 @@ export default {
           margin-left: 50px;
           display: inline-block;
           float: right;
-          color: #d5d5d5;
+          color:rgba(0,0,0,0.7);
         }
       }
 

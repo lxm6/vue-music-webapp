@@ -51,7 +51,7 @@ export default {
 
     .text {
       flex: 1;
-      color: $color-text-l;
+      color: $color-text-ll;
     }
 
     .icon {

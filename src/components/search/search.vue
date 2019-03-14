@@ -57,27 +57,7 @@ import { mapActions, mapGetters } from "vuex";
 import { playlistMixin, searchMixin } from "common/js/mixin";
 
 export default {
-  mounted() {
-    var router = this.$router;
-    this.$refs.search.addEventListener("touchstart", e => {
-      this.startX = e.touches[0].pageX;
-    });
-    this.$refs.search.addEventListener("touchmove", e => {
-      var moveEndX = e.changedTouches[0].pageX;
-      var X = moveEndX - this.startX;
-      if (X > 100) {
-        this.$refs.search.style.left = X - 100 + "px";
-      }
-    });
-    this.$refs.search.addEventListener("touchend", e => {
-      if (this.$refs.search.offsetLeft > 100) {
-        router.push("./rank");
-        this.$refs.search.style.left = 0 + "px";
-      } else {
-        this.$refs.search.style.left = 0 + "px";
-      }
-    });
-  },
+
   mixins: [playlistMixin, searchMixin],
   created() {
     this._getHotKey();
@@ -174,10 +154,9 @@ export default {
           padding: 5px 10px;
           margin: 0 12px 10px 0;
           border-radius: 15px;
-          border: 1px solid $color-text-d;
-          // background: $color-highlight-background;
+          border: 1px solid $color-text-l;
           font-size: $font-size-medium;
-          color: $color-text-d;
+          color: $color-text-l;
         }
       }
 
