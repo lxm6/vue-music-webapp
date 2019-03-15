@@ -84,11 +84,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         }).then((response) => {
           var ret = response.data
           if (typeof ret === 'string') {
-            // var reg = /^\w+\(({[^()]+})\)$/
-            var reg = /{.*}/
+            var reg = /^\w+\(({[^()]+})\)$/
             var matches = ret.match(reg)
             if (matches) {
-              ret = JSON.parse(matches[0])
+              ret = JSON.parse(matches[1])
+
             }
           }
           res.json(ret)

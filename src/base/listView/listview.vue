@@ -190,13 +190,12 @@ export default {
   background: $color-highlight-background;
 
   .list-group {
-    padding-bottom: 30px;
 
     .list-group-title {
       height: 30px;
       line-height: 30px;
       padding-left: 20px;
-      font-size: $font-size-small;
+      font-size: $font-size-medium;
       color: $color-text-l;
       background: $color-background;
     }
@@ -204,7 +203,8 @@ export default {
     .list-group-item {
       display: flex;
       align-items: center;
-      padding: 20px 0 0 30px;
+      padding: 10px 0 10px 30px;
+      border-bottom 1px solid $color-border
 
       .avatar {
         width: 50px;
@@ -227,10 +227,10 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
-    padding: 20px 0;
+    padding: 10px 0;
     border-radius: 10px;
     text-align: center;
-    background: $color-background-dd;
+    background: #eee;
     font-family: Helvetica;
 
     .item {
@@ -255,7 +255,7 @@ export default {
       height: 30px;
       line-height: 30px;
       padding-left: 20px;
-      font-size: $font-size-small;
+      font-size: $font-size-medium;
       color: $color-text-l;
       background: $color-background;
     }

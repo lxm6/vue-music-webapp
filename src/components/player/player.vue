@@ -61,6 +61,8 @@
               <div class="pure-music" v-if="isPure">
                 <p>此歌曲没有歌词</p>
               </div>
+                <div class="blank" >
+              </div>
             </div>
           </scroll>
         </div>
@@ -408,7 +410,7 @@ export default {
             return;
           }
           // 解析歌词
-          this.currentLyric = new Lyric(lyric, this.handleLyric);
+          this.currentLyric = new Lyric(lyric.replace(/&apos;/g,"'"), this.handleLyric);
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
             this.isPure = true;
@@ -606,7 +608,6 @@ export default {
           this.msg = "此歌曲无法播放";
           this.$refs.topTip.show();
           this.songReady = true;
-          this.setPlayingState(false);
           this.currentLyric=""
           this.currentSongUrl = "";
         });
@@ -816,7 +817,7 @@ export default {
           text-align: center;
 
           .playing-lyric {
-            height: 20px;
+            white-space:normal
             line-height: 20px;
             font-size: $font-size-medium-x;
             color: rgba(255, 255, 255, 0.5);
@@ -837,6 +838,9 @@ export default {
           margin: 0 auto;
           overflow: hidden;
           text-align: center;
+          .blank{
+             padding-top: 20%;
+            }
 
           .pure-music {
             padding-top: 50%;
@@ -845,9 +849,11 @@ export default {
           }
 
           .text {
-            line-height: 38px;
+            white-space:normal
+            line-height: 25px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
+            padding-bottom :18px
 
             &.current {
               color: $color-theme;
