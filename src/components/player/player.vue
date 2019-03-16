@@ -61,8 +61,7 @@
               <div class="pure-music" v-if="isPure">
                 <p>此歌曲没有歌词</p>
               </div>
-                <div class="blank" >
-              </div>
+              <div class="blank"></div>
             </div>
           </scroll>
         </div>
@@ -217,9 +216,9 @@ export default {
           a.href = `http://dl.stream.qqmusic.qq.com${
             this.currentSongUrl.match(/^https?\:\/\/[\w\.]+(.+)$/)[1]
           }`;
-             a.download = `${this.currentSong.name}${this.url.match(
-                        /^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/
-                    )[1]}`;
+          a.download = `${this.currentSong.name}${
+            this.url.match(/^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/)[1]
+          }`;
           a.click();
         }
       }, 400);
@@ -410,7 +409,10 @@ export default {
             return;
           }
           // 解析歌词
-          this.currentLyric = new Lyric(lyric.replace(/&apos;/g,"'"), this.handleLyric);
+          this.currentLyric = new Lyric(
+            lyric.replace(/&apos;/g, "'"),
+            this.handleLyric
+          );
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
             this.isPure = true;
@@ -605,11 +607,17 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          this.msg = "此歌曲无法播放";
+          this.msg = "已跳过无法播放的歌曲";
           this.$refs.topTip.show();
           this.songReady = true;
-          this.currentLyric=""
-          this.currentSongUrl = "";
+          if (nextFlag) {
+            this.next();
+          } else {
+            this.prev();
+          }
+          // this.setPlayingState(false);
+          // this.currentLyric=""
+          // this.currentSongUrl = "";
         });
     },
     currentSongUrl() {
@@ -689,7 +697,7 @@ export default {
           display: block;
           padding: 9px;
           font-size: $font-size-large-x;
-          transform: rotate(-90deg)
+          transform: rotate(-90deg);
         }
       }
 
@@ -817,7 +825,7 @@ export default {
           text-align: center;
 
           .playing-lyric {
-            white-space:normal
+            white-space: normal;
             line-height: 20px;
             font-size: $font-size-medium-x;
             color: rgba(255, 255, 255, 0.5);
@@ -838,22 +846,23 @@ export default {
           margin: 0 auto;
           overflow: hidden;
           text-align: center;
-          .blank{
-             padding-top: 20%;
-            }
+
+          .blank {
+            padding-top: 20%;
+          }
 
           .pure-music {
             padding-top: 50%;
-            color: rgba(255, 255, 255, 0.5);;
+            color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
           }
 
           .text {
-            white-space:normal
+            white-space: normal;
             line-height: 25px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
-            padding-bottom :18px
+            padding-bottom: 18px;
 
             &.current {
               color: $color-theme;
@@ -884,7 +893,7 @@ export default {
           &.active {
             width: 20px;
             border-radius: 5px;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.8);
           }
         }
       }
@@ -991,8 +1000,7 @@ export default {
     }
 
     &.mini-enter, &.mini-leave-to {
-      // opacity: 0;
-     transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
     }
 
     .icon {
@@ -1062,7 +1070,7 @@ export default {
 
     .text {
       font-size: $font-size-medium-x;
-      color:#fff
+      color: #fff;
     }
   }
 }

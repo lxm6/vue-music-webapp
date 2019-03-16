@@ -9,7 +9,7 @@
   >
     <ul>
       <li v-for="(group,index) in data" class="list-group" ref="listGroup" :key="index">
-        <h2 class="list-group-title">{{group.title}}</h2>
+        <h2 class="list-group-title">{{group.title.replace(/9/,"#")}}</h2>
         <uL>
           <li @click="selectItem(item)" v-for="(item,index) in group.items" class="list-group-item" :key="index">
             <img class="avatar" v-lazy="item.avatar">
@@ -61,7 +61,7 @@ export default {
   computed: {
     shortcutList() {
       return this.data.map(group => {
-        return group.title.substr(0, 1);
+        return group.title.replace(/9/,"#").substr(0, 1);
       });
     },
     fixedTitle() {
@@ -69,7 +69,7 @@ export default {
         return "";
       }
       return this.data[this.currentIndex]
-        ? this.data[this.currentIndex].title
+        ? this.data[this.currentIndex].title.replace(/9/,"#")
         : "";
     }
   },

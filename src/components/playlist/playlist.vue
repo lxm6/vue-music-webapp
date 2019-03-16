@@ -141,6 +141,7 @@ export default {
       if (!this.playListVisible || newSong.id === oldSong.id) {
         return;
       }
+     
       setTimeout(() => {
         this.scrollToCurrent(newSong);
       }, 20);
