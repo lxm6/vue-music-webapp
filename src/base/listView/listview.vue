@@ -203,7 +203,7 @@ export default {
     .list-group-item {
       display: flex;
       align-items: center;
-      padding: 10px 0 10px 30px;
+      padding: 8px 0 8px 30px;
       border-bottom 1px solid $color-border
 
       .avatar {
@@ -241,6 +241,7 @@ export default {
 
       &.current {
         color: $color-theme;
+        font-weight bold
       }
     }
   }

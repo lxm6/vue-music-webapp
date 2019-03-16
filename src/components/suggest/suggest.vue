@@ -10,11 +10,13 @@
   >
     <ul class="suggest-list">
       <li @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.docid">
+        <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid">
         <div class="icon">
           <i :class="getIconCls(item)"></i>
         </div>
         <div class="name">
           <p class="text" v-html="getDisplayName(item)"></p>
+          <p class="subtext" v-html="item.singer"></p>
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
@@ -61,6 +63,7 @@ export default {
       pullup: true,
       beforeScroll: true,
       hasMore: true,
+      first:true,
       result: []
     };
   },
@@ -102,7 +105,6 @@ export default {
     },
     selectItem(item) {
       if (item.isPay) {
-        console.log("dd");
         this.$refs.topTip.show();
         return;
       }
@@ -120,23 +122,25 @@ export default {
       }
       this.$emit("select", item);
     },
+    getAvatar(mid) {
+        return `//y.gtimg.cn/music/photo_new/T001R150x150M000${mid}.jpg?max_age=2592000`;
+    },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
         return item.singername;
+
       } else {
-        return `${item.name}-${item.singer}`;
+        return item.name;
       }
     },
     getIconCls(item) {
-      if (item.type === TYPE_SINGER) {
-        return "icon-mine";
-      } else {
+      if (item.type !== TYPE_SINGER) {
         return "icon-music";
       }
     },
     _genResult(data) {
       let ret = [];
-      if (data.zhida && data.zhida.singerid) {
+      if (data.zhida && data.zhida.singerid && this.page === 1) {
         ret.push({ ...data.zhida, ...{ type: TYPE_SINGER } });
       }
       if (data.song) {
@@ -195,21 +199,23 @@ export default {
     .suggest-item {
       display: flex;
       align-items: center;
-      padding: 15px 0;
+      padding: 10px 0;
       border-bottom: 1px solid $color-border;
     }
 
-    .icon {
-      flex: 0 0 30px;
-      width: 30px;
+    .avatar {
+      width: 40px;
+      border-radius: 50%;
+    }
 
-      [class^='icon-'] {
-        font-size: $font-size-medium-x;
-        color: $color-text-l;
-      }
+    .icon-music {
+      width: 30px;
+      font-size: $font-size-medium-x;
+      color: $color-text-l;
     }
 
     .name {
+      margin-left:10px 
       flex: 1;
       font-size: $font-size-medium-x;
       color: $color-text-ll;
@@ -218,13 +224,19 @@ export default {
       .text {
         no-wrap();
       }
-      
+
+      .subtext {
+        padding-top: 5px;
+        font-size: $font-size-medium;
+        color: $color-text-l;
+      }
     }
-    .tip{
-        color: $color-text-ll;
-        text-align center;
-        padding 20px 0
-        }
+
+    .tip {
+      color: $color-text-ll;
+      text-align: center;
+      padding: 20px 0;
+    }
   }
 
   .no-result-wrapper {

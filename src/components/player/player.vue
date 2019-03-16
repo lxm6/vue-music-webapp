@@ -1050,7 +1050,7 @@ export default {
         font-size: 36px;
         position: absolute;
         left: 0;
-        top: 1px;
+        top: 0px;
       }
     }
   }

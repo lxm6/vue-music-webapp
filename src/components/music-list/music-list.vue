@@ -179,7 +179,7 @@ export default {
         // this.$refs.favorBtn.style.display = 'none'
         this.$refs.wrapperBtn.style.display = "none";
       } else {
-        this.$refs.bgImage.style.paddingTop = "70%";
+        this.$refs.bgImage.style.paddingTop = "65%";
         this.$refs.bgImage.style.height = 0;
         // this.$refs.playBtn.style.display = ''
         this.$refs.wrapperBtn.style.display = "";
@@ -240,7 +240,7 @@ export default {
     position: relative;
     width: 100%;
     height: 0;
-    padding-top: 70%;
+    padding-top: 65%;
     transform-origin: top;
     background-size: cover;
 
