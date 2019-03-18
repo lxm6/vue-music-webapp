@@ -16,7 +16,6 @@ export function getSingerList(index) {
     hostUin: 0,
     needNewCode: 0,
     platform: 'yqq',
-    data: JSON.stringify(commonParams)
   })
   return jsonp(url, data, options)
 }

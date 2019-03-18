@@ -69,6 +69,7 @@
           <div class="dot-wrapper">
             <span class="dot" :class="{'active':currentShow==='cd'}"></span>
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+            <span class="dot" @click="showLyricset">ddd</span>
           </div>
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
@@ -117,6 +118,7 @@
       </div>
     </transition>
     <playlist ref="playlist"></playlist>
+    <lyricset ref="lyricset"></lyricset>
     <audio
       ref="audio"
       :src="currentSongUrl"
@@ -143,6 +145,7 @@ import { shuffle } from "common/js/util";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
 import Playlist from "components/playlist/playlist";
+import Lyricset from "components/lyricset/lyricset";
 import TopTip from "base/top-tip/top-tip";
 import { playerMixin } from "common/js/mixin";
 
@@ -447,6 +450,9 @@ export default {
     showPlaylist() {
       this.$refs.playlist.show();
     },
+     showLyricset() {
+      this.$refs.lyricset.show();
+    },
     // 点击唱片部分
     middleTouchStart(e) {
       // 触控标志位
@@ -652,6 +658,7 @@ export default {
     ProgressCircle,
     Scroll,
     Playlist,
+    Lyricset,
     TopTip
   }
 };

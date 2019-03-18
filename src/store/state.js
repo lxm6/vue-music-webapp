@@ -13,6 +13,7 @@ const state = {
   fullScreen: false,
   playListVisible: false,
   addSongVisible: false,
+  lyricsetVisible: false,
   playlist: [],
   sequenceList: [],
   mode: playMode.sequence,

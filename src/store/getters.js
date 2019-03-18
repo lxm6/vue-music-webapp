@@ -17,3 +17,4 @@ export const favoriteList = state => state.favoriteList
 export const favoriteListList = state => state.favoriteListList;
 export const playListVisible = state => state.playListVisible;
 export const addSongVisible = state => state.addSongVisible;
+export const lyricsetVisible = state => state.lyricsetVisible;
