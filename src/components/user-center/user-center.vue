@@ -227,13 +227,13 @@ export default {
       overflow: hidden;
 
       .list-inner {
-        padding: 10px 15px;
+        padding: 10px 0px;
 
         .item {
           display: flex;
           box-sizing: border-box;
           align-items: center;
-          margin-bottom: 10px
+          margin: 10px 20px
           padding: 10px;
           background: $color-highlight-background;
 

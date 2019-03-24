@@ -203,19 +203,19 @@ export default {
     .list-group-item {
       display: flex;
       align-items: center;
-      padding: 8px 0 8px 30px;
+      padding: 7px 0 7px 20px;
       border-bottom 1px solid $color-border
 
       .avatar {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
       }
 
       .name {
         margin-left: 20px;
         color: $color-text;
-        font-size: $font-size-medium;
+        font-size: $font-size-medium-x;
       }
     }
   }

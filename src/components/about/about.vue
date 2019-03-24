@@ -21,17 +21,18 @@
           <h1>关于</h1>
           <ul>
             <li>
-              软件名称
+              网站
               <span>柠檬音乐</span>
             </li>
-            <li>
-              版本
-              <span>1.0.0</span>
-            </li>
-            <li>
+             <li>
               网址
               <span>lxm6.top</span>
             </li>
+            <li>
+              作者
+              <span>LXM</span>
+            </li>
+           
             <li @click="openUrl" class="url">
               GitHub
               <span>
@@ -230,7 +231,7 @@ export default {
         line-height: 50px;
 
         span {
-          margin-left: 50px;
+          margin-left: 80px;
           display: inline-block;
           float: right;
           color:rgba(0,0,0,0.7);

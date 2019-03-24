@@ -26,6 +26,7 @@ export default {
       type: Array,
       default: null
     },
+       //上拉刷新
     pullup: {
       type: Boolean,
       default: false

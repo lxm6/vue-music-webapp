@@ -129,6 +129,7 @@ export default {
     back() {
       this.$router.back();
     },
+
     selectItem(item, index) {
       if (item.isPay) {
         this.$refs.topTip.show();
@@ -303,7 +304,7 @@ export default {
     background: #fff;
 
     .song-list-wrapper {
-      padding: 5px 25px 0 25px;
+      padding: 5px 0px 0 0px;
     }
 
     .loading-container {

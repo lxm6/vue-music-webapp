@@ -53,8 +53,8 @@ export const selectPlay = function ({
   }
   // 点击的当前歌曲下标
   commit(types.SET_CURRENT_INDEX, index)
-  // 改变为全屏模式
-  commit(types.SET_FULL_SCREEN, true)
+  // // 改变为全屏模式
+  // commit(types.SET_FULL_SCREEN, true)
   // 改变当前的播放状态
   commit(types.SET_PLAYING_STATE, true)
 }

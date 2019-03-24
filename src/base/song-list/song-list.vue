@@ -1,13 +1,13 @@
 <template>
   <div class="song-list">
     <ul>
-      <li v-for="(item,index) in songs" :key="index" class="item" @click="selectSong(item,index)">
+      <li v-for="(item,index) in songs" :key="index" class="item" :class="{'current-play-b':getCurrent(item)}" @click="selectSong(item,index)">
         <div class="rank" v-show="rank">
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
         </div>
-        <div class="content">
-          <h2 class="name">{{item.name}}</h2>
-          <p class="desc">{{getDesc(item)}}</p>
+        <div class="content" >
+          <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+          <p class="desc" :class="{'current-play':getCurrent(item)}">{{getDesc(item)}}</p>
         </div>
       </li>
     </ul>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     songs: {
@@ -26,7 +27,21 @@ export default {
       default: false
     }
   },
+  computed: {
+    ...mapGetters(["currentSong"])
+  },
   methods: {
+    getCurrent(item) {
+      if (this.currentSong.id === item.id) {
+        return true;
+      }
+    },
+    getCurrentB(item) {
+      if (this.currentSong.id === item.id) {
+        return "current-play-b";
+      }
+      return "";
+    },
     getDesc(song) {
       return `${song.singer} · ${song.album}`;
     },
@@ -53,13 +68,15 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
+  padding-top 10px
+
   .item {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    font-size: $font-size-medium;
-    padding: 10px 0px;
-    border-bottom: 1px solid $color-border;
+    padding: 0px 0px 0px 25px;
+    border-left: 5px solid $color-background;
+
 
     .rank {
       flex: 0 0 25px;
@@ -96,18 +113,29 @@ export default {
       flex: 1;
       line-height: 20px;
       overflow: hidden;
+      border-bottom: 1px solid $color-border;
+      padding: 7px 0px;
 
       .name {
         no-wrap();
+        font-size: $font-size-medium-x;
         color: $color-text;
       }
 
       .desc {
+        font-size: $font-size-small;
         no-wrap();
         margin-top: 4px;
         color: $color-text-l;
       }
+
+      .current-play {
+        color: $color-theme;
+      }
     }
   }
+    .current-play-b {
+      border-left: 5px solid $color-theme;
+    }
 }
 </style>

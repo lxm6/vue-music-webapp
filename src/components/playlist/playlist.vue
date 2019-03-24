@@ -5,7 +5,8 @@
         <div class="list-header">
           <h1 class="title">
             <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text">{{modeText}}</span>
+            <span class="text">{{modeText}} <span class="text" v-show="mode!=1">（{{playlist.length}}首）</span></span>
+           
             <span class="clear" @click="showConfirm">
               <i class="icon-clear"></i>
             </span>
