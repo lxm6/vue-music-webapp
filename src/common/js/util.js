@@ -16,7 +16,6 @@ export function shuffle(arr) {
 //节流函数
 export function debounce(func, delay) {
   let timer
-
   return function (...args) {
     if (timer) {
       clearTimeout(timer)

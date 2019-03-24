@@ -85,15 +85,9 @@ const router = new Router({
     {
       path: '/singer',
       component: Singer,
-      meta: {
-        keepAlive: true,
-      },
       children: [{
         path: ':id',
         component: SingerDetail,
-        meta: {
-          keepAlive: true,
-        },
       }]
     },
     {

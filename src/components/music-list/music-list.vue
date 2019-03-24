@@ -303,7 +303,7 @@ export default {
     background: #fff;
 
     .song-list-wrapper {
-      padding: 10px 25px 0 25px;
+      padding: 5px 25px 0 25px;
     }
 
     .loading-container {
@@ -326,8 +326,8 @@ export default {
     color: #9E9E9E;
     text-align: center;
     border-radius: 50%;
-    -webkit-box-shadow: 0 0 12px rgba(190, 190, 190, 0.35);
-    box-shadow: 0 0 12px rgba(190, 190, 190, 0.35);
+    -webkit-box-shadow: 0 0 7px rgba(190, 190, 190, 0.35);
+    box-shadow: 2px 0 7px rgba(190, 190, 190, 0.35);
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
     border: 1px solid #ebebeb;

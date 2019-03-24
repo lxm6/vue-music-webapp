@@ -10,6 +10,7 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <player></player>
   </div>
+  
 </template>
 
 <script>

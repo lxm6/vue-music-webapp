@@ -12,7 +12,8 @@ const FAVORITE_KEY = '__favorite__'
 const FAVORITE_LIST_KEY = '__favoritelist__';
 const FAVORITE_MAX_LEN = 100
 
-
+//操作搜索历史数组的方法
+//参数：搜索记录数组，添加的项，筛选方法，最大数量
 function insertArray(arr, val, compare, maxLen) {
   const index = arr.findIndex(compare)
   if (index === 0) {
@@ -26,14 +27,7 @@ function insertArray(arr, val, compare, maxLen) {
     arr.pop()
   }
 }
-
-function deleteFromArray(arr, compare) {
-  const index = arr.findIndex(compare)
-  if (index > -1) {
-    arr.splice(index, 1)
-  }
-}
-
+//插入最新搜索历史到本地缓存，同时返回新的搜索历史数组
 export function saveSearch(query) {
   let searches = storage.get(SEARCH_KEY, [])
   insertArray(searches, query, (item) => {
@@ -42,6 +36,14 @@ export function saveSearch(query) {
   storage.set(SEARCH_KEY, searches)
   return searches
 }
+
+function deleteFromArray(arr, compare) {
+  const index = arr.findIndex(compare)
+  if (index > -1) {
+    arr.splice(index, 1)
+  }
+}
+
 
 export function deleteSearch(query) {
   let searches = storage.get(SEARCH_KEY, [])

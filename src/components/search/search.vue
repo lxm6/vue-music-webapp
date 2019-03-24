@@ -39,7 +39,7 @@
       <div class="search-result" v-show="query" ref="searchResult">
         <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
       </div>
-      <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
+      <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
       <router-view></router-view>
     </div>
   </div>
@@ -127,12 +127,12 @@ export default {
 
 .search {
   .search-box-wrapper {
-    margin: 20px;
+    margin: 14px 20px;
   }
 
   .shortcut-wrapper {
     position: fixed;
-    top: 165px;
+    top: 160px;
     bottom: 0;
     width: 100%;
 
@@ -146,7 +146,7 @@ export default {
         .title {
           margin-bottom: 15px;
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: $color-theme;
         }
 
         .item {
@@ -169,7 +169,7 @@ export default {
           align-items: center;
           height: 40px;
           font-size: $font-size-medium;
-          color: $color-text-l;
+          color: $color-theme;
           border-bottom: 1px solid $color-border;
 
           .text {
@@ -192,7 +192,7 @@ export default {
   .search-result {
     position: fixed;
     width: 100%;
-    top: 165px;
+    top: 160px;
     bottom: 0;
   }
 }

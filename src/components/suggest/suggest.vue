@@ -17,6 +17,7 @@
         <div class="name">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-html="item.singer"></p>
+          <p class="subtext" v-if="item.singermid">单曲：{{item.songnum}}&nbsp;&nbsp;专辑：{{item.albumnum}}</p>
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
@@ -141,7 +142,7 @@ export default {
     _genResult(data) {
       let ret = [];
       if (data.zhida && data.zhida.singerid && this.page === 1) {
-        ret.push({ ...data.zhida, ...{ type: TYPE_SINGER } });
+        ret.push({ ...data.zhida, ...{ type: TYPE_SINGER },...data.zhida.songnum,...data.zhida.albumnum });
       }
       if (data.song) {
         ret = ret.concat(this._normalizeSongs(data.song.list));
@@ -227,7 +228,7 @@ export default {
 
       .subtext {
         padding-top: 5px;
-        font-size: $font-size-medium;
+        font-size: $font-size-small-m;
         color: $color-text-l;
       }
     }
@@ -253,7 +254,7 @@ export default {
 
     .text {
       font-size: $font-size-medium-x;
-      color: $color-text;
+      color: #fff;
     }
   }
 }

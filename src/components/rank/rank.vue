@@ -110,7 +110,7 @@ export default {
         overflow: hidden;
         background: $color-highlight-background;
         color: $color-text-ll;
-        font-size: $font-size-small;
+        font-size: $font-size-small-m;
 
         .song {
           no-wrap();

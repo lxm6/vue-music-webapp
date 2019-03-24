@@ -53,13 +53,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
         axios.get(url, {
           headers: {
-            /* 根据访问的网址限制做的一种伪装 */
             referer: 'https://c.y.qq.com/',
             host: 'c.y.qq.com'
           },
           params: req.query
         }).then((response) => {
           var ret = response.data
+          //将接收到的jsonp文件转换为json格式
           if (typeof ret === 'string') {
             var reg = /^\w+\(({[^()]+})\)$/
             var mathes = ret.match(reg)

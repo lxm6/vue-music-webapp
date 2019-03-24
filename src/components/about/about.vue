@@ -29,8 +29,8 @@
               <span>1.0.0</span>
             </li>
             <li>
-              作者
-              <span>林秀梅</span>
+              网址
+              <span>lxm6.top</span>
             </li>
             <li @click="openUrl" class="url">
               GitHub

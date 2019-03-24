@@ -5,7 +5,6 @@ import {
 import {
   Base64
 } from 'js-base64'
-let isEmpty=false;
 export default class Song {
   constructor({
     id,
@@ -70,7 +69,6 @@ export default class Song {
       return Promise.reject(err);
     });
   }
-
 }
 
 

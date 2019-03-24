@@ -321,7 +321,6 @@ export default {
         if (index === this.playlist.length) {
           index = 0;
         }
-        // setCurrentIndex: mutation
         this.setCurrentIndex(index);
         if (!this.playing) {
           this.togglePlaying();
@@ -357,7 +356,6 @@ export default {
       }, 500);
       this.savePlayHistory(this.currentSong);
     },
-    // audio,防止极限点击操作报错
     error() {
       if (this.currentLyrics) {
         this.currentLyrics.stop();
@@ -416,6 +414,7 @@ export default {
             lyric.replace(/&apos;/g, "'"),
             this.handleLyric
           );
+
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
             this.isPure = true;
@@ -760,13 +759,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 80%; // 75
+        padding-top: 78%; 
 
         .cd-wrapper {
           position: absolute;
-          left: 12.5%; // 15%
+          left: 13%; // 15%
           top: 12%;
-          width: 80%; // 75
+          width: 78%; 
           height: 100%;
 
           .triger {
@@ -1065,7 +1064,7 @@ export default {
         font-size: 36px;
         position: absolute;
         left: 0;
-        top: 0px;
+        top: 1px;
       }
     }
   }
