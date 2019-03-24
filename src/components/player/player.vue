@@ -121,7 +121,7 @@
     <lyricset ref="lyricset"></lyricset>
     <audio
       ref="audio"
-      :src="currentSongUrl"
+      :src="currentSong.url"
       @play="ready"
       @error="error"
       @timeupdate="updateTime"
@@ -449,7 +449,7 @@ export default {
     showPlaylist() {
       this.$refs.playlist.show();
     },
-     showLyricset() {
+    showLyricset() {
       this.$refs.lyricset.show();
     },
     // 点击唱片部分
@@ -579,19 +579,22 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
+      this.$nextTick(() => {
+        this.$refs.audio.play();
+      });
+      // // 如果是付费歌曲
+      // if (newSong.isPay) {
+      //   this.msg = "已跳过付费歌曲";
+      //   this.$refs.topTip.show();
+      //   this.songReady = true;
+      //   if (nextFlag) {
+      //     this.next();
+      //   } else {
+      //     this.prev();
+      //   }
+      //   return;
+      // }
 
-      // 如果是付费歌曲
-      if (newSong.isPay) {
-        this.msg = "已跳过付费歌曲";
-        this.$refs.topTip.show();
-        this.songReady = true;
-        if (nextFlag) {
-          this.next();
-        } else {
-          this.prev();
-        }
-        return;
-      }
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -599,50 +602,61 @@ export default {
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
+       clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.$refs.audio.play()
+          this.getLyric()
+        }, 1000)
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      newSong
-        .getSongUrl()
-        .then(url => {
-          this.currentSongUrl = url;
-        })
-        .then(() => {
-          this.getLyric();
-        })
-        .catch(err => {
-          console.log(err);
-          this.msg = "已跳过无法播放的歌曲";
-          this.$refs.topTip.show();
-          this.songReady = true;
-          if (nextFlag) {
-            this.next();
-          } else {
-            this.prev();
-          }
-          // this.setPlayingState(false);
-          // this.currentLyric=""
-          // this.currentSongUrl = "";
-        });
+
+      // newSong
+      //   .getSongUrl()
+      //   .then(url => {
+      //     this.currentSongUrl = url;
+      //   })
+      //   .then(() => {
+      //     this.getLyric();
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //     this.msg = "已跳过无法播放的歌曲";
+      //     this.$refs.topTip.show();
+      //     this.songReady = true;
+      //     if (nextFlag) {
+      //       this.next();
+      //     } else {
+      //       this.prev();
+      //     }
+      //     // this.setPlayingState(false);
+      //     // this.currentLyric=""
+      //     // this.currentSongUrl = "";
+      //   });
     },
-    currentSongUrl() {
-      this.$nextTick(() => {
-        this.$refs.audio.play();
-      });
-    },
+    // currentSongUrl() {
+    //   this.$nextTick(() => {
+    //     this.$refs.audio.play();
+    //   });
+    // },
 
     // 监听playing(state数据), 真正控制播放的是audio播放器
-    playing(newState) {
-      setTimeout(() => {
-        let audio = this.$refs.audio;
-        if (newState) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      }, 500);
-    },
-
+    // playing(newState) {
+    //   setTimeout(() => {
+    //     let audio = this.$refs.audio;
+    //     if (newState) {
+    //       audio.play();
+    //     } else {
+    //       audio.pause();
+    //     }
+    //   }, 500);
+    // },
+   playing(newPlaying) {
+        const audio = this.$refs.audio
+        this.$nextTick(() => {
+          newPlaying ? audio.play() : audio.pause()
+        })
+      },
     fullScreen(newVal) {
       if (newVal) {
         setTimeout(() => {
@@ -759,13 +773,13 @@ export default {
         position: relative;
         width: 100%;
         height: 0;
-        padding-top: 78%; 
+        padding-top: 78%;
 
         .cd-wrapper {
           position: absolute;
           left: 13%; // 15%
           top: 12%;
-          width: 78%; 
+          width: 78%;
           height: 100%;
 
           .triger {

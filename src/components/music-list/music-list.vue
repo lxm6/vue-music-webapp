@@ -131,10 +131,10 @@ export default {
     },
 
     selectItem(item, index) {
-      if (item.isPay) {
-        this.$refs.topTip.show();
-        return;
-      }
+      // if (item.isPay) {
+      //   this.$refs.topTip.show();
+      //   return;
+      // }
       this.selectPlay({
         list: this.songs,
         index
