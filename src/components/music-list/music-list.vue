@@ -3,7 +3,10 @@
     <div class="back" @click="back">
       <i class="icon-back"></i>
     </div>
-    <h1 class="title" v-html="title"></h1>
+    <div class="title">
+      <h1 v-html="title"></h1>
+      <p v-show="!isDisc"  v-html="updateTime" ref="updateTime"></p>
+    </div>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper" v-show="songs.length>0" ref="wrapperBtn">
         <div ref="playBtn" class="play" @click="random">
@@ -70,6 +73,10 @@ export default {
       default: []
     },
     title: {
+      type: String,
+      default: ""
+    },
+    updateTime: {
       type: String,
       default: ""
     },
@@ -157,7 +164,7 @@ export default {
       let zIndex = 0;
       let blur = 0;
       const percent = Math.abs(newVal / this.imageHeight);
-      if (newVal < -400) {
+      if (newVal < -600) {
         this.showBackTop = true;
       } else {
         this.showBackTop = false;
@@ -176,14 +183,13 @@ export default {
         zIndex = 10;
         this.$refs.bgImage.style.paddingTop = 0;
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
-        // this.$refs.playBtn.style.display = 'none'
-        // this.$refs.favorBtn.style.display = 'none'
-        this.$refs.wrapperBtn.style.display = "none";
+        this.$refs.wrapperBtn.style.display = "none"; 
+        this.$refs.updateTime.style.display = "none"; 
       } else {
         this.$refs.bgImage.style.paddingTop = "65%";
         this.$refs.bgImage.style.height = 0;
-        // this.$refs.playBtn.style.display = ''
         this.$refs.wrapperBtn.style.display = "";
+        this.$refs.updateTime.style.display = "";
       }
       this.$refs.bgImage.style[transform] = `scale(${scale})`;
       this.$refs.bgImage.style.zIndex = zIndex;
@@ -235,6 +241,11 @@ export default {
     line-height: 40px;
     font-size: $font-size-large;
     color: #fff;
+  }
+
+  p {
+    font-size: $font-size-medium;
+    color: #f4f4f4;
   }
 
   .bg-image {

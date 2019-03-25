@@ -1,20 +1,32 @@
 <template>
   <transition name="slide">
-    <music-list :rank="rank" :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+    <music-list
+      :rank="rank"
+      :title="title"
+      :updateTime="updateTime"
+      :bg-image="bgImage"
+      :songs="songs"
+    ></music-list>
   </transition>
 </template>
 
 <script>
+let info = {};
 import MusicList from "components/music-list/music-list";
 import { getMusicList } from "api/rank";
 import { ERR_OK } from "api/config";
 import { mapGetters } from "vuex";
 import { createSong } from "common/js/song";
 export default {
-
   computed: {
     title() {
       return this.topList.topTitle;
+    },
+    updateTime() {
+      if (this.songs.length) {
+        return info.updateTime + "更新";
+      }
+      return "";
     },
     bgImage() {
       if (this.songs.length) {
@@ -27,7 +39,7 @@ export default {
   data() {
     return {
       songs: [],
-      rank: true,
+      rank: true
     };
   },
   created() {
@@ -41,6 +53,14 @@ export default {
       }
       getMusicList(this.topList.id).then(res => {
         if (res.code === ERR_OK) {
+          info = {
+            title: res.topinfo.ListName,
+            updateTime: res.update_time,
+            img: res.topinfo.pic_v12,
+            date: res.date,
+            day_of_year: res.day_of_year,
+            info: res.topinfo.info
+          };
           this.songs = this._normalizeSongs(res.songlist);
         }
       });

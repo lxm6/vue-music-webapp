@@ -133,7 +133,7 @@ export default {
         height: 100px;
         overflow: hidden;
         background: $color-highlight-background;
-        color: $color-text-ll;
+        color: $color-text;
         font-size: $font-size-small-m;
 
         .song {

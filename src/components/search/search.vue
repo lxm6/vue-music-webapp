@@ -127,14 +127,17 @@ export default {
 
 .search {
   .search-box-wrapper {
-    margin: 14px 20px;
+    margin: 11px 16px 10px 16px;
+    background-color $color-background
   }
 
   .shortcut-wrapper {
     position: fixed;
-    top: 160px;
+    top: 150px;
     bottom: 0;
     width: 100%;
+    padding-top 10px
+    background-color $color-highlight-background
 
     .shortcut {
       height: 100%;
@@ -192,7 +195,7 @@ export default {
   .search-result {
     position: fixed;
     width: 100%;
-    top: 160px;
+    top: 150px;
     bottom: 0;
   }
 }

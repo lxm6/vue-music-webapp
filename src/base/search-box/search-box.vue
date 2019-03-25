@@ -52,7 +52,7 @@ export default {
   padding: 0 6px;
   height: 40px;
   background: $color-highlight-background;
-  border-radius: 6px;
+  border-radius: 4px;
 
   .icon-search {
     font-size: 24px;
@@ -60,6 +60,7 @@ export default {
   }
 
   .box {
+    outline:none
     flex: 1;
     margin: 0 5px;
     line-height: 18px;

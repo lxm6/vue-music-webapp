@@ -5,7 +5,7 @@
         <div class="list-header">
           <h1 class="title">
             <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text">{{modeText}} <span class="text" v-show="mode!=1">（{{playlist.length}}首）</span></span>
+            <span class="text">{{modeText}} <span class="text" v-show="mode!=1">({{playlist.length}}首)</span></span>
            
             <span class="clear" @click="showConfirm">
               <i class="icon-clear"></i>
@@ -211,7 +211,7 @@ export default {
 
         .text {
           flex: 1;
-          font-size: $font-size-medium;
+          font-size: $font-size-medium-x;
           color: $color-theme;
         }
 
@@ -258,7 +258,7 @@ export default {
         .text {
           flex: 1;
           no-wrap();
-          font-size: $font-size-medium;
+          font-size: $font-size-medium-x;
           color: $color-text-ll;
         }
         .current-play{

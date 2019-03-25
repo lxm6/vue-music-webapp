@@ -17,7 +17,7 @@
         <div class="name">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-html="item.singer"></p>
-          <p class="subtext" v-if="item.singermid">单曲：{{item.songnum}}&nbsp;&nbsp;专辑：{{item.albumnum}}</p>
+          <p class="subtext" v-if="item.singermid">单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
@@ -195,12 +195,12 @@ export default {
   overflow: hidden;
 
   .suggest-list {
-    padding: 0 30px;
+    padding: 0 24px;
 
     .suggest-item {
       display: flex;
       align-items: center;
-      padding: 10px 0;
+      padding: 9px 0;
       border-bottom: 1px solid $color-border;
     }
 
