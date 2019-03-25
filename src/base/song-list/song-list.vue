@@ -31,6 +31,7 @@ export default {
     ...mapGetters(["currentSong"])
   },
   methods: {
+    
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;

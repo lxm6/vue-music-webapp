@@ -5,6 +5,10 @@
         <li @click="selectItem(item)" class="item" v-for="(item,index) in topList" :key="index">
           <div class="icon">
             <img width="100" height="100" v-lazy="item.picUrl">
+            <div class="content">
+              <img width="11" height="11" src="~@/common/image/earphone.png">
+              <span>{{parseInt(item.listenCount/10000)}}万</span>
+            </div>
           </div>
           <ul class="songlist">
             <li class="song" v-for="(song,index) in item.songList" :key="index">
@@ -25,21 +29,24 @@
 <script>
 import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
-import { getTopList } from "api/rank";
+import { getTopList, getMusicList } from "api/rank";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
-import { mapMutations } from "vuex";
+import { createSong } from "common/js/song";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
- 
   mixins: [playlistMixin],
+
   created() {
     this._getTopList();
   },
   data() {
     return {
-      topList: []
+      topList: [],
+
     };
   },
+
   methods: {
     selectItem(item) {
       this.$router.push({
@@ -60,6 +67,7 @@ export default {
         }
       });
     },
+
     ...mapMutations({
       setTopList: "SET_TOP_LIST"
     })
@@ -89,15 +97,31 @@ export default {
       margin: 0 15px;
       padding-top: 15px;
       height: 100px;
+      position: relative;
 
       &:last-child {
-        padding-bottom: 20px;
+        margin-bottom: 20px;
       }
 
       .icon {
         flex: 0 0 100px;
         width: 100px;
         height: 100px;
+        color: #eee;
+
+        .content {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          bottom: 2px;
+          left: 3px;
+          font-size: 9px;
+
+          span {
+            margin-left: 5px;
+          }
+        }
+
       }
 
       .songlist {
