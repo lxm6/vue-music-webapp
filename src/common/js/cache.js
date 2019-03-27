@@ -6,11 +6,14 @@ const SEARCH_MAX_LEN = 15
 
 const PLAY_KEY = '__play__'
 //最近播放100首
-const PLAY_MAX_LEN = 100    
+const PLAY_MAX_LEN = 100
 
 const FAVORITE_KEY = '__favorite__'
 const FAVORITE_LIST_KEY = '__favoritelist__';
 const FAVORITE_MAX_LEN = 100
+
+const FONTSIZE = '__Fontsize__'
+const COLOR = '__Color__'
 
 //操作搜索历史数组的方法
 //参数：搜索记录数组，添加的项，筛选方法，最大数量
@@ -104,14 +107,30 @@ export function loadFavoriteList() {
 // 保存收藏的歌单
 export function saveFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
-  insertArray(lists, list, item =>  item.dissid === list.dissid, FAVORITE_MAX_LEN);
+  insertArray(lists, list, item => item.dissid === list.dissid, FAVORITE_MAX_LEN);
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
 }
 // 取消某个歌单的收藏状态
 export function deleteFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
-  deleteFromArray(lists, item =>  item.dissid === list.dissid);
+  deleteFromArray(lists, item => item.dissid === list.dissid);
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
+}
+
+
+export function saveFontsize(fontsize) {
+  storage.set(FONTSIZE, fontsize);
+}
+
+export function loadFontsize() {
+  return storage.get(FONTSIZE, 16)
+}
+export function saveColor(color) {
+  storage.set(COLOR, color);
+}
+
+export function loadColor() {
+  return storage.get(COLOR, "green")
 }

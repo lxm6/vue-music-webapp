@@ -2,12 +2,27 @@
   <transition name="list-fade">
     <div class="lyricset" @click="hide" v-show="lyricsetVisible">
       <div class="list-wrapper" @click.stop>
-
         <div class="list-operate">
-          <div class="add">
-            <i class="icon-add"></i>
-            <span class="text">添加歌曲到队列</span>
-          </div>
+          <ul class="fontsize">
+            <span>大小</span>
+            <li
+              :class="{'current':defaultFontSize === item.fontSize}"
+              v-for="(item,index) in theme.fontSizeList"
+              :style="{fontSize:item.fontSize + 'px'}"
+              :key="index"
+              @click="setFontSize(item.fontSize)"
+            >A</li>
+          </ul>
+          <ul class="color">
+            <span>颜色</span>
+            <li v-for="(item,index) in theme.colorList" :key="index">
+              <i
+                @click="setColor(item.name)"
+                :style="{background:item.color}"
+                :class="{'current':defaultColor === item.name}"
+              ></i>
+            </li>
+          </ul>
         </div>
         <div @click="hide" class="list-close">
           <span>完成</span>
@@ -19,13 +34,21 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  data() {
-    return {};
+  props: {
+    defaultFontSize: Number,
+    defaultColor: String,
+    theme: Object
   },
   computed: {
     ...mapGetters(["lyricsetVisible"])
   },
   methods: {
+    setFontSize(fontSize) {
+      this.$emit("setFontSize", fontSize);
+    },
+    setColor(name) {
+      this.$emit("setColor", name);
+    },
     show() {
       this.setlyricsetVisible(true);
     },
@@ -33,23 +56,11 @@ export default {
       this.setlyricsetVisible(false);
     },
 
-    getCurrentIcon(item) {
-      if (this.currentSong.id === item.id) {
-        return "icon-play";
-      }
-      return "";
-    },
-    getCurrent(item) {
-      if (this.currentSong.id === item.id) {
-        return "current-play";
-      }
-      return "";
-    },
     ...mapMutations({
       setlyricsetVisible: "SET_LYRICSET_VISIBLE"
     })
   },
-  watch: {},
+  watch: {}
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -64,7 +75,6 @@ export default {
   bottom: 0;
   z-index: 200;
   background-color: rgba(0, 0, 0, 0.4);
-
 
   &.list-fade-enter-active, &.list-fade-leave-active {
     transition: opacity 0.3s;
@@ -108,22 +118,13 @@ export default {
           font-size: $font-size-medium;
           color: $color-theme;
         }
-
-        .clear {
-          extend-click();
-
-          .icon-clear {
-            font-size: $font-size-medium-x;
-            color: $color-text-d;
-          }
-        }
       }
     }
 
     .list-content {
       max-height: 270px;
       overflow: hidden;
-      padding: 0 15px;
+      padding: 0 20px;
 
       .item {
         display: flex;
@@ -139,63 +140,50 @@ export default {
         &.list-enter, &.list-leave-to {
           height: 0;
         }
-
-        .current {
-          flex: 0 0 20px;
-          width: 20px;
-          font-size: $font-size-medium;
-          color: $color-theme;
-        }
-
-        .text {
-          flex: 1;
-          no-wrap();
-          font-size: $font-size-medium;
-          color: $color-text-ll;
-        }
-
-        .current-play {
-          color: $color-theme;
-        }
-
-        .like {
-          extend-click();
-          margin-right: 15px;
-          font-size: $font-size-medium-x;
-          color: $color-theme;
-
-          .icon-favorite {
-            color: $color-sub-theme;
-          }
-        }
-
-        .delete {
-          extend-click();
-          font-size: $font-size-medium;
-          color: rgba(0, 0, 0, 0.3);
-        }
       }
     }
 
     .list-operate {
-      width: 140px;
-      margin: 10px auto 15px auto;
-
-      .add {
+      ul {
+        height: 60px;
+        border-bottom: 1px solid $color-border;
+        line-height: 32px;
         display: flex;
-        align-items: center;
-        padding: 10px 16px;
-        border: 1px solid $color-theme;
-        border-radius: 100px;
-        color: $color-theme;
 
-        .icon-add {
-          margin-right: 5px;
-          font-size: $font-size-small-s;
+        span {
+          padding: 15px;
+          display: inline-block;
+          color: $color-text-l;
+          font-size: $font-size-medium;
         }
 
-        .text {
-          font-size: $font-size-small;
+        li {
+          padding: 15px;
+          align-items: center;
+          flex: 1;
+        }
+      }
+
+      .fontsize li {
+        color: #3c3c3c;
+
+        &.current {
+          color: $color-theme;
+        }
+      }
+
+      .color li {
+        i {
+          display: block;
+          height: 20px;
+          width: 20px;
+          background-color: $color-theme;
+          border-radius: 50%;
+          border: 2px solid #fff;
+
+          &.current {
+            border: 2px solid #bbb;
+          }
         }
       }
     }

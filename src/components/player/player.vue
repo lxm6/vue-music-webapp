@@ -53,7 +53,8 @@
                 <p
                   ref="lyricLine"
                   class="text"
-                  :class="{'current': currentLineNum ===index}"
+                  :style="{fontSize:defaultFontSize + 'px'}"
+                  :class="[currentLineNum ===index?defaultColor:'']"
                   v-for="(line,index) in currentLyric.lines"
                   :key="index"
                 >{{line.txt}}</p>
@@ -69,7 +70,7 @@
           <div class="dot-wrapper">
             <span class="dot" :class="{'active':currentShow==='cd'}"></span>
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-            <span class="dot" @click="showLyricset">ddd</span>
+            <span class="dot" @click="showLyricset"></span>
           </div>
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
@@ -118,7 +119,14 @@
       </div>
     </transition>
     <playlist ref="playlist"></playlist>
-    <lyricset ref="lyricset"></lyricset>
+    <lyricset
+      ref="lyricset"
+      :defaultFontSize="defaultFontSize"
+      :defaultColor="defaultColor"
+      :theme="theme"
+      @setFontSize="setFontSize"
+      @setColor="setColor"
+    ></lyricset>
     <audio
       ref="audio"
       :src="currentSong.url"
@@ -148,6 +156,12 @@ import Playlist from "components/playlist/playlist";
 import Lyricset from "components/lyricset/lyricset";
 import TopTip from "base/top-tip/top-tip";
 import { playerMixin } from "common/js/mixin";
+import {
+  saveFontsize,
+  loadFontsize,
+  saveColor,
+  loadColor
+} from "common/js/cache";
 
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
@@ -170,7 +184,25 @@ export default {
       playingLyric: "",
       currentSongUrl: "",
       msg: "",
-      isPure: false
+      isPure: false,
+      defaultFontSize: loadFontsize(),
+      defaultColor: loadColor(),
+      theme: {
+        fontSizeList: [
+          { fontSize: 14 },
+          { fontSize: 16 },
+          { fontSize: 18 },
+          { fontSize: 20 },
+          { fontSize: 22 }
+        ],
+        colorList: [
+          { name: "green", color: "$color-theme" },
+          { name: "blue", color: "#50baf8" },
+          { name: "purple", color: "#b66afc" },
+          { name: "yellow", color: "#f1f13d" },
+          { name: "red", color: "#ff4e4e" }
+        ]
+      }
     };
   },
   computed: {
@@ -210,8 +242,17 @@ export default {
   },
   created() {
     this.touch = {};
+  
   },
   methods: {
+    setFontSize(fontSize) {
+      this.defaultFontSize = fontSize;
+      saveFontsize(fontSize);
+    },
+    setColor(color) {
+      this.defaultColor = color;
+      saveColor(color);
+    },
     triggerDownload() {
       setTimeout(() => {
         if (this.currentSongUrl) {
@@ -355,6 +396,7 @@ export default {
         this.songReady = true;
       }, 500);
       this.savePlayHistory(this.currentSong);
+      console.log(this.currentSong)
     },
     error() {
       if (this.currentLyrics) {
@@ -403,6 +445,7 @@ export default {
     },
     // 获取歌词
     getLyric() {
+
       this.currentSong
         .getLyric()
         .then(lyric => {
@@ -573,6 +616,7 @@ export default {
   watch: {
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
+
       if (!newSong || !newSong.id) {
         return;
       }
@@ -602,11 +646,11 @@ export default {
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
-       clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          this.$refs.audio.play()
-          this.getLyric()
-        }, 1000)
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.$refs.audio.play();
+        this.getLyric();
+      }, 500);
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
@@ -651,19 +695,13 @@ export default {
     //     }
     //   }, 500);
     // },
-   playing(newPlaying) {
-        const audio = this.$refs.audio
-        this.$nextTick(() => {
-          newPlaying ? audio.play() : audio.pause()
-        })
-      },
-    fullScreen(newVal) {
-      if (newVal) {
-        setTimeout(() => {
-          this.$refs.lyricList.refresh();
-        }, 20);
-      }
-    }
+    playing(newPlaying) {
+      const audio = this.$refs.audio;
+      this.$nextTick(() => {
+        newPlaying ? audio.play() : audio.pause();
+      });
+    },
+
   },
 
   components: {
@@ -884,8 +922,24 @@ export default {
             font-size: $font-size-medium-x;
             padding-bottom: 18px;
 
-            &.current {
+            &.green {
               color: $color-theme;
+            }
+
+            &.yellow {
+              color: $color-yellow;
+            }
+
+            &.blue {
+              color: $color-blue;
+            }
+
+            &.red {
+              color: $color-red;
+            }
+
+            &.purple {
+              color: $color-purple;
             }
           }
         }

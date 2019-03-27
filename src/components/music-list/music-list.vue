@@ -5,7 +5,7 @@
     </div>
     <div class="title">
       <h1 v-html="title"></h1>
-      <p v-show="!isDisc"  v-html="updateTime" ref="updateTime"></p>
+      <p v-show="rank" v-html="updateTime" ref="updateTime"></p>
     </div>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper" v-show="songs.length>0" ref="wrapperBtn">
@@ -33,8 +33,18 @@
       class="list"
       ref="list"
     >
-      <div class="song-list-wrapper">
-        <song-list :rank="rank" :songs="songs" @select="selectItem"></song-list>
+      <div class="song-list-wrapper" v-show="songs.length">
+        <ul class="tab" v-if="rank">
+          <li
+            v-for="(item,index) in items"
+            class="tab-item"
+            :class="{'active':currentIndex === index}"
+            @click="currentIndex=index"
+            :key="index"
+          >{{ item.name }}</li>
+        </ul>
+        <div class="content" v-if="currentIndex===1&&rank" v-html="info"></div>
+        <song-list :rank="rank" :songs="songs" @select="selectItem" v-if="currentIndex===0"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">
         <loading></loading>
@@ -80,6 +90,10 @@ export default {
       type: String,
       default: ""
     },
+    info: {
+      type: String,
+      default: ""
+    },
     rank: {
       type: Boolean,
       default: false
@@ -96,7 +110,9 @@ export default {
   data() {
     return {
       scrollY: 0,
-      showBackTop: false
+      showBackTop: false,
+      currentIndex: 0,
+      items: [{ name: "歌曲" }, { name: "详情" }]
     };
   },
   computed: {
@@ -115,6 +131,7 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
+    switchItem() {},
     backTop() {
       this.$refs.list.scrollTo(0, 0, 500);
     },
@@ -183,8 +200,8 @@ export default {
         zIndex = 10;
         this.$refs.bgImage.style.paddingTop = 0;
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
-        this.$refs.wrapperBtn.style.display = "none"; 
-        this.$refs.updateTime.style.display = "none"; 
+        this.$refs.wrapperBtn.style.display = "none";
+        this.$refs.updateTime.style.display = "none";
       } else {
         this.$refs.bgImage.style.paddingTop = "65%";
         this.$refs.bgImage.style.height = 0;
@@ -258,7 +275,7 @@ export default {
 
     .play-wrapper {
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       z-index: 50;
       width: 100%;
       display: flex;
@@ -307,6 +324,26 @@ export default {
     background: #fff;
   }
 
+  .tab {
+    display: flex;
+    height: 48px;
+    line-height: 48px;
+    font-size: $font-size-medium-x;
+    color: #000;
+    background: $color-background;
+    margin-bottom: 6px;
+
+    .tab-item {
+      flex: 1;
+      text-align: center;
+
+      &.active {
+        color: $color-theme;
+        border-bottom: 3px solid $color-theme;
+      }
+    }
+  }
+
   .list {
     position: fixed;
     top: 0;
@@ -314,8 +351,11 @@ export default {
     width: 100%;
     background: #fff;
 
-    .song-list-wrapper {
-      padding: 5px 0px 0 0px;
+    .content {
+      line-height: 25px;
+      padding: 10px 24px;
+      color: $color-text-ll;
+      font-size: $font-size-medium;
     }
 
     .loading-container {

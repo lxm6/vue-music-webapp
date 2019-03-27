@@ -4,6 +4,7 @@
       :rank="rank"
       :title="title"
       :updateTime="updateTime"
+      :info="info"
       :bg-image="bgImage"
       :songs="songs"
     ></music-list>
@@ -25,6 +26,12 @@ export default {
     updateTime() {
       if (this.songs.length) {
         return info.updateTime + "更新";
+      }
+      return "";
+    },
+    info() {
+      if (this.songs.length) {
+        return info.info;
       }
       return "";
     },

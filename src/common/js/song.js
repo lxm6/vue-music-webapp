@@ -47,27 +47,27 @@ export default class Song {
     });
 }
   // 获取歌曲url
-  getSongUrl () {
-    if (this.url) {
-      return Promise.resolve(this.url);
-    }
-    return getSongVkey(this.mid).then((res) => {
-      if (res.code === ERR_OK) {
-        if (res.data.items.length > 0) {
-          let vkey = res.data.items[0].vkey;
-          if (!vkey) { 
-            isEmpty=true;
-            return Promise.reject(new Error('getSongKey function got vkey is null')); 
-          }
-          let currentSongUrl = getSongURL(this.mid, vkey);
-          this.url = currentSongUrl;
-          return Promise.resolve(currentSongUrl);
-        }
-      }
-    }).catch((err) => {
-      return Promise.reject(err);
-    });
-  }
+//   getSongUrl () {
+//     if (this.url) {
+//       return Promise.resolve(this.url);
+//     }
+//     return getSongVkey(this.mid).then((res) => {
+//       if (res.code === ERR_OK) {
+//         if (res.data.items.length > 0) {
+//           let vkey = res.data.items[0].vkey;
+//           if (!vkey) { 
+//             isEmpty=true;
+//             return Promise.reject(new Error('getSongKey function got vkey is null')); 
+//           }
+//           let currentSongUrl = getSongURL(this.mid, vkey);
+//           this.url = currentSongUrl;
+//           return Promise.resolve(currentSongUrl);
+//         }
+//       }
+//     }).catch((err) => {
+//       return Promise.reject(err);
+//     });
+//   }
 }
 
 

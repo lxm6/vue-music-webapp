@@ -69,7 +69,7 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-
+  margin-top 10px
   .item {
     display: flex;
     align-items: center;
