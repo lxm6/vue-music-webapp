@@ -1,13 +1,23 @@
 <template>
   <div class="song-list">
     <ul>
-      <li v-for="(item,index) in songs" :key="index" class="item" :class="{'current-play-b':getCurrent(item)}" @click="selectSong(item,index)">
+      <li
+        v-for="(item,index) in songs"
+        :key="index"
+        class="item"
+        :class="{'current-play-b':getCurrent(item)}"
+        @click="selectSong(item,index)"
+      >
         <div class="rank" v-show="rank">
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
         </div>
-        <div class="content" >
+        <div class="content">
           <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
-          <p class="desc" :class="{'current-play':getCurrent(item)}">{{getDesc(item)}}</p>
+          <p class="desc" :class="{'current-play':getCurrent(item)}">
+            <span class="vip" v-if="item.isPay">VIP</span>
+            <span class="hq">HQ</span>
+            <span>{{getDesc(item)}}</span>
+          </p>
         </div>
       </li>
     </ul>
@@ -31,7 +41,6 @@ export default {
     ...mapGetters(["currentSong"])
   },
   methods: {
-    
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;
@@ -69,14 +78,14 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-  margin-top 10px
+  margin-top: 10px;
+
   .item {
     display: flex;
     align-items: center;
     box-sizing: border-box;
     padding: 0px 0px 0px 25px;
     border-left: 5px solid #fff;
-
 
     .rank {
       flex: 0 0 25px;
@@ -125,8 +134,24 @@ export default {
       .desc {
         font-size: $font-size-small;
         no-wrap();
-        margin-top: 4px;
+        margin-top: 5px;
         color: $color-text-l;
+
+      }
+      .vip,.hq{
+        font-size: 7px;
+        padding: 1px 2px;
+        color: $color-theme;
+        border: 1px solid $color-theme;
+        border-radius: 3px;
+      }
+
+      .hq {
+        padding 1px 3px;
+        color: orange;
+        border: 1px solid orange;
+        margin-right 4px
+
       }
 
       .current-play {
@@ -134,8 +159,9 @@ export default {
       }
     }
   }
-    .current-play-b {
-      border-left: 5px solid $color-theme;
-    }
+
+  .current-play-b {
+    border-left: 5px solid $color-theme;
+  }
 }
 </style>

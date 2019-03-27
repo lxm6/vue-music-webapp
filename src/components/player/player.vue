@@ -106,7 +106,7 @@
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
-          <p class="desc" v-html="currentSong.singer"></p>
+          <p class="desc" v-html="this.playing&&playingLyric?playingLyric:currentSong.singer"></p>
         </div>
         <div class="control">
           <progress-circle :radius="radius" :percent="percent">
@@ -396,7 +396,6 @@ export default {
         this.songReady = true;
       }, 500);
       this.savePlayHistory(this.currentSong);
-      console.log(this.currentSong)
     },
     error() {
       if (this.currentLyrics) {
@@ -770,9 +769,10 @@ export default {
       }
 
       .subtitle {
-        line-height: 14px;
+        margin: 0 auto;
+        width: 80%;
+        line-height: 18px;
         text-align: center;
-        // margin-left: 15%;
         font-size: $font-size-medium;
         color: #fff;
       }
@@ -1079,8 +1079,8 @@ export default {
 
     .icon {
       flex: 0 0 40px;
-      width: 40px;
-      padding: 0 10px 0 20px;
+      width: 44px;
+      padding: 0 10px 0 14px;
 
       img {
         border-radius: 50%;
@@ -1103,25 +1103,25 @@ export default {
       flex: 1;
       line-height: 20px;
       overflow: hidden;
+      font-size: $font-size-medium;
+
 
       .name {
         margin-bottom: 2px;
         no-wrap();
-        font-size: $font-size-medium;
         color: $color-text;
       }
 
       .desc {
         no-wrap();
-        font-size: $font-size-small;
         color: $color-text-l;
       }
     }
 
     .control {
-      flex: 0 0 30px;
+      flex: 0 0 20px;
       width: 36px;
-      padding: 0 10px;
+      padding: 0 14px 0 0;
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;

@@ -17,7 +17,10 @@
         <div class="name">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-html="item.singer"></p>
-          <p class="subtext" v-if="item.singermid">单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
+          <p
+            class="subtext"
+            v-if="item.singermid"
+          >单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
         </div>
       </li>
       <loading v-show="hasMore" title="加载更多"></loading>
@@ -64,7 +67,7 @@ export default {
       pullup: true,
       beforeScroll: true,
       hasMore: true,
-      first:true,
+      first: true,
       result: []
     };
   },
@@ -105,10 +108,10 @@ export default {
       this.$emit("listScroll");
     },
     selectItem(item) {
-      if (item.isPay) {
-        this.$refs.topTip.show();
-        return;
-      }
+      // if (item.isPay) {
+      //   this.$refs.topTip.show();
+      //   return;
+      // }
       if (item.type === TYPE_SINGER) {
         const singer = new Singer({
           id: item.singermid,
@@ -124,12 +127,11 @@ export default {
       this.$emit("select", item);
     },
     getAvatar(mid) {
-        return `//y.gtimg.cn/music/photo_new/T001R150x150M000${mid}.jpg?max_age=2592000`;
+      return `//y.gtimg.cn/music/photo_new/T001R150x150M000${mid}.jpg?max_age=2592000`;
     },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
         return item.singername;
-
       } else {
         return item.name;
       }
@@ -142,7 +144,12 @@ export default {
     _genResult(data) {
       let ret = [];
       if (data.zhida && data.zhida.singerid && this.page === 1) {
-        ret.push({ ...data.zhida, ...{ type: TYPE_SINGER },...data.zhida.songnum,...data.zhida.albumnum });
+        ret.push({
+          ...data.zhida,
+          ...{ type: TYPE_SINGER },
+          ...data.zhida.songnum,
+          ...data.zhida.albumnum
+        });
       }
       if (data.song) {
         ret = ret.concat(this._normalizeSongs(data.song.list));
@@ -216,7 +223,7 @@ export default {
     }
 
     .name {
-      margin-left:10px 
+      margin-left: 10px;
       flex: 1;
       font-size: $font-size-medium-x;
       color: $color-text-ll;
@@ -230,6 +237,7 @@ export default {
         padding-top: 5px;
         font-size: $font-size-small-m;
         color: $color-text-l;
+       no-wrap()
       }
     }
 
