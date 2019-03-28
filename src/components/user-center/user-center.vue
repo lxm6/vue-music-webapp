@@ -9,7 +9,7 @@
       </div>
       <div ref="playBtn" class="play-btn" @click="random" v-if="currentIndex===1||currentIndex===0">
         <i class="icon-play"></i>
-        <span class="text">随机播放全部</span>
+        <span class="text">全部播放</span>
       </div>
       <div class="list-wrapper" ref="listWrapper">
         <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0" :data="favoriteList">
@@ -130,8 +130,12 @@ export default {
       list = list.map(song => {
         return new Song(song);
       });
-      this.randomPlay({
-        list
+      // this.randomPlay({
+      //   list
+      // });
+      this.selectPlay({
+        list,
+        index:0
       });
     },
     selectItem(item) {
@@ -143,7 +147,7 @@ export default {
     ...mapMutations({
       setDisc: "SET_DISC"
     }),
-    ...mapActions(["insertSong", "randomPlay"])
+    ...mapActions(["insertSong", "randomPlay","selectPlay"])
   },
 
   components: {

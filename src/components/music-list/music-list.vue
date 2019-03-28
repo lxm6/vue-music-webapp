@@ -11,11 +11,11 @@
       <div class="play-wrapper" v-show="songs.length>0" ref="wrapperBtn">
         <div ref="playBtn" class="play" @click="random">
           <i class="icon-play"></i>
-          <span class="text">随机播放全部</span>
+          <span class="text">全部播放</span>
         </div>
         <div ref="favorBtn" v-show="isDisc" @click="toggleFavorite" class="favor">
           <i :class="isFavorite?'icon-favorite':'icon-not-favorite'"></i>
-          <span class="text">{{isFavorite?'取消收藏':'收藏此歌单'}}</span>
+          <span class="text">{{isFavorite?'取消收藏':'收藏歌单'}}</span>
         </div>
       </div>
       <div class="filter" ref="filter"></div>
@@ -34,6 +34,11 @@
       ref="list"
     >
       <div class="song-list-wrapper" v-show="songs.length">
+        <ul class="tab" v-if="!isDisc&&!rank">
+          <li
+            class="tab-item active"
+          >单曲 {{ songs.length}}</li>
+        </ul>
         <ul class="tab" v-if="rank">
           <li
             v-for="(item,index) in items"
@@ -165,9 +170,13 @@ export default {
       });
     },
     random() {
-      this.randomPlay({
-        list: this.songs
-      });
+      //随机播放
+      // this.randomPlay({
+      //   list: this.songs
+      // });
+
+    //顺序播放全部
+      this.selectItem(0,0);
     },
     toggleFavorite() {
       this.$emit("favoriteChange");
@@ -326,8 +335,8 @@ export default {
 
   .tab {
     display: flex;
-    height: 48px;
-    line-height: 48px;
+    height: 42px;
+    line-height: 42px;
     font-size: $font-size-medium-x;
     color: #000;
     background: $color-background;
