@@ -84,7 +84,10 @@ export const randomPlay = function ({
 export const insertSong = function ({
   commit,
   state
-}, song) {
+}, array) {
+
+  let song=array[0];
+  let isAdd=array[1];
   let playlist = state.playlist.slice()
   let sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
@@ -109,6 +112,7 @@ export const insertSong = function ({
   let currentSIndex = findIndex(sequenceList, currentSong) + 1
   let fsIndex = findIndex(sequenceList, song)
   sequenceList.splice(currentSIndex, 0, song)
+
   if (fsIndex > -1) {
     if (currentSIndex > fsIndex) {
       sequenceList.splice(fsIndex, 1)
@@ -120,9 +124,12 @@ export const insertSong = function ({
   // 提交修改
   commit(types.SET_PLAYLIST, playlist)
   commit(types.SET_SEQUENCE_LIST, sequenceList)
-  commit(types.SET_CURRENT_INDEX, currentIndex)
-  commit(types.SET_FULL_SCREEN, true)
-  commit(types.SET_PLAYING_STATE, true)
+  if (!isAdd) {
+    commit(types.SET_CURRENT_INDEX, currentIndex)
+    commit(types.SET_FULL_SCREEN, true)
+    commit(types.SET_PLAYING_STATE, true)
+  } 
+
 }
 
 //保存搜索历史

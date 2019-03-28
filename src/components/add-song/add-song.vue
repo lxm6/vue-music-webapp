@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="add-song" v-show="addSongVisible" @click.stop>
       <div class="header">
-        <h1 class="title">添加歌曲到列表</h1>
+        <h1 class="title">添加歌曲到队列</h1>
         <div class="back" @click="hide">
           <i class="icon-back"></i>
         </div>
@@ -46,7 +46,7 @@
       <top-tip ref="topTip">
         <div class="tip-title">
           <i class="icon-ok"></i>
-          <span class="text">1首歌曲已经添加到播放列表</span>
+          <span class="text">添加成功</span>
         </div>
       </top-tip>
     </div>
@@ -101,7 +101,7 @@ export default {
     },
     selectSong(song, index) {
       if (index !== 0) {
-        this.insertSong(new Song(song));
+        this.insertSong([new Song(song),true]);
         this.$refs.topTip.show();
       }
     },

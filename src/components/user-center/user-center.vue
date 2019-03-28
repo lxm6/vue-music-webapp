@@ -116,7 +116,7 @@ export default {
       this.currentIndex = index;
     },
     selectSong(song) {
-      this.insertSong(new Song(song));
+      this.insertSong([new Song(song),false]);
     },
     back() {
       this.$router.back();
