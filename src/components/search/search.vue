@@ -72,7 +72,7 @@ export default {
     shortcut() {
       return this.hotKey.concat(this.searchHistory);
     },
-    ...mapGetters(["searchHistory"])
+    ...mapGetters(["searchHistory","palyHistory"])
   },
   methods: {
     handlePlaylist(playlist) {

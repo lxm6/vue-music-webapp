@@ -118,7 +118,7 @@ export const searchMixin = {
     },
     ...mapActions([
       'saveSearchHistory',
-      'deleteSearchHistory'
+      'deleteSearchHistory',
     ])
   }
 }

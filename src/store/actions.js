@@ -18,6 +18,9 @@ import {
   deleteFavorite,
   saveFavoriteList as saveFavoriteSheet,
   deleteFavoriteList as deleteFavoriteSheet,
+  deletePlay,
+  clearFavoriteList,
+  clearPlay
 } from 'common/js/cache'
 
 function findIndex(list, song) {
@@ -86,8 +89,8 @@ export const insertSong = function ({
   state
 }, array) {
 
-  let song=array[0];
-  let isAdd=array[1];
+  let song = array[0];
+  let isAdd = array[1];
   let playlist = state.playlist.slice()
   let sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
@@ -128,7 +131,7 @@ export const insertSong = function ({
     commit(types.SET_CURRENT_INDEX, currentIndex)
     commit(types.SET_FULL_SCREEN, true)
     commit(types.SET_PLAYING_STATE, true)
-  } 
+  }
 
 }
 
@@ -206,6 +209,12 @@ export const deleteFavoriteList = function ({
 }, song) {
   commit(types.SET_FAVORITE_LIST, deleteFavorite(song))
 }
+// 清空喜爱的歌曲
+export const ClearFavoriteList = function ({
+  commit
+}) {
+  commit(types.SET_FAVORITE_LIST, clearFavoriteList())
+}
 
 //保存喜爱歌单
 export const saveFavoriteListList = function ({
@@ -218,4 +227,21 @@ export const deleteFavoriteListList = function ({
   commit
 }, list) {
   commit(types.SET_FAVORITE_LIST_LIST, deleteFavoriteSheet(list));
+}
+
+//删除搜索历史
+export const deletePlayHistory = function ({
+  commit
+}, query) {
+  commit(types.SET_PLAY_HISTORY, deletePlay(query))
+}
+//清空
+export const clear = function ({
+  commit
+}, index) {
+  if (index === 0) {
+    commit(types.SET_FAVORITE_LIST, clearFavoriteList())
+  } else {
+    commit(types.SET_PLAY_HISTORY, clearPlay())
+  }
 }

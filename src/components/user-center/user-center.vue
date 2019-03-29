@@ -11,16 +11,34 @@
         <i class="icon-play"></i>
         <span class="text">全部播放</span>
       </div>
+      <div
+        class="play-btn"
+        @click="showConfirm(currentIndex)"
+        v-if="currentIndex===1||currentIndex===0"
+      >
+        <i class="icon-clear"></i>
+        <span class="text">清空</span>
+      </div>
       <div class="list-wrapper" ref="listWrapper">
         <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0" :data="favoriteList">
           <div class="list-inner">
-            <song-list :songs="favoriteList" @select="selectSong"></song-list>
+            <song-list
+              :songs="favoriteList"
+              @select="selectSong"
+              @deleteFavorite="deleteFavorite"
+              :isFavorite="true"
+            ></song-list>
           </div>
         </scroll>
 
         <scroll ref="playList" class="list-scroll" v-if="currentIndex===1" :data="playHistory">
           <div class="list-inner">
-            <song-list :songs="playHistory" @select="selectSong"></song-list>
+            <song-list
+              :songs="playHistory"
+              @select="selectSong"
+              @deletePlay="deletePlay"
+              :isPlayHistory="true"
+            ></song-list>
           </div>
         </scroll>
         <scroll
@@ -52,6 +70,7 @@
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
+      <confirm ref="confirm" @confirm="clear(currentIndex)" text="是否清空全部？" confirmBtnText="清空"></confirm>
     </div>
   </transition>
 </template>
@@ -61,6 +80,7 @@ import Switches from "base/switches/switches";
 import Scroll from "base/scroll/scroll";
 import SongList from "base/song-list/song-list";
 import NoResult from "base/no-result/no-result";
+import Confirm from "base/confirm/confirm";
 import Song from "common/js/song";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
@@ -112,11 +132,20 @@ export default {
       this.$refs.playList && this.$refs.playList.refresh();
       this.$refs.favoriteListList && this.$refs.favoriteListList.refresh();
     },
+    showConfirm(index) {
+      if(index===0){
+        if(this.playHistory.length)
+        this.$refs.confirm.show();
+      }else{
+          if(this.favoriteList.length)
+        this.$refs.confirm.show();
+      }
+    },
     switchItem(index) {
       this.currentIndex = index;
     },
     selectSong(song) {
-      this.insertSong([new Song(song),false]);
+      this.insertSong([new Song(song), false]);
     },
     back() {
       this.$router.back();
@@ -135,26 +164,35 @@ export default {
       // });
       this.selectPlay({
         list,
-        index:0
+        index: 0
       });
     },
+
     selectItem(item) {
       this.$router.push({
         path: `/recommend/${item.id}`
       });
       this.setDisc(item);
     },
+    deletePlay(item) {
+      this.$emit("deletePlay", item);
+    },
+    deleteFavorite(item) {
+      this.$emit("deleteFavorite", item);
+    },
+
     ...mapMutations({
       setDisc: "SET_DISC"
     }),
-    ...mapActions(["insertSong", "randomPlay","selectPlay"])
+    ...mapActions(["insertSong", "randomPlay", "selectPlay","clear"])
   },
 
   components: {
     Switches,
     Scroll,
     SongList,
-    NoResult
+    NoResult,
+    Confirm
   }
 };
 </script>
@@ -197,47 +235,49 @@ export default {
   }
 
   .play-btn {
+    margin-right: 20px;
     box-sizing: border-box;
-    width: 135px;
-    padding: 7px 0;
+    width: 50%;
+    padding: 2px 0;
     margin: 0 auto;
-    text-align: center;
-    border: 1px solid $color-theme;
     color: $color-theme;
     border-radius: 100px;
-    font-size: 0;
+    text-align: center;
+    float: left;
 
-    .icon-play {
+    .icon-play, .icon-clear {
       display: inline-block;
       vertical-align: middle;
       margin-right: 6px;
-      font-size: $font-size-medium-x;
+      font-size: $font-size-large;
     }
 
     .text {
+      color: #000;
       display: inline-block;
       vertical-align: middle;
-      font-size: $font-size-small;
+      font-size: $font-size-medium-x;
     }
   }
 
   .list-wrapper {
+    border-top: 3px solid $color-theme;
     position: absolute;
-    top: 93px;
+    top: 90px;
     bottom: 0;
     width: 100%;
+    background-color: #fff;
+
     .list-scroll {
       height: 100%;
       overflow: hidden;
 
       .list-inner {
-        padding: 10px 0px;
-
         .item {
           display: flex;
           box-sizing: border-box;
           align-items: center;
-          margin: 10px 20px
+          margin: 10px 20px;
           padding: 10px;
           background: $color-highlight-background;
 

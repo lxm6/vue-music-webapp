@@ -6,11 +6,11 @@ const SEARCH_MAX_LEN = 15
 
 const PLAY_KEY = '__play__'
 //最近播放100首
-const PLAY_MAX_LEN = 100
+const PLAY_MAX_LEN = 200
 
 const FAVORITE_KEY = '__favorite__'
 const FAVORITE_LIST_KEY = '__favoritelist__';
-const FAVORITE_MAX_LEN = 100
+const FAVORITE_MAX_LEN = 200
 
 const FONTSIZE = '__Fontsize__'
 const COLOR = '__Color__'
@@ -111,6 +111,12 @@ export function saveFavoriteList(list) {
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
 }
+
+export function clearFavoriteList() {
+  storage.remove(FAVORITE_LIST_KEY)
+  return []
+}
+
 // 取消某个歌单的收藏状态
 export function deleteFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
@@ -133,4 +139,17 @@ export function saveColor(color) {
 
 export function loadColor() {
   return storage.get(COLOR, "green")
+}
+
+//删除最近播放
+export function deletePlay(query) {
+  let play = storage.get(PLAY_KEY, [])
+  deleteFromArray(play, item => item.id === query.id);
+  storage.set(PLAY_KEY, play)
+  return play
+}
+
+export function clearPlay() {
+  storage.remove(PLAY_KEY)
+  return []
 }
