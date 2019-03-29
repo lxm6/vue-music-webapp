@@ -113,7 +113,7 @@ export function saveFavoriteList(list) {
 }
 
 export function clearFavoriteList() {
-  storage.remove(FAVORITE_LIST_KEY)
+  storage.set(FAVORITE_KEY)
   return []
 }
 

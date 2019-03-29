@@ -11,11 +11,7 @@
         <i class="icon-play"></i>
         <span class="text">全部播放</span>
       </div>
-      <div
-        class="play-btn"
-        @click="showConfirm(currentIndex)"
-        v-if="currentIndex===1||currentIndex===0"
-      >
+      <div class="play-btn" @click="showConfirm" v-if="currentIndex===1||currentIndex===0">
         <i class="icon-clear"></i>
         <span class="text">清空</span>
       </div>
@@ -132,13 +128,11 @@ export default {
       this.$refs.playList && this.$refs.playList.refresh();
       this.$refs.favoriteListList && this.$refs.favoriteListList.refresh();
     },
-    showConfirm(index) {
-      if(index===0){
-        if(this.playHistory.length)
-        this.$refs.confirm.show();
-      }else{
-          if(this.favoriteList.length)
-        this.$refs.confirm.show();
+    showConfirm() {
+      if (this.currentIndex === 0) {
+        if (this.favoriteList.length) this.$refs.confirm.show();
+      } else {
+        if (this.playHistory.length) this.$refs.confirm.show();
       }
     },
     switchItem(index) {
@@ -184,7 +178,7 @@ export default {
     ...mapMutations({
       setDisc: "SET_DISC"
     }),
-    ...mapActions(["insertSong", "randomPlay", "selectPlay","clear"])
+    ...mapActions(["insertSong", "randomPlay", "selectPlay", "clear"])
   },
 
   components: {

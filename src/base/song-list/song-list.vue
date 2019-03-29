@@ -81,12 +81,9 @@ export default {
     },
      deletePlay(item) {
       this.deletePlayHistory(item);
-      console.log("deletePlay")
     },
     deleteFavorite(item) {
       this.deleteFavoriteList(item);
-      console.log("deleteFavorite")
-
     },
     ...mapActions(["deletePlayHistory","deleteFavoriteList"])
   }

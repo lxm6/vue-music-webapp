@@ -124,7 +124,7 @@ export default {
       this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300);
     },
     deleteOne(item) {
-      this.deleteSong(item);
+      this.this.deleteSong(item);(item);
       if (!this.playlist.length) {
         this.hide();
       }

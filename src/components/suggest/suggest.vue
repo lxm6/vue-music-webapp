@@ -122,7 +122,7 @@ export default {
         });
         this.setSinger(singer);
       } else {
-        this.insertSong(item);
+        this.insertSong([item,false]);
       }
       this.$emit("select", item);
     },
