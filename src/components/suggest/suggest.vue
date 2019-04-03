@@ -11,19 +11,20 @@
     <ul class="suggest-list">
       <li @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.docid">
         <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid">
-        <div class="icon">
-          <i :class="getIconCls(item)"></i>
-        </div>
         <div class="name">
           <p class="text" v-html="getDisplayName(item)"></p>
-          <p class="subtext" v-html="item.singer"></p>
+          <p class="subtext" v-show="getDesc(item)">
+            <span class="vip" v-show="item.isPay">VIP</span>
+            <span class="hq">HQ</span>
+            <span>{{getDesc(item)}}</span>
+          </p>
           <p
             class="subtext"
             v-if="item.singermid"
           >单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
         </div>
       </li>
-      <loading v-show="hasMore" title="加载更多"></loading>
+      <loading v-show="hasMore" title="正在载入"></loading>
       <div class="tip" v-show="!hasMore && result.length">没有更多数据了</div>
     </ul>
     <div class="no-result-wrapper" v-show="!hasMore && !result.length">
@@ -71,6 +72,7 @@ export default {
       result: []
     };
   },
+
   methods: {
     show() {
       this.showFlag = true;
@@ -129,6 +131,11 @@ export default {
     getAvatar(mid) {
       return `//y.gtimg.cn/music/photo_new/T001R150x150M000${mid}.jpg?max_age=2592000`;
     },
+    getDesc(item) {
+      if (item.type != TYPE_SINGER) {
+        return `${item.singer} · ${item.album}`;
+      }
+    },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
         return item.singername;
@@ -136,11 +143,7 @@ export default {
         return item.name;
       }
     },
-    getIconCls(item) {
-      if (item.type !== TYPE_SINGER) {
-        return "icon-music";
-      }
-    },
+
     _genResult(data) {
       let ret = [];
       if (data.zhida && data.zhida.singerid && this.page === 1) {
@@ -209,6 +212,8 @@ export default {
       align-items: center;
       padding: 9px 0;
       border-bottom: 1px solid $color-border;
+      flex: 1;
+      line-height: 16px;
     }
 
     .avatar {
@@ -216,15 +221,8 @@ export default {
       border-radius: 50%;
     }
 
-    .icon-music {
-      width: 30px;
-      font-size: $font-size-medium-x;
-      color: $color-text-l;
-    }
-
     .name {
       margin-left: 10px;
-      flex: 1;
       font-size: $font-size-medium-x;
       color: $color-text-ll;
       overflow: hidden;
@@ -233,11 +231,26 @@ export default {
         no-wrap();
       }
 
+      .vip, .hq {
+        font-size: 5px;
+        padding: 1px 2px;
+        color: $color-theme;
+        border: 1px solid $color-theme;
+        border-radius: 3px;
+      }
+
+      .hq {
+        padding: 1px 3px;
+        color: orange;
+        border: 1px solid orange;
+        margin-right: 4px;
+      }
+
       .subtext {
-        padding-top: 5px;
-        font-size: $font-size-small-m;
+        margin-top: 7px;
+        font-size: $font-size-small;
         color: $color-text-l;
-       no-wrap()
+        no-wrap();
       }
     }
 

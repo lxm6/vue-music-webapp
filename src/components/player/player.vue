@@ -615,7 +615,6 @@ export default {
   watch: {
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-
       if (!newSong || !newSong.id) {
         return;
       }
