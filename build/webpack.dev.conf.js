@@ -36,14 +36,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       // 推荐列表
       app.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-        axios.get(url, {
+        axios.get(url, { //通过axios发送http请求，同时更改referer和host，并且把参数给服务端
           headers: {
             referer: 'https://c.y.qq.com/',
             host: 'c.y.qq.com'
           },
-          params: req.query
-        }).then((response) => {
-          res.json(response.data)
+          params: req.query  //浏览器请求该接口所带来的参数 
+        }).then((response) => {  //成功回调
+          res.json(response.data) //response是QQ接口返回的，res是我们自己的。所以要把数据输出给浏览器前端
         }).catch((e) => {
           console.log(e)
         })

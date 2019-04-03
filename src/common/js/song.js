@@ -37,7 +37,7 @@ export default class Song {
     return new Promise((resolve, reject) => {
         getLyric(this.mid).then(res => {
             if (res.retcode === ERR_OK) {
-                // 对歌词记性base64解码
+                // 对歌词进行base64解码
                 this.lyric = Base64.decode(res.lyric);
                 resolve(this.lyric);
             } else {

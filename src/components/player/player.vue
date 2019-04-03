@@ -182,7 +182,6 @@ export default {
       currentShow: "cd",
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
-      currentSongUrl: "",
       msg: "",
       isPure: false,
       defaultFontSize: loadFontsize(),
@@ -207,10 +206,12 @@ export default {
   },
   computed: {
     cdCls() {
-      return this.playing ? "play" : "play pause";
+      return this.playing && this.currentSong.url != "" ? "play" : "play pause";
     },
     trCls() {
-      return this.playing ? "triger" : "triger pause";
+      return this.playing && this.currentSong.url != ""
+        ? "triger"
+        : "triger pause";
     },
     playIcon() {
       return this.playing ? "icon-pause" : "icon-play";
@@ -242,7 +243,6 @@ export default {
   },
   created() {
     this.touch = {};
-  
   },
   methods: {
     setFontSize(fontSize) {
@@ -391,21 +391,16 @@ export default {
     },
     // audio,防止极限点击操作报错
     ready() {
-      // 延时避免快速切换歌曲导致 DOM 会报错
-      setTimeout(() => {
-        this.songReady = true;
-      }, 500);
+      this.songReady = true;
       this.savePlayHistory(this.currentSong);
     },
     error() {
-      if (this.currentLyrics) {
+      if (this.currentLyrics || this.currentSong.url != "") {
         this.currentLyrics.stop();
       }
       this.songReady = true;
     },
-    updateTime(e) {
-      this.currentTime = e.target.currentTime;
-    },
+
     // 进度条进度改变
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
@@ -444,7 +439,6 @@ export default {
     },
     // 获取歌词
     getLyric() {
-
       this.currentSong
         .getLyric()
         .then(lyric => {
@@ -478,12 +472,12 @@ export default {
     // txt: 歌词文案
     handleLyric({ lineNum, txt }) {
       this.currentLineNum = lineNum;
-      if (lineNum > 5) {
-        // 保证高亮歌词在中间, 当前歌词，往上偏移5行
-        let lineEl = this.$refs.lyricLine[lineNum - 3];
+      if (lineNum > 3) {
+        // 保证高亮歌词在中间
+        let lineEl = this.$refs.lyricLine[lineNum - 2];
         this.$refs.lyricList.scrollToElement(lineEl, 1000);
       } else {
-        // 前五行歌词不发生滚动, 位于顶部
+        //滚动到顶部
         this.$refs.lyricList.scrollTo(0, 0, 1000);
       }
       this.playingLyric = txt;
@@ -569,6 +563,9 @@ export default {
       this.$refs.middleL.style[transitionDuration] = `${time}ms`;
       this.touch.initiated = false;
     },
+    updateTime(e) {
+      this.currentTime = e.target.currentTime;  //时间戳
+    },
     format(interval) {
       interval = interval | 0;
       const minute = (interval / 60) | 0;
@@ -615,7 +612,6 @@ export default {
   watch: {
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-
       if (!newSong || !newSong.id) {
         return;
       }
@@ -647,8 +643,10 @@ export default {
       }
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.$refs.audio.play();
-        this.getLyric();
+        if (this.currentSong.url != "") {
+          this.$refs.audio.play();
+          this.getLyric();
+        }
       }, 500);
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
@@ -699,8 +697,7 @@ export default {
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
       });
-    },
-
+    }
   },
 
   components: {
@@ -1104,7 +1101,6 @@ export default {
       line-height: 20px;
       overflow: hidden;
       font-size: $font-size-medium;
-
 
       .name {
         margin-bottom: 2px;

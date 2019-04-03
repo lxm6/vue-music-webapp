@@ -16,7 +16,7 @@ import { playlistMixin } from "common/js/mixin";
 const HOT_SINGER_LEN = 30;
 const HOT_NAME = "热门";
 const NUM_NAME = "#";
-
+    
 export default {
   // mounted() {
   //   var router = this.$router;
@@ -133,7 +133,7 @@ export default {
       return hot.concat(ret).concat(num);
     },
     ...mapMutations({
-      setSinger: "SET_SINGER"
+      setSinger: "SET_SINGER"  //对应mutation-types中定义的常量
     })
   },
   components: {

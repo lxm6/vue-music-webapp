@@ -47,7 +47,6 @@ function deleteFromArray(arr, compare) {
   }
 }
 
-
 export function deleteSearch(query) {
   let searches = storage.get(SEARCH_KEY, [])
   deleteFromArray(searches, (item) => {
@@ -79,6 +78,7 @@ export function loadPlay() {
   return storage.get(PLAY_KEY, [])
 }
 
+//保存收藏歌曲
 export function saveFavorite(song) {
   let songs = storage.get(FAVORITE_KEY, [])
   insertArray(songs, song, (item) => {
@@ -87,7 +87,7 @@ export function saveFavorite(song) {
   storage.set(FAVORITE_KEY, songs)
   return songs
 }
-
+//删除收藏歌曲
 export function deleteFavorite(song) {
   let songs = storage.get(FAVORITE_KEY, [])
   deleteFromArray(songs, (item) => {
@@ -96,9 +96,14 @@ export function deleteFavorite(song) {
   storage.set(FAVORITE_KEY, songs)
   return songs
 }
-
+//载入收藏歌曲
 export function loadFavorite() {
   return storage.get(FAVORITE_KEY, [])
+}
+//清空收藏列列表
+export function clearFavoriteList() {
+  storage.set(FAVORITE_KEY)
+  return []
 }
 // 载入收藏的歌单
 export function loadFavoriteList() {
@@ -112,11 +117,6 @@ export function saveFavoriteList(list) {
   return lists;
 }
 
-export function clearFavoriteList() {
-  storage.set(FAVORITE_KEY)
-  return []
-}
-
 // 取消某个歌单的收藏状态
 export function deleteFavoriteList(list) {
   const lists = storage.get(FAVORITE_LIST_KEY, []);
@@ -124,7 +124,6 @@ export function deleteFavoriteList(list) {
   storage.set(FAVORITE_LIST_KEY, lists);
   return lists;
 }
-
 
 export function saveFontsize(fontsize) {
   storage.set(FONTSIZE, fontsize);
