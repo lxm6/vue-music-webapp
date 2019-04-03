@@ -18,13 +18,6 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
-          <div class="favorite">
-            <i
-              @click="toggleFavorite(currentSong)"
-              class="icon"
-              :class="getFavoriteIcon(currentSong)"
-            ></i>
-          </div>
         </div>
         <!-- <div class="line"></div> -->
         <div
@@ -70,8 +63,23 @@
           <div class="dot-wrapper">
             <span class="dot" :class="{'active':currentShow==='cd'}"></span>
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-            <span class="dot" @click="showLyricset"></span>
           </div>
+          <ul class="operator-wrapper">
+            <li class="favorite">
+              <i
+                @click="toggleFavorite(currentSong)"
+                class="icon"
+                :class="getFavoriteIcon(currentSong)"
+              ></i>
+            </li>
+            <li class="down" @click="triggerDownload">
+              <img src="./down.png" width="24" height="24">
+            </li>
+            <li class="setLyric" @click="showLyricset">
+              <img src="./font.png" width="24" height="24">
+            </li>
+          </ul>
+
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
@@ -242,7 +250,6 @@ export default {
   },
   created() {
     this.touch = {};
-  
   },
   methods: {
     setFontSize(fontSize) {
@@ -389,12 +396,8 @@ export default {
       }
       this.songReady = false;
     },
-    // audio,防止极限点击操作报错
     ready() {
-      // 延时避免快速切换歌曲导致 DOM 会报错
-      setTimeout(() => {
-        this.songReady = true;
-      }, 500);
+      this.songReady = true;
       this.savePlayHistory(this.currentSong);
     },
     error() {
@@ -444,7 +447,6 @@ export default {
     },
     // 获取歌词
     getLyric() {
-
       this.currentSong
         .getLyric()
         .then(lyric => {
@@ -698,8 +700,7 @@ export default {
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
       });
-    },
-
+    }
   },
 
   components: {
@@ -776,15 +777,11 @@ export default {
         color: #fff;
       }
 
-      .favorite {
+      .setlyric {
         font-size: $font-size-large-xx;
         position: absolute;
         top: 11px;
         right: 18px;
-
-        .icon-favorite {
-          color: $color-sub-theme;
-        }
       }
     }
 
@@ -799,7 +796,7 @@ export default {
       position: fixed;
       width: 100%;
       top: 62px;
-      bottom: 155px;
+      bottom: 180px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -916,7 +913,7 @@ export default {
 
           .text {
             white-space: normal;
-            line-height: 25px;
+            line-height: 20px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
             padding-bottom: 18px;
@@ -953,6 +950,7 @@ export default {
       .dot-wrapper {
         text-align: center;
         font-size: 0;
+        margin-bottom: 10px;
 
         .dot {
           display: inline-block;
@@ -971,12 +969,37 @@ export default {
         }
       }
 
+      .operator-wrapper {
+        padding: 0px 10%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        color: $color-theme;
+
+        li {
+          flex: 1;
+        }
+
+        .favorite {
+          font-size: $font-size-large;
+          .icon-favorite {
+            color: $color-sub-theme;
+          }
+        }
+
+        .download {
+        }
+
+        .setLyric {
+        }
+      }
+
       .progress-wrapper {
         display: flex;
         align-items: center;
         width: 80%;
         margin: 0px auto;
-        padding: 10px 0;
+        padding: 0px 0px 10px 0;
 
         .time {
           color: #fff;
@@ -1103,7 +1126,6 @@ export default {
       line-height: 20px;
       overflow: hidden;
       font-size: $font-size-medium;
-
 
       .name {
         margin-bottom: 2px;

@@ -12,7 +12,7 @@ export function getSingerList(index) {
     page: 'list',
     key: 'all_all_all',
     pagesize: 100,
-    pagenum: index,
+    pagenum: 1,
     hostUin: 0,
     needNewCode: 0,
     platform: 'yqq',
