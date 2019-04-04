@@ -60,10 +60,6 @@
           </scroll>
         </div>
         <div class="bottom">
-          <div class="dot-wrapper">
-            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-          </div>
           <ul class="operator-wrapper">
             <li class="favorite">
               <i
@@ -72,8 +68,9 @@
                 :class="getFavoriteIcon(currentSong)"
               ></i>
             </li>
-            <li class="down" @click="triggerDownload">
-              <img src="./down.png" width="24" height="24">
+            <li class="dot-wrapper" >
+                <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+                <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
             </li>
             <li class="setLyric" @click="showLyricset">
               <img src="./font.png" width="24" height="24">
@@ -260,20 +257,7 @@ export default {
       this.defaultColor = color;
       saveColor(color);
     },
-    triggerDownload() {
-      setTimeout(() => {
-        if (this.currentSongUrl) {
-          const a = document.createElement("a");
-          a.href = `http://dl.stream.qqmusic.qq.com${
-            this.currentSongUrl.match(/^https?\:\/\/[\w\.]+(.+)$/)[1]
-          }`;
-          a.download = `${this.currentSong.name}${
-            this.url.match(/^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/)[1]
-          }`;
-          a.click();
-        }
-      }, 400);
-    },
+
     show() {
       this.showFlag = true;
     },
@@ -795,8 +779,8 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 62px;
-      bottom: 180px;
+      top: 60px;
+      bottom: 193px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -890,7 +874,7 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
-        margin-top: 16px;
+        margin-top: 22px;
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -970,7 +954,7 @@ export default {
       }
 
       .operator-wrapper {
-        padding: 0px 10%;
+        padding: 0px 20%;
         text-align: center;
         display: flex;
         align-items: center;
@@ -982,16 +966,12 @@ export default {
 
         .favorite {
           font-size: $font-size-large;
+
           .icon-favorite {
             color: $color-sub-theme;
           }
         }
 
-        .download {
-        }
-
-        .setLyric {
-        }
       }
 
       .progress-wrapper {

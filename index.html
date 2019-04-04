@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <title>柠檬音乐</title>
+  <meta name="application-name" content="柠檬音乐">
+  <meta name="description" content="免费听QQ音乐付费歌曲的WebApp">
   <link rel="icon" type="image/png" href="static/favicon.ico">
  
   <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
@@ -36,14 +38,10 @@
   <meta name="msapplication-TileColor" content="#40C4FF">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <% for (var chunk of webpack.chunks) {
-      for (var file of chunk.files) {
-        if (file.match(/\.(js|css)$/)) { %>
-      <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
-      <% }}} %>
 </head>
 
 <body>
+
   <script>
     mui.init({
       keyEventBind: {
