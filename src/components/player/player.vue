@@ -779,8 +779,8 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 60px;
-      bottom: 193px;
+      top: 66px;
+      bottom: 170px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -795,7 +795,7 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 13%; // 15%
+          left: 13%; 
           top: 12%;
           width: 78%;
           height: 100%;
@@ -874,10 +874,11 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
-        margin-top: 22px;
+        margin-top: 20px;
         width: 100%;
         height: 100%;
         overflow: hidden;
+
 
         .lyric-wrapper {
           width: 80%;
@@ -896,11 +897,10 @@ export default {
           }
 
           .text {
+            padding 10px 0;
             white-space: normal;
-            line-height: 20px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
-            padding-bottom: 18px;
 
             &.green {
               color: $color-theme;
@@ -965,7 +965,7 @@ export default {
         }
 
         .favorite {
-          font-size: $font-size-large;
+          font-size: $font-size-large-x;
 
           .icon-favorite {
             color: $color-sub-theme;
