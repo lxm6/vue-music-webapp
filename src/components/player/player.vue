@@ -18,13 +18,6 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
-          <div class="favorite">
-            <i
-              @click="toggleFavorite(currentSong)"
-              class="icon"
-              :class="getFavoriteIcon(currentSong)"
-            ></i>
-          </div>
         </div>
         <!-- <div class="line"></div> -->
         <div
@@ -67,11 +60,23 @@
           </scroll>
         </div>
         <div class="bottom">
-          <div class="dot-wrapper">
-            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
-            <span class="dot" @click="showLyricset"></span>
-          </div>
+          <ul class="operator-wrapper">
+            <li class="favorite">
+              <i
+                @click="toggleFavorite(currentSong)"
+                class="icon"
+                :class="getFavoriteIcon(currentSong)"
+              ></i>
+            </li>
+            <li class="dot-wrapper" >
+                <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+                <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+            </li>
+            <li class="setLyric" @click="showLyricset">
+              <img src="./font.png" width="24" height="24">
+            </li>
+          </ul>
+
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
@@ -253,20 +258,7 @@ export default {
       this.defaultColor = color;
       saveColor(color);
     },
-    triggerDownload() {
-      setTimeout(() => {
-        if (this.currentSongUrl) {
-          const a = document.createElement("a");
-          a.href = `http://dl.stream.qqmusic.qq.com${
-            this.currentSongUrl.match(/^https?\:\/\/[\w\.]+(.+)$/)[1]
-          }`;
-          a.download = `${this.currentSong.name}${
-            this.url.match(/^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/)[1]
-          }`;
-          a.click();
-        }
-      }, 400);
-    },
+
     show() {
       this.showFlag = true;
     },
@@ -389,7 +381,6 @@ export default {
       }
       this.songReady = false;
     },
-    // audio,防止极限点击操作报错
     ready() {
       this.songReady = true;
       this.savePlayHistory(this.currentSong);
@@ -774,15 +765,11 @@ export default {
         color: #fff;
       }
 
-      .favorite {
+      .setlyric {
         font-size: $font-size-large-xx;
         position: absolute;
         top: 11px;
         right: 18px;
-
-        .icon-favorite {
-          color: $color-sub-theme;
-        }
       }
     }
 
@@ -796,8 +783,8 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 62px;
-      bottom: 155px;
+      top: 66px;
+      bottom: 170px;
       white-space: nowrap;
       font-size: 0;
       overflow: hidden;
@@ -812,7 +799,7 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 13%; // 15%
+          left: 13%; 
           top: 12%;
           width: 78%;
           height: 100%;
@@ -891,10 +878,11 @@ export default {
       .middle-r {
         display: inline-block;
         vertical-align: top;
-        margin-top: 16px;
+        margin-top: 20px;
         width: 100%;
         height: 100%;
         overflow: hidden;
+
 
         .lyric-wrapper {
           width: 80%;
@@ -913,11 +901,10 @@ export default {
           }
 
           .text {
+            padding 10px 0;
             white-space: normal;
-            line-height: 25px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-medium-x;
-            padding-bottom: 18px;
 
             &.green {
               color: $color-theme;
@@ -951,6 +938,7 @@ export default {
       .dot-wrapper {
         text-align: center;
         font-size: 0;
+        margin-bottom: 10px;
 
         .dot {
           display: inline-block;
@@ -969,12 +957,33 @@ export default {
         }
       }
 
+      .operator-wrapper {
+        padding: 0px 20%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        color: $color-theme;
+
+        li {
+          flex: 1;
+        }
+
+        .favorite {
+          font-size: $font-size-large-x;
+
+          .icon-favorite {
+            color: $color-sub-theme;
+          }
+        }
+
+      }
+
       .progress-wrapper {
         display: flex;
         align-items: center;
         width: 80%;
         margin: 0px auto;
-        padding: 10px 0;
+        padding: 0px 0px 10px 0;
 
         .time {
           color: #fff;

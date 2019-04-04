@@ -82,7 +82,8 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: ` https://api.bzqll.com/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
+    url: 'http://dl.stream.qqmusic.qq.com/C400003hIK000vUlny.m4a?vkey=F1ACCFA630C7805ECD7C6A0890F0E5C332D6D3C164E777E13E22459202D50BB683A89E1C049CE5541894DEFA91DD00F403861597179A8C5B&guid=6567906347&uin=0&fromtag=66'
+    // url: ` https://api.bzqll.com/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
   })
 }
 
