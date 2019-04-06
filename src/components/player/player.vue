@@ -52,7 +52,7 @@
                   :key="index"
                 >{{line.txt}}</p>
               </div>
-              <div class="pure-music" v-if="isPure">
+              <div class="pure-music" :style="{fontSize:defaultFontSize + 'px'}" v-if="isPure">
                 <p>此歌曲没有歌词</p>
               </div>
               <div class="blank"></div>
@@ -73,7 +73,7 @@
                 <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
             </li>
             <li class="setLyric" @click="showLyricset">
-              <img src="./font.png" width="24" height="24">
+              <img src="./Aa.png" width="24" height="24">
             </li>
           </ul>
 
@@ -202,9 +202,9 @@ export default {
         colorList: [
           { name: "green", color: "$color-theme" },
           { name: "blue", color: "#50baf8" },
-          { name: "purple", color: "#b66afc" },
           { name: "yellow", color: "#f1f13d" },
-          { name: "red", color: "#ff4e4e" }
+          { name: "pink", color: "#fa7fbd" },
+          { name: "red", color: "#f96666" }
         ]
       }
     };
@@ -465,7 +465,7 @@ export default {
       this.currentLineNum = lineNum;
       if (lineNum > 3) {
         // 保证高亮歌词在中间
-        let lineEl = this.$refs.lyricLine[lineNum - 2];
+        let lineEl = this.$refs.lyricLine[lineNum - 3];
         this.$refs.lyricList.scrollToElement(lineEl, 1000);
       } else {
         //滚动到顶部
@@ -747,7 +747,7 @@ export default {
       }
 
       .title {
-        width: 70%;
+        width: 75%;
         margin: 0 auto;
         line-height: 40px;
         text-align: center;
@@ -922,8 +922,8 @@ export default {
               color: $color-red;
             }
 
-            &.purple {
-              color: $color-purple;
+            &.pink {
+              color: $color-pink;
             }
           }
         }
@@ -952,7 +952,7 @@ export default {
           &.active {
             width: 20px;
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.8);
+            background: $color-background;
           }
         }
       }
@@ -962,7 +962,7 @@ export default {
         text-align: center;
         display: flex;
         align-items: center;
-        color: $color-theme;
+        color: $color-background;
 
         li {
           flex: 1;

@@ -24,7 +24,7 @@
               网站
               <span>柠檬音乐</span>
             </li>
-             <li>
+            <li>
               网址
               <span>lxm6.top</span>
             </li>
@@ -32,8 +32,8 @@
               作者
               <span>LXM</span>
             </li>
-           
-            <li @click="openUrl" class="url">
+
+            <li @click="openGitHub" class="url">
               GitHub
               <span>
                 <img src="~@/common/image/github.svg" alt="github" width="35">
@@ -50,9 +50,9 @@
 <script>
 import TopTip from "base/top-tip/top-tip";
 import Confirm from "base/confirm/confirm";
+import { openUrl } from "common/js/openUrl";
 
 export default {
-
   props: {
     delay: {
       type: Number,
@@ -76,15 +76,9 @@ export default {
       window.location.reload();
     },
     download() {
-      
-      // this.hide();
-      // this.$router.push({
-      //   name: "target",
-      //   params: {
-      //     data: "https://www.lxm6.top/download/download.html"
-      //   }
-      // });
-
+      this.hide();
+      openUrl("https://www.lxm6.top/download/download.html")
+  
     },
     openDialog() {
       this.$refs.dialog.style.display = "block";
@@ -92,16 +86,12 @@ export default {
     hideDialog() {
       this.$refs.dialog.style.display = "none";
     },
-    openUrl() {
+    openGitHub() {
       this.hide();
       this.hideDialog();
-      this.$router.push({
-        name: "target",
-        params: {
-          data: "https://github.com/lxm6/vue-music-webapp"
-        }
-      });
+      openUrl("https://github.com/lxm6/vue-music-webapp");
     },
+
     showConfirm() {
       this.$refs.confirm.show();
     },
@@ -163,7 +153,6 @@ export default {
       color: $color-text;
       height: 60px;
       line-height: 60px;
-
     }
   }
 }
@@ -219,7 +208,7 @@ export default {
     }
 
     .url:hover {
-      background-color: rgba(255,255,255,0.5);
+      background-color: rgba(255, 255, 255, 0.5);
     }
 
     ul {
@@ -234,7 +223,7 @@ export default {
           margin-left: 80px;
           display: inline-block;
           float: right;
-          color:rgba(0,0,0,0.7);
+          color: rgba(0, 0, 0, 0.7);
         }
       }
 

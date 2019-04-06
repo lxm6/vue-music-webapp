@@ -53,11 +53,7 @@ const UserCenter = (resolve) => {
     resolve(module)
   })
 }
-const Target = (resolve) => {
-  import('components/target/target').then((module) => {
-    resolve(module)
-  })
-}
+
 Vue.use(Router)
 const router = new Router({
   routes: [{
@@ -125,14 +121,7 @@ const router = new Router({
         keepAlive: false,
       },
     },
-    {
-      name:'target',
-      path: '/target',
-      component: Target,
-      meta: {
-        keepAlive: false,
-      },
-    },
+   
   ]
 })
 

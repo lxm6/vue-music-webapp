@@ -99,7 +99,7 @@ export default {
     .progress {
       position: absolute;
       height: 100%;
-      background: $color-theme;
+      background: #fff;
     }
 
     .progress-btn-wrapper {

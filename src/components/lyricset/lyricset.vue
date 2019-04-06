@@ -179,10 +179,10 @@ export default {
           width: 20px;
           background-color: $color-theme;
           border-radius: 50%;
-          border: 2px solid #fff;
+          border: 3px solid #fff;
 
           &.current {
-            border: 2px solid #bbb;
+            border: 3px solid #ccc;
           }
         }
       }

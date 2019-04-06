@@ -7,7 +7,7 @@
           <slider>
             <!-- 作为插槽插入组件内部的slot之中 -->
             <div v-for="(item,index) in recommends" :key="index">
-              <a :href="item.linkUrl">
+              <a @click="openLink(item.linkUrl)">
                 <img class="needsclick" @load="loadImage" :src="item.picUrl">
               </a>
             </div>
@@ -49,6 +49,7 @@ import { getRecommend, getDiscList } from "api/recommend";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
+import { openUrl } from "common/js/openUrl";
 
 export default {
 
@@ -65,6 +66,10 @@ export default {
   },
 
   methods: {
+    openLink(url){
+      openUrl(url)
+    },
+
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.recommend.style.bottom = bottom;
@@ -95,14 +100,6 @@ export default {
         this.checkloaded = true;
         this.$refs.scroll.refresh();
       }
-    },
-    openUrl() {
-      // this.$router.push({
-      //   name: "target",
-      //   params: {
-      //     data: "http://y.qq.com/w/album.html"
-      //   }
-      // });
     },
     ...mapMutations({
       setDisc: "SET_DISC"
