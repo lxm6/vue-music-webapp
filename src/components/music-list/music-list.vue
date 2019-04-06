@@ -242,19 +242,6 @@ export default {
   right: 0;
   background: $color-background;
 
-  .back {
-    position: absolute;
-    top: 0;
-    left: 6px;
-    z-index: 50;
-
-    .icon-back {
-      display: block;
-      padding: 10px;
-      font-size: $font-size-large-x;
-      color: $color-theme;
-    }
-  }
 
   .title {
     position: absolute;

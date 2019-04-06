@@ -1,5 +1,6 @@
 <template>
   <transition name="list-fade">
+
     <div class="playlist" @click="hide" v-show="playListVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-header">
@@ -49,8 +50,11 @@
       </div>
       <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
       <add-song ref="addSong" ></add-song>
+    <toast :title=title ref="toast"></toast>
+    
     </div>
   </transition>
+
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -58,12 +62,14 @@ import { playMode } from "common/js/config";
 import Scroll from "base/scroll/scroll";
 import Confirm from "base/confirm/confirm";
 import AddSong from "components/add-song/add-song";
+import Toast from "base/toast/toast";
 import { playerMixin } from "common/js/mixin";
 export default {
   mixins: [playerMixin],
   data() {
     return {
-      refreshDelay: 120
+      refreshDelay: 120,
+      title:"",
     };
   },
   computed: {
@@ -151,7 +157,9 @@ export default {
   components: {
     Scroll,
     Confirm,
-    AddSong
+    AddSong,
+    Toast
+
   }
 };
 </script>

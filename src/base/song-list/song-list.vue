@@ -94,7 +94,6 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-  margin-top: 8px;
 
   .item {
     display: flex;

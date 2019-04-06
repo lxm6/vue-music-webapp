@@ -58,20 +58,23 @@ export const playerMixin = {
       })
       this.setCurrentIndex(index)
     },
-    toggleFavorite(song) {
-      if (this.isFavorite(song)) {
-        this.deleteFavoriteList(song)
-      } else {
-        this.saveFavoriteList(song)
-      }
-    },
+
     getFavoriteIcon(song) {
       if (this.isFavorite(song)) {
         return 'icon-favorite'
       }
       return 'icon-not-favorite'
     },
-
+    toggleFavorite(song) {
+      this.$refs.toast.show();
+      if (this.isFavorite(song)) {
+        this.title="已取消喜欢"
+        this.deleteFavoriteList(song);
+      } else {
+        this.title="已收藏到我喜欢"
+        this.saveFavoriteList(song);
+      }
+    },
     isFavorite(song) {
       const index = this.favoriteList.findIndex((item) => {
         return item.id === song.id

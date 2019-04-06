@@ -68,9 +68,9 @@
                 :class="getFavoriteIcon(currentSong)"
               ></i>
             </li>
-            <li class="dot-wrapper" >
-                <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-                <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+            <li class="dot-wrapper">
+              <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+              <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
             </li>
             <li class="setLyric" @click="showLyricset">
               <img src="./Aa.png" width="24" height="24">
@@ -145,6 +145,7 @@
         <span class="text">{{msg}}</span>
       </div>
     </top-tip>
+    <toast :title=title ref="toast"></toast>
   </div>
 </template>
 <script>
@@ -160,6 +161,7 @@ import Scroll from "base/scroll/scroll";
 import Playlist from "components/playlist/playlist";
 import Lyricset from "components/lyricset/lyricset";
 import TopTip from "base/top-tip/top-tip";
+import Toast from "base/toast/toast";
 import { playerMixin } from "common/js/mixin";
 import {
   saveFontsize,
@@ -176,6 +178,7 @@ export default {
 
   data() {
     return {
+      title:"",
       songReady: false,
       currentTime: 0,
       // 环形进度条大小
@@ -210,6 +213,7 @@ export default {
     };
   },
   computed: {
+
     cdCls() {
       return this.playing && this.currentSong.url != "" ? "play" : "play pause";
     },
@@ -250,6 +254,7 @@ export default {
     this.touch = {};
   },
   methods: {
+
     setFontSize(fontSize) {
       this.defaultFontSize = fontSize;
       saveFontsize(fontSize);
@@ -555,7 +560,7 @@ export default {
       this.touch.initiated = false;
     },
     updateTime(e) {
-      this.currentTime = e.target.currentTime;  //时间戳
+      this.currentTime = e.target.currentTime; //时间戳
     },
     format(interval) {
       interval = interval | 0;
@@ -697,7 +702,8 @@ export default {
     Scroll,
     Playlist,
     Lyricset,
-    TopTip
+    TopTip,
+    Toast
   }
 };
 </script>
@@ -731,20 +737,9 @@ export default {
       z-index: 100;
       margin-bottom: 5px;
       color: $color-theme;
-
-      .back {
-        position: absolute;
-        top: 0;
-        left: 6px;
-        z-index: 50;
-
         .icon-back {
-          display: block;
-          padding: 9px;
-          font-size: $font-size-large-x;
           transform: rotate(-90deg);
         }
-      }
 
       .title {
         width: 75%;
@@ -799,7 +794,7 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 13%; 
+          left: 13%;
           top: 12%;
           width: 78%;
           height: 100%;
@@ -883,7 +878,6 @@ export default {
         height: 100%;
         overflow: hidden;
 
-
         .lyric-wrapper {
           width: 80%;
           margin: 0 auto;
@@ -897,14 +891,14 @@ export default {
           .pure-music {
             padding-top: 50%;
             color: rgba(255, 255, 255, 0.5);
-            font-size: $font-size-medium-x;
+            font-size: $font-size-large;
           }
 
           .text {
-            padding 10px 0;
+            padding: 11px 0;
             white-space: normal;
             color: rgba(255, 255, 255, 0.5);
-            font-size: $font-size-medium-x;
+            font-size: $font-size-large;
 
             &.green {
               color: $color-theme;
@@ -975,7 +969,6 @@ export default {
             color: $color-sub-theme;
           }
         }
-
       }
 
       .progress-wrapper {

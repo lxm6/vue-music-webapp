@@ -10,7 +10,6 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <player></player>
   </div>
-  
 </template>
 
 <script>
@@ -30,7 +29,6 @@ export default {
       this.$refs.about.showFlag = true;
     }
   },
-
   components: {
     MHeader,
     Tab,
@@ -43,7 +41,8 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
-#app{
-  -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+#app {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 </style>

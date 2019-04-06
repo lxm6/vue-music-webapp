@@ -210,20 +210,6 @@ export default {
     transform: translate3d(100%, 0, 0);
   }
 
-  .back {
-    position: absolute;
-    top: 0;
-    left: 6px;
-    z-index: 50;
-
-    .icon-back {
-      display: block;
-      padding: 10px;
-      font-size: $font-size-large-x;
-      color: $color-theme;
-    }
-  }
-
   .switches-wrapper {
     margin: 10px 0 15px 0;
   }
@@ -261,6 +247,7 @@ export default {
     bottom: 0;
     width: 100%;
     background-color: #fff;
+    padding-top 7px;
 
     .list-scroll {
       height: 100%;

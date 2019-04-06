@@ -130,7 +130,7 @@ export function saveFontsize(fontsize) {
 }
 
 export function loadFontsize() {
-  return storage.get(FONTSIZE, 16)
+  return storage.get(FONTSIZE, 18)
 }
 export function saveColor(color) {
   storage.set(COLOR, color);

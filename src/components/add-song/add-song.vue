@@ -13,7 +13,13 @@
       <div class="shortcut" v-show="!query">
         <switches :switches="switches" :currentIndex="currentIndex" @switch="switchItem"></switches>
         <div class="list-wrapper">
-          <scroll :refreshDelay="refreshDelay" ref="songList" v-if="currentIndex===0" class="list-scroll" :data="playHistory">
+          <scroll
+            :refreshDelay="refreshDelay"
+            ref="songList"
+            v-if="currentIndex===0"
+            class="list-scroll"
+            :data="playHistory"
+          >
             <div class="list-inner">
               <song-list :songs="playHistory" @select="selectSong"></song-list>
             </div>
@@ -62,7 +68,7 @@ import Switches from "base/switches/switches";
 import TopTip from "base/top-tip/top-tip";
 import Suggest from "components/suggest/suggest";
 import { searchMixin } from "common/js/mixin";
-import { mapGetters, mapActions,mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import Song from "common/js/song";
 export default {
   mixins: [searchMixin],
@@ -82,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["playHistory","addSongVisible"])
+    ...mapGetters(["playHistory", "addSongVisible"])
   },
   methods: {
     show() {
@@ -97,11 +103,10 @@ export default {
     },
     hide() {
       this.setAddSongVisible(false);
-
     },
     selectSong(song, index) {
       if (index !== 0) {
-        this.insertSong([new Song(song),true]);
+        this.insertSong([new Song(song), true]);
         this.$refs.topTip.show();
       }
     },
@@ -158,20 +163,15 @@ export default {
       font-size: $font-size-large;
       color: $color-theme;
     }
-      .back {
-        position: absolute;
-        top: 0;
-        left: 6px;
-        z-index: 50;
 
-        .icon-back {
-          display: block;
-          padding: 9px;
-          font-size: $font-size-large-x;
-           color: $color-theme;
-        }
-      }
+    .back {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      z-index: 50;
 
+
+    }
   }
 
   .search-box-wrapper {
@@ -208,15 +208,10 @@ export default {
     padding: 18px 0;
     font-size: 0;
 
-    .icon-ok {
-      font-size: $font-size-medium-x;
-      color: #fff;
-      margin-right: 6px;
-    }
-
     .text {
       font-size: $font-size-medium-x;
       color: #fff;
+      margin-left 10px;
     }
   }
 }
