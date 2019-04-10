@@ -1,13 +1,15 @@
 <template>
   <transition name="list-fade">
-
     <div class="playlist" @click="hide" v-show="playListVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-header">
           <h1 class="title">
             <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text">{{modeText}} <span class="text" v-show="mode!=1">({{playlist.length}}首)</span></span>
-           
+            <span class="text">
+              {{modeText}}
+              <span class="text" v-show="mode!=1">({{playlist.length}}首)</span>
+            </span>
+
             <span class="clear" @click="showConfirm">
               <i class="icon-clear"></i>
             </span>
@@ -49,12 +51,20 @@
         </div>
       </div>
       <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
-      <add-song ref="addSong" ></add-song>
-    <toast :title=title ref="toast"></toast>
-    
+      <add-song ref="addSong"></add-song>
+      <toast :title="title" ref="toast1">
+        <div class="content">
+            <i class="icon-ok"></i>
+          <p class="desc">{{title}}</p>
+        </div>
+      </toast>
+      <toast :title="title" ref="toast2">
+        <div class="content">
+          <p class="desc">{{title}}</p>
+        </div>
+      </toast>
     </div>
   </transition>
-
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -69,7 +79,7 @@ export default {
   data() {
     return {
       refreshDelay: 120,
-      title:"",
+      title: ""
     };
   },
   computed: {
@@ -93,10 +103,9 @@ export default {
     },
     hide() {
       this.setPlayListVisible(false);
-
     },
     showConfirm() {
-      this.$refs.confirm.show()
+      this.$refs.confirm.show();
     },
     confirmClear() {
       this.deleteSongList();
@@ -130,7 +139,8 @@ export default {
       this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300);
     },
     deleteOne(item) {
-      this.this.deleteSong(item);(item);
+      this.deleteSong(item);
+      item;
       if (!this.playlist.length) {
         this.hide();
       }
@@ -148,7 +158,7 @@ export default {
       if (!this.playListVisible || newSong.id === oldSong.id) {
         return;
       }
-     
+
       setTimeout(() => {
         this.scrollToCurrent(newSong);
       }, 20);
@@ -159,7 +169,6 @@ export default {
     Confirm,
     AddSong,
     Toast
-
   }
 };
 </script>
@@ -174,8 +183,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 200;
-  background-color: rgba(0,0,0,0.4);
-
+  background-color: rgba(0, 0, 0, 0.4);
 
   &.list-fade-enter-active, &.list-fade-leave-active {
     transition: opacity 0.3s;
@@ -194,14 +202,13 @@ export default {
   }
 
   &.list-fade-enter, .list-wrapper {
-    border-top-left-radius :10px;
-    border-top-right-radius :10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: $color-playlist-bg
-
+    background-color: $color-playlist-bg;
 
     .list-header {
       position: relative;
@@ -253,7 +260,6 @@ export default {
         &.list-enter, &.list-leave-to {
           height: 0;
         }
-      
 
         .current {
           flex: 0 0 20px;
@@ -261,7 +267,6 @@ export default {
           font-size: $font-size-medium;
           color: $color-theme;
         }
-        
 
         .text {
           flex: 1;
@@ -269,7 +274,8 @@ export default {
           font-size: $font-size-medium-x;
           color: $color-text-ll;
         }
-        .current-play{
+
+        .current-play {
           color: $color-theme;
         }
 
@@ -287,7 +293,7 @@ export default {
         .delete {
           extend-click();
           font-size: $font-size-medium;
-          color: rgba(0,0,0,0.3);
+          color: rgba(0, 0, 0, 0.3);
         }
       }
     }
@@ -321,6 +327,24 @@ export default {
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
+    }
+  }
+
+  .content {
+    width: 140px;
+    padding: 10px 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+
+    i{
+      display:inline-block;
+      margin-bottom :10px
+    }
+    .desc {
+      font-size: $font-size-medium;
+      color: $color-text-h;
     }
   }
 }

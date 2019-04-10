@@ -25,6 +25,7 @@
           @touchstart.prevent="middleTouchStart"
           @touchmove.prevent="middleTouchMove"
           @touchend="middleTouchEnd"
+          @click.stop="toggleShow"
         >
           <div class="middle-l" ref="middleL">
             <div class="cd-wrapper" ref="cdWrapper">
@@ -40,7 +41,7 @@
               <div class="playing-lyric">{{playingLyric}}</div>
             </div>
           </div>
-          <scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
+          <scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines" :scrollbar="false">
             <div class="lyric-wrapper">
               <div v-if="currentLyric">
                 <p
@@ -145,7 +146,17 @@
         <span class="text">{{msg}}</span>
       </div>
     </top-tip>
-    <toast :title=title ref="toast"></toast>
+    <toast :title="title" ref="toast1">
+      <div class="content">
+        <i class="icon-ok"></i>
+        <p class="desc">{{title}}</p>
+      </div>
+    </toast>
+        <toast :title="title" ref="toast2">
+      <div class="content">
+        <p class="desc">{{title}}</p>
+      </div>
+    </toast>
   </div>
 </template>
 <script>
@@ -178,7 +189,8 @@ export default {
 
   data() {
     return {
-      title:"",
+
+      title: "",
       songReady: false,
       currentTime: 0,
       // 环形进度条大小
@@ -213,14 +225,14 @@ export default {
     };
   },
   computed: {
+    miniLyric(){
 
+    },
     cdCls() {
-      return this.playing && this.currentSong.url != "" ? "play" : "play pause";
+      return this.playing ? "play" : "play pause";
     },
     trCls() {
-      return this.playing && this.currentSong.url != ""
-        ? "triger"
-        : "triger pause";
+      return this.playing ? "triger" : "triger pause";
     },
     playIcon() {
       return this.playing ? "icon-pause" : "icon-play";
@@ -254,7 +266,24 @@ export default {
     this.touch = {};
   },
   methods: {
-
+    toggleShow() {
+      console.log("dd");
+      if (this.currentShow === "cd") {
+        this.currentShow = "lyric";
+        this.$refs.middleL.style.opacity = 0;
+        this.$refs.lyricList.$el.style[
+          transform
+        ] = `translate3d(${-window.innerWidth}px,0,0)`;
+        this.$refs.lyricList.$el.style[transitionDuration] = 0;
+        this.$refs.middleL.style[transitionDuration] = 0;
+      } else {
+        this.currentShow = "cd";
+        this.$refs.middleL.style.opacity = 1;
+        this.$refs.lyricList.$el.style[transform] = `translate3d(0,0,0)`;
+        this.$refs.lyricList.$el.style[transitionDuration] = 0;
+        this.$refs.middleL.style[transitionDuration] = 0;
+      }
+    },
     setFontSize(fontSize) {
       this.defaultFontSize = fontSize;
       saveFontsize(fontSize);
@@ -409,21 +438,7 @@ export default {
         this.currentLyric.seek(currentTime * 1000);
       }
     },
-    changeMode() {
-      //mode 有 3 种状态
-      const mode = (this.mode + 1) % 3;
-      this.setPlayMode(mode);
-      let list = null;
-      if (mode === playMode.random) {
-        list = shuffle(this.sequenceList);
-      } else {
-        list = this.sequenceList;
-      }
-      // 播放模式变化时, 当前歌曲下标重新设置
-      this.resetCurrentIndex(list);
-      // mutation: setPlayList
-      this.setPlaylist(list);
-    },
+
     // 确保切换模式的时候，当前歌曲是不变的
     resetCurrentIndex(list) {
       // findIndex: es6
@@ -737,9 +752,10 @@ export default {
       z-index: 100;
       margin-bottom: 5px;
       color: $color-theme;
-        .icon-back {
-          transform: rotate(-90deg);
-        }
+
+      .icon-back {
+        transform: rotate(-90deg);
+      }
 
       .title {
         width: 75%;
@@ -1146,7 +1162,22 @@ export default {
     }
   }
 }
-
+  .content {
+    width: 140px;
+    padding 10px 0;
+    margin 0 auto;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    i{
+      display:inline-block;
+      margin-bottom :10px
+    }
+    .desc {
+      font-size: $font-size-medium;
+      color: $color-text-h;
+    }
+  }
 @keyframes rotate {
   0% {
     transform: rotate(0);

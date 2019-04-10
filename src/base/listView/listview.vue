@@ -30,9 +30,16 @@
           class="item"
           :class="{'current':currentIndex===index}"
           :key="index"
+          @click="cshortcut(index,item)"
         >{{item}}</li>
+
       </ul>
     </div>
+    <toast :title="title" ref="toast">
+       <div class="content">
+        <p class="desc">{{title}}</p>
+      </div>
+    </toast>
     <div class="list-fixed" ref="fixed" v-show="fixedTitle">
       <div class="fixed-title">{{fixedTitle}}</div>
     </div>
@@ -45,6 +52,7 @@
 <script type="text/ecmascript-6">
 import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
+import Toast from "base/toast/toast";
 import { getData } from "common/js/dom";
 
 const TITLE_HEIGHT = 30;
@@ -75,6 +83,7 @@ export default {
   },
   data() {
     return {
+      title:"",
       scrollY: -1,
       currentIndex: 0,
       diff: -1
@@ -87,6 +96,11 @@ export default {
     this.listHeight = [];
   },
   methods: {
+    cshortcut(index,item){
+        this.title=item;
+       this.$refs.toast.show();
+      this._scrollTo(index);
+    },
     selectItem(item) {
       this.$emit("select", item);
     },
@@ -95,7 +109,6 @@ export default {
       let firstTouch = e.touches[0];
       this.touch.y1 = firstTouch.pageY;
       this.touch.anchorIndex = anchorIndex;
-
       this._scrollTo(anchorIndex);
     },
     onShortcutTouchMove(e) {
@@ -174,7 +187,8 @@ export default {
   },
   components: {
     Scroll,
-    Loading
+    Loading,
+    Toast
   }
 };
 </script>
@@ -238,6 +252,7 @@ export default {
       line-height: 1;
       color: $color-text-l;
       font-size: $font-size-small;
+      cursor:default
 
       &.current {
         color: $color-theme;
@@ -267,6 +282,21 @@ export default {
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
+  }
+  .content {
+    width: 50px;
+    height 50px;
+    margin 0 auto;
+    line-height 50px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+
+    .desc {
+      font-size: $font-size-large;
+      font-weight bold;
+      color: $color-text-h;
+    }
   }
 }
 </style>

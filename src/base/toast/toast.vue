@@ -1,10 +1,9 @@
 <template>
- <transition name="fade">
-  <div class="toast" v-show="showFlag">
-    <i class="icon-ok"></i>
-    <p class="desc">{{title}}</p>
-  </div>
- </transition>
+  <transition name="fade">
+    <div class="toast" v-show="showFlag">
+       <slot></slot>
+    </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -25,7 +24,7 @@ export default {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.hide();
-      }, 1500);
+      }, 800);
     },
     hide() {
       this.showFlag = false;
@@ -37,23 +36,27 @@ export default {
 @import '~common/stylus/variable';
 
 .toast {
-  width: 150px;
-  padding: 15px 0;
-  text-align: center;
+  width: 200px;
   position: fixed;
-  top: 40%;
+  top: 45%;
   left: 50%;
-  margin-left: -75px;
+  margin-left: -100px;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
 
+  .content {
+    width: 100px;
+    padding 10px 10px;
+    margin 0 auto;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
 
-  .desc {
-    margin-top: 10px;
-    line-height: 20px;
-    font-size: $font-size-medium;
-    color: $color-text-h;
+    .desc {
+      margin-top: 10px;
+      line-height: 20px;
+      font-size: $font-size-medium;
+      color: $color-text-h;
+    }
   }
 
   &.fade-enter, &.fade-leave-to {
@@ -65,7 +68,7 @@ export default {
   }
 
   &.fade-enter-active, &.fade-leave-active {
-    transition: all 0.5s;
+    transition: all 0.3s;
   }
 }
 </style>

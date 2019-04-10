@@ -44,8 +44,10 @@ export function getDiscList() {
   })
 
 }
-
-//获取热门歌单数据
+/**
+ * @function getSongList 获取推荐歌单里的歌曲数据
+ * @param {String} disstid 歌单id
+ */
 export function getSongList(disstid) {
   const url = '/api/getSongList'
   const data = Object.assign({}, commonParams, {
@@ -64,3 +66,4 @@ export function getSongList(disstid) {
     return Promise.resolve(res.data)
   })
 }
+

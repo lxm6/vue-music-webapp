@@ -8,7 +8,6 @@
 import BScroll from "better-scroll";
 
 export default {
-
   props: {
     probeType: {
       type: Number,
@@ -26,7 +25,7 @@ export default {
       type: Array,
       default: null
     },
-       //上拉刷新
+    //上拉刷新
     pullup: {
       type: Boolean,
       default: false
@@ -39,7 +38,20 @@ export default {
       type: Number,
       default: 20
     },
-
+    scrollbar: {
+      type: Boolean,
+      default: true
+    },
+    mouseWheel: {
+      type: Boolean,
+      default: true
+    },
+    //是否启用硬件加速
+     HWCompositing: {
+      type: Boolean,
+      default: true
+    },
+    
   },
   mounted() {
     setTimeout(() => {
@@ -53,7 +65,10 @@ export default {
       }
       this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
-        click: this.click
+        click: this.click,
+        scrollbar:this.scrollbar,
+        mouseWheel:this.mouseWheel,
+        HWCompositing:this.HWCompositing,
       });
 
       if (this.listenScroll) {

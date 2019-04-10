@@ -3,12 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>柠檬音乐</title>
   <meta name="application-name" content="柠檬音乐">
   <meta name="description" content="免费听QQ音乐付费歌曲的WebApp">
   <link rel="icon" type="image/png" href="static/favicon.ico">
- 
+
   <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
   <meta name="theme-color" content="#00BCD4">
   <meta name="mobile-web-app-capable" content="yes">
@@ -31,33 +32,43 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="柠檬音乐">
-  <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/apple-touch-icon-152x152.png">
-  <link rel="mask-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/safari-pinned-tab.svg" color="#4DBA87">
+  <link rel="apple-touch-icon"
+    href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/apple-touch-icon-152x152.png">
+  <link rel="mask-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/safari-pinned-tab.svg"
+    color="#4DBA87">
   <!-- Add to home screen for Windows -->
-  <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
+  <meta name="msapplication-TileImage"
+    content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
   <meta name="msapplication-TileColor" content="#40C4FF">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
+<style>
+  body {
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+
+</style>
 
 <body>
 
   <script>
-
     mui.init({
       keyEventBind: {
-        backbutton: true 
+        backbutton: true
       }
     });
     // //首页返回键处理
     // //处理逻辑：1秒内，连续两次按返回键，则退出应用；
     var first = null;
-    mui.back = function() {
+    mui.back = function () {
       if (!first) {
         first = new Date().getTime(); //记录第一次按下回退键的时间
         mui.toast("再按一次退出应用"); //给出提示
         history.go(-1); //回退到上一页面
-        setTimeout(function() {
+        setTimeout(function () {
           //1s中后清除
           first = null;
         }, 1000);
@@ -69,7 +80,7 @@
       }
     };
 
-    </script>
+  </script>
   <div id="app"></div>
   <!-- built files will be auto injected -->
 

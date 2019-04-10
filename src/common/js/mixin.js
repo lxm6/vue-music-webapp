@@ -40,6 +40,13 @@ export const playerMixin = {
     ])
   },
   methods: {
+    changeModeText() {
+      return this.mode === playMode.sequence
+        ? "顺序播放"
+        : this.mode === playMode.random
+        ? "随机播放"
+        : "单曲循环";
+    },
     changeMode() {
       const mode = (this.mode + 1) % 3
       this.setPlayMode(mode)
@@ -49,8 +56,13 @@ export const playerMixin = {
       } else {
         list = this.sequenceList
       }
+      // 播放模式变化时, 当前歌曲下标重新设置
       this.resetCurrentIndex(list)
+      // mutation: setPlayList
       this.setPlaylist(list)
+      this.title=this.changeModeText();
+      this.$refs.toast2.show();
+
     },
     resetCurrentIndex(list) {
       let index = list.findIndex((item) => {
@@ -66,7 +78,6 @@ export const playerMixin = {
       return 'icon-not-favorite'
     },
     toggleFavorite(song) {
-      this.$refs.toast.show();
       if (this.isFavorite(song)) {
         this.title="已取消喜欢"
         this.deleteFavoriteList(song);
@@ -74,6 +85,8 @@ export const playerMixin = {
         this.title="已收藏到我喜欢"
         this.saveFavoriteList(song);
       }
+      this.$refs.toast1.show();
+
     },
     isFavorite(song) {
       const index = this.favoriteList.findIndex((item) => {
