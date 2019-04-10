@@ -41,7 +41,12 @@
               <div class="playing-lyric">{{playingLyric}}</div>
             </div>
           </div>
-          <scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines" :scrollbar="false">
+          <scroll
+            class="middle-r"
+            ref="lyricList"
+            :data="currentLyric && currentLyric.lines"
+            :scrollbar="false"
+          >
             <div class="lyric-wrapper">
               <div v-if="currentLyric">
                 <p
@@ -70,8 +75,9 @@
               ></i>
             </li>
             <li class="dot-wrapper">
-              <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-              <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+         
+              <span class="dot" :class="{'active':currentShow==='cd' }"  @click.stop="toggleShow"></span>
+              <span class="dot" :class="{'active':currentShow==='lyric'}"  @click.stop="toggleShow"></span>
             </li>
             <li class="setLyric" @click="showLyricset">
               <img src="./Aa.png" width="24" height="24">
@@ -152,7 +158,7 @@
         <p class="desc">{{title}}</p>
       </div>
     </toast>
-        <toast :title="title" ref="toast2">
+    <toast :title="title" ref="toast2">
       <div class="content">
         <p class="desc">{{title}}</p>
       </div>
@@ -189,7 +195,6 @@ export default {
 
   data() {
     return {
-
       title: "",
       songReady: false,
       currentTime: 0,
@@ -225,9 +230,7 @@ export default {
     };
   },
   computed: {
-    miniLyric(){
-
-    },
+    miniLyric() {},
     cdCls() {
       return this.playing ? "play" : "play pause";
     },
@@ -801,27 +804,26 @@ export default {
       overflow: hidden;
 
       .middle-l {
-        display: inline-block;
         vertical-align: center;
         position: relative;
         width: 100%;
-        height: 0;
-        padding-top: 78%;
 
         .cd-wrapper {
-          position: absolute;
-          left: 13%;
-          top: 12%;
-          width: 78%;
-          height: 100%;
+          
+            img {
+              width: 100%;
+              height: 100%;
+            }
 
           .triger {
+            width:70px;
+            height:120px;
+            left:50%;
+            margin-left:-10px;
+            top:-50px;
             position: absolute;
-            top: -17%;
-            height: 40%;
-            left: 44%;
             z-index: 1;
-            transform-origin: 17% 8%;
+            transform-origin: 18% 8%;
             transition: all 0.4s;
 
             &.play {
@@ -831,17 +833,16 @@ export default {
             &.pause {
               transform: rotate(-30deg);
             }
-
-            img {
-              height: 100%;
-            }
           }
 
           .cd {
-            width: 94%;
-            height: 94%;
+            width: 260px;
+            height: 260px;
             box-sizing: border-box;
-            position: absolute;
+            position: relative;
+            margin-left: -130px;
+            left: 50%;
+            margin-top:35px
 
             &.play {
               animation: rotate 20s linear infinite;
@@ -852,20 +853,18 @@ export default {
             }
 
             .cdImg {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
               border-radius: 50%;
+              position: absolute;
             }
 
             .albumImg {
+              width: 240px;
+              height: 240px;
+              top: 50%;
+              left: 50%;
+              margin-left: -120px;
+              margin-top: -120px;
               position: absolute;
-              left: 17%;
-              top: 17%;
-              width: 65%;
-              height: 65%;
               border-radius: 50%;
             }
           }
@@ -873,7 +872,7 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 40px auto 0 auto;
+          margin: 20px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
@@ -887,11 +886,11 @@ export default {
       }
 
       .middle-r {
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 20px;
+        position: absolute;
+        top:20px;
+        bottom: 20px;
+        left:100%;
         width: 100%;
-        height: 100%;
         overflow: hidden;
 
         .lyric-wrapper {
@@ -901,17 +900,18 @@ export default {
           text-align: center;
 
           .blank {
-            padding-top: 20%;
+            padding-top: 10%;
           }
 
           .pure-music {
-            padding-top: 50%;
+            padding-top: 150px;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-large;
           }
-
+      
           .text {
-            padding: 11px 0;
+            line-height:24px;
+            padding: 10px 0;
             white-space: normal;
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-large;
@@ -1162,22 +1162,26 @@ export default {
     }
   }
 }
-  .content {
-    width: 140px;
-    padding 10px 0;
-    margin 0 auto;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    i{
-      display:inline-block;
-      margin-bottom :10px
-    }
-    .desc {
-      font-size: $font-size-medium;
-      color: $color-text-h;
-    }
+
+.content {
+  width: 140px;
+  padding: 10px 0;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+
+  i {
+    display: inline-block;
+    margin-bottom: 10px;
   }
+
+  .desc {
+    font-size: $font-size-medium;
+    color: $color-text-h;
+  }
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0);

@@ -38,7 +38,7 @@ export default {
 .toast {
   width: 200px;
   position: fixed;
-  top: 45%;
+  top: 40%;
   left: 50%;
   margin-left: -100px;
   z-index: 1000;
