@@ -220,7 +220,7 @@ export default {
           { fontSize: 22 }
         ],
         colorList: [
-          { name: "green", color: "$color-theme" },
+          { name: "green", color: "#31c27c" },
           { name: "blue", color: "#50baf8" },
           { name: "yellow", color: "#f1f13d" },
           { name: "pink", color: "#fa7fbd" },
@@ -1146,7 +1146,7 @@ export default {
         font-size: 36px;
         position: absolute;
         left: 0;
-        top: 1px;
+        top: 0.5px;
       }
     }
   }

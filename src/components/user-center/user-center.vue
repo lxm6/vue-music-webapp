@@ -11,7 +11,8 @@
         <i class="icon-play"></i>
         <span class="text">全部播放</span>
       </div>
-      <div class="play-btn" @click="showConfirm" v-if="currentIndex===1||currentIndex===0">
+
+       <div class="play-btn" @click="showConfirm" v-if="currentIndex===1||currentIndex===0">
         <i class="icon-clear"></i>
         <span class="text">清空</span>
       </div>
