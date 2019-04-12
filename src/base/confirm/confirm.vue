@@ -83,7 +83,7 @@ export default {
     z-index: 999;
 
     .confirm-content {
-      width: 270px;
+      width: 250px;
       border-radius: 5px;
       background: $color-highlight-background;
       p{
@@ -92,10 +92,10 @@ export default {
         }
  
       .text {
-        padding: 19px 15px;
+        padding: 15px 15px;
         line-height: 22px;
         text-align: center;
-        font-size: $font-size-large;
+        font-size: $font-size-medium-x;
         color: $color-text-ll;
       }
 
@@ -103,7 +103,7 @@ export default {
         display: flex;
         align-items: center;
         text-align: center;
-        font-size: $font-size-large;
+        font-size: $font-size-medium-x;
 
         .operate-btn {
           flex: 1;

@@ -20,7 +20,8 @@ import {
   deleteFavoriteList as deleteFavoriteSheet,
   deletePlay,
   clearFavoriteList,
-  clearPlay
+  clearPlay,
+  delSong
 } from 'common/js/cache'
 
 function findIndex(list, song) {
@@ -239,9 +240,22 @@ export const deletePlayHistory = function ({
 export const clear = function ({
   commit
 }, index) {
+
   if (index === 0) {
     commit(types.SET_FAVORITE_LIST, clearFavoriteList())
   } else {
     commit(types.SET_PLAY_HISTORY, clearPlay())
+  }
+}
+//删除歌曲
+export const deleteSong2 = function ({
+  commit
+}, array) {
+  if(array[0]==0){
+    commit(types.SET_FAVORITE_LIST, delSong(array))
+
+  }else{
+    commit(types.SET_PLAY_HISTORY, delSong(array))
+
   }
 }

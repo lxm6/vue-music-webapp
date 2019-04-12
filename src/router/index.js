@@ -81,9 +81,15 @@ const router = new Router({
     {
       path: '/singer',
       component: Singer,
+      meta: {
+        keepAlive: true,
+      },
       children: [{
         path: ':id',
         component: SingerDetail,
+        meta: {
+          keepAlive: true,
+        },
       }]
     },
     {
@@ -120,6 +126,7 @@ const router = new Router({
       meta: {
         keepAlive: false,
       },
+   
     },
    
   ]
@@ -127,10 +134,14 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  const {fullScreen,playListVisible,addSongVisible} = store.getters;
+  const {fullScreen,playListVisible,addSongVisible,deleteSongVisible,lyricsetVisible} = store.getters;
   if (fullScreen) {
     store.commit('SET_FULL_SCREEN', false);
     next(false);
+    if (lyricsetVisible) {
+      store.commit('SET_LYRICSET_VISIBLE', false);
+      next(false);
+    } 
     if(playListVisible){
       store.commit('SET_PLAY_LIST_VISIBLE', false);
       next(false);
@@ -149,6 +160,11 @@ router.beforeEach((to, from, next) => {
     store.commit('SET_PLAY_LIST_VISIBLE', true);
     next(false);
   } 
+  if (deleteSongVisible) {
+    store.commit('SET_DELETE_SONG_VISIBLE', false);
+    next(false);
+  } 
+  
 });
 
 export default router;

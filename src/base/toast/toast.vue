@@ -24,7 +24,7 @@ export default {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.hide();
-      }, 800);
+      }, 1000);
     },
     hide() {
       this.showFlag = false;
@@ -37,7 +37,7 @@ export default {
 
 .toast {
   width: 200px;
-  position: fixed;
+  position: absolute;
   top: 40%;
   left: 50%;
   margin-left: -100px;

@@ -150,7 +150,7 @@ export default {
   }
 
   &.slide-enter, &.slide-leave-to {
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(0, 100%, 0);
   }
 
   .header {
@@ -169,19 +169,18 @@ export default {
       top: 0;
       left: 6px;
       z-index: 50;
-
-
+      transform: rotate(-90deg);
     }
   }
 
   .search-box-wrapper {
-    margin: 20px;
+    margin: 10px 20px;
   }
 
   .shortcut {
     .list-wrapper {
       position: absolute;
-      top: 165px;
+      top: 135px;
       bottom: 0;
       width: 100%;
 

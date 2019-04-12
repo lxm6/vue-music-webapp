@@ -152,3 +152,18 @@ export function clearPlay() {
   storage.remove(PLAY_KEY)
   return []
 }
+//删除歌曲操作
+export function delSong(array) {
+  if (array[0] == 0) {
+    let favorite = storage.get(FAVORITE_KEY, [])
+    let result = favorite.filter(item => !array[1].some(ele => ele.id === item.id))
+    storage.set(FAVORITE_KEY, result)
+    return result
+  } else {
+    let play = storage.get(PLAY_KEY, [])
+    let result = play.filter(item => !array[1].some(ele => ele.id === item.id))
+    storage.set(PLAY_KEY, result)
+    return result
+  }
+
+}

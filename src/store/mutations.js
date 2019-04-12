@@ -47,6 +47,9 @@ const matutaions = {
   [types.SET_ADD_SONG_VISIBLE](state, visible) {
     state.addSongVisible = visible;
   },
+  [types.SET_DELETE_SONG_VISIBLE](state, visible) {
+    state.deleteSongVisible = visible;
+  },
   [types.SET_LYRICSET_VISIBLE](state, visible) {
     state.lyricsetVisible = visible;
   },

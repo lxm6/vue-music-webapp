@@ -212,7 +212,7 @@ export default {
         this.$refs.wrapperBtn.style.display = "none";
         this.$refs.updateTime.style.display = "none";
       } else {
-        this.$refs.bgImage.style.paddingTop = "240px";
+        this.$refs.bgImage.style.paddingTop = "220px";
         this.$refs.bgImage.style.height = 0;
         this.$refs.wrapperBtn.style.display = "";
         this.$refs.updateTime.style.display = "";
@@ -265,7 +265,7 @@ export default {
     position: relative;
     width: 100%;
     height: 0;
-    padding-top: 240px;
+    padding-top: 220px;
     transform-origin: top;
     background-size: cover;
 

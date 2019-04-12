@@ -75,7 +75,6 @@
               ></i>
             </li>
             <li class="dot-wrapper">
-         
               <span class="dot" :class="{'active':currentShow==='cd' }"  @click.stop="toggleShow"></span>
               <span class="dot" :class="{'active':currentShow==='lyric'}"  @click.stop="toggleShow"></span>
             </li>
@@ -230,7 +229,6 @@ export default {
     };
   },
   computed: {
-    miniLyric() {},
     cdCls() {
       return this.playing ? "play" : "play pause";
     },
@@ -262,7 +260,6 @@ export default {
       "fullScreen",
       "playing",
       "currentIndex",
-      "miniPlayerVisible"
     ])
   },
   created() {
@@ -305,6 +302,7 @@ export default {
     // 唱片界面缩小到底部
     back() {
       this.setFullScreen(false);
+
     },
     // 底部界面放大到唱片界面
     open() {
@@ -619,7 +617,7 @@ export default {
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN"
+      setFullScreen: "SET_FULL_SCREEN",
     }),
     ...mapActions(["savePlayHistory"])
   },
@@ -797,7 +795,7 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 66px;
+      top: 70px;
       bottom: 170px;
       white-space: nowrap;
       font-size: 0;
@@ -817,7 +815,7 @@ export default {
 
           .triger {
             width:70px;
-            height:120px;
+            height:110px;
             left:50%;
             margin-left:-10px;
             top:-50px;
