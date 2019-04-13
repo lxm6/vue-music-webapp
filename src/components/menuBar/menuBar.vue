@@ -1,6 +1,6 @@
 <template>
   <transition name="list-fade">
-    <div class="menuBar" @click.stop="hide" v-show="menuBarVisible">
+    <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
       <div class="list-wrapper" >
         <ul>
           <li @click="findSinger">
@@ -57,7 +57,7 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 300;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
 
   .list-wrapper {
     ul {

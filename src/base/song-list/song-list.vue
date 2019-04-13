@@ -21,16 +21,15 @@
           <div @click.stop="showMenu(item)" class="delete">
             <img src="./menu2.png" width="20" height="20">
           </div>
-          <menuBar @deleteOne="deleteOne" @findSinger="findSinger(item)"></menuBar>
         </div>
       </li>
+
     </ul>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import MenuBar from "components/menuBar/menuBar";
 
 export default {
   props: {
@@ -112,9 +111,6 @@ export default {
     })
   },
 
-  components: {
-    MenuBar
-  }
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

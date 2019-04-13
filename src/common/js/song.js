@@ -85,8 +85,8 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    // url: 'http://dl.stream.qqmusic.qq.com/C400001Qu4I30eVFYb.m4a?guid=4013727690&vkey=8D28FBD91C80AFD682EAD497A01C5CCD3B6CE24D54A6EB1DDFE650C871A37249ED13CC35DA4D00CD5A54AF47D67D3D91C92B7CBB978E5F22&uin=0&fromtag=38'
-    url: ` https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
+    url: 'http://dl.stream.qqmusic.qq.com/C400001Qu4I30eVFYb.m4a?guid=4013727690&vkey=8D28FBD91C80AFD682EAD497A01C5CCD3B6CE24D54A6EB1DDFE650C871A37249ED13CC35DA4D00CD5A54AF47D67D3D91C92B7CBB978E5F22&uin=0&fromtag=38'
+    // url: ` https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
   })
 }
 

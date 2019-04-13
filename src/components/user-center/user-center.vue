@@ -75,8 +75,9 @@
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
-      <router-view></router-view>
+        <menuBar @findSinger="findSinger"></menuBar>
 
+      <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -94,6 +95,8 @@ import Singer from "common/js/singer";
 import DeleteSong from "components/delete-song/delete-song";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
+import { setTimeout } from "timers";
+import MenuBar from "components/menuBar/menuBar";
 
 export default {
   mixins: [playlistMixin],
@@ -159,7 +162,6 @@ export default {
         path: `/user/${singer.id}`
       });
       this.setSinger(singer);
-
     },
     showBtn() {
       if (this.currentIndex === 0) {
@@ -236,11 +238,11 @@ export default {
         this.$refs.userCenter.style["z-index"] = "100";
       }
     },
-     menuBarVisible() {
+    menuBarVisible() {
       if (this.menuBarVisible) {
         this.$refs.userCenter.style["z-index"] = "200";
       } else {
-        this.$refs.userCenter.style["z-index"] = "100";
+          this.$refs.userCenter.style["z-index"] = "100";
       }
     }
   },
@@ -251,7 +253,8 @@ export default {
     NoResult,
     Confirm,
     Toast,
-    DeleteSong
+    DeleteSong,
+    MenuBar
   }
 };
 </script>
@@ -312,7 +315,6 @@ export default {
     bottom: 0;
     width: 100%;
     background-color: #fff;
-    padding-top: 7px;
 
     .list-scroll {
       height: 100%;
