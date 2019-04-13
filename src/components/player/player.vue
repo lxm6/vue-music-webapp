@@ -17,7 +17,7 @@
             <i class="icon-back"></i>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
-          <h2 class="subtitle" v-html="currentSong.singer"></h2>
+          <h2 class="subtitle" v-html="currentSong.singerName"></h2>
         </div>
         <!-- <div class="line"></div> -->
         <div
@@ -117,7 +117,7 @@
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
-          <p class="desc" v-html="this.playing&&playingLyric?playingLyric:currentSong.singer"></p>
+          <p class="desc" v-html="this.playing&&playingLyric?playingLyric:currentSong.singerName"></p>
         </div>
         <div class="control">
           <progress-circle :radius="radius" :percent="percent">

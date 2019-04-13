@@ -53,5 +53,8 @@ const matutaions = {
   [types.SET_LYRICSET_VISIBLE](state, visible) {
     state.lyricsetVisible = visible;
   },
+  [types.SET_MENUBAR_VISIBLE](state, visible) {
+    state.menuBarVisible = visible;
+  },
 }
 export default matutaions

@@ -9,7 +9,8 @@ export default class Song {
   constructor({
     id,
     mid,
-    singer,
+    singerName,
+    singerMid,
     name,
     album,
     duration,
@@ -19,7 +20,8 @@ export default class Song {
   }) {
     this.id = id
     this.mid = mid
-    this.singer = singer
+    this.singerName = singerName
+    this.singerMid = singerMid
     this.name = name
     this.album = album
     this.duration = duration
@@ -76,19 +78,20 @@ export function createSong(musicData) {
   return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
-    singer: filterSinger(musicData.singer),
+    singerName: filterSingerName(musicData.singer),
+    singerMid: musicData.singer[0].mid,
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    // url: 'http://dl.stream.qqmusic.qq.com/C400003hIK000vUlny.m4a?vkey=F1ACCFA630C7805ECD7C6A0890F0E5C332D6D3C164E777E13E22459202D50BB683A89E1C049CE5541894DEFA91DD00F403861597179A8C5B&guid=6567906347&uin=0&fromtag=66'
+    // url: 'http://dl.stream.qqmusic.qq.com/C400001Qu4I30eVFYb.m4a?guid=4013727690&vkey=8D28FBD91C80AFD682EAD497A01C5CCD3B6CE24D54A6EB1DDFE650C871A37249ED13CC35DA4D00CD5A54AF47D67D3D91C92B7CBB978E5F22&uin=0&fromtag=38'
     url: ` https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
   })
 }
 
 // 如果有多个歌手名，则用/隔开
-export function filterSinger(singer) {
+export function filterSingerName(singer) {
   let ret = []
   if (!singer) {
     return ''
@@ -98,3 +101,4 @@ export function filterSinger(singer) {
   })
   return ret.join('/')
 }
+

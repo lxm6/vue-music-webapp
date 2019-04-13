@@ -18,12 +18,10 @@
             <span class="hq">HQ</span>
             <span>{{getDesc(item)}}</span>
           </p>
-          <div @click.stop="deletePlay(item)" class="delete" v-if="isPlayHistory">
-            <i class="icon-delete"></i>
+          <div @click.stop="showMenu(item)" class="delete">
+            <img src="./menu2.png" width="20" height="20">
           </div>
-          <div @click.stop="deleteFavorite(item)" class="delete" v-if="isFavorite">
-            <i class="icon-delete"></i>
-          </div>
+          <menuBar @deleteOne="deleteOne" @findSinger="findSinger(item)"></menuBar>
         </div>
       </li>
     </ul>
@@ -31,7 +29,9 @@
 </template>
 
 <script>
-import { mapGetters,mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import MenuBar from "components/menuBar/menuBar";
+
 export default {
   props: {
     songs: {
@@ -42,11 +42,18 @@ export default {
       type: Boolean,
       default: false
     },
-    isFavorite:Boolean,
-    isPlayHistory:Boolean
+    currentIndex:{
+      type: Number,
+      default: 0
+    }
+  },
+  data() {
+    return {
+      item:{}
+    }
   },
   computed: {
-    ...mapGetters(["currentSong"])
+    ...mapGetters(["currentSong", "menuBarVisible"])
   },
   methods: {
     getCurrent(item) {
@@ -61,7 +68,7 @@ export default {
       return "";
     },
     getDesc(song) {
-      return `${song.singer} · ${song.album}`;
+      return `${song.singerName} · ${song.album}`;
     },
     selectSong(item, index) {
       this.$emit("select", item, index);
@@ -79,13 +86,34 @@ export default {
         return index + 1;
       }
     },
-     deletePlay(item) {
+    showMenu(item) {
+      this.setMenuBarVisible(true);
+      this.item=item;
+    },
+    deletePlay(item) {
       this.deletePlayHistory(item);
     },
     deleteFavorite(item) {
       this.deleteFavoriteList(item);
     },
-    ...mapActions(["deletePlayHistory","deleteFavoriteList"])
+        deleteOne(item) {
+      if (this.currentIndex == 0) {
+        this.$emit("deleteFavorite", item);
+      } else {
+        this.$emit("deletePlay", item);
+      }
+    },
+    findSinger(item) {
+       this.$emit("findSinger", this.item);
+    },
+    ...mapActions(["deletePlayHistory", "deleteFavoriteList"]),
+    ...mapMutations({
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
+    })
+  },
+
+  components: {
+    MenuBar
   }
 };
 </script>
@@ -94,7 +122,6 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-
   .item {
     display: flex;
     align-items: center;

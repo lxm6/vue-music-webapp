@@ -15,6 +15,7 @@ const state = {
   addSongVisible: false,
   deleteSongVisible: false,
   lyricsetVisible: false,
+  menuBarVisible: false,
   playlist: [],
   sequenceList: [],
   mode: playMode.sequence,

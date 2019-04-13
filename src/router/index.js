@@ -74,7 +74,7 @@ const router = new Router({
         path: ':id',
         component: Disc,
         meta: {
-          keepAlive: true,
+          keepAlive: false,
         },
       }]
     },
@@ -88,7 +88,7 @@ const router = new Router({
         path: ':id',
         component: SingerDetail,
         meta: {
-          keepAlive: true,
+          keepAlive: false,
         },
       }]
     },
@@ -102,7 +102,7 @@ const router = new Router({
         path: ':id',
         component: TopList,
         meta: {
-          keepAlive: true,
+          keepAlive: false,
         },
       }]
     },
@@ -116,7 +116,7 @@ const router = new Router({
         path: ':id',
         component: SingerDetail,
         meta: {
-          keepAlive: true,
+          keepAlive: false,
         },
       }]
     },
@@ -126,7 +126,13 @@ const router = new Router({
       meta: {
         keepAlive: false,
       },
-   
+      children: [{
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          keepAlive: false,
+        },
+      }]
     },
    
   ]
@@ -146,7 +152,7 @@ router.beforeEach((to, from, next) => {
       store.commit('SET_PLAY_LIST_VISIBLE', false);
       next(false);
     }else{
-      store.commit('SET_FULL_SCREEN', false);
+      store.commit('SET_FULL_SCREEN', true);
       next(false);
     }
   } else if (playListVisible) {

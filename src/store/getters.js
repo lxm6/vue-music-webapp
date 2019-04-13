@@ -18,3 +18,4 @@ export const playListVisible = state => state.playListVisible;
 export const addSongVisible = state => state.addSongVisible;
 export const deleteSongVisible = state => state.deleteSongVisible;
 export const lyricsetVisible = state => state.lyricsetVisible;
+export const menuBarVisible = state => state.menuBarVisible;

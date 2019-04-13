@@ -23,8 +23,8 @@
             <song-list
               :songs="favoriteList"
               @select="selectSong"
-              @deleteFavorite="deleteFavorite"
-              :isFavorite="true"
+              :currentIndex="0"
+              @findSinger="findSinger"
             ></song-list>
           </div>
         </scroll>
@@ -34,8 +34,8 @@
             <song-list
               :songs="playHistory"
               @select="selectSong"
-              @deletePlay="deletePlay"
-              :isPlayHistory="true"
+              :currentIndex="1"
+              @findSinger="findSinger"
             ></song-list>
           </div>
         </scroll>
@@ -75,6 +75,8 @@
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
+      <router-view></router-view>
+
     </div>
   </transition>
 </template>
@@ -87,6 +89,8 @@ import NoResult from "base/no-result/no-result";
 import Confirm from "base/confirm/confirm";
 import Toast from "base/toast/toast";
 import Song from "common/js/song";
+import Singer from "common/js/singer";
+
 import DeleteSong from "components/delete-song/delete-song";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
@@ -141,10 +145,22 @@ export default {
       "favoriteList",
       "playHistory",
       "favoriteListList",
-      "deleteSongVisible"
+      "deleteSongVisible",
+      "menuBarVisible"
     ])
   },
   methods: {
+    findSinger(item) {
+      const singer = new Singer({
+        id: item.singerMid,
+        name: item.singerName
+      });
+      this.$router.push({
+        path: `/user/${singer.id}`
+      });
+      this.setSinger(singer);
+
+    },
     showBtn() {
       if (this.currentIndex === 0) {
         if (this.favoriteList.length != 0) {
@@ -204,15 +220,10 @@ export default {
       });
       this.setDisc(item);
     },
-    deletePlay(item) {
-      this.$emit("deletePlay", item);
-    },
-    deleteFavorite(item) {
-      this.$emit("deleteFavorite", item);
-    },
 
     ...mapMutations({
       setDisc: "SET_DISC",
+      setSinger: "SET_SINGER",
       setDeleteSongVisible: "SET_DELETE_SONG_VISIBLE"
     }),
     ...mapActions(["insertSong", "randomPlay", "selectPlay"])
@@ -220,6 +231,13 @@ export default {
   watch: {
     deleteSongVisible() {
       if (this.deleteSongVisible) {
+        this.$refs.userCenter.style["z-index"] = "200";
+      } else {
+        this.$refs.userCenter.style["z-index"] = "100";
+      }
+    },
+     menuBarVisible() {
+      if (this.menuBarVisible) {
         this.$refs.userCenter.style["z-index"] = "200";
       } else {
         this.$refs.userCenter.style["z-index"] = "100";
