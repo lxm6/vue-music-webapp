@@ -157,7 +157,7 @@ export const clearSearchHistory = function ({
   commit(types.SET_SEARCH_HISTORY, clearSearch())
 }
 
-// 删除一首歌
+// 播放列表删除一首歌
 export const deleteSong = function ({
   commit,
   state
@@ -236,17 +236,7 @@ export const deletePlayHistory = function ({
 }, query) {
   commit(types.SET_PLAY_HISTORY, deletePlay(query))
 }
-//清空
-export const clear = function ({
-  commit
-}, index) {
 
-  if (index === 0) {
-    commit(types.SET_FAVORITE_LIST, clearFavoriteList())
-  } else {
-    commit(types.SET_PLAY_HISTORY, clearPlay())
-  }
-}
 //删除歌曲
 export const deleteSong2 = function ({
   commit

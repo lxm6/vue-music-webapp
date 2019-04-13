@@ -109,7 +109,7 @@
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
-      <menuBar @findSinger="findSinger"></menuBar>
+      <menuBar @findSinger="findSinger" @deleteOne="deleteOne"></menuBar>
 
       <router-view></router-view>
     </div>
@@ -136,6 +136,7 @@ export default {
   mixins: [playlistMixin],
   data() {
     return {
+      item:{},
       currentIndex: 0,
       switches: [
         {
@@ -202,13 +203,21 @@ export default {
       }
       return "";
     },
-    showMenu() {
+    showMenu(item) {
+      this.item=item;
       this.setMenuBarVisible(true);
     },
-    findSinger(item) {
+    deleteOne(){
+      if(this.currentIndex==0){
+        this.deleteFavoriteList(this.item);
+      }else{
+        this.deletePlayHistory(this.item);
+      }
+    },
+    findSinger() {
       const singer = new Singer({
-        id: item.singerMid,
-        name: item.singerName
+        id: this.item.singerMid,
+        name: this.item.singerName
       });
       this.$router.push({
         path: `/user/${singer.id}`
@@ -273,13 +282,6 @@ export default {
         path: `/recommend/${item.id}`
       });
       this.setDisc(item);
-    },
-
-    deletePlay(item) {
-      this.deletePlayHistory(item);
-    },
-    deleteFavorite(item) {
-      this.deleteFavoriteList(item);
     },
 
     ...mapMutations({
