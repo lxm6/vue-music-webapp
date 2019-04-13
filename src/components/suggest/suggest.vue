@@ -133,7 +133,7 @@ export default {
     },
     getDesc(item) {
       if (item.type != TYPE_SINGER) {
-        return `${item.singer} · ${item.album}`;
+        return `${item.singerName} · ${item.album}`;
       }
     },
     getDisplayName(item) {

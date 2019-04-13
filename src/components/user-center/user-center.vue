@@ -18,25 +18,59 @@
         </div>
       </div>
       <div class="list-wrapper" ref="listWrapper">
-        <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0" :data="favoriteList">
+        <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0">
           <div class="list-inner">
-            <song-list
-              :songs="favoriteList"
-              @select="selectSong"
-              :currentIndex="0"
-              @findSinger="findSinger"
-            ></song-list>
+            <div class="song-list">
+              <ul>
+                <li
+                  v-for="(item,index) in favoriteList"
+                  :key="index"
+                  class="item"
+                  :class="{'current-play-b':getCurrent(item)}"
+                  @click="selectSong(item)"
+                >
+                  <div class="content">
+                    <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+                    <p class="desc" :class="{'current-play':getCurrent(item)}">
+                      <span class="vip" v-if="item.isPay">VIP</span>
+                      <span class="hq">HQ</span>
+                      <span>{{getDesc(item)}}</span>
+                    </p>
+                    <div @click.stop="showMenu(item)" class="delete">
+                      <img src="./menu2.png" width="20" height="20">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </scroll>
 
-        <scroll ref="playList" class="list-scroll" v-if="currentIndex===1" :data="playHistory">
+        <scroll ref="playList" class="list-scroll" v-if="currentIndex===1">
           <div class="list-inner">
-            <song-list
-              :songs="playHistory"
-              @select="selectSong"
-              :currentIndex="1"
-              @findSinger="findSinger"
-            ></song-list>
+            <div class="song-list">
+              <ul>
+                <li
+                  v-for="(item,index) in playHistory"
+                  :key="index"
+                  class="item"
+                  :class="{'current-play-b':getCurrent(item)}"
+                  @click="selectSong(item)"
+                >
+                  <div class="content">
+                    <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+                    <p class="desc" :class="{'current-play':getCurrent(item)}">
+                      <span class="vip" v-if="item.isPay">VIP</span>
+                      <span class="hq">HQ</span>
+                      <span>{{getDesc(item)}}</span>
+                    </p>
+                    <div @click.stop="showMenu(item)" class="delete">
+                      <img src="./menu2.png" width="20" height="20">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </scroll>
         <scroll
@@ -51,7 +85,7 @@
                 @click="selectItem(item)"
                 v-for="(item,index) in favoriteListList"
                 :key="index"
-                class="item"
+                class="item2"
               >
                 <div class="icon">
                   <img v-lazy="item.imgurl" width="60" height="60">
@@ -75,7 +109,7 @@
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
-        <menuBar @findSinger="findSinger"></menuBar>
+      <menuBar @findSinger="findSinger"></menuBar>
 
       <router-view></router-view>
     </div>
@@ -145,6 +179,7 @@ export default {
       }
     },
     ...mapGetters([
+      "currentSong",
       "favoriteList",
       "playHistory",
       "favoriteListList",
@@ -153,6 +188,23 @@ export default {
     ])
   },
   methods: {
+    getDesc(song) {
+      return `${song.singerName} · ${song.album}`;
+    },
+    getCurrent(item) {
+      if (this.currentSong.id === item.id) {
+        return true;
+      }
+    },
+    getCurrentB(item) {
+      if (this.currentSong.id === item.id) {
+        return "current-play-b";
+      }
+      return "";
+    },
+    showMenu() {
+      this.setMenuBarVisible(true);
+    },
     findSinger(item) {
       const singer = new Singer({
         id: item.singerMid,
@@ -223,12 +275,27 @@ export default {
       this.setDisc(item);
     },
 
+    deletePlay(item) {
+      this.deletePlayHistory(item);
+    },
+    deleteFavorite(item) {
+      this.deleteFavoriteList(item);
+    },
+
     ...mapMutations({
       setDisc: "SET_DISC",
       setSinger: "SET_SINGER",
-      setDeleteSongVisible: "SET_DELETE_SONG_VISIBLE"
+      setDeleteSongVisible: "SET_DELETE_SONG_VISIBLE",
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
     }),
-    ...mapActions(["insertSong", "randomPlay", "selectPlay"])
+
+    ...mapActions([
+      "insertSong",
+      "randomPlay",
+      "selectPlay",
+      "deletePlayHistory",
+      "deleteFavoriteList"
+    ])
   },
   watch: {
     deleteSongVisible() {
@@ -242,7 +309,7 @@ export default {
       if (this.menuBarVisible) {
         this.$refs.userCenter.style["z-index"] = "200";
       } else {
-          this.$refs.userCenter.style["z-index"] = "100";
+        this.$refs.userCenter.style["z-index"] = "100";
       }
     }
   },
@@ -261,6 +328,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+@import '~common/stylus/mixin';
 
 .user-center {
   position: fixed;
@@ -321,13 +389,80 @@ export default {
       overflow: hidden;
 
       .list-inner {
-        .item {
+        .song-list {
+          padding-top:5px;
+          .item {
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            margin 10px 0px;
+            padding: 0px 0px 0px 25px;
+            border-left: 5px solid #fff;
+
+            .content {
+              flex: 1;
+              line-height: 20px;
+              overflow: hidden;
+              border-bottom: 1px solid $color-border;
+
+              .name {
+                no-wrap();
+                font-size: $font-size-medium-x;
+                color: $color-text;
+                display: inline-block;
+                width: 88%;
+              }
+
+              .desc {
+                display: inline-block;
+                font-size: $font-size-small;
+                no-wrap();
+                margin-top: 3px;
+                color: $color-text-l;
+                width: 88%;
+              }
+
+              .vip, .hq {
+                font-size: 7px;
+                padding: 1px 2px;
+                color: $color-theme;
+                border: 1px solid $color-theme;
+                border-radius: 3px;
+              }
+
+              .hq {
+                padding: 1px 3px;
+                color: orange;
+                border: 1px solid orange;
+                margin-right: 4px;
+              }
+
+              .current-play {
+                color: $color-theme;
+              }
+            }
+
+            .delete {
+              width 9%;
+              extend-click();
+              float: right;
+              font-size: $font-size-medium;
+              color: rgba(0, 0, 0, 0.3);
+            }
+          }
+
+          .current-play-b {
+            border-left: 5px solid $color-theme;
+          }
+        }
+
+        .item2 {
           display: flex;
           box-sizing: border-box;
           align-items: center;
           margin: 10px 20px;
           padding: 10px;
-          background: $color-highlight-background;
+          background: $color-background;
 
           .icon {
             flex: 0 0 60px;
@@ -384,4 +519,5 @@ export default {
     }
   }
 }
+
 </style>

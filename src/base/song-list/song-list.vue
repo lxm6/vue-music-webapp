@@ -18,9 +18,7 @@
             <span class="hq">HQ</span>
             <span>{{getDesc(item)}}</span>
           </p>
-          <div @click.stop="showMenu(item)" class="delete">
-            <img src="./menu2.png" width="20" height="20">
-          </div>
+  
         </div>
       </li>
 
@@ -41,18 +39,11 @@ export default {
       type: Boolean,
       default: false
     },
-    currentIndex:{
-      type: Number,
-      default: 0
-    }
+
   },
-  data() {
-    return {
-      item:{}
-    }
-  },
+
   computed: {
-    ...mapGetters(["currentSong", "menuBarVisible"])
+    ...mapGetters(["currentSong"])
   },
   methods: {
     getCurrent(item) {
@@ -85,30 +76,8 @@ export default {
         return index + 1;
       }
     },
-    showMenu(item) {
-      this.setMenuBarVisible(true);
-      this.item=item;
-    },
-    deletePlay(item) {
-      this.deletePlayHistory(item);
-    },
-    deleteFavorite(item) {
-      this.deleteFavoriteList(item);
-    },
-        deleteOne(item) {
-      if (this.currentIndex == 0) {
-        this.$emit("deleteFavorite", item);
-      } else {
-        this.$emit("deletePlay", item);
-      }
-    },
-    findSinger(item) {
-       this.$emit("findSinger", this.item);
-    },
-    ...mapActions(["deletePlayHistory", "deleteFavoriteList"]),
-    ...mapMutations({
-      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
-    })
+
+
   },
 
 };
@@ -168,7 +137,7 @@ export default {
         font-size: $font-size-medium-x;
         color: $color-text;
         display: inline-block;
-        width: 90%;
+        width: 98%;
       }
 
       .desc {
@@ -177,7 +146,7 @@ export default {
         no-wrap();
         margin-top: 3px;
         color: $color-text-l;
-        width: 90%;
+        width: 98%;
       }
 
       .vip, .hq {
@@ -200,14 +169,6 @@ export default {
       }
     }
 
-    .delete {
-      padding: 0 3px;
-      float: right;
-      right: 15px;
-      extend-click();
-      font-size: $font-size-medium;
-      color: rgba(0, 0, 0, 0.3);
-    }
   }
 
   .current-play-b {
