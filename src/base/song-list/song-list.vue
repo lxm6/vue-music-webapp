@@ -87,6 +87,7 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
+  padding-top 8px;
   .item {
     display: flex;
     align-items: center;

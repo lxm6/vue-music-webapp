@@ -139,42 +139,6 @@ const router = new Router({
 })
 
 
-// router.beforeEach((to, from, next) => {
-//   const {fullScreen,playListVisible,addSongVisible,deleteSongVisible,lyricsetVisible} = store.getters;
-//   if (fullScreen) {
-//     store.commit('SET_FULL_SCREEN', false);
-//     next(false);
-//     if (lyricsetVisible) {
-//       store.commit('SET_LYRICSET_VISIBLE', false);
-//       next(false);
-//     } 
-//     if(playListVisible){
-//       store.commit('SET_PLAY_LIST_VISIBLE', false);
-//       next(false);
-//     }else{
-//       store.commit('SET_FULL_SCREEN', true);
-//       next(false);
-//     }
-//   } else if (playListVisible) {
-//     store.commit('SET_PLAY_LIST_VISIBLE', false);
-//     next(false);
-//   }else {
-//     next(true);
-//   }
-//   if (addSongVisible) {
-//     store.commit('SET_ADD_SONG_VISIBLE', false);
-//     store.commit('SET_PLAY_LIST_VISIBLE', true);
-//     next(false);
-//   } 
-//   if (deleteSongVisible) {
-//     store.commit('SET_DELETE_SONG_VISIBLE', false);
-//     next(false);
-//   } 
-  
-// });
-
-// export default router;
-
 router.beforeEach((to, from, next) => {
   const {
     fullScreen,

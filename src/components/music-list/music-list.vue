@@ -245,7 +245,7 @@ export default {
 
   .title {
     position: absolute;
-    top: 0;
+    top: 4px;
     left: 10%;
     z-index: 40;
     width: 80%;
@@ -327,7 +327,6 @@ export default {
     font-size: $font-size-medium-x;
     color: #000;
     background: $color-background;
-    margin-bottom: 6px;
 
     .tab-item {
       flex: 1;
