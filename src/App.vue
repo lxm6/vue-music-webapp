@@ -7,7 +7,7 @@
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     <player></player>
   </div>
 </template>
@@ -45,4 +45,5 @@ export default {
 #app {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 </style>

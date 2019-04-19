@@ -1,5 +1,6 @@
 <template>
   <div class="recommend" ref="recommend">
+     <!-- <img src="~@/common/image/paint.png" class="paint"> -->
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
@@ -114,7 +115,12 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
+// .paint {
+//   position: fixed;
+//   width: 330px;
+//   height: auto;
+//   margin-left:10px;
+// }
 .recommend {
   position: fixed;
   width: 100%;

@@ -18,8 +18,11 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
+          <div class="download" @click="download">
+            <img src="./download.png" width="27">
+          </div>
         </div>
-        <!-- <div class="line"></div> -->
+
         <div
           class="middle"
           @touchstart.prevent="middleTouchStart"
@@ -75,8 +78,8 @@
               ></i>
             </li>
             <li class="dot-wrapper">
-              <span class="dot" :class="{'active':currentShow==='cd' }"  @click.stop="toggleShow"></span>
-              <span class="dot" :class="{'active':currentShow==='lyric'}"  @click.stop="toggleShow"></span>
+              <span class="dot" :class="{'active':currentShow==='cd' }" @click.stop="toggleShow"></span>
+              <span class="dot" :class="{'active':currentShow==='lyric'}" @click.stop="toggleShow"></span>
             </li>
             <li class="setLyric" @click="showLyricset">
               <img src="./Aa.png" width="24" height="24">
@@ -86,7 +89,11 @@
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
-              <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
+              <progress-bar
+                ref="progressBar"
+                :percent="percent"
+                @percentChange="onProgressBarChange"
+              ></progress-bar>
             </div>
             <span class="time time-r">{{format(currentSong.duration)}}</span>
           </div>
@@ -185,13 +192,11 @@ import {
   saveColor,
   loadColor
 } from "common/js/cache";
-
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
 let nextFlag = true;
 export default {
   mixins: [playerMixin],
-
   data() {
     return {
       title: "",
@@ -256,11 +261,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters([
-      "fullScreen",
-      "playing",
-      "currentIndex",
-    ])
+    ...mapGetters(["fullScreen", "playing", "currentIndex"])
   },
   created() {
     this.touch = {};
@@ -292,7 +293,6 @@ export default {
       this.defaultColor = color;
       saveColor(color);
     },
-
     show() {
       this.showFlag = true;
     },
@@ -302,7 +302,6 @@ export default {
     // 唱片界面缩小到底部
     back() {
       this.setFullScreen(false);
-
     },
     // 底部界面放大到唱片界面
     open() {
@@ -419,14 +418,16 @@ export default {
     ready() {
       this.songReady = true;
       this.savePlayHistory(this.currentSong);
+      if (this.currentLyric) {
+        this.currentLyric.seek(this.currentTime * 1000);
+      }
     },
     error() {
-      if (this.currentLyrics || this.currentSong.url != "") {
-        this.currentLyrics.stop();
+      if (this.currentLyric || this.currentSong.url != "") {
+        this.currentLyric.stop();
       }
       this.songReady = true;
     },
-
     // 进度条进度改变
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
@@ -439,7 +440,6 @@ export default {
         this.currentLyric.seek(currentTime * 1000);
       }
     },
-
     // 确保切换模式的时候，当前歌曲是不变的
     resetCurrentIndex(list) {
       // findIndex: es6
@@ -462,7 +462,6 @@ export default {
             lyric.replace(/&apos;/g, "'"),
             this.handleLyric
           );
-
           if (!this.currentLyric.lines.length) {
             this.playingLyric = "此歌曲没有歌词";
             this.isPure = true;
@@ -615,9 +614,21 @@ export default {
         scale
       };
     },
+    download() {
+      setTimeout(() => {
+        if (this.currentSong.url) {
+          /* eslint-disable */
+          const filename = `${this.currentSong.name}.mp3`;
+          const a = document.createElement("a");
+          a.href = this.currentSong.url;
+          a.download = filename;
+          a.click();
+        }
+      }, 200);
+    },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN",
+      setFullScreen: "SET_FULL_SCREEN"
     }),
     ...mapActions(["savePlayHistory"])
   },
@@ -630,9 +641,6 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
-      this.$nextTick(() => {
-        this.$refs.audio.play();
-      });
       // // 如果是付费歌曲
       // if (newSong.isPay) {
       //   this.msg = "已跳过付费歌曲";
@@ -645,7 +653,6 @@ export default {
       //   }
       //   return;
       // }
-
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -655,15 +662,12 @@ export default {
       }
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        if (this.currentSong.url != "") {
-          this.$refs.audio.play();
-          this.getLyric();
-        }
+        this.$refs.audio.play();
+        this.getLyric();
       }, 500);
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-
       // newSong
       //   .getSongUrl()
       //   .then(url => {
@@ -692,7 +696,6 @@ export default {
     //     this.$refs.audio.play();
     //   });
     // },
-
     // 监听playing(state数据), 真正控制播放的是audio播放器
     // playing(newState) {
     //   setTimeout(() => {
@@ -704,6 +707,14 @@ export default {
     //     }
     //   }, 500);
     // },
+    fullScreen(newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          this.$refs.lyricList.refresh();
+          this.$refs.progressBar.setProgressOffset(this.percent);
+        }, 20);
+      }
+    },
     playing(newPlaying) {
       const audio = this.$refs.audio;
       this.$nextTick(() => {
@@ -711,7 +722,6 @@ export default {
       });
     }
   },
-
   components: {
     ProgressBar,
     ProgressCircle,
@@ -759,8 +769,8 @@ export default {
       }
 
       .title {
-        width: 75%;
-        margin: 0 auto;
+        width: 77%;
+        margin: 4px auto 0 auto;
         line-height: 40px;
         text-align: center;
         no-wrap();
@@ -775,6 +785,12 @@ export default {
         text-align: center;
         font-size: $font-size-medium;
         color: #fff;
+      }
+
+      .download {
+        top: 10px;
+        position: absolute;
+        right: 10px;
       }
 
       .setlyric {
@@ -807,18 +823,17 @@ export default {
         width: 100%;
 
         .cd-wrapper {
-          
-            img {
-              width: 100%;
-              height: 100%;
-            }
+          img {
+            width: 100%;
+            height: 100%;
+          }
 
           .triger {
-            width:70px;
-            height:110px;
-            left:50%;
-            margin-left:-10px;
-            top:-50px;
+            width: 70px;
+            height: 110px;
+            left: 50%;
+            margin-left: -10px;
+            top: -50px;
             position: absolute;
             z-index: 1;
             transform-origin: 18% 8%;
@@ -840,7 +855,7 @@ export default {
             position: relative;
             margin-left: -130px;
             left: 50%;
-            margin-top:35px
+            margin-top: 35px;
 
             &.play {
               animation: rotate 20s linear infinite;
@@ -885,9 +900,9 @@ export default {
 
       .middle-r {
         position: absolute;
-        top:20px;
-        bottom: 20px;
-        left:100%;
+        top: 10px;
+        bottom: 10px;
+        left: 100%;
         width: 100%;
         overflow: hidden;
 
@@ -906,9 +921,9 @@ export default {
             color: rgba(255, 255, 255, 0.5);
             font-size: $font-size-large;
           }
-      
+
           .text {
-            line-height:24px;
+            line-height: 24px;
             padding: 10px 0;
             white-space: normal;
             color: rgba(255, 255, 255, 0.5);

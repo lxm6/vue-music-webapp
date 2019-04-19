@@ -140,7 +140,7 @@ export default {
 
 .leftNav {
   background-color: $color-highlight-background;
-  width: 60%;
+  width: 220px;
   height: 100%;
   opacity: 0.95;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);

@@ -110,7 +110,6 @@
         <no-result :title="noResultDesc"></no-result>
       </div>
       <menuBar @findSinger="findSinger" @deleteOne="deleteOne"></menuBar>
-
       <router-view></router-view>
     </div>
   </transition>
@@ -125,13 +124,11 @@ import Confirm from "base/confirm/confirm";
 import Toast from "base/toast/toast";
 import Song from "common/js/song";
 import Singer from "common/js/singer";
-
 import DeleteSong from "components/delete-song/delete-song";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 import { setTimeout } from "timers";
 import MenuBar from "components/menuBar/menuBar";
-
 export default {
   mixins: [playlistMixin],
   data() {
@@ -249,7 +246,6 @@ export default {
       this.$refs.playList && this.$refs.playList.refresh();
       this.$refs.favoriteListList && this.$refs.favoriteListList.refresh();
     },
-
     switchItem(index) {
       this.currentIndex = index;
     },
@@ -261,7 +257,6 @@ export default {
     },
     random() {
       let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory;
-
       if (list.length === 0) {
         return;
       }
@@ -276,21 +271,18 @@ export default {
         index: 0
       });
     },
-
     selectItem(item) {
       this.$router.push({
         path: `/recommend/${item.id}`
       });
       this.setDisc(item);
     },
-
     ...mapMutations({
       setDisc: "SET_DISC",
       setSinger: "SET_SINGER",
       setDeleteSongVisible: "SET_DELETE_SONG_VISIBLE",
       setMenuBarVisible: "SET_MENUBAR_VISIBLE"
     }),
-
     ...mapActions([
       "insertSong",
       "randomPlay",
@@ -331,7 +323,6 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
-
 .user-center {
   position: fixed;
   top: 0;
@@ -339,36 +330,29 @@ export default {
   z-index: 100;
   width: 100%;
   background: $color-background;
-
   &.slide-enter-active, &.slide-leave-active {
     transition: all 0.3s;
   }
-
   &.slide-enter, &.slide-leave-to {
     transform: translate3d(100%, 0, 0);
   }
-
   .switches-wrapper {
     margin: 10px 0 15px 0;
   }
-
   .btn-wrapper {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-
     .play-btn, .del-btn {
       padding: 0 15px;
       color: $color-theme;
       align-items;
       border-radius: 100px;
-
       .icon-play, .icon-clear {
         vertical-align: middle;
         margin-right: 4px;
         font-size: $font-size-medium-x;
       }
-
       .text {
         color: #000;
         display: inline-block;
@@ -377,7 +361,6 @@ export default {
       }
     }
   }
-
   .list-wrapper {
     border-top: 3px solid $color-theme;
     position: absolute;
@@ -385,11 +368,9 @@ export default {
     bottom: 0;
     width: 100%;
     background-color: #fff;
-
     .list-scroll {
       height: 100%;
       overflow: hidden;
-
       .list-inner {
         .song-list {
           padding-top:5px;
@@ -400,30 +381,26 @@ export default {
             margin 10px 0px;
             padding: 0px 0px 0px 25px;
             border-left: 5px solid #fff;
-
             .content {
               flex: 1;
               line-height: 20px;
               overflow: hidden;
               border-bottom: 1px solid $color-border;
-
               .name {
                 no-wrap();
                 font-size: $font-size-medium-x;
                 color: $color-text;
                 display: inline-block;
-                width: 88%;
+                width: 90%;
               }
-
               .desc {
                 display: inline-block;
                 font-size: $font-size-small;
                 no-wrap();
                 margin-top: 3px;
                 color: $color-text-l;
-                width: 88%;
+                width: 90%;
               }
-
               .vip, .hq {
                 font-size: 7px;
                 padding: 1px 2px;
@@ -431,33 +408,28 @@ export default {
                 border: 1px solid $color-theme;
                 border-radius: 3px;
               }
-
               .hq {
                 padding: 1px 3px;
                 color: orange;
                 border: 1px solid orange;
                 margin-right: 4px;
               }
-
               .current-play {
                 color: $color-theme;
               }
             }
-
             .delete {
-              width 9%;
+              width 30px;
               extend-click();
               float: right;
               font-size: $font-size-medium;
               color: rgba(0, 0, 0, 0.3);
             }
           }
-
           .current-play-b {
             border-left: 5px solid $color-theme;
           }
         }
-
         .item2 {
           display: flex;
           box-sizing: border-box;
@@ -465,13 +437,11 @@ export default {
           margin: 10px 20px;
           padding: 10px;
           background: $color-background;
-
           .icon {
             flex: 0 0 60px;
             width: 60px;
             padding-right: 20px;
           }
-
           .text {
             display: flex;
             flex-direction: column;
@@ -480,12 +450,10 @@ export default {
             line-height: 20px;
             overflow: hidden;
             font-size: $font-size-medium;
-
             .name {
               margin-bottom: 10px;
               color: $color-text;
             }
-
             .desc {
               color: $color-text-d;
             }
@@ -494,14 +462,12 @@ export default {
       }
     }
   }
-
   .no-result-wrapper {
     position: absolute;
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
   }
-
   .wrapper {
     width: 140px;
     padding: 10px 0;
@@ -509,17 +475,14 @@ export default {
     text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
-
     i {
       display: inline-block;
       margin-bottom: 10px;
     }
-
     .desc {
       font-size: $font-size-medium;
       color: $color-text-h;
     }
   }
 }
-
 </style>

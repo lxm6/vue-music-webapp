@@ -139,38 +139,78 @@ const router = new Router({
 })
 
 
+// router.beforeEach((to, from, next) => {
+//   const {fullScreen,playListVisible,addSongVisible,deleteSongVisible,lyricsetVisible} = store.getters;
+//   if (fullScreen) {
+//     store.commit('SET_FULL_SCREEN', false);
+//     next(false);
+//     if (lyricsetVisible) {
+//       store.commit('SET_LYRICSET_VISIBLE', false);
+//       next(false);
+//     } 
+//     if(playListVisible){
+//       store.commit('SET_PLAY_LIST_VISIBLE', false);
+//       next(false);
+//     }else{
+//       store.commit('SET_FULL_SCREEN', true);
+//       next(false);
+//     }
+//   } else if (playListVisible) {
+//     store.commit('SET_PLAY_LIST_VISIBLE', false);
+//     next(false);
+//   }else {
+//     next(true);
+//   }
+//   if (addSongVisible) {
+//     store.commit('SET_ADD_SONG_VISIBLE', false);
+//     store.commit('SET_PLAY_LIST_VISIBLE', true);
+//     next(false);
+//   } 
+//   if (deleteSongVisible) {
+//     store.commit('SET_DELETE_SONG_VISIBLE', false);
+//     next(false);
+//   } 
+  
+// });
+
+// export default router;
+
 router.beforeEach((to, from, next) => {
-  const {fullScreen,playListVisible,addSongVisible,deleteSongVisible,lyricsetVisible} = store.getters;
-  if (fullScreen) {
-    store.commit('SET_FULL_SCREEN', false);
+  const {
+    fullScreen,
+    playListVisible,
+    addSongVisible,
+    deleteSongVisible,
+    lyricsetVisible,
+    menuBarVisible
+  } = store.getters;
+
+  if (addSongVisible) {
+    store.commit('SET_ADD_SONG_VISIBLE', false);
     next(false);
-    if (lyricsetVisible) {
-      store.commit('SET_LYRICSET_VISIBLE', false);
-      next(false);
-    } 
-    if(playListVisible){
-      store.commit('SET_PLAY_LIST_VISIBLE', false);
-      next(false);
-    }else{
-      store.commit('SET_FULL_SCREEN', true);
-      next(false);
-    }
+  }
+  if (playListVisible) {
+    store.commit('SET_PLAY_LIST_VISIBLE', false);
+    next(false);
   } else if (playListVisible) {
     store.commit('SET_PLAY_LIST_VISIBLE', false);
     next(false);
-  }else {
-    next(true);
-  }
-  if (addSongVisible) {
-    store.commit('SET_ADD_SONG_VISIBLE', false);
-    store.commit('SET_PLAY_LIST_VISIBLE', true);
+  } else if (lyricsetVisible) {
+    store.commit('SET_LYRICSET_VISIBLE', false);
     next(false);
-  } 
-  if (deleteSongVisible) {
+  } else if (fullScreen) {
+    store.commit('SET_FULL_SCREEN', false);
+    next(false);
+  }else if (deleteSongVisible) {
     store.commit('SET_DELETE_SONG_VISIBLE', false);
     next(false);
-  } 
-  
+  } else  if (menuBarVisible) {
+    store.commit('SET_MENUBAR_VISIBLE', false);
+    next(true);
+  }  else {
+    next(true);
+  }
+
 });
 
 export default router;

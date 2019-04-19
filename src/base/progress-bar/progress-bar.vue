@@ -17,10 +17,8 @@
 
 <script type="text/ecmascript-6">
 import { prefixStyle } from "common/js/dom";
-
 const progressBtnWidth = 16;
 const transform = prefixStyle("transform");
-
 export default {
   props: {
     percent: {
@@ -70,6 +68,13 @@ export default {
       this.$refs.progressBtn.style[
         transform
       ] = `translate3d(${offsetWidth}px,0,0)`;
+    },
+    setProgressOffset(percent) {
+      if (percent >= 0 && !this.touch.initiated) {
+        const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth;
+        const offsetWidth = percent * barWidth;
+        this._offset(offsetWidth);
+      }
     }
   },
   watch: {
@@ -86,29 +91,24 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
 .progress-bar {
   height: 30px;
-
   .bar-inner {
     position: relative;
     top: 13px;
     height: 3px;
-    background: rgba(255,255,255,0.3);
-
+    background: rgba(255, 255, 255, 0.3);
     .progress {
       position: absolute;
       height: 100%;
       background: #fff;
     }
-
     .progress-btn-wrapper {
       position: absolute;
       left: -8px;
       top: -13px;
       width: 30px;
       height: 30px;
-
       .progress-btn {
         position: relative;
         top: 7px;
