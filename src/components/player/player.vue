@@ -423,7 +423,8 @@ export default {
       }
     },
     error() {
-      if (this.currentLyric || this.currentSong.url != "") {
+
+      if (this.currentLyric) {
         this.currentLyric.stop();
       }
       this.songReady = true;
