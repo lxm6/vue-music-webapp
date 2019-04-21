@@ -11,20 +11,20 @@
       </div>
       <div class="btn-wrapper" v-show="showBtn()">
         <div ref="playBtn" class="play-btn" @click="random">
-          <i class="icon-play"></i>
-          <span class="text">全部播放</span>
+          <mu-flat-button label="全部播放" icon="play_circle_outline" color="#666"/>
         </div>
         <div class="del-btn" @click="showDelete">
-          <i class="icon-clear"></i>
-          <span class="text">删除</span>
+          <!-- <i class="icon-clear"></i>
+          <span class="text">删除</span>-->
+          <mu-flat-button label="删除" icon="delete" color="#666"/>
         </div>
       </div>
       <div class="list-wrapper" ref="listWrapper">
-        <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0">
+        <scroll ref="favoriteList" class="list-scroll" v-show="currentIndex===0">
           <div class="list-inner">
             <div class="song-list">
               <ul>
-                <li
+                <mu-list-item
                   v-for="(item,index) in favoriteList"
                   :key="index"
                   class="item"
@@ -34,43 +34,43 @@
                   <div class="content">
                     <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
                     <p class="desc" :class="{'current-play':getCurrent(item)}">
-                      <span class="vip" v-if="item.isPay">VIP</span>
+                      <span class="vip" v-show="item.isPay">VIP</span>
                       <span class="hq">HQ</span>
                       <span>{{getDesc(item)}}</span>
                     </p>
-                    <div @click.stop="showMenu(item)" class="delete">
-                      <img src="./menu2.png" width="20" height="20">
-                    </div>
                   </div>
-                </li>
+                  <div @click.stop="showMenu(item)" class="delete" slot="right">
+                    <mu-icon-button icon="more_vert"/>
+                  </div>
+                </mu-list-item>
               </ul>
             </div>
           </div>
         </scroll>
 
-        <scroll ref="playList" class="list-scroll" v-if="currentIndex===1">
+        <scroll ref="playList" class="list-scroll" v-show="currentIndex===1">
           <div class="list-inner">
             <div class="song-list">
               <ul>
-                <li
+                <mu-list-item
                   v-for="(item,index) in playHistory"
                   :key="index"
                   class="item"
                   :class="{'current-play-b':getCurrent(item)}"
                   @click="selectSong(item)"
                 >
-                  <div class="content">
+                  <div class="content" slot="title">
                     <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
                     <p class="desc" :class="{'current-play':getCurrent(item)}">
-                      <span class="vip" v-if="item.isPay">VIP</span>
+                      <span class="vip" v-show="item.isPay">VIP</span>
                       <span class="hq">HQ</span>
                       <span>{{getDesc(item)}}</span>
                     </p>
-                    <div @click.stop="showMenu(item)" class="delete">
-                      <img src="./menu2.png" width="20" height="20">
-                    </div>
                   </div>
-                </li>
+                  <div @click.stop="showMenu(item)" class="delete" slot="right">
+                    <mu-icon-button icon="more_vert"/>
+                  </div>
+                </mu-list-item>
               </ul>
             </div>
           </div>
@@ -78,25 +78,31 @@
         <scroll
           ref="favoriteListList"
           class="list-scroll"
-          v-if="currentIndex===2"
+          v-show="currentIndex===2"
           :data="favoriteListList"
         >
           <div class="list-inner">
             <ul>
-              <li
+              <mu-list-item
                 @click="selectItem(item)"
                 v-for="(item,index) in favoriteListList"
                 :key="index"
                 class="item2"
               >
-                <div class="icon">
-                  <img v-lazy="item.imgurl" width="60" height="60">
-                </div>
-                <div class="text">
-                  <h2 class="name" v-html="item.creator.name"></h2>
-                  <p class="desc" v-html="item.dissname"></p>
-                </div>
-              </li>
+                <mu-flexbox class="flexbox">
+                  <mu-flexbox-item class="flexitem">
+                    <div class="ablum">
+                      <img v-lazy="item.imgurl" width="60" height="60">
+                    </div>
+                  </mu-flexbox-item>
+                  <mu-flexbox-item>
+                    <div class="text">
+                      <h2 class="name" v-html="item.creator.name"></h2>
+                      <p class="desc" v-html="item.dissname"></p>
+                    </div>
+                  </mu-flexbox-item>
+                </mu-flexbox>
+              </mu-list-item>
             </ul>
           </div>
         </scroll>
@@ -352,10 +358,10 @@ export default {
     justify-content: space-between;
 
     .play-btn, .del-btn {
-      padding: 0 15px;
       color: $color-theme;
       align-items;
       border-radius: 100px;
+      margin-bottom:5px
 
       .icon-play, .icon-clear {
         vertical-align: middle;
@@ -389,17 +395,14 @@ export default {
           padding-top: 5px;
 
           .item {
-            display: flex;
-            align-items: center;
             box-sizing: border-box;
-            margin: 10px 0px;
-            padding: 0px 0px 0px 25px;
             border-left: 5px solid #fff;
 
             .content {
-              flex: 1;
               line-height: 20px;
               overflow: hidden;
+              margin-left: 25px;
+              padding: 10px 0 2px 0;
               border-bottom: 1px solid $color-border;
 
               .name {
@@ -407,7 +410,7 @@ export default {
                 font-size: $font-size-medium-x;
                 color: $color-text;
                 display: inline-block;
-                width: 90%;
+                width: 100%;
               }
 
               .desc {
@@ -416,7 +419,7 @@ export default {
                 no-wrap();
                 margin-top: 3px;
                 color: $color-text-l;
-                width: 90%;
+                width: 100%;
               }
 
               .vip, .hq {
@@ -440,9 +443,7 @@ export default {
             }
 
             .delete {
-              width: 30px;
               extend-click();
-              float: right;
               font-size: $font-size-medium;
               color: rgba(0, 0, 0, 0.3);
             }
@@ -453,25 +454,23 @@ export default {
           }
         }
 
+        .flexbox {
+          padding: 10px 10px 8px 10px;
+        }
+
+        .flexitem {
+          flex: 0 0 70px !important;
+        }
+
         .item2 {
-          display: flex;
-          box-sizing: border-box;
-          align-items: center;
-          margin: 10px 20px;
-          padding: 10px;
+          margin: 15px;
           background: $color-background;
 
-          .icon {
-            flex: 0 0 60px;
+          .ablum {
             width: 60px;
-            padding-right: 20px;
           }
 
           .text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
             line-height: 20px;
             overflow: hidden;
             font-size: $font-size-medium;
@@ -516,6 +515,4 @@ export default {
     }
   }
 }
-
-
 </style>

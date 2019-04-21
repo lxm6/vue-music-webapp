@@ -5,10 +5,10 @@
 
       <div @click.stop class="leftNav">
         <mu-list>
-          <mu-list-item title="App下载" @click="download"/>
-          <mu-list-item title="清除缓存" @click="showConfirm"/>
-          <mu-list-item title="刷新页面" @click="refreshPage"/>
-          <mu-list-item title="关于" @click="openAboutDialog"/>
+          <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
+          <mu-list-item title="清除缓存" @click="showConfirm" class="mu-list-item"/>
+          <mu-list-item title="刷新页面" @click="refreshPage" class="mu-list-item"/>
+          <mu-list-item title="关于" @click="openAboutDialog" class="mu-list-item"/>
         </mu-list>
       </div>
       <top-tip ref="topTip">
@@ -104,7 +104,12 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
+.mu-list{
+  text-indent 20px;
+  }
+.mu-list-item{
+  padding 5px 0;
+}
 .wrapper {
   position: fixed;
   top: 0px;

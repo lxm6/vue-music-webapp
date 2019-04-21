@@ -16,23 +16,28 @@
         </div>
         <div class="recommend-list" ref="recommendList">
           <h1 class="list-title">热门歌单推荐</h1>
-          <mu-list>
+          <ul>
             <mu-list-item
               @click="selectItem(item)"
               v-for="(item,index) in discList"
               :key="index"
-              class="listItem"
+              class="item"
             >
-              <div class="ablum">
-                <img v-lazy="item.imgurl" width="60" height="60">
-              </div>
-              <div class="text">
-                <h2 class="name" v-html="item.creator.name"></h2>
-                <p class="desc" v-html="item.dissname"></p>
-              </div>
- 
+              <mu-flexbox class="flexbox">
+                <mu-flexbox-item class="flexitem">
+                  <div class="ablum">
+                    <img v-lazy="item.imgurl" width="60" height="60">
+                  </div>
+                </mu-flexbox-item>
+                <mu-flexbox-item>
+                  <div class="text">
+                    <h2 class="name" v-html="item.creator.name"></h2>
+                    <p class="desc" v-html="item.dissname"></p>
+                  </div>
+                </mu-flexbox-item>
+              </mu-flexbox>
             </mu-list-item>
-          </mu-list>
+          </ul>
         </div>
       </div>
       <div class="loading-container" v-show="!discList.length">
@@ -52,7 +57,6 @@ import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
 import { openUrl } from "common/js/openUrl";
-
 export default {
   mixins: [playlistMixin],
   data() {
@@ -65,12 +69,10 @@ export default {
     this._getRecommend();
     this._getDiscList();
   },
-
   methods: {
     openLink(url) {
       openUrl(url);
     },
-
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.recommend.style.bottom = bottom;
@@ -139,31 +141,34 @@ export default {
     }
 
     .recommend-list {
-      margin: 0 15px;
-
       .list-title {
-        padding: 15px 0 10px 0;
+        height: 50px;
+        line-height: 50px;
         text-align: center;
         font-size: $font-size-medium-x;
         color: $color-theme;
       }
 
-      .listItem {
+      .flexbox {
+        padding: 10px 10px 8px 10px;
+      }
+
+      .flexitem {
+        flex: 0 0 70px !important;
+      }
+
+      .item {
+        margin: 0 15px 10px;
         background: $color-highlight-background;
-        margin-bottom: 10px;
-        line-height: 14px;
 
         .ablum {
-          float: left;
-          margin-right: 20px;
+          width: 60px;
         }
 
         .text {
-          float: left;
           line-height: 20px;
           overflow: hidden;
           font-size: $font-size-medium;
-          margin-top: 5px;
 
           .name {
             margin-bottom: 10px;

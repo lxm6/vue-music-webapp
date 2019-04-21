@@ -1,9 +1,9 @@
 <template>
   <div class="music-list">
     <div class="back" @click="back">
-              <mu-icon-button>
-          <i class="icon-back"></i>
-        </mu-icon-button>
+      <mu-icon-button>
+        <i class="icon-back"></i>
+      </mu-icon-button>
     </div>
     <div class="title">
       <h1 v-html="title"></h1>
@@ -24,7 +24,7 @@
     </div>
     <div class="bg-layer" ref="layer"></div>
     <div class="backTop" v-show="showBackTop" @click="backTop">
-     <mu-float-button icon="keyboard_arrow_up" class="demo-float-button"/>
+      <mu-float-button icon="keyboard_arrow_up" class="demo-float-button"/>
     </div>
 
     <scroll
@@ -37,9 +37,7 @@
     >
       <div class="song-list-wrapper" v-show="songs.length">
         <ul class="tab" v-if="!isDisc&&!rank">
-          <li
-            class="tab-item active"
-          >单曲 {{ songs.length}}</li>
+          <li class="tab-item active">单曲 {{ songs.length}}</li>
         </ul>
         <ul class="tab" v-if="rank">
           <li
@@ -177,8 +175,8 @@ export default {
       //   list: this.songs
       // });
 
-    //顺序播放全部
-      this.selectItem(0,0);
+      //顺序播放全部
+      this.selectItem(0, 0);
     },
     toggleFavorite() {
       this.$emit("favoriteChange");
@@ -244,7 +242,6 @@ export default {
   right: 0;
   background: $color-background;
 
-
   .title {
     position: absolute;
     top: 4px;
@@ -281,7 +278,7 @@ export default {
 
       .favor, .play {
         box-sizing: border-box;
-        width: 135px;
+        width: 120px;
         padding: 10px 0;
         margin: 0 auto;
         text-align: center;
@@ -290,6 +287,10 @@ export default {
         border-radius: 100px;
         background-color: rgba(0, 0, 0, 0.1);
         font-size: 0;
+
+        &:active  {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
 
         .icon-play, .icon-favorite, .icon-not-favorite {
           display: inline-block;
@@ -369,11 +370,11 @@ export default {
     bottom: 80px;
     right: 20px;
 
-    .mu-float-button{
-    background-color: #fff;
-    width: 50px;
-    height: 50px;
-    color:$color-theme
+    .mu-float-button {
+      background-color: #fff;
+      width: 50px;
+      height: 50px;
+      color: $color-theme;
     }
   }
 

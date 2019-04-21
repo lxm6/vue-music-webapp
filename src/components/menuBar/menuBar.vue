@@ -1,20 +1,18 @@
 <template>
   <transition name="list-fade">
     <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
-      <div class="list-wrapper" >
+      <div class="list-wrapper">
         <ul>
           <li @click="findSinger">
             <i class="icon-mine"></i>
             <p>查看歌手</p>
           </li>
-          <li  @click="deleteOne">
+          <li @click="deleteOne">
             <i class="icon-clear"></i>
             <p>删除</p>
           </li>
         </ul>
-        <div @click="hide" class="list-close">
-          <span>取消</span>
-        </div>
+        <mu-flat-button @click="hide" label="取消" class="demo-flat-button"/>
       </div>
     </div>
   </transition>
@@ -34,11 +32,11 @@ export default {
     hide() {
       this.setMenuBarVisible(false);
     },
-    findSinger(){
-        this.$emit("findSinger");
+    findSinger() {
+      this.$emit("findSinger");
     },
-    deleteOne(){
-        this.$emit("deleteOne");
+    deleteOne() {
+      this.$emit("deleteOne");
     },
     ...mapMutations({
       setMenuBarVisible: "SET_MENUBAR_VISIBLE"
@@ -62,15 +60,15 @@ export default {
   .list-wrapper {
     ul {
       width: 100%;
-      height 90px;
-      padding 10px;
+      height: 120px;
+      padding: 10px;
 
       li {
         color: $color-text-ll;
         float: left;
         text-align: center;
         margin-left: 20px;
-        margin-top 10px;
+        margin-top: 10px;
 
         i {
           padding: 15px;
@@ -87,12 +85,12 @@ export default {
       }
     }
 
-    .list-close {
-      text-align: center;
-      line-height: 50px;
+    .demo-flat-button {
+      width: 100%;
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
+      height 50px;
     }
   }
 

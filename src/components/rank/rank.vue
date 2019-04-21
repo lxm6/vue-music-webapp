@@ -1,23 +1,34 @@
 <template>
   <div class="rank" ref="rank">
     <scroll :data="topList" class="toplist" ref="toplist">
-      <mu-list>
-        <mu-list-item @click="selectItem(item)" class="item" v-for="(item,index) in topList" :key="index">
-          <div class="ablum" slot="left">
-            <img width="100" height="100" v-lazy="item.picUrl">
-            <div class="icon">
-              <img width="10" height="10" src="~@/common/image/earphone.png">
-              <span>{{parseInt(item.listenCount/10000)}}万</span>
-            </div>
-          </div>
-          <ul class="songlist" >
-            <li class="song" v-for="(song,index) in item.songList" :key="index">
-              <span>{{index + 1}}</span>
-              <span>{{song.songname}}-{{song.singername}}</span>
-            </li>
-          </ul>
+      <ul>
+        <mu-list-item
+          @click="selectItem(item)"
+          class="item"
+          v-for="(item,index) in topList"
+          :key="index"
+        >
+          <mu-flexbox>
+            <mu-flexbox-item class="flexitem">
+              <div class="ablum">
+                <img width="100" height="100" v-lazy="item.picUrl">
+                <div class="icon">
+                  <img width="11" height="11" src="~@/common/image/earphone.png">
+                  <span>{{parseInt(item.listenCount/10000)}}万</span>
+                </div>
+              </div>
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              <ul class="songlist">
+                <li class="song" v-for="(song,index) in item.songList" :key="index">
+                  <span>{{index + 1}}</span>
+                  <span>{{song.songname}}-{{song.singername}}</span>
+                </li>
+              </ul>
+            </mu-flexbox-item>
+          </mu-flexbox>
         </mu-list-item>
-      </mu-list>
+      </ul>
       <div class="loading-container" v-show="!topList.length">
         <loading></loading>
       </div>
@@ -41,7 +52,7 @@ export default {
   },
   data() {
     return {
-      topList: [],
+      topList: []
     };
   },
   methods: {
@@ -76,50 +87,64 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+
 .rank {
   position: fixed;
   width: 100%;
-  top: 88px;
+  top: 103px;
   bottom: 0;
+
   .toplist {
     height: 100%;
     overflow: hidden;
+
     .item {
-      height 100px;
-      background: $color-highlight-background;
-      margin 15px;
       position: relative;
-      &:last-child {
-        margin-bottom: 20px;
+      margin:15px;
+      background: $color-highlight-background;
+
+      .flexitem {
+        flex: 0 0 90px !important;
       }
+
       .ablum {
         width: 100px;
         height: 100px;
         color: #eee;
-        top:14px;
-        left -16px;
-        position relative;
-    
+
         .icon {
+          display: flex;
+          align-items: center;
           position: absolute;
+          bottom: 2px;
           left: 3px;
           font-size: 8px;
-          bottom 2px;
 
+          span {
+            margin-left: 5px;
+          }
         }
       }
+
       .songlist {
-        padding-left:50px;
-        padding-top:2px;
+
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+        height: 100px;
         overflow: hidden;
         color: $color-text;
         font-size: $font-size-small-m;
+
         .song {
           no-wrap();
           line-height: 26px;
         }
       }
     }
+
     .loading-container {
       position: absolute;
       width: 100%;

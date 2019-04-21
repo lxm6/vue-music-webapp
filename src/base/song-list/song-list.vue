@@ -82,20 +82,20 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-  padding-top: 8px;
+  // padding-top: 8px;
 
   .listitem {
     box-sizing: border-box;
     border-left: 5px solid #fff;
-    border-bottom: 1px solid $color-border;
 
 
     .rank {
       float left;
-      width: 25px;
+      width: 54px;
+      height 63px;
       margin: 10px 15 0 10px;
       text-align: center;
-      line-height 10px;
+      line-height 78px;
 
       .icon {
         display: inline-block;
@@ -123,9 +123,11 @@ export default {
     }
 
     .content {
-      line-height: 18px;
+      line-height: 20px;
       overflow: hidden;
-      margin-left 10px;
+      margin-left 20px;
+      padding 10px 0  2px 0;
+      border-bottom: 1px solid $color-border;
 
       .name {
         no-wrap();

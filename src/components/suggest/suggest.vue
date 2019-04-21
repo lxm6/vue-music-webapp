@@ -9,9 +9,10 @@
     @beforeScroll="listScroll"
   >
     <ul class="suggest-list">
-      <li @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.docid">
-        <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid">
-        <div class="name">
+      <mu-list-item @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.docid">
+        <mu-avatar :src="getAvatar(item.singermid)" slot="leftAvatar" v-if="item.singermid"/>
+        <!-- <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid"> -->
+        <div class="name" slot="title">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
             <span class="vip" v-show="item.isPay">VIP</span>
@@ -23,7 +24,7 @@
             v-if="item.singermid"
           >单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
         </div>
-      </li>
+      </mu-list-item>
       <loading v-show="hasMore" title="正在载入"></loading>
       <div class="tip" v-show="!hasMore && result.length">没有更多数据了</div>
     </ul>
@@ -205,27 +206,19 @@ export default {
   overflow: hidden;
 
   .suggest-list {
-    padding: 0 24px;
-
+    
     .suggest-item {
-      display: flex;
-      align-items: center;
-      padding: 9px 0;
-      border-bottom: 1px solid $color-border;
-      flex: 1;
       line-height: 16px;
     }
 
-    .avatar {
-      width: 40px;
-      border-radius: 50%;
-    }
-
     .name {
-      margin-left: 10px;
       font-size: $font-size-medium-x;
       color: $color-text-ll;
       overflow: hidden;
+      margin-left 20px;
+      padding 10px 0;
+      line-height 16px;
+      border-bottom: 1px solid $color-border;
 
       .text {
         no-wrap();

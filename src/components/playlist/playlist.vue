@@ -46,9 +46,8 @@
             <span class="text">添加歌曲到队列</span>
           </div>
         </div>
-        <div @click="hide" class="list-close">
-          <span>关闭</span>
-        </div>
+        <mu-flat-button @click="hide" label="关闭" class="demo-flat-button"/>
+     
       </div>
       <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
       <add-song ref="addSong"></add-song>
@@ -321,12 +320,12 @@ export default {
       }
     }
 
-    .list-close {
-      text-align: center;
-      line-height: 50px;
+    .demo-flat-button {
+      width: 100%;
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
+      height 50px;
     }
   }
 

@@ -24,9 +24,7 @@
             </li>
           </ul>
         </div>
-        <div @click="hide" class="list-close">
-          <span>完成</span>
-        </div>
+        <mu-flat-button @click="hide" label="完成" class="demo-flat-button"/>
       </div>
     </div>
   </transition>
@@ -175,8 +173,8 @@ export default {
       .color li {
         i {
           display: block;
-          height: 20px;
-          width: 20px;
+          height: 22px;
+          width: 22px;
           background-color: $color-theme;
           border-radius: 50%;
           border: 3px solid #fff;
@@ -188,12 +186,12 @@ export default {
       }
     }
 
-    .list-close {
-      text-align: center;
-      line-height: 50px;
+        .demo-flat-button {
+      width: 100%;
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
+      height 50px;
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="delete-song" v-if="deleteSongVisible">
       <div class="header">
         <div class="close" @click="hide">
-          <i class="icon-close"></i>
+          <mu-icon-menu icon="close"/>
         </div>
         <h1 class="title" v-html="checkText"></h1>
         <input class="check-btn" type="checkbox" @click="checkedAll" :checked="check">
@@ -97,7 +97,6 @@ export default {
     ...mapGetters(["favoriteList", "playHistory", "deleteSongVisible"])
   },
   methods: {
-
     show() {
       this.setDeleteSongVisible(true);
     },
@@ -105,7 +104,7 @@ export default {
       this.setDeleteSongVisible(false);
     },
     getDesc(song) {
-      return `${song.singer} · ${song.album}`;
+      return `${song.singerName} · ${song.album}`;
     },
     showConfirm() {
       if (this.checkboxList.length == 0) {
@@ -140,8 +139,8 @@ export default {
     ...mapActions(["deleteSong2"])
   },
   watch: {
-    deleteSongVisible(){
-      console.log(this.checkboxList.length)
+    deleteSongVisible() {
+      console.log(this.checkboxList.length);
       this.checkboxList = [];
     }
   },
@@ -181,14 +180,13 @@ export default {
     color: $color-theme;
 
     .title {
-      line-height: 44px;
+      line-height: 50px;
       font-size: $font-size-large;
     }
 
     .close {
       position: absolute;
-      top: 14px;
-      right: 16px;
+      right: 0px;
     }
 
     .check-btn {

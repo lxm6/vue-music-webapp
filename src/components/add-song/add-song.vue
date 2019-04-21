@@ -4,7 +4,9 @@
       <div class="header">
         <h1 class="title">添加歌曲到队列</h1>
         <div class="back" @click="hide">
+           <mu-icon-button>
           <i class="icon-back"></i>
+        </mu-icon-button>
         </div>
       </div>
       <div class="search-box-wrapper">
@@ -159,7 +161,7 @@ export default {
     text-align: center;
 
     .title {
-      line-height: 44px;
+      line-height: 50px;
       font-size: $font-size-large;
       color: $color-theme;
     }
@@ -189,7 +191,6 @@ export default {
         overflow: hidden;
 
         .list-inner {
-          padding: 20px 20px;
         }
       }
     }
