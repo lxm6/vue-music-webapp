@@ -1,28 +1,26 @@
 <template>
   <div class="song-list">
-    <ul>
-      <li
+    <mu-list>
+      <mu-list-item
         v-for="(item,index) in songs"
         :key="index"
-        class="item"
+        class="listitem"
         :class="{'current-play-b':getCurrent(item)}"
         @click="selectSong(item,index)"
       >
-        <div class="rank" v-show="rank">
-          <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
-        </div>
-        <div class="content">
-          <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
-          <p class="desc" :class="{'current-play':getCurrent(item)}">
-            <span class="vip" v-if="item.isPay">VIP</span>
-            <span class="hq">HQ</span>
-            <span>{{getDesc(item)}}</span>
-          </p>
-  
-        </div>
-      </li>
-
-    </ul>
+          <div class="rank" v-show="rank" >
+            <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
+          </div>
+          <div class="content">
+            <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+            <p class="desc" :class="{'current-play':getCurrent(item)}">
+              <span class="vip" v-if="item.isPay">VIP</span>
+              <span class="hq">HQ</span>
+              <span>{{getDesc(item)}}</span>
+            </p>
+          </div>
+      </mu-list-item>
+    </mu-list>
   </div>
 </template>
 
@@ -38,8 +36,7 @@ export default {
     rank: {
       type: Boolean,
       default: false
-    },
-
+    }
   },
 
   computed: {
@@ -75,31 +72,30 @@ export default {
       if (index > 2) {
         return index + 1;
       }
-    },
-
-
-  },
-
+    }
+  }
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
 .song-list {
-  padding-top 8px;
-  .item {
-    display: flex;
-    align-items: center;
+  padding-top: 8px;
+
+  .listitem {
     box-sizing: border-box;
-    padding: 0px 0px 0px 25px;
     border-left: 5px solid #fff;
+    border-bottom: 1px solid $color-border;
+
 
     .rank {
-      flex: 0 0 25px;
+      float left;
       width: 25px;
-      margin-right: 20px;
+      margin: 10px 15 0 10px;
       text-align: center;
+      line-height 10px;
 
       .icon {
         display: inline-block;
@@ -127,11 +123,9 @@ export default {
     }
 
     .content {
-      flex: 1;
-      line-height: 20px;
+      line-height: 18px;
       overflow: hidden;
-      border-bottom: 1px solid $color-border;
-      padding: 8px 0px 0px 0;
+      margin-left 10px;
 
       .name {
         no-wrap();
@@ -145,9 +139,9 @@ export default {
         display: inline-block;
         font-size: $font-size-small;
         no-wrap();
-        margin-top: 3px;
         color: $color-text-l;
         width: 98%;
+
       }
 
       .vip, .hq {
@@ -169,7 +163,6 @@ export default {
         color: $color-theme;
       }
     }
-
   }
 
   .current-play-b {

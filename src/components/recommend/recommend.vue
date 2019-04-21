@@ -1,6 +1,6 @@
 <template>
   <div class="recommend" ref="recommend">
-     <!-- <img src="~@/common/image/paint.png" class="paint"> -->
+    <!-- <img src="~@/common/image/paint.png" class="paint"> -->
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
@@ -16,22 +16,23 @@
         </div>
         <div class="recommend-list" ref="recommendList">
           <h1 class="list-title">热门歌单推荐</h1>
-          <ul>
-            <li
+          <mu-list>
+            <mu-list-item
               @click="selectItem(item)"
               v-for="(item,index) in discList"
               :key="index"
-              class="item"
+              class="listItem"
             >
-              <div class="icon">
+              <div class="ablum">
                 <img v-lazy="item.imgurl" width="60" height="60">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
                 <p class="desc" v-html="item.dissname"></p>
               </div>
-            </li>
-          </ul>
+ 
+            </mu-list-item>
+          </mu-list>
         </div>
       </div>
       <div class="loading-container" v-show="!discList.length">
@@ -53,7 +54,6 @@ import { mapMutations } from "vuex";
 import { openUrl } from "common/js/openUrl";
 
 export default {
-
   mixins: [playlistMixin],
   data() {
     return {
@@ -67,8 +67,8 @@ export default {
   },
 
   methods: {
-    openLink(url){
-      openUrl(url)
+    openLink(url) {
+      openUrl(url);
     },
 
     handlePlaylist(playlist) {
@@ -115,11 +115,12 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
 // .paint {
-//   position: fixed;
-//   width: 330px;
-//   height: auto;
-//   margin-left:10px;
+// position: fixed;
+// width: 330px;
+// height: auto;
+// margin-left:10px;
 // }
 .recommend {
   position: fixed;
@@ -138,36 +139,31 @@ export default {
     }
 
     .recommend-list {
+      margin: 0 15px;
+
       .list-title {
-        height: 50px;
-        line-height: 50px;
+        padding: 15px 0 10px 0;
         text-align: center;
         font-size: $font-size-medium-x;
         color: $color-theme;
       }
 
-      .item {
-        display: flex;
-        box-sizing: border-box;
-        align-items: center;
-        margin: 0 15px 10px;
-        padding: 10px 10px 8px 10px;
+      .listItem {
         background: $color-highlight-background;
+        margin-bottom: 10px;
+        line-height: 14px;
 
-        .icon {
-          flex: 0 0 60px;
-          width: 60px;
-          padding-right: 20px;
+        .ablum {
+          float: left;
+          margin-right: 20px;
         }
 
         .text {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          flex: 1;
+          float: left;
           line-height: 20px;
           overflow: hidden;
           font-size: $font-size-medium;
+          margin-top: 5px;
 
           .name {
             margin-bottom: 10px;

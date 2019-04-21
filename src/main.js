@@ -6,15 +6,16 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import store from './store'
-
+import MuseUI from 'muse-ui'
+import 'muse-ui/dist/muse-ui.css'
 import 'common/stylus/index.styl'
 
 fastclick.attach(document.body)
+Vue.use(MuseUI)
 Vue.use(Mui);
 Vue.use(VueLazyload, {
   loading: require('common/image/default.png')
 })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,12 +1,18 @@
 <template>
   <div class="search-list" v-show="searches.length">
     <transition-group name="list" tag="ul">
-      <li :key="item" class="search-item" @click="selectItem(item)" v-for="item in searches">
-        <span class="text">{{item}}</span>
-        <span class="icon" @click.stop="deleteOne(item)">
-          <i class="icon-delete"></i>
-        </span>
-      </li>
+      <mu-list :key="item" class="search-item" @click="selectItem(item)" v-for="item in searches">
+        <mu-list-item>
+          <mu-flexbox>
+            <mu-flexbox-item class="flex-demo">
+              <span class="text">{{item}}</span>
+            </mu-flexbox-item>
+            <span class="icon" @click.stop="deleteOne(item)">
+              <i class="icon-delete"></i>
+            </span>
+          </mu-flexbox>
+        </mu-list-item>
+      </mu-list>
     </transition-group>
   </div>
 </template>
@@ -35,9 +41,6 @@ export default {
 
 .search-list {
   .search-item {
-    display: flex;
-    align-items: center;
-    height: 40px;
     overflow: hidden;
     border-bottom: 1px solid $color-border;
 
@@ -50,7 +53,6 @@ export default {
     }
 
     .text {
-      flex: 1;
       color: $color-text-ll;
     }
 

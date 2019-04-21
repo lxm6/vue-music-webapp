@@ -1,14 +1,15 @@
 <template>
   <transition name="slide">
     <div class="wrapper" v-show="showFlag" @click="hide">
+      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
+
       <div @click.stop class="leftNav">
-        <ul>
-          <li @click="download" id="goto_baidu">App下载</li>
-          <li @click="showConfirm">清除缓存</li>
-          <li @click="refreshPage">刷新页面</li>
-          <li @click="openDialog">关于</li>
-          <li></li>
-        </ul>
+        <mu-list>
+          <mu-list-item title="App下载" @click="download"/>
+          <mu-list-item title="清除缓存" @click="showConfirm"/>
+          <mu-list-item title="刷新页面" @click="refreshPage"/>
+          <mu-list-item title="关于" @click="openAboutDialog"/>
+        </mu-list>
       </div>
       <top-tip ref="topTip">
         <div class="tip-title">
@@ -16,34 +17,28 @@
           <span class="text">清除缓存成功</span>
         </div>
       </top-tip>
-      <div class="dialog-wrapper" ref="dialog" @click.stop="hideDialog">
-        <div class="dialog" @click.stop>
-          <h1>关于</h1>
-          <ul>
-            <li>
-              网站
-              <span>柠檬音乐</span>
-            </li>
-            <li>
-              网址
-              <span>lxm6.top</span>
-            </li>
-            <li>
-              作者
-              <span>LXM</span>
-            </li>
 
-            <li @click="openGitHub" class="url">
-              GitHub
-              <span>
+        <mu-dialog :open="showAboutDialog" @close="closeAboutDialog" title="关于">
+          <mu-list>
+            <mu-list-item title="网站" disabled>
+              <p slot="after">柠檬音乐</p>
+            </mu-list-item>
+            <mu-list-item title="网址" disabled>
+              <p slot="after">lxm6.top</p>
+            </mu-list-item>
+            <mu-list-item title="作者" disabled>
+              <p slot="after">LXM</p>
+            </mu-list-item>
+            <mu-list-item title="GitHub" @click="openGitHub">
+              <p slot="after">
                 <img src="~@/common/image/github.svg" alt="github" width="35">
-              </span>
-            </li>
-          </ul>
-        </div>
+              </p>
+            </mu-list-item>
+          </mu-list>
+          
+        </mu-dialog>
       </div>
-      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
-    </div>
+    
   </transition>
 </template>
 
@@ -61,7 +56,8 @@ export default {
   },
   data() {
     return {
-      showFlag: false
+      showFlag: false,
+      showAboutDialog: false
     };
   },
   methods: {
@@ -77,18 +73,15 @@ export default {
     },
     download() {
       this.hide();
-      openUrl("https://www.lxm6.top/download/download.html")
-  
+      openUrl("https://www.lxm6.top/download/download.html");
     },
-    openDialog() {
-      this.$refs.dialog.style.display = "block";
+    openAboutDialog() {
+      this.showAboutDialog = true;
     },
-    hideDialog() {
-      this.$refs.dialog.style.display = "none";
+    closeAboutDialog() {
+      this.showAboutDialog = false;
     },
     openGitHub() {
-      this.hide();
-      this.hideDialog();
       openUrl("https://github.com/lxm6/vue-music-webapp");
     },
 
@@ -142,19 +135,9 @@ export default {
   background-color: $color-highlight-background;
   width: 220px;
   height: 100%;
+  padding-top: 100px;
   opacity: 0.95;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);
-
-  ul {
-    padding-top: 100px;
-
-    li {
-      padding-left: 30px;
-      color: $color-text;
-      height: 60px;
-      line-height: 60px;
-    }
-  }
 }
 
 .tip-title {
@@ -171,66 +154,6 @@ export default {
   .text {
     font-size: $font-size-medium-x;
     color: #fff;
-  }
-}
-
-.dialog-wrapper {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
-  display: none;
-  animation: fadein 0.3s;
-
-  .dialog {
-    padding: 30px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3000;
-    width: 200px;
-    height: 245px;
-    background-color: #fff;
-    box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    font-size: 16px;
-    color: $color-theme;
-    animation: slide-in 0.3s;
-
-    h1 {
-      font-size: 22px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid $color-theme-d;
-      margin-bottom: 15px;
-    }
-
-    .url:hover {
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-
-    ul {
-      float: left;
-
-      li {
-        padding: 0 10px;
-        height: 50px;
-        line-height: 50px;
-
-        span {
-          margin-left: 80px;
-          display: inline-block;
-          float: right;
-          color: rgba(0, 0, 0, 0.7);
-        }
-      }
-
-      img {
-        margin: 10px auto;
-      }
-    }
   }
 }
 

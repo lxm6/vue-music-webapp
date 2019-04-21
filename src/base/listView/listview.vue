@@ -1,3 +1,4 @@
+    
 <template>
   <scroll
     @scroll="scroll"
@@ -54,10 +55,8 @@ import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
 import Toast from "base/toast/toast";
 import { getData } from "common/js/dom";
-
 const TITLE_HEIGHT = 30;
 const ANCHOR_HEIGHT = 18;
-
 export default {
   props: {
     data: {
@@ -116,7 +115,6 @@ export default {
       this.touch.y2 = firstTouch.pageY;
       let delta = ((this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT) | 0;
       let anchorIndex = parseInt(this.touch.anchorIndex) + delta;
-
       this._scrollTo(anchorIndex);
     },
     refresh() {
@@ -195,16 +193,13 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
 .listview {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background: $color-highlight-background;
-
   .list-group {
-
     .list-group-title {
       height: 30px;
       line-height: 30px;
@@ -213,19 +208,16 @@ export default {
       color: $color-text-l;
       background: $color-background;
     }
-
     .list-group-item {
       display: flex;
       align-items: center;
       padding: 7px 0 7px 20px;
       border-bottom 1px solid $color-border
-
       .avatar {
         width: 45px;
         height: 45px;
         border-radius: 50%;
       }
-
       .name {
         margin-left: 20px;
         color: $color-text;
@@ -233,7 +225,6 @@ export default {
       }
     }
   }
-
   .list-shortcut {
     position: absolute;
     z-index: 30;
@@ -246,27 +237,23 @@ export default {
     text-align: center;
     background: #eee;
     font-family: Helvetica;
-
     .item {
       padding: 3px;
       line-height: 1;
       color: $color-text-l;
       font-size: $font-size-small;
       cursor:default
-
       &.current {
         color: $color-theme;
         font-weight bold
       }
     }
   }
-
   .list-fixed {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-
     .fixed-title {
       height: 30px;
       line-height: 30px;
@@ -276,7 +263,6 @@ export default {
       background: $color-background;
     }
   }
-
   .loading-container {
     position: absolute;
     width: 100%;
@@ -291,7 +277,6 @@ export default {
     text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
-
     .desc {
       font-size: $font-size-large;
       font-weight bold;

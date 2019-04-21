@@ -40,7 +40,6 @@ export default {};
 
     &.router-link-active {
       .tab-link {
-        font-weight bold
         color: $color-text-h;
         border-bottom: 2px solid $color-text-h;
       }

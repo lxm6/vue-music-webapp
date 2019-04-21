@@ -1,7 +1,9 @@
 <template>
   <div class="music-list">
     <div class="back" @click="back">
-      <i class="icon-back"></i>
+              <mu-icon-button>
+          <i class="icon-back"></i>
+        </mu-icon-button>
     </div>
     <div class="title">
       <h1 v-html="title"></h1>
@@ -22,7 +24,7 @@
     </div>
     <div class="bg-layer" ref="layer"></div>
     <div class="backTop" v-show="showBackTop" @click="backTop">
-      <i class="icon-back"></i>
+     <mu-float-button icon="keyboard_arrow_up" class="demo-float-button"/>
     </div>
 
     <scroll
@@ -72,7 +74,7 @@ import { mapActions } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 import TopTip from "base/top-tip/top-tip";
 
-const RESERVED_HEIGHT = 40;
+const RESERVED_HEIGHT = 45;
 const transform = prefixStyle("transform");
 const backdrop = prefixStyle("backdrop-filter");
 
@@ -366,18 +368,13 @@ export default {
     position: absolute;
     bottom: 80px;
     right: 20px;
-    background: #fff;
+
+    .mu-float-button{
+    background-color: #fff;
     width: 50px;
     height: 50px;
-    line-height: 54px;
-    color: #9E9E9E;
-    text-align: center;
-    border-radius: 50%;
-    -webkit-box-shadow: 0 0 7px rgba(190, 190, 190, 0.35);
-    box-shadow: 2px 0 7px rgba(190, 190, 190, 0.35);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-    border: 1px solid #ebebeb;
+    color:$color-theme
+    }
   }
 
   .tip-title {

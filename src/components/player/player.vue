@@ -13,13 +13,15 @@
         </div>
 
         <div class="top">
-          <div class="back" @click="back" ref="back">
-            <i class="icon-back"></i>
+          <div class="back" @click="back">
+            <mu-icon-button>
+              <i class="icon-back"></i>
+            </mu-icon-button>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
           <div class="download" @click="download">
-            <img src="./download.png" width="27">
+            <i class="material-icons">file_download</i>
           </div>
         </div>
 
@@ -423,7 +425,6 @@ export default {
       }
     },
     error() {
-
       if (this.currentLyric) {
         this.currentLyric.stop();
       }
@@ -765,7 +766,7 @@ export default {
       margin-bottom: 5px;
       color: $color-theme;
 
-      .icon-back {
+      .back {
         transform: rotate(-90deg);
       }
 
@@ -789,9 +790,12 @@ export default {
       }
 
       .download {
-        top: 10px;
+        top: 8px;
         position: absolute;
         right: 10px;
+        .material-icons{
+          font-size:30px;
+          }
       }
 
       .setlyric {
@@ -1133,6 +1137,7 @@ export default {
       line-height: 20px;
       overflow: hidden;
       font-size: $font-size-medium;
+      margin-left:20px;
 
       .name {
         margin-bottom: 2px;
@@ -1147,9 +1152,9 @@ export default {
     }
 
     .control {
-      flex: 0 0 20px;
+      flex: 0 0 40px;
       width: 36px;
-      padding: 0 14px 0 0;
+      margin-right:6px;
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;
@@ -1160,7 +1165,7 @@ export default {
         font-size: 36px;
         position: absolute;
         left: 0;
-        top: 0.5px;
+        top: 0;
       }
     }
   }

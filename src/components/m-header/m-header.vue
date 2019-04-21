@@ -1,10 +1,12 @@
 <template>
   <div class="m-header">
-    <i class="menu" @click="show"><img src="~@/common/image/menu.svg" alt="github" width="28"></i>
+    <div class="menu" @click="show">
+      <mu-icon-button icon="menu"/>
+    </div>
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
     <router-link tag="div" class="mine" to="/User">
-      <i class="icon-mine"></i>
+      <mu-icon-button icon="person"/>
     </router-link>
   </div>
 </template>
@@ -34,16 +36,11 @@ export default {
   text-align: center;
   color: $color-text-h;
   background-color: $color-theme;
+  font-size 0;
 
   .menu {
-    display: inline-block;
     position: absolute;
-    top: 0;
-    left: 20px;
-    width: 30px;
-    height: 32px;
-    font-size: 26px;
-    margin-top: 6px;
+    left: 8px;
   }
 
   .icon {
@@ -61,21 +58,15 @@ export default {
     display: inline-block;
     vertical-align: top;
     line-height: 44px;
-    font-style  bold
+    font-style: bold;
     font-size: $font-size-large;
   }
 
   .mine {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 6px;
 
-    .icon-mine {
-      display: block;
-      padding: 12px;
-      font-size: 20px;
-      color: #fff;
-    }
   }
 }
 

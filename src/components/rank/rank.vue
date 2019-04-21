@@ -1,23 +1,23 @@
 <template>
   <div class="rank" ref="rank">
     <scroll :data="topList" class="toplist" ref="toplist">
-      <ul>
-        <li @click="selectItem(item)" class="item" v-for="(item,index) in topList" :key="index">
-          <div class="icon">
+      <mu-list>
+        <mu-list-item @click="selectItem(item)" class="item" v-for="(item,index) in topList" :key="index">
+          <div class="ablum" slot="left">
             <img width="100" height="100" v-lazy="item.picUrl">
-            <div class="content">
-              <img width="11" height="11" src="~@/common/image/earphone.png">
+            <div class="icon">
+              <img width="10" height="10" src="~@/common/image/earphone.png">
               <span>{{parseInt(item.listenCount/10000)}}万</span>
             </div>
           </div>
-          <ul class="songlist">
+          <ul class="songlist" >
             <li class="song" v-for="(song,index) in item.songList" :key="index">
               <span>{{index + 1}}</span>
               <span>{{song.songname}}-{{song.singername}}</span>
             </li>
           </ul>
-        </li>
-      </ul>
+        </mu-list-item>
+      </mu-list>
       <div class="loading-container" v-show="!topList.length">
         <loading></loading>
       </div>
@@ -36,17 +36,14 @@ import { createSong } from "common/js/song";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   mixins: [playlistMixin],
-
   created() {
     this._getTopList();
   },
   data() {
     return {
       topList: [],
-
     };
   },
-
   methods: {
     selectItem(item) {
       this.$router.push({
@@ -56,7 +53,6 @@ export default {
     },
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
-
       this.$refs.rank.style.bottom = bottom;
       this.$refs.toplist.refresh();
     },
@@ -67,7 +63,6 @@ export default {
         }
       });
     },
-
     ...mapMutations({
       setTopList: "SET_TOP_LIST"
     })
@@ -81,68 +76,50 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
-
 .rank {
   position: fixed;
   width: 100%;
   top: 88px;
   bottom: 0;
-
   .toplist {
     height: 100%;
     overflow: hidden;
-
     .item {
-      display: flex;
-      margin: 0 15px;
-      padding-top: 15px;
-      height: 100px;
+      height 100px;
+      background: $color-highlight-background;
+      margin 15px;
       position: relative;
-
       &:last-child {
         margin-bottom: 20px;
       }
-
-      .icon {
-        flex: 0 0 100px;
+      .ablum {
         width: 100px;
         height: 100px;
         color: #eee;
-
-        .content {
-          display: flex;
-          align-items: center;
+        top:14px;
+        left -16px;
+        position relative;
+    
+        .icon {
           position: absolute;
-          bottom: 2px;
           left: 3px;
-          font-size: 9px;
+          font-size: 8px;
+          bottom 2px;
 
-          span {
-            margin-left: 5px;
-          }
         }
-
       }
-
       .songlist {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0 20px;
-        height: 100px;
+        padding-left:50px;
+        padding-top:2px;
         overflow: hidden;
-        background: $color-highlight-background;
         color: $color-text;
         font-size: $font-size-small-m;
-
         .song {
           no-wrap();
           line-height: 26px;
         }
       }
     }
-
     .loading-container {
       position: absolute;
       width: 100%;

@@ -2,7 +2,9 @@
   <transition name="slide">
     <div class="user-center" ref="userCenter">
       <div class="back" @click="back">
-        <i class="icon-back"></i>
+        <mu-icon-button>
+          <i class="icon-back"></i>
+        </mu-icon-button>
       </div>
       <div class="switches-wrapper">
         <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
@@ -133,7 +135,7 @@ export default {
   mixins: [playlistMixin],
   data() {
     return {
-      item:{},
+      item: {},
       currentIndex: 0,
       switches: [
         {
@@ -201,13 +203,13 @@ export default {
       return "";
     },
     showMenu(item) {
-      this.item=item;
+      this.item = item;
       this.setMenuBarVisible(true);
     },
-    deleteOne(){
-      if(this.currentIndex==0){
+    deleteOne() {
+      if (this.currentIndex == 0) {
         this.deleteFavoriteList(this.item);
-      }else{
+      } else {
         this.deletePlayHistory(this.item);
       }
     },
@@ -323,6 +325,7 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+
 .user-center {
   position: fixed;
   top: 0;
@@ -330,29 +333,36 @@ export default {
   z-index: 100;
   width: 100%;
   background: $color-background;
+
   &.slide-enter-active, &.slide-leave-active {
     transition: all 0.3s;
   }
+
   &.slide-enter, &.slide-leave-to {
     transform: translate3d(100%, 0, 0);
   }
+
   .switches-wrapper {
     margin: 10px 0 15px 0;
   }
+
   .btn-wrapper {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+
     .play-btn, .del-btn {
       padding: 0 15px;
       color: $color-theme;
       align-items;
       border-radius: 100px;
+
       .icon-play, .icon-clear {
         vertical-align: middle;
         margin-right: 4px;
         font-size: $font-size-medium-x;
       }
+
       .text {
         color: #000;
         display: inline-block;
@@ -361,6 +371,7 @@ export default {
       }
     }
   }
+
   .list-wrapper {
     border-top: 3px solid $color-theme;
     position: absolute;
@@ -368,24 +379,29 @@ export default {
     bottom: 0;
     width: 100%;
     background-color: #fff;
+
     .list-scroll {
       height: 100%;
       overflow: hidden;
+
       .list-inner {
         .song-list {
-          padding-top:5px;
+          padding-top: 5px;
+
           .item {
             display: flex;
             align-items: center;
             box-sizing: border-box;
-            margin 10px 0px;
+            margin: 10px 0px;
             padding: 0px 0px 0px 25px;
             border-left: 5px solid #fff;
+
             .content {
               flex: 1;
               line-height: 20px;
               overflow: hidden;
               border-bottom: 1px solid $color-border;
+
               .name {
                 no-wrap();
                 font-size: $font-size-medium-x;
@@ -393,6 +409,7 @@ export default {
                 display: inline-block;
                 width: 90%;
               }
+
               .desc {
                 display: inline-block;
                 font-size: $font-size-small;
@@ -401,6 +418,7 @@ export default {
                 color: $color-text-l;
                 width: 90%;
               }
+
               .vip, .hq {
                 font-size: 7px;
                 padding: 1px 2px;
@@ -408,28 +426,33 @@ export default {
                 border: 1px solid $color-theme;
                 border-radius: 3px;
               }
+
               .hq {
                 padding: 1px 3px;
                 color: orange;
                 border: 1px solid orange;
                 margin-right: 4px;
               }
+
               .current-play {
                 color: $color-theme;
               }
             }
+
             .delete {
-              width 30px;
+              width: 30px;
               extend-click();
               float: right;
               font-size: $font-size-medium;
               color: rgba(0, 0, 0, 0.3);
             }
           }
+
           .current-play-b {
             border-left: 5px solid $color-theme;
           }
         }
+
         .item2 {
           display: flex;
           box-sizing: border-box;
@@ -437,11 +460,13 @@ export default {
           margin: 10px 20px;
           padding: 10px;
           background: $color-background;
+
           .icon {
             flex: 0 0 60px;
             width: 60px;
             padding-right: 20px;
           }
+
           .text {
             display: flex;
             flex-direction: column;
@@ -450,10 +475,12 @@ export default {
             line-height: 20px;
             overflow: hidden;
             font-size: $font-size-medium;
+
             .name {
               margin-bottom: 10px;
               color: $color-text;
             }
+
             .desc {
               color: $color-text-d;
             }
@@ -462,12 +489,14 @@ export default {
       }
     }
   }
+
   .no-result-wrapper {
     position: absolute;
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
   }
+
   .wrapper {
     width: 140px;
     padding: 10px 0;
@@ -475,14 +504,18 @@ export default {
     text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
+
     i {
       display: inline-block;
       margin-bottom: 10px;
     }
+
     .desc {
       font-size: $font-size-medium;
       color: $color-text-h;
     }
   }
 }
+
+
 </style>
