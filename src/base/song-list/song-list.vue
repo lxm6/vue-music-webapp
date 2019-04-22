@@ -126,8 +126,9 @@ export default {
       line-height: 20px;
       overflow: hidden;
       margin-left 20px;
-      padding 10px 0  2px 0;
+      padding 10px 10px  2px 0;
       border-bottom: 1px solid $color-border;
+
 
       .name {
         no-wrap();

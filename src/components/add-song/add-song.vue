@@ -3,10 +3,8 @@
     <div class="add-song" v-show="addSongVisible" @click.stop>
       <div class="header">
         <h1 class="title">添加歌曲到队列</h1>
-        <div class="back" @click="hide">
-           <mu-icon-button>
-          <i class="icon-back"></i>
-        </mu-icon-button>
+        <div class="close" @click="hide">
+           <mu-icon-button icon="close" color="#31c27c"/>
         </div>
       </div>
       <div class="search-box-wrapper">
@@ -166,12 +164,11 @@ export default {
       color: $color-theme;
     }
 
-    .back {
+    .close {
       position: absolute;
       top: 0;
-      left: 6px;
+      right: 6px;
       z-index: 50;
-      transform: rotate(-90deg);
     }
   }
 

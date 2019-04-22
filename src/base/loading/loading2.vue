@@ -1,9 +1,7 @@
 <template>
   <div class="loading">
-    <!-- <img src="./loading.gif" width="24" height="24">
-    <p class="desc">{{title}}</p>-->
-    <mu-circular-progress :size="25" :strokeWidth="4" color="#31c27c"/>
-    <p class="desc">{{title}}</p>
+    <mu-circular-progress :size="25" :strokeWidth="4" color="#31c27c" class="progress"/>
+    <span class="desc">{{title}}</span>
   </div>
 </template>
 
@@ -23,11 +21,17 @@ export default {
 .loading {
   width: 100%;
   text-align: center;
+  height 60px;
+  line-height: 40px;
+  padding 10px 0;
 
   .desc {
-    line-height: 25px;
     font-size: $font-size-small;
     color: $color-text-l;
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 40px;
+
   }
 }
 </style>

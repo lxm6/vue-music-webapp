@@ -22,22 +22,30 @@
           :refreshDelay="refreshDelay"
         >
           <transition-group name="list" tag="ul">
-            <li
+            <mu-list-item
               :key="item.id"
               ref="listItem"
               class="item"
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
-              <i class="current" :class="getCurrentIcon(item)"></i>
-              <span class="text" :class="getCurrent(item)">{{item.name}}</span>
-              <span @click.stop="toggleFavorite(item)" class="like">
-                <i :class="getFavoriteIcon(item)"></i>
-              </span>
-              <span @click.stop="deleteOne(item)" class="delete">
-                <i class="icon-delete"></i>
-              </span>
-            </li>
+              <mu-flexbox class="flexbox">
+                <mu-flexbox-item class="flexitem1">
+                  <i class="current" :class="getCurrentIcon(item)"></i>
+                </mu-flexbox-item>
+                <mu-flexbox-item >
+                  <div class="text" :class="getCurrent(item)">{{item.name}}</div>
+                </mu-flexbox-item>
+                <mu-flexbox-item class="flexitem2"> 
+                  <span @click.stop="toggleFavorite(item)" class="like">
+                    <i :class="getFavoriteIcon(item)"></i>
+                  </span>
+                  <span @click.stop="deleteOne(item)" class="delete">
+                    <i class="icon-delete"></i>
+                  </span>
+                </mu-flexbox-item>
+              </mu-flexbox>
+            </mu-list-item>
           </transition-group>
         </scroll>
         <div class="list-operate">
@@ -47,13 +55,12 @@
           </div>
         </div>
         <mu-flat-button @click="hide" label="关闭" class="demo-flat-button"/>
-     
       </div>
       <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
       <add-song ref="addSong"></add-song>
       <toast :title="title" ref="toast1">
         <div class="content">
-            <i class="icon-ok"></i>
+          <i class="icon-ok"></i>
           <p class="desc">{{title}}</p>
         </div>
       </toast>
@@ -240,14 +247,18 @@ export default {
       }
     }
 
+    .flexitem1 {
+      flex: 0 0 0 !important;
+    }
+    .flexitem2 {
+      flex: 0 0 50px !important;
+    }
     .list-content {
       max-height: 270px;
       overflow: hidden;
       padding: 0 15px;
 
       .item {
-        display: flex;
-        align-items: center;
         height: 45px;
         overflow: hidden;
         border-top: 1px solid $color-border;
@@ -261,17 +272,16 @@ export default {
         }
 
         .current {
-          flex: 0 0 20px;
           width: 20px;
           font-size: $font-size-medium;
           color: $color-theme;
         }
 
         .text {
-          flex: 1;
           no-wrap();
           font-size: $font-size-medium-x;
           color: $color-text-ll;
+          width 98%;
         }
 
         .current-play {
@@ -309,6 +319,10 @@ export default {
         border-radius: 100px;
         color: $color-theme;
 
+        &:active {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
         .icon-add {
           margin-right: 5px;
           font-size: $font-size-small-s;
@@ -325,7 +339,7 @@ export default {
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
-      height 50px;
+      height: 50px;
     }
   }
 
@@ -337,10 +351,11 @@ export default {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
 
-    i{
-      display:inline-block;
-      margin-bottom :10px
+    i {
+      display: inline-block;
+      margin-bottom: 10px;
     }
+
     .desc {
       font-size: $font-size-medium;
       color: $color-text-h;

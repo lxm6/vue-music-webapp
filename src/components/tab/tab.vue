@@ -1,5 +1,5 @@
 <template>
-  <div class="tab">
+  <!-- <div class="tab">
     <router-link tag="div" class="tab-item" to="/recommend">
       <span class="tab-link">推荐</span>
     </router-link>
@@ -12,38 +12,34 @@
     <router-link tag="div" class="tab-item" to="/search">
       <span class="tab-link">搜索</span>
     </router-link>
-  </div>
+  </div>-->
+  <mu-bottom-nav :value="bottomNav" @change="handleChange">
+    <mu-bottom-nav-item value="recommend" title="推荐" to="/recommend"/>
+    <mu-bottom-nav-item value="singer" title="歌手" to="/singer"/>
+    <mu-bottom-nav-item value="rank" title="排行" to="/rank"/>
+    <mu-bottom-nav-item value="search" title="搜索" to="/search"/>
+  </mu-bottom-nav>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      bottomNav: "recommend"
+    };
+  },
+  methods: {
+    handleChange(val) {
+      this.bottomNav = val;
+    }
+  }
+};
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 
-.tab {
-  display: flex;
-  height: 44px;
-  line-height: 44px;
-  font-size: $font-size-medium-x;
-  background-color: $color-theme;
-
-
-  .tab-item {
-    flex: 1;
-    text-align: center;
-
-    .tab-link {
-      padding-bottom: 5px;
-      color: $color-text-h;
-    }
-
-    &.router-link-active {
-      .tab-link {
-        color: $color-text-h;
-        border-bottom: 2px solid $color-text-h;
-      }
-    }
-  }
+.router-link-active {
+  border-bottom: 3px solid #d5ef42;
+  
 }
 </style>

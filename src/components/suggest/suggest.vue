@@ -9,7 +9,12 @@
     @beforeScroll="listScroll"
   >
     <ul class="suggest-list">
-      <mu-list-item @click="selectItem(item)" class="suggest-item" v-for="item in result" :key="item.docid">
+      <mu-list-item
+        @click="selectItem(item)"
+        class="suggest-item"
+        v-for="item in result"
+        :key="item.docid"
+      >
         <mu-avatar :src="getAvatar(item.singermid)" slot="leftAvatar" v-if="item.singermid"/>
         <!-- <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid"> -->
         <div class="name" slot="title">
@@ -25,7 +30,7 @@
           >单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
         </div>
       </mu-list-item>
-      <loading v-show="hasMore" title="正在载入"></loading>
+      <loading2 v-show="hasMore"></loading2>
       <div class="tip" v-show="!hasMore && result.length">没有更多数据了</div>
     </ul>
     <div class="no-result-wrapper" v-show="!hasMore && !result.length">
@@ -41,7 +46,7 @@
 
 <script>
 import Scroll from "base/scroll/scroll";
-import Loading from "base/loading/loading";
+import Loading2 from "base/loading/loading2";
 import NoResult from "base/no-result/no-result";
 import { search } from "api/search";
 import { ERR_OK } from "api/config";
@@ -125,7 +130,7 @@ export default {
         });
         this.setSinger(singer);
       } else {
-        this.insertSong([item,false]);
+        this.insertSong([item, false]);
       }
       this.$emit("select", item);
     },
@@ -190,7 +195,7 @@ export default {
   },
   components: {
     Scroll,
-    Loading,
+    Loading2,
     NoResult,
     TopTip
   }
@@ -206,7 +211,6 @@ export default {
   overflow: hidden;
 
   .suggest-list {
-    
     .suggest-item {
       line-height: 16px;
     }
@@ -215,10 +219,11 @@ export default {
       font-size: $font-size-medium-x;
       color: $color-text-ll;
       overflow: hidden;
-      margin-left 20px;
-      padding 10px 0;
-      line-height 16px;
+      margin-left: 20px;
+      padding: 10px 0;
+      line-height: 16px;
       border-bottom: 1px solid $color-border;
+      padding-right: 15px;
 
       .text {
         no-wrap();
