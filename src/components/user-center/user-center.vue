@@ -92,13 +92,13 @@
                 <mu-flexbox class="flexbox">
                   <mu-flexbox-item class="flexitem">
                     <div class="ablum">
-                      <img v-lazy="item.imgurl" width="60" height="60">
+                      <img v-lazy="item.imgurl" width="60" height="60" :key="index">
                     </div>
                   </mu-flexbox-item>
                   <mu-flexbox-item>
                     <div class="text">
-                      <h2 class="name" v-html="item.creator.name"></h2>
                       <p class="desc" v-html="item.dissname"></p>
+                      <h2 class="name" v-html="item.creator.name"></h2>
                     </div>
                   </mu-flexbox-item>
                 </mu-flexbox>
@@ -361,7 +361,7 @@ export default {
       color: $color-theme;
       align-items;
       border-radius: 100px;
-      margin-bottom:5px
+      margin-bottom: 5px;
 
       .icon-play, .icon-clear {
         vertical-align: middle;
@@ -476,12 +476,12 @@ export default {
             font-size: $font-size-medium;
 
             .name {
-              margin-bottom: 10px;
-              color: $color-text;
+              color: $color-text-l;
             }
 
             .desc {
-              color: $color-text-d;
+              color: $color-text;
+              margin-bottom: 10px;
             }
           }
         }

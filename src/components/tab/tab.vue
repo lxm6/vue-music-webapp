@@ -4,7 +4,6 @@
     <mu-bottom-nav-item value="recommend" title="推荐" to="/recommend"/>
     <mu-bottom-nav-item value="singer" title="歌手" to="/singer"/>
     <mu-bottom-nav-item value="rank" title="排行" to="/rank"/>
-    <mu-bottom-nav-item value="search" title="搜索" to="/search"/>
     <mu-bottom-nav-item value="search" title="歌单" to="/sort"/>
   </mu-bottom-nav>
 </template>

@@ -34,7 +34,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devServer: {
     before(app) {
       // 分类歌单标签
-
       app.get('/api/getSortTags', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'
         axios.get(url, {

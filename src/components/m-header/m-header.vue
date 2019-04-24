@@ -6,7 +6,7 @@
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
     <router-link tag="div" class="mine" to="/User">
-      <mu-icon-button icon="person"/>
+      <mu-icon-button icon="search"/>
     </router-link>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
 
 .m-header {
   position: relative;
-  height: 44px;
+  height: 50px;
   text-align: center;
   color: $color-text-h;
   background-color: $color-theme;
@@ -65,7 +65,7 @@ export default {
   .mine {
     position: absolute;
     top: 0;
-    right: 6px;
+    right: 5px;
 
   }
 }

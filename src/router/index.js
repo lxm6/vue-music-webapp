@@ -121,7 +121,7 @@ const router = new Router({
       path: '/search',
       component: Search,
       meta: {
-        keepAlive: true,
+        keepAlive: false,
       },
       children: [{
         path: ':id',
@@ -136,7 +136,14 @@ const router = new Router({
       component: UserCenter,
       meta: {
         keepAlive: false,
-      }
+      },
+      children: [{
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          keepAlive: false,
+        },
+      }]
     },
     {
       path: '/sort',
@@ -151,13 +158,6 @@ const router = new Router({
         meta: {
           keepAlive: false,
         },
-        children: [{
-          path: ':id',
-          component: Disc,
-          meta: {
-            keepAlive: false,
-          },
-        }]
       }]
     },
   ]

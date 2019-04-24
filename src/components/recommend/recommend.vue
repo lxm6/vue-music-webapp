@@ -44,7 +44,7 @@
         <loading></loading>
       </div>
     </scroll>
-    <router-view></router-view>
+      <router-view></router-view>
   </div>
 </template>
 
@@ -172,13 +172,11 @@ export default {
 
           .name {
             color: $color-text-l;
-
           }
 
           .desc {
             color: $color-text;
             margin-bottom: 10px;
-
           }
         }
       }
