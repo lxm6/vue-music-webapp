@@ -136,7 +136,6 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
-    switchItem() {},
     backTop() {
       this.$refs.list.scrollTo(0, 0, 500);
     },

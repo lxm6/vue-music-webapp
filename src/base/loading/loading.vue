@@ -1,8 +1,6 @@
 <template>
   <div class="loading">
-    <!-- <img src="./loading.gif" width="24" height="24">
-    <p class="desc">{{title}}</p>-->
-    <mu-circular-progress :size="25" :strokeWidth="4" color="#31c27c"/>
+    <mu-circular-progress :size="30" :strokeWidth="4" color="#31c27c"/>
     <p class="desc">{{title}}</p>
   </div>
 </template>
@@ -25,7 +23,7 @@ export default {
   text-align: center;
 
   .desc {
-    line-height: 25px;
+    line-height: 30px;
     font-size: $font-size-small;
     color: $color-text-l;
   }

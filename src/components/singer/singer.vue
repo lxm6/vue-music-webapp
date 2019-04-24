@@ -18,34 +18,7 @@ const HOT_NAME = "热门";
 const NUM_NAME = "#";
     
 export default {
-  // mounted() {
-  //   var router = this.$router;
-  //   this.$refs.singer.addEventListener("touchstart", e => {
-  //     this.startX = e.touches[0].pageX;
-  //   });
-  //   this.$refs.singer.addEventListener("touchmove", e => {
-  //     var moveEndX = e.changedTouches[0].pageX;
-  //     var X = moveEndX - this.startX;
-  //     if (X < -100) {
-  //       this.$refs.singer.style.left = X + "px";
-  //     } else if (X > 100) {
-  //       this.$refs.singer.style.left = X - 100 + "px";
-  //     }
-  //   });
-  //   this.$refs.singer.addEventListener("touchend", e => {
-  //     if (this.$refs.singer.offsetLeft < -100) {
-  //       router.push("./rank");
-  //       this.$refs.singer.style.left = 0 + "px";
 
-  //     } else if (this.$refs.singer.offsetLeft > 100) {
-  //       router.push("./recommend");
-  //       this.$refs.singer.style.left = 0 + "px";
-
-  //     } else {
-  //       this.$refs.singer.style.left = 0 + "px";
-  //     }
-  //   });
-  // },
   mixins: [playlistMixin],
   data() {
     return {

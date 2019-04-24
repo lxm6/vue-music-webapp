@@ -53,7 +53,18 @@ const UserCenter = (resolve) => {
     resolve(module)
   })
 }
-
+//歌单分类
+const Sort = (resolve) => {
+  import('components/sort/sort').then((module) => {
+    resolve(module)
+  })
+}
+//歌单分类
+const SortDetail = (resolve) => {
+  import('components/sort-detail/sort-detail').then((module) => {
+    resolve(module)
+  })
+}
 Vue.use(Router)
 const router = new Router({
   routes: [{
@@ -125,16 +136,30 @@ const router = new Router({
       component: UserCenter,
       meta: {
         keepAlive: false,
+      }
+    },
+    {
+      path: '/sort',
+      component: Sort,
+      meta: {
+        keepAlive: true,
       },
       children: [{
-        path: ':id',
-        component: SingerDetail,
+        name: 'SortDetail',
+        path: '/sortDetail',
+        component: SortDetail,
         meta: {
           keepAlive: false,
         },
+        children: [{
+          path: ':id',
+          component: Disc,
+          meta: {
+            keepAlive: false,
+          },
+        }]
       }]
     },
-   
   ]
 })
 
@@ -165,13 +190,13 @@ router.beforeEach((to, from, next) => {
   } else if (fullScreen) {
     store.commit('SET_FULL_SCREEN', false);
     next(false);
-  }else if (deleteSongVisible) {
+  } else if (deleteSongVisible) {
     store.commit('SET_DELETE_SONG_VISIBLE', false);
     next(false);
-  } else  if (menuBarVisible) {
+  } else if (menuBarVisible) {
     store.commit('SET_MENUBAR_VISIBLE', false);
     next(true);
-  }  else {
+  } else {
     next(true);
   }
 

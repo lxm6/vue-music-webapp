@@ -70,6 +70,7 @@ export default {
         margin-left: 20px;
         margin-top: 10px;
 
+
         i {
           padding: 15px;
           display: inline-block;

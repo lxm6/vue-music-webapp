@@ -12,9 +12,9 @@
             <mu-flexbox-item class="flexitem">
               <div class="ablum">
                 <img width="100" height="100" v-lazy="item.picUrl">
-                <div class="icon">
-                  <img width="11" height="11" src="~@/common/image/earphone.png">
-                  <span>{{parseInt(item.listenCount/10000)}}万</span>
+                <div class="info">
+                  <img src="~@/common/image/earphone.png">
+                  <span>{{Math.round(item.listenCount/1000)/10}}万</span>
                 </div>
               </div>
             </mu-flexbox-item>
@@ -100,7 +100,7 @@ export default {
 
     .item {
       position: relative;
-      margin:15px;
+      margin: 15px;
       background: $color-highlight-background;
 
       .flexitem {
@@ -112,22 +112,26 @@ export default {
         height: 100px;
         color: #eee;
 
-        .icon {
-          display: flex;
-          align-items: center;
+        .info {
           position: absolute;
           bottom: 2px;
-          left: 3px;
-          font-size: 8px;
+          left: 5px;
+          color: #fff;
+          font-size: 9px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
 
-          span {
-            margin-left: 5px;
+          img {
+            width: 11px;
+            height: 11px;
+            display: inline-block;
+            margin-right: 3px;
           }
         }
       }
 
       .songlist {
-
         flex: 1;
         display: flex;
         flex-direction: column;

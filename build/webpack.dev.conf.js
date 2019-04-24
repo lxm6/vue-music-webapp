@@ -33,6 +33,24 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
+      // 分类歌单标签
+
+      app.get('/api/getSortTags', function (req, res) {
+        var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+         
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+
       // 推荐列表
       app.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
@@ -41,8 +59,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             referer: 'https://c.y.qq.com/',
             host: 'c.y.qq.com'
           },
-          params: req.query  //浏览器请求该接口所带来的参数 
-        }).then((response) => {  //成功回调
+          params: req.query //浏览器请求该接口所带来的参数 
+        }).then((response) => { //成功回调
           res.json(response.data) //response是QQ接口返回的，res是我们自己的。所以要把数据输出给浏览器前端
         }).catch((e) => {
           console.log(e)
@@ -104,8 +122,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             referer: 'https://c.y.qq.com/',
             host: 'c.y.qq.com'
           },
-          params: req.query 
-        }).then((response) => { 
+          params: req.query
+        }).then((response) => {
           res.json(response.data)
         }).catch((error) => {
           console.log(error)

@@ -21,18 +21,18 @@ export function getRecommend() {
 }
 
 /**
- * 获取推荐歌单数据
+ * 获取推荐歌单
  */
-export function getDiscList() {
+export function getDiscList(categoryId=10000000,sortId=5,ein=49) {
   const url = '/api/getDiscList'
   const data = Object.assign({}, commonParams, {
     platform: 'yqq', // 加引号
     hostUin: 0,
     sin: 0,
-    ein: 29,
-    sortId: 5,
+    ein: ein,
+    sortId: sortId,
     needNewCode: 0,
-    categoryId: 10000000,
+    categoryId: categoryId,
     rnd: Math.random(),
     format: 'json'
   })

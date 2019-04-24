@@ -1,14 +1,14 @@
 <template>
   <ul class="switches">
-    <li
-      class="switch-item"
-      v-for="(item,index) in switches"
-      :key="index"
-      :class="{'active':currentIndex === index}"
-      @click="switchItem(index)"
-    >
-      <span>{{item.name}}</span>
-    </li>
+      <li
+        class="switch-item"
+        v-for="(item,index) in switches"
+        :key="index"
+        :class="{'active':currentIndex === index}"
+        @click="switchItem(index)"
+      >
+        <span>{{item.name}}</span>
+      </li>
   </ul>
 </template>
 
