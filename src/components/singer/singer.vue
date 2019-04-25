@@ -1,6 +1,9 @@
 <template>
-  <div class="singer" ref="singer">
-    <list-view @select="selectSinger" :data="singers" ref="list"></list-view>
+  <div class="container">
+    <title-Bar :titleBarName="titleBarName"></title-Bar>
+    <div class="singer" ref="singer">
+      <list-view @select="selectSinger" :data="singers" ref="list"></list-view>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -10,19 +13,20 @@ import { getSingerList } from "api/singer";
 import { ERR_OK } from "api/config";
 import Singer from "common/js/singer";
 import ListView from "base/listview/listview";
+import TitleBar from "base/title-bar/title-bar";
 import { mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 
 const HOT_SINGER_LEN = 30;
 const HOT_NAME = "热门";
 const NUM_NAME = "#";
-    
-export default {
 
+export default {
   mixins: [playlistMixin],
   data() {
     return {
-      singers: []
+      singers: [],
+      titleBarName: "歌手"
     };
   },
   created() {
@@ -50,7 +54,6 @@ export default {
           // this.singers = [...this.singers, ...res.data.list];
         }
       });
-
     },
     _normalizeSinger(list) {
       let map = {
@@ -106,20 +109,30 @@ export default {
       return hot.concat(ret).concat(num);
     },
     ...mapMutations({
-      setSinger: "SET_SINGER"  //对应mutation-types中定义的常量
+      setSinger: "SET_SINGER" //对应mutation-types中定义的常量
     })
   },
   components: {
-    ListView
+    ListView,
+    TitleBar
   }
 };
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-.singer {
-  position: fixed;
-  top: 88px;
+@import '~common/stylus/variable';
+
+.container {
+  position: absolute;
   bottom: 0;
   width: 100%;
+  top: 0;
+}
+
+.singer {
+  width: 100%;
+  top: $top-height;
+  position: fixed;
+  bottom: 0;
 }
 </style>

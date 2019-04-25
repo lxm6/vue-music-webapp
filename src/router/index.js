@@ -121,7 +121,7 @@ const router = new Router({
       path: '/search',
       component: Search,
       meta: {
-        keepAlive: false,
+        keepAlive: true,
       },
       children: [{
         path: ':id',

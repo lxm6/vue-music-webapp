@@ -1,45 +1,49 @@
 <template>
-  <div class="rank" ref="rank">
-    <scroll :data="topList" class="toplist" ref="toplist">
-      <ul>
-        <mu-list-item
-          @click="selectItem(item)"
-          class="item"
-          v-for="(item,index) in topList"
-          :key="index"
-        >
-          <mu-flexbox>
-            <mu-flexbox-item class="flexitem">
-              <div class="ablum">
-                <img width="100" height="100" v-lazy="item.picUrl">
-                <div class="info">
-                  <img src="~@/common/image/earphone.png">
-                  <span>{{Math.round(item.listenCount/1000)/10}}万</span>
+  <div class="container">
+    <title-Bar :titleBarName="titleBarName"></title-Bar>
+    <div class="rank" ref="rank">
+      <scroll :data="topList" class="toplist" ref="toplist">
+        <ul>
+          <mu-list-item
+            @click="selectItem(item)"
+            class="item"
+            v-for="(item,index) in topList"
+            :key="index"
+          >
+            <mu-flexbox>
+              <mu-flexbox-item class="flexitem">
+                <div class="ablum">
+                  <img width="100" height="100" v-lazy="item.picUrl">
+                  <div class="info">
+                    <img src="~@/common/image/earphone.png">
+                    <span>{{Math.round(item.listenCount/1000)/10}}万</span>
+                  </div>
                 </div>
-              </div>
-            </mu-flexbox-item>
-            <mu-flexbox-item>
-              <ul class="songlist">
-                <li class="song" v-for="(song,index) in item.songList" :key="index">
-                  <span>{{index + 1}}</span>
-                  <span>{{song.songname}}-{{song.singername}}</span>
-                </li>
-              </ul>
-            </mu-flexbox-item>
-          </mu-flexbox>
-        </mu-list-item>
-      </ul>
-      <div class="loading-container" v-show="!topList.length">
-        <loading></loading>
-      </div>
-    </scroll>
-    <router-view></router-view>
+              </mu-flexbox-item>
+              <mu-flexbox-item>
+                <ul class="songlist">
+                  <li class="song" v-for="(song,index) in item.songList" :key="index">
+                    <span>{{index + 1}}</span>
+                    <span>{{song.songname}}-{{song.singername}}</span>
+                  </li>
+                </ul>
+              </mu-flexbox-item>
+            </mu-flexbox>
+          </mu-list-item>
+        </ul>
+        <div class="loading-container" v-show="!topList.length">
+          <loading></loading>
+        </div>
+      </scroll>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
+import TitleBar from "base/title-bar/title-bar";
 import { getTopList, getMusicList } from "api/rank";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
@@ -52,7 +56,8 @@ export default {
   },
   data() {
     return {
-      topList: []
+      topList: [],
+      titleBarName: "排行"
     };
   },
   methods: {
@@ -80,7 +85,8 @@ export default {
   },
   components: {
     Scroll,
-    Loading
+    Loading,
+    TitleBar
   }
 };
 </script>
@@ -88,10 +94,17 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  top: 0;
+}
+
 .rank {
   position: fixed;
   width: 100%;
-  top: 103px;
+  top: 74px;
   bottom: 0;
 
   .toplist {

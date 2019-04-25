@@ -1,55 +1,60 @@
 <template>
-  <div class="disc-list">
-    <div class="back" @click="back">
-      <mu-icon-button>
-        <i class="icon-back"></i>
-      </mu-icon-button>
-    </div>
-    <div class="small-title" ref="smallTitle" v-show="false">
-      <h1 v-html="categoryName"></h1>
-    </div>
-    <div class="bg-image" :style="bgStyle" ref="bgImage">
-      <div class="large-title" ref="largeTitle">
+    <div class="disc-list">
+      <div class="back" @click="back">
+        <mu-icon-button>
+          <i class="icon-back"></i>
+        </mu-icon-button>
+      </div>
+      <div class="small-title" ref="smallTitle" v-show="false">
         <h1 v-html="categoryName"></h1>
       </div>
+      <div class="bg-image" :style="bgStyle" ref="bgImage">
+        <div class="large-title" ref="largeTitle">
+          <h1 v-html="categoryName"></h1>
+        </div>
 
-      <div class="filter" ref="filter"></div>
-    </div>
-    <div class="bg-layer" ref="layer"></div>
-    <scroll
-      @scroll="scroll"
-      :listen-scroll="listenScroll"
-      :probe-type="probeType"
-      :data="discList"
-      class="recommend-content"
-      ref="discList"
-    >
-      <div v-show="discList.length">
-        <div class="switches-wrapper">
-          <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
-        </div>
-        <div class="recommend-list" ref="recommendList">
-          <li @click="selectItem(item)" v-for="(item,index) in discList" :key="index" class="item">
-            <div class="ablum">
-              <img v-lazy="item.imgurl" :key="item.imgurl">
-              <div class="info">
-                <img src="~@/common/image/earphone.png">
-                <span>{{Math.round(item.listennum/1000)/10}}万</span>
+        <div class="filter" ref="filter"></div>
+      </div>
+      <div class="bg-layer" ref="layer"></div>
+      <scroll
+        @scroll="scroll"
+        :listen-scroll="listenScroll"
+        :probe-type="probeType"
+        :data="discList"
+        class="recommend-content"
+        ref="discList"
+      >
+        <div v-show="discList.length">
+          <div class="switches-wrapper">
+            <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
+          </div>
+          <div class="recommend-list" ref="recommendList">
+            <li
+              @click="selectItem(item)"
+              v-for="(item,index) in discList"
+              :key="index"
+              class="item"
+            >
+              <div class="ablum">
+                <img v-lazy="item.imgurl" :key="item.imgurl">
+                <div class="info">
+                  <img src="~@/common/image/earphone.png">
+                  <span>{{Math.round(item.listennum/1000)/10}}万</span>
+                </div>
               </div>
-            </div>
-            <div class="text">
-              <p class="desc" v-html="item.dissname"></p>
-              <h2 class="name" v-html="item.creator.name"></h2>
-            </div>
-          </li>
+              <div class="text">
+                <p class="desc" v-html="item.dissname"></p>
+                <h2 class="name" v-html="item.creator.name"></h2>
+              </div>
+            </li>
+          </div>
         </div>
-      </div>
-      <div v-show="showFlag" class="loading-container">
-        <loading></loading>
-      </div>
-    </scroll>
-    <router-view></router-view>
-  </div>
+        <div v-show="showFlag" class="loading-container">
+          <loading></loading>
+        </div>
+      </scroll>
+      <router-view></router-view>
+    </div>
 </template>
 
 <script>

@@ -1,28 +1,24 @@
 <template>
   <div class="m-header">
-    <div class="menu" @click="show">
+    <div class="menu" @click="open">
       <mu-icon-button icon="menu"/>
     </div>
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
-    <router-link tag="div" class="mine" to="/User">
+    <router-link tag="div" class="mine" to="/Search">
       <mu-icon-button icon="search"/>
     </router-link>
   </div>
 </template>
 
 <script>
-import about from "components/about/about";
 
 export default {
   methods: {
-    show() {
-      this.$emit("show");
+    open() {
+      this.$emit("open");
     }
   },
-  components: {
-    about
-  }
 };
 </script>
 
@@ -32,7 +28,7 @@ export default {
 
 .m-header {
   position: relative;
-  height: 50px;
+  height: 48px;
   text-align: center;
   color: $color-text-h;
   background-color: $color-theme;
@@ -45,8 +41,7 @@ export default {
 
   .icon {
     display: inline-block;
-    vertical-align: top;
-    margin-top: 4px;
+    margin-top: 8px;
     width: 30px;
     height: 32px;
     margin-right: 9px;
@@ -57,7 +52,7 @@ export default {
   .text {
     display: inline-block;
     vertical-align: top;
-    line-height: 44px;
+    line-height: 50px;
     font-style: bold;
     font-size: $font-size-large;
   }

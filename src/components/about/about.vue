@@ -4,7 +4,7 @@
       <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
 
       <div @click.stop class="leftNav">
-        <mu-list>
+        <mu-list  class="mu-list-class">
           <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
           <mu-list-item title="清除缓存" @click="showConfirm" class="mu-list-item"/>
           <mu-list-item title="刷新页面" @click="refreshPage" class="mu-list-item"/>
@@ -66,6 +66,8 @@ export default {
     },
     hide() {
       this.showFlag = false;
+      console.log("hide")
+
     },
     // 强制刷新页面
     refreshPage() {
@@ -104,7 +106,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-.mu-list{
+.mu-list-class{
   text-indent 20px;
   }
 .mu-list-item{

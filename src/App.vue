@@ -1,8 +1,5 @@
 <template>
   <div id="app" @touchmove.prevent>
-    <about ref="about"></about>
-    <m-header @show="show"></m-header>
-    <tab></tab>
     <!-- 可将dom缓存在内存中,不会每次切换都加载 -->
     <transition name="slide">
       <keep-alive>
@@ -12,16 +9,12 @@
     <transition name="slide">
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </transition>
-
     <player></player>
   </div>
 </template>
 
 <script>
-import MHeader from "components/m-header/m-header";
 import Player from "components/player/player";
-import Tab from "components/tab/tab";
-import about from "components/about/about";
 
 export default {
   data() {
@@ -29,16 +22,9 @@ export default {
       fullscreen: false
     };
   },
-  methods: {
-    show() {
-      this.$refs.about.showFlag = true;
-    }
-  },
+
   components: {
-    MHeader,
-    Tab,
-    Player,
-    about
+    Player
   }
 };
 </script>

@@ -31,9 +31,7 @@ $font-size-large-xx = 24px;
 $color-playlist-bg = rgb(255, 255, 255);
 $color-border = rgba(0, 0, 0, 0.1);
 // $color-background = #18251f
-$color-background = #f4f4f4;
-$color-background-dd = #f2f2f2;
-$color-background-d = #f3f3f3;
+$color-background = #eee;
 // $color-highlight-background = #254436
 $color-highlight-background = #fff;
 $color-dialog-background = #31c27c;
@@ -52,6 +50,15 @@ $color-pink = #fa7fbd;
 $color-blue = #50baf8;
 $color-red = #f96666;
 
+$top-height=60px;
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 .mu-dialog-title {
   color: $color-theme;
 }
@@ -74,18 +81,36 @@ $color-red = #f96666;
 }
 
 .mu-bottom-item-text {
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
-  padding-bottom:10px;
+  padding-bottom: 10px;
 }
 
 .mu-bottom-item-active .mu-bottom-item-text {
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
+  font-weight: bold;
 }
 
 .mu-bottom-nav {
   background-color: $color-theme;
   height: 44px;
   line-height: 30px;
+}
+
+.mu-float-button {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.material-icons {
+  font-size: 28px;
+}
+
+.mu-appbar {
+  background-color: $color-theme;
+
+}
+
+.mu-appbar-title {
+  font-size: 18px;
 }

@@ -1,31 +1,35 @@
 <template>
-  <div class="sort-wrapper" ref="sort">
-    <scroll class="sort-tags-wrapper" ref="scroll" :data="categories">
-      <ul>
-        <li class="categoriesWrapper" v-for="(item1,indexs) in categories" :key="indexs">
-          <h4 class="title">{{item1.categoryGroupName}}</h4>
-          <ul class="item-Wrapper">
-            <li
-              v-for="(item2,index) in item1.items"
-              :key="index"
-              class="items"
-              v-html="item2.categoryName"
-              @click="SelectTags(item2)"
-            ></li>
-          </ul>
-        </li>
-      </ul>
+  <div class="container">
+    <title-Bar :titleBarName="titleBarName"></title-Bar>
+    <div class="sort-wrapper" ref="sort">
+      <scroll class="sort-tags-wrapper" ref="scroll" :data="categories">
+        <ul>
+          <li class="categoriesWrapper" v-for="(item1,indexs) in categories" :key="indexs">
+            <h4 class="title">{{item1.categoryGroupName}}</h4>
+            <ul class="item-Wrapper">
+              <li
+                v-for="(item2,index) in item1.items"
+                :key="index"
+                class="items"
+                v-html="item2.categoryName"
+                @click="SelectTags(item2)"
+              ></li>
+            </ul>
+          </li>
+        </ul>
 
-      <div class="loading-container" v-show="!categories.length">
-        <loading></loading>
-      </div>
-    </scroll>
-    <router-view></router-view>
+        <div class="loading-container" v-show="!categories.length">
+          <loading></loading>
+        </div>
+      </scroll>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import Loading from "base/loading/loading";
+import TitleBar from "base/title-bar/title-bar";
 import Scroll from "base/scroll/scroll";
 import { getSortTags } from "api/sort";
 import { ERR_OK } from "api/config";
@@ -36,7 +40,8 @@ export default {
   data() {
     return {
       categories: [],
-      categoryId: 100
+      categoryId: 100,
+      titleBarName: "歌单分类"
     };
   },
   created() {
@@ -67,18 +72,25 @@ export default {
   },
   components: {
     Scroll,
-    Loading
+    Loading,
+    TitleBar
   }
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
+.container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  top: 0;
+}
 .sort-wrapper {
+  top: 72px;
+  bottom: 0;
   position: fixed;
   width: 100%;
-  top: 103px;
-  bottom: 0;
+
 
   .sort-tags-wrapper {
     height: 100%;
@@ -91,23 +103,23 @@ export default {
       align-items: center;
       text-align: center;
 
-      &:nth-child(1) .title{
+      &:nth-child(1) .title {
         background: url('icon1.png') no-repeat 50% 0% / 26px;
       }
 
-      &:nth-child(2) .title{
+      &:nth-child(2) .title {
         background: url('icon2.png') no-repeat 50% 0% / 26px;
       }
 
-      &:nth-child(3) .title{
+      &:nth-child(3) .title {
         background: url('icon3.png') no-repeat 50% 0% / 26px;
       }
 
-      &:nth-child(4) .title{
+      &:nth-child(4) .title {
         background: url('icon4.png') no-repeat 50% 0% / 26px;
       }
 
-      &:nth-child(5) .title{
+      &:nth-child(5) .title {
         background: url('icon5.png') no-repeat 50% 0% / 26px;
       }
 

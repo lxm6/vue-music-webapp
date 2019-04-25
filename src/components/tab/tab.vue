@@ -1,10 +1,8 @@
 <template>
 
   <mu-bottom-nav :value="bottomNav" @change="handleChange">
-    <mu-bottom-nav-item value="recommend" title="推荐" to="/recommend"/>
-    <mu-bottom-nav-item value="singer" title="歌手" to="/singer"/>
-    <mu-bottom-nav-item value="rank" title="排行" to="/rank"/>
-    <mu-bottom-nav-item value="search" title="歌单" to="/sort"/>
+    <mu-bottom-nav-item value="recommend" title="音乐" to="/recommend"/>
+    <mu-bottom-nav-item value="user" title="我的" to="/user"/>
   </mu-bottom-nav>
 </template>
 
@@ -25,8 +23,4 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 
-.router-link-active {
-  border-bottom: 3px solid #d5ef42;
-  
-}
 </style>

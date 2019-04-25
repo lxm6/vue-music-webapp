@@ -1,52 +1,56 @@
 <template>
-  <div class="searchWrapper" ref="search">
-    <div class="search">
-      <div class="search-box-wrapper">
-        <search-box ref="searchBox" @query="onQueryChange"></search-box>
-      </div>
-      <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
-        <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
-          <div>
-            <div class="hot-key">
-              <h1 class="title">热门搜索</h1>
-              <ul>
-                <li
-                  @click="addQuery(item.k)"
-                  class="item"
-                  v-for="(item,index) in hotKey"
-                  :key="index"
-                >
-                  <span>{{item.k}}</span>
-                </li>
-              </ul>
+  <div class="container">
+    <title-Bar :titleBarName="titleBarName"></title-Bar>
+    <div class="searchWrapper" ref="search">
+      <div class="search">
+        <div class="search-box-wrapper">
+          <search-box ref="searchBox" @query="onQueryChange"></search-box>
+        </div>
+        <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
+          <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
+            <div>
+              <div class="hot-key">
+                <h1 class="title">热门搜索</h1>
+                <ul>
+                  <li
+                    @click="addQuery(item.k)"
+                    class="item"
+                    v-for="(item,index) in hotKey"
+                    :key="index"
+                  >
+                    <span>{{item.k}}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="search-history" v-show="searchHistory.length">
+                <h1 class="title">
+                  <span class="text">搜索历史</span>
+                  <span @click="showConfirm" class="clear">
+                    <i class="icon-clear"></i>
+                  </span>
+                </h1>
+                <search-list
+                  @delete="deleteSearchHistory"
+                  @select="addQuery"
+                  :searches="searchHistory"
+                ></search-list>
+              </div>
             </div>
-            <div class="search-history" v-show="searchHistory.length">
-              <h1 class="title">
-                <span class="text">搜索历史</span>
-                <span @click="showConfirm" class="clear">
-                  <i class="icon-clear"></i>
-                </span>
-              </h1>
-              <search-list
-                @delete="deleteSearchHistory"
-                @select="addQuery"
-                :searches="searchHistory"
-              ></search-list>
-            </div>
-          </div>
-        </scroll>
+          </scroll>
+        </div>
+        <div class="search-result" v-show="query" ref="searchResult">
+          <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
+        </div>
+        <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
+        <router-view></router-view>
       </div>
-      <div class="search-result" v-show="query" ref="searchResult">
-        <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
-      </div>
-      <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
-      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import SearchBox from "base/search-box/search-box";
+import TitleBar from "base/title-bar/title-bar";
 import SearchList from "base/search-list/search-list";
 import Scroll from "base/scroll/scroll";
 import Suggest from "components/suggest/suggest";
@@ -57,13 +61,13 @@ import { mapActions, mapGetters } from "vuex";
 import { playlistMixin, searchMixin } from "common/js/mixin";
 
 export default {
-
   mixins: [playlistMixin, searchMixin],
   created() {
     this._getHotKey();
   },
   data() {
     return {
+      titleBarName: "搜索",
       hotKey: [],
       query: ""
     };
@@ -72,7 +76,7 @@ export default {
     shortcut() {
       return this.hotKey.concat(this.searchHistory);
     },
-    ...mapGetters(["searchHistory","palyHistory"])
+    ...mapGetters(["searchHistory", "palyHistory"])
   },
   methods: {
     handlePlaylist(playlist) {
@@ -110,7 +114,8 @@ export default {
     SearchList,
     Scroll,
     Confirm,
-    Suggest
+    Suggest,
+    TitleBar
   }
 };
 </script>
@@ -118,26 +123,34 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  top: 0;
+}
+
 .searchWrapper {
   position: fixed;
   width: 100%;
-  top: 88px;
+  top: $top-height;
   bottom: 0;
+  background: #fff;
 }
 
 .search {
   .search-box-wrapper {
-    margin: 11px 16px 10px 16px;
-    background-color $color-background
+    padding: 12px 15px;
+    background-color: $color-background;
   }
 
   .shortcut-wrapper {
-    position: fixed;
-    top: 150px;
-    bottom: 0;
     width: 100%;
-    padding-top 10px
-    background-color $color-highlight-background
+    padding-top: 10px;
+    position: fixed;
+    top: 125px;
+    bottom: 0;
+    background-color: $color-highlight-background;
 
     .shortcut {
       height: 100%;
@@ -195,7 +208,7 @@ export default {
   .search-result {
     position: fixed;
     width: 100%;
-    top: 150px;
+    top: 135px;
     bottom: 0;
   }
 }

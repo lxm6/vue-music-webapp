@@ -1,9 +1,7 @@
 <template>
   <div class="music-list">
     <div class="back" @click="back">
-      <mu-icon-button>
-        <i class="icon-back"></i>
-      </mu-icon-button>
+       <mu-icon-button icon="arrow_back"/>
     </div>
     <div class="title">
       <h1 v-html="title"></h1>
