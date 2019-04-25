@@ -1,10 +1,5 @@
 <template>
   <div>
-    <div class="header">
-      <about ref="about"></about>
-      <m-header @open="open"></m-header>
-      <tab></tab>
-    </div>
     <div class="recommend" ref="recommend" >
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
       <scroll ref="scroll" class="recommend-content" :data="discList">
@@ -77,9 +72,7 @@
 import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
-import MHeader from "components/m-header/m-header";
-import About from "components/about/about";
-import Tab from "components/tab/tab";
+
 import { getRecommend, getDiscList } from "api/recommend";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";
@@ -98,9 +91,6 @@ export default {
     this._getDiscList();
   },
   methods: {
-    open() {
-      this.$refs.about.show();
-    },
     openLink(url) {
       openUrl(url);
     },
@@ -143,9 +133,7 @@ export default {
     Slider,
     Scroll,
     Loading,
-    MHeader,
-    Tab,
-    About
+
   }
 };
 </script>
@@ -158,16 +146,17 @@ export default {
 // height: auto;
 // margin-left:10px;
 // }
-.header {
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-}
+
+// .header {
+//   position: fixed;
+//   width: 100%;
+//   z-index: 100;
+// }
 
 .recommend {
   position: fixed;
   width: 100%;
-  top: 92px;
+  top: 94px;
   bottom: 0;
   background: #fff;
 

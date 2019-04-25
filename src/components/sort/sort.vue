@@ -79,18 +79,21 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
 .container {
   position: absolute;
   bottom: 0;
   width: 100%;
   top: 0;
+  height: 100%;
+  background: $color-background;
 }
+
 .sort-wrapper {
   top: 72px;
   bottom: 0;
   position: fixed;
   width: 100%;
-
 
   .sort-tags-wrapper {
     height: 100%;

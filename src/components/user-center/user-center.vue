@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+    
     <div class="user-center" ref="userCenter">
       <div class="back" @click="back">
         <mu-icon-button>
@@ -120,7 +120,6 @@
       <menuBar @findSinger="findSinger" @deleteOne="deleteOne"></menuBar>
       <router-view></router-view>
     </div>
-  </transition>
 </template>
 
 <script>
@@ -334,19 +333,12 @@ export default {
 
 .user-center {
   position: fixed;
-  top: 0;
+  top: 94px;
   bottom: 0;
   z-index: 100;
   width: 100%;
   background: $color-background;
 
-  &.slide-enter-active, &.slide-leave-active {
-    transition: all 0.3s;
-  }
-
-  &.slide-enter, &.slide-leave-to {
-    transform: translate3d(100%, 0, 0);
-  }
 
   .switches-wrapper {
     margin: 10px 0 15px 0;

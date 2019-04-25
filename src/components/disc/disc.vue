@@ -1,6 +1,6 @@
 <template>
-  <transition name="slide">
     <!-- isDisc 是否是歌单 -->
+     <transition name="slide">
     <music-list
       :title="title"
       :bg-image="bgImage"
@@ -9,7 +9,7 @@
       :isFavorite="isFavorite"
       @favoriteChange="toggleFavorite"
     ></music-list>
-  </transition>
+     </transition>
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .slide-enter-active, .slide-leave-active {
-  transition: all 0.3s;
+  transition: all 5s;
 }
 
 .slide-enter, .slide-leave-to {

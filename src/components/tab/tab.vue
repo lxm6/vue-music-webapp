@@ -22,5 +22,7 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
+.router-link-active{
+  border-bottom 3px solid #d4ef3e
+}
 </style>

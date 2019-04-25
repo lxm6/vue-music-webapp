@@ -66,7 +66,6 @@ export default {
     },
     hide() {
       this.showFlag = false;
-      console.log("hide")
 
     },
     // 强制刷新页面

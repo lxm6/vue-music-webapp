@@ -241,7 +241,7 @@ export default {
 
   .title {
     position: absolute;
-    top: 4px;
+    top: 8px;
     left: 10%;
     z-index: 40;
     width: 80%;
