@@ -96,12 +96,12 @@ export default {
   .bar-inner {
     position: relative;
     top: 13px;
-    height: 3px;
+    height: 2px;
     background: rgba(255, 255, 255, 0.3);
     .progress {
       position: absolute;
       height: 100%;
-      background: #fff;
+      background: $color-theme;
     }
     .progress-btn-wrapper {
       position: absolute;

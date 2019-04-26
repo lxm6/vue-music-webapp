@@ -3,11 +3,15 @@
     <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
       <div class="list-wrapper">
         <ul>
-          <li @click="findSinger">
+          <li @click="findSinger" v-show="!isDisc">
             <i class="icon-mine"></i>
             <p>查看歌手</p>
           </li>
-          <li @click="deleteOne">
+          <li @click="deleteOne" v-show="!isDisc">
+            <i class="icon-clear"></i>
+            <p>删除</p>
+          </li>
+          <li @click="deleteDisc" v-show="isDisc">
             <i class="icon-clear"></i>
             <p>删除</p>
           </li>
@@ -21,7 +25,12 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  props: {},
+  props: {
+    isDisc: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     ...mapGetters(["menuBarVisible"])
   },
@@ -37,6 +46,9 @@ export default {
     },
     deleteOne() {
       this.$emit("deleteOne");
+    },
+    deleteDisc() {
+      this.$emit("deleteDisc");
     },
     ...mapMutations({
       setMenuBarVisible: "SET_MENUBAR_VISIBLE"
@@ -70,7 +82,6 @@ export default {
         margin-left: 20px;
         margin-top: 10px;
 
-
         i {
           padding: 15px;
           display: inline-block;
@@ -91,7 +102,7 @@ export default {
       background: $color-theme;
       font-size: $font-size-medium-x;
       color: #fff;
-      height 50px;
+      height: 50px;
     }
   }
 

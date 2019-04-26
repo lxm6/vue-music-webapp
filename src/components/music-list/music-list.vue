@@ -70,7 +70,7 @@ import { mapActions } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 import TopTip from "base/top-tip/top-tip";
 
-const RESERVED_HEIGHT = 45;
+const RESERVED_HEIGHT = 50;
 const transform = prefixStyle("transform");
 const backdrop = prefixStyle("backdrop-filter");
 
@@ -209,7 +209,7 @@ export default {
         this.$refs.wrapperBtn.style.display = "none";
         this.$refs.updateTime.style.display = "none";
       } else {
-        this.$refs.bgImage.style.paddingTop = "220px";
+        this.$refs.bgImage.style.paddingTop = "200px";
         this.$refs.bgImage.style.height = 0;
         this.$refs.wrapperBtn.style.display = "";
         this.$refs.updateTime.style.display = "";
@@ -261,7 +261,7 @@ export default {
     position: relative;
     width: 100%;
     height: 0;
-    padding-top: 220px;
+    padding-top: 200px;
     transform-origin: top;
     background-size: cover;
 

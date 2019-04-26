@@ -94,6 +94,14 @@ export const playerMixin = {
       })
       return index > -1
     },
+    deleteOne(item) {
+      this.deleteSong(item);
+      this.title="删除成功"
+      this.$refs.toast1.show();this.$refs.toast1.show();
+      if (!this.playlist.length) {
+        this.hide();
+      }
+    },
     ...mapMutations({
       setPlayMode: 'SET_PLAY_MODE',
       setPlaylist: 'SET_PLAYLIST',

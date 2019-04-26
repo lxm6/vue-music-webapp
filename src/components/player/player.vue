@@ -14,14 +14,12 @@
 
         <div class="top">
           <div class="back" @click="back">
-            <mu-icon-button>
-              <i class="icon-back"></i>
-            </mu-icon-button>
+            <mu-icon-button icon="arrow_back" slot="left"/>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
           <div class="download" @click="download">
-            <i class="material-icons">file_download</i>
+            <mu-icon-button icon="file_download" slot="right"/>
           </div>
         </div>
 
@@ -764,11 +762,7 @@ export default {
       position: relative;
       z-index: 100;
       margin-bottom: 5px;
-      color: $color-theme;
-
-      .back {
-        transform: rotate(-90deg);
-      }
+      color: #fff;
 
       .title {
         width: 77%;
@@ -777,25 +771,20 @@ export default {
         text-align: center;
         no-wrap();
         font-size: $font-size-large;
-        color: #fff;
       }
 
       .subtitle {
         margin: 0 auto;
-        width: 80%;
+        width: 78%;
         line-height: 18px;
         text-align: center;
         font-size: $font-size-medium;
-        color: #fff;
       }
 
       .download {
-        top: 8px;
+        top: 0px;
         position: absolute;
-        right: 10px;
-        .material-icons{
-          font-size:30px;
-          }
+        right: 0;
       }
 
       .setlyric {
@@ -1039,10 +1028,10 @@ export default {
 
         .icon {
           flex: 1;
-          color: $color-theme;
+          color: #f2f2f2;
 
           &.disable {
-            color: $color-theme-d;
+            color: rgba(255, 255, 255, 0.5);
           }
 
           i {
@@ -1137,7 +1126,7 @@ export default {
       line-height: 20px;
       overflow: hidden;
       font-size: $font-size-medium;
-      margin-left:20px;
+      margin-left: 20px;
 
       .name {
         margin-bottom: 2px;
@@ -1154,7 +1143,7 @@ export default {
     .control {
       flex: 0 0 40px;
       width: 36px;
-      margin-right:6px;
+      margin-right: 6px;
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
         font-size: 30px;

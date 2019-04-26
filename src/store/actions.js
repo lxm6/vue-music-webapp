@@ -20,7 +20,6 @@ import {
   deleteFavoriteList as deleteFavoriteSheet,
   deletePlay,
   clearFavoriteList,
-  clearPlay,
   delSong
 } from 'common/js/cache'
 
@@ -176,9 +175,9 @@ export const deleteSong = function ({
   commit(types.SET_PLAYLIST, playlist)
   commit(types.SET_SEQUENCE_LIST, sequenceList)
   commit(types.SET_CURRENT_INDEX, currentIndex)
-
-  const playingState = playlist.length > 0
-  commit(types.SET_PLAYING_STATE, playingState)
+  if (playlist.length < 1) {
+    commit(types.SET_PLAYING_STATE, false)
+  }
 
 }
 
@@ -241,10 +240,10 @@ export const deletePlayHistory = function ({
 export const deleteSong2 = function ({
   commit
 }, array) {
-  if(array[0]==0){
+  if (array[0] == 0) {
     commit(types.SET_FAVORITE_LIST, delSong(array))
 
-  }else{
+  } else {
     commit(types.SET_PLAY_HISTORY, delSong(array))
 
   }

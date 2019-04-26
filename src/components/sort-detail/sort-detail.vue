@@ -1,9 +1,7 @@
 <template>
     <div class="disc-list">
       <div class="back" @click="back">
-        <mu-icon-button>
-          <i class="icon-back"></i>
-        </mu-icon-button>
+        <mu-icon-button icon="arrow_back"/>
       </div>
       <div class="small-title" ref="smallTitle" v-show="false">
         <h1 v-html="categoryName"></h1>
@@ -66,7 +64,7 @@ import { getDiscList } from "api/recommend";
 import { prefixStyle } from "common/js/dom";
 import { playlistMixin } from "common/js/mixin";
 import { mapMutations } from "vuex";
-const RESERVED_HEIGHT = 45;
+const RESERVED_HEIGHT = 50;
 const transform = prefixStyle("transform");
 const backdrop = prefixStyle("backdrop-filter");
 

@@ -58,7 +58,7 @@ export default {
 }
 
 .slide-enter-active, .slide-leave-active {
-  transition: all 0.3s;
+  transition: all 3s;
 }
 
 .slide-enter, .slide-leave-to {

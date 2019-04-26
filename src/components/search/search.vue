@@ -124,7 +124,7 @@ export default {
 @import '~common/stylus/mixin';
 
 .container {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   top: 0;

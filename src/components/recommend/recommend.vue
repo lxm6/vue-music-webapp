@@ -211,7 +211,9 @@ export default {
       }
 
       .item {
-        margin: 0 15px 10px;
+        margin: 0 12px;
+        border-bottom:1px solid $color-border
+
 
         .ablum {
           width: 60px;

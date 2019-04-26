@@ -22,30 +22,32 @@
           :refreshDelay="refreshDelay"
         >
           <transition-group name="list" tag="ul">
-            <mu-list-item
+            <li
               :key="item.id"
               ref="listItem"
               class="item"
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
-              <mu-flexbox class="flexbox">
-                <mu-flexbox-item class="flexitem1">
-                  <i class="current" :class="getCurrentIcon(item)"></i>
-                </mu-flexbox-item>
-                <mu-flexbox-item >
-                  <div class="text" :class="getCurrent(item)">{{item.name}}</div>
-                </mu-flexbox-item>
-                <mu-flexbox-item class="flexitem2"> 
-                  <span @click.stop="toggleFavorite(item)" class="like">
-                    <i :class="getFavoriteIcon(item)"></i>
-                  </span>
-                  <span @click.stop="deleteOne(item)" class="delete">
-                    <i class="icon-delete"></i>
-                  </span>
-                </mu-flexbox-item>
-              </mu-flexbox>
-            </mu-list-item>
+              <mu-list-item>
+                <mu-flexbox class="flexbox">
+                  <mu-flexbox-item class="flexitem1">
+                    <i class="current" :class="getCurrentIcon(item)"></i>
+                  </mu-flexbox-item>
+                  <mu-flexbox-item>
+                    <div class="text" :class="getCurrent(item)">{{item.name}}</div>
+                  </mu-flexbox-item>
+                  <mu-flexbox-item class="flexitem2">
+                    <span @click.stop="toggleFavorite(item)" class="like">
+                      <i :class="getFavoriteIcon(item)"></i>
+                    </span>
+                    <span @click.stop="deleteOne(item)" class="delete">
+                      <i class="icon-delete"></i>
+                    </span>
+                  </mu-flexbox-item>
+                </mu-flexbox>
+              </mu-list-item>
+            </li>
           </transition-group>
         </scroll>
         <div class="list-operate">
@@ -101,7 +103,6 @@ export default {
   methods: {
     show() {
       this.setPlayListVisible(true);
-
       setTimeout(() => {
         this.$refs.listContent.refresh();
         this.scrollToCurrent(this.currentSong);
@@ -144,13 +145,7 @@ export default {
       });
       this.$refs.listContent.scrollToElement(this.$refs.listItem[index], 300);
     },
-    deleteOne(item) {
-      this.deleteSong(item);
-      item;
-      if (!this.playlist.length) {
-        this.hide();
-      }
-    },
+
     addSong() {
       this.$refs.addSong.show();
     },
@@ -164,7 +159,6 @@ export default {
       if (!this.playListVisible || newSong.id === oldSong.id) {
         return;
       }
-
       setTimeout(() => {
         this.scrollToCurrent(newSong);
       }, 20);
@@ -250,11 +244,13 @@ export default {
     .flexitem1 {
       flex: 0 0 0 !important;
     }
+
     .flexitem2 {
       flex: 0 0 50px !important;
     }
+
     .list-content {
-      max-height: 270px;
+      height: 270px;
       overflow: hidden;
       padding: 0 15px;
 
@@ -281,7 +277,7 @@ export default {
           no-wrap();
           font-size: $font-size-medium-x;
           color: $color-text-ll;
-          width 98%;
+          width: 98%;
         }
 
         .current-play {

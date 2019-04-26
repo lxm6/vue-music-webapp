@@ -54,6 +54,12 @@ const UserCenter = (resolve) => {
   })
 }
 //歌单分类
+const SaveList = (resolve) => {
+  import('components/save-list/save-list').then((module) => {
+    resolve(module)
+  })
+}
+//歌单分类
 const Sort = (resolve) => {
   import('components/sort/sort').then((module) => {
     resolve(module)
@@ -135,32 +141,40 @@ const router = new Router({
       path: '/user',
       component: UserCenter,
       meta: {
+        keepAlive: true,
+      }
+    },
+    {
+      path: '/saveList/:index',
+      component: SaveList,
+      meta: {
         keepAlive: false,
       },
       children: [{
-        path: ':id',
+        path: '/saveList/:index/:id',
         component: SingerDetail,
         meta: {
           keepAlive: false,
         },
       }]
-    },
-    {
-      path: '/sort',
-      component: Sort,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        name: 'SortDetail',
-        path: '/sortDetail',
-        component: SortDetail,
-        meta: {
-          keepAlive: false,
-        },
-      }]
-    },
+    }
   ]
+
+}, {
+  path: '/sort',
+  component: Sort,
+  meta: {
+    keepAlive: true,
+  },
+  children: [{
+    name: 'SortDetail',
+    path: '/sortDetail',
+    component: SortDetail,
+    meta: {
+      keepAlive: false,
+    },
+
+  }, ]
 })
 
 

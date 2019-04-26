@@ -127,8 +127,8 @@ export default {
     },
 
     deleteSong() {
-      this.deleteSong2([this.currentIndex, this.checkboxList]);
       this.$refs.toast.show();
+      this.deleteSong2([this.currentIndex, this.checkboxList]);
       if (this.isCheckedAll) {
         this.hide();
       }
@@ -140,7 +140,6 @@ export default {
   },
   watch: {
     deleteSongVisible() {
-      console.log(this.checkboxList.length);
       this.checkboxList = [];
     }
   },
@@ -180,7 +179,7 @@ export default {
     color: $color-theme;
 
     .title {
-      line-height: 50px;
+      line-height: 53px;
       font-size: $font-size-large;
     }
 
