@@ -96,7 +96,7 @@ export default {
   .bar-inner {
     position: relative;
     top: 13px;
-    height: 2px;
+    height: 3px;
     background: rgba(255, 255, 255, 0.3);
     .progress {
       position: absolute;

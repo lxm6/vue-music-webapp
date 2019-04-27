@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="recommend" ref="recommend">
+    <div class="recommend" ref="recommend" v-show="recommends.length">
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
       <scroll ref="scroll" class="recommend-content" :data="discList">
         <div>
@@ -33,7 +33,7 @@
               <h1>电台</h1>
             </mu-flexbox-item>
           </mu-flexbox>
-          <div class="recommend-list"  v-show="discList.length">
+          <div class="recommend-list" v-show="discList.length">
             <h1 class="list-title">为你推荐歌单</h1>
             <ul>
               <li
@@ -59,7 +59,7 @@
               <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
             </div>
           </div>
-          <div class="new-list"  v-show="discList.length">
+          <div class="new-list" v-show="discList.length">
             <h1 class="list-title">最新歌单</h1>
             <ul>
               <mu-list-item
@@ -112,7 +112,7 @@ export default {
       discList: [],
       newDiscList: [],
       result: [],
-      clickNum: 0,
+      clickNum: 0
     };
   },
   created() {
@@ -197,7 +197,7 @@ export default {
 // z-index: 100;
 // }
 .recommend {
-  position: fixed;
+  position: absolute;
   width: 100%;
   top: 94px;
   bottom: 0;
@@ -230,6 +230,7 @@ export default {
           width: 50px;
           height: 50px;
           background-color: $color-theme;
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
         }
       }
     }

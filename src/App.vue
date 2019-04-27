@@ -6,19 +6,15 @@
       <tab></tab>
     </div>
     <!-- 可将dom缓存在内存中,不会每次切换都加载 -->
-    <!-- <transition name="slide">
+    <transition name="slide">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
     </transition>
     <transition name="slide">
       <router-view v-if="!$route.meta.keepAlive"></router-view>
-    </transition>-->
-    <transition name="slide" mode="out-in">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
     </transition>
+
     <player></player>
   </div>
 </template>

@@ -105,7 +105,7 @@ const router = new Router({
         path: ':id',
         component: SingerDetail,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
     },

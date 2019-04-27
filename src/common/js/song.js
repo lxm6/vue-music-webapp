@@ -1,4 +1,8 @@
-import { getSongVkey, getSongURL, getLyric } from 'api/song';
+import {
+  getSongVkey,
+  getSongURL,
+  getLyric
+} from 'api/song';
 import {
   ERR_OK
 } from 'api/config'
@@ -27,39 +31,43 @@ export default class Song {
     this.duration = duration
     this.image = image
     this.isPay = isPay;
-    this.url = url
+    if (url) {
+      this.url = url;
+    }
   }
 
   // 获取歌曲的歌词
   getLyric() {
     // 如果歌词已存在
     if (this.lyric) {
-        return Promise.resolve(this.lyric);
+      return Promise.resolve(this.lyric);
     }
     return new Promise((resolve, reject) => {
-        getLyric(this.mid).then(res => {
-            if (res.retcode === ERR_OK) {
-                // 对歌词记性base64解码
-                this.lyric = Base64.decode(res.lyric);
-                resolve(this.lyric);
-            } else {
-                reject('no lyric');
-            }
-        });
+      getLyric(this.mid).then(res => {
+        if (res.retcode === ERR_OK) {
+          // 对歌词记性base64解码
+          this.lyric = Base64.decode(res.lyric);
+          resolve(this.lyric);
+        } else {
+          reject('no lyric');
+        }
+      });
     });
-}
-  获取歌曲url
-  getSongUrl () {
+  }
+  //获取歌曲url
+  getSongUrl() {
     if (this.url) {
+      console.log("f")
       return Promise.resolve(this.url);
     }
     return getSongVkey(this.mid).then((res) => {
       if (res.code === ERR_OK) {
         if (res.data.items.length > 0) {
           let vkey = res.data.items[0].vkey;
-          if (!vkey) { 
-            return Promise.reject(new Error('getSongKey function got vkey is null')); 
+          if (!vkey) {
+            return Promise.reject(new Error('获取vkey失败'));
           }
+          console.log("dd")
           let currentSongUrl = getSongURL(this.mid, vkey);
           this.url = currentSongUrl;
           return Promise.resolve(currentSongUrl);
@@ -84,7 +92,7 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
+    url: `https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=192`
   })
 }
 
@@ -99,4 +107,3 @@ export function filterSingerName(singer) {
   })
   return ret.join('/')
 }
-

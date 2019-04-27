@@ -227,6 +227,7 @@ export default {
 
       .text {
         no-wrap();
+        font-size 16px;
       }
 
       .vip, .hq {
@@ -245,10 +246,11 @@ export default {
       }
 
       .subtext {
-        margin-top: 7px;
         font-size: $font-size-small;
-        color: $color-text-l;
         no-wrap();
+        color: $color-text-l;
+        width: 98%;
+        margin-top 7px;
       }
     }
 

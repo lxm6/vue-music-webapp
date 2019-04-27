@@ -147,7 +147,6 @@
     ></lyricset>
     <audio
       ref="audio"
-      :src="currentSongUrl"
       @play="ready"
       @error="error"
       @timeupdate="updateTime"
@@ -211,7 +210,7 @@ export default {
       currentShow: "cd",
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
-      currentSongUrl: '',
+      currentSongUrl: "",
       msg: "",
       isPure: false,
       defaultFontSize: loadFontsize(),
@@ -417,7 +416,9 @@ export default {
       this.songReady = false;
     },
     ready() {
-      this.songReady = true;
+      setTimeout(() => {
+        this.songReady = true;
+      }, 200);
       this.savePlayHistory(this.currentSong);
       if (this.currentLyric) {
         this.currentLyric.seek(this.currentTime * 1000);
@@ -617,11 +618,11 @@ export default {
     },
     download() {
       setTimeout(() => {
-        if (this.currentSong.url) {
+        if (this.currentSongUrl) {
           /* eslint-disable */
           const filename = `${this.currentSong.name}.mp3`;
           const a = document.createElement("a");
-          a.href = this.currentSong.url;
+          a.href = this.currentSongUrl;
           a.download = filename;
           a.click();
         }
@@ -657,7 +658,7 @@ export default {
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
-         this.currentLyric = null;
+        this.currentLyric = null;
         this.currentTime = 0;
         this.playingLyric = "";
         this.currentLineNum = 0;
@@ -670,6 +671,8 @@ export default {
         .getSongUrl()
         .then(url => {
           this.currentSongUrl = url;
+          this.$refs.audio.src = this.currentSongUrl;
+          this.$refs.audio.play();
         })
         .then(() => {
           this.getLyric();
@@ -686,21 +689,19 @@ export default {
           }
         });
     },
-    currentSongUrl() {
-      this.$nextTick(() => {
-        this.$refs.audio.play();
-      });
-    },
+
     //监听playing(state数据), 真正控制播放的是audio播放器
     playing(newState) {
-      setTimeout(() => {
-        let audio = this.$refs.audio;
-        if (newState) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      }, 500);
+
+      if (!this.songReady) {
+        return;
+      }
+      const audio = this.$refs.audio;
+      // 根据播放状态变量playing控制播放器
+      this.$nextTick(() => {
+        /* eslint-disable no-unused-expressions */
+        newPlaying ? audio.play() : audio.pause();
+      });
     },
     fullScreen(newVal) {
       if (newVal) {
