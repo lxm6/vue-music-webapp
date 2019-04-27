@@ -157,27 +157,24 @@ const router = new Router({
           keepAlive: false,
         },
       }]
-    }
-  ]
 
-}, {
-  path: '/sort',
-  component: Sort,
-  meta: {
-    keepAlive: true,
-  },
-  children: [{
-    name: 'SortDetail',
-    path: '/sortDetail',
-    component: SortDetail,
-    meta: {
-      keepAlive: false,
+    }, {
+      path: '/sort',
+      component: Sort,
+      meta: {
+        keepAlive: true,
+      },
+      children: [{
+        name: 'SortDetail',
+        path: '/sortDetail',
+        component: SortDetail,
+        meta: {
+          keepAlive: false,
+        },
+      }]
     },
-
-  }, ]
+  ]
 })
-
-
 router.beforeEach((to, from, next) => {
   const {
     fullScreen,

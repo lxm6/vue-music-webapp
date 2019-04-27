@@ -163,19 +163,5 @@ export default {
   }
 }
 
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
 
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes slide-in {
-  0% {
-    transform: translate(-50%, -70%);
-  }
-}
 </style>

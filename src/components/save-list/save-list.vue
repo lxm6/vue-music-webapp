@@ -197,7 +197,7 @@ export default {
       } else if (this.currentIndex === 1) {
         if (this.playHistory.length != 0) {
           return true;
-        } 
+        }
       }
     },
     showMenu(item) {
@@ -225,7 +225,6 @@ export default {
     deleteDisc() {
       this.deleteFavoriteListList(this.item);
       this.$refs.toast.show();
-
     },
     showDelete() {
       this.setDeleteSongVisible(true);
@@ -436,7 +435,7 @@ export default {
         }
 
         .flexbox {
-          padding: 10px 10px 8px 10px;
+          padding: 8px 0 6px 0;
         }
 
         .flexitem {

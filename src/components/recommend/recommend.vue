@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="recommend" ref="recommend" >
+    <div class="recommend" ref="recommend">
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
-      <scroll ref="scroll" class="recommend-content" :data="discList">
+      <scroll ref="scroll" class="recommend-content" :data="discList" v-show="discList.length">
         <div>
           <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
           <div v-if="recommends.length" class="slider-wrapper">
@@ -33,12 +33,38 @@
               <h1>电台</h1>
             </mu-flexbox-item>
           </mu-flexbox>
-          <div class="recommend-list" ref="recommendList" v-show="discList.length">
-            <h1 class="list-title">热门歌单推荐</h1>
+          <div class="recommend-list">
+            <h1 class="list-title">为你推荐歌单</h1>
+            <ul>
+              <li
+                @click="selectItem(item)"
+                v-for="(item,index) in discList"
+                :key="index"
+                class="item"
+              >
+                <div class="ablum">
+                  <img :src="item.imgurl">
+                  <div class="info">
+                    <img src="~@/common/image/earphone.png">
+                    <span>{{Math.round(item.listennum/1000)/10}}万</span>
+                  </div>
+                </div>
+                <div class="text">
+                  <p class="desc" v-html="item.dissname"></p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="changeBtn" @click="changeDisc">
+              <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
+            </div>
+          </div>
+          <div class="new-list">
+            <h1 class="list-title">最新歌单</h1>
             <ul>
               <mu-list-item
                 @click="selectItem(item)"
-                v-for="(item,index) in discList"
+                v-for="(item,index) in newDiscList"
                 :key="index"
                 class="item"
               >
@@ -83,13 +109,17 @@ export default {
   data() {
     return {
       recommends: [],
-      discList: []
+      discList: [],
+      newDiscList: [],
+      result: [],
+      clickNum: 0,
     };
   },
   created() {
     this._getRecommend();
     this._getDiscList();
   },
+  computed: {},
   methods: {
     openLink(url) {
       openUrl(url);
@@ -105,6 +135,10 @@ export default {
       });
       this.setDisc(item);
     },
+    changeDisc() {
+      this.discList = this.result[this.clickNum % 3];
+      this.clickNum += 1;
+    },
     _getRecommend() {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
@@ -113,9 +147,20 @@ export default {
       });
     },
     _getDiscList() {
-      getDiscList().then(res => {
+      //推荐歌单
+      getDiscList(10000000, 5, 17).then(res => {
         if (res.code === ERR_OK) {
           this.discList = res.data.list;
+          for (var i = 0; i < this.discList.length; i += 6) {
+            this.result.push(this.discList.slice(i, i + 6));
+          }
+          this.changeDisc();
+        }
+      });
+      //最新歌单
+      getDiscList(10000000, 2, 11).then(res => {
+        if (res.code === ERR_OK) {
+          this.newDiscList = res.data.list;
         }
       });
     },
@@ -132,8 +177,7 @@ export default {
   components: {
     Slider,
     Scroll,
-    Loading,
-
+    Loading
   }
 };
 </script>
@@ -148,11 +192,10 @@ export default {
 // }
 
 // .header {
-//   position: fixed;
-//   width: 100%;
-//   z-index: 100;
+// position: fixed;
+// width: 100%;
+// z-index: 100;
 // }
-
 .recommend {
   position: fixed;
   width: 100%;
@@ -192,7 +235,15 @@ export default {
     }
 
     .recommend-list {
-      background: #fff;
+      padding: 0 10px 10px 10px;
+
+      .changeBtn {
+        width: 108px;
+        height: 100%;
+        margin: 10px auto 0px;
+        border: 1px solid $color-border;
+        border-radius: 5px;
+      }
 
       .list-title {
         height: 50px;
@@ -202,8 +253,69 @@ export default {
         color: $color-theme;
       }
 
+      .ablum {
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        .info {
+          position: absolute;
+          bottom: 5px;
+          left: 5px;
+          color: #fff;
+          font-size: 10px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          img {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 3px;
+          }
+        }
+      }
+
+      .item {
+        width: 32.7%;
+        cursor: pointer;
+        margin-bottom: 10px;
+        display: inline-block;
+        margin-right: 3px;
+
+        &:nth-child(3n) {
+          margin-right: 0px;
+        }
+
+        .text {
+          overflow: hidden;
+          font-size: $font-size-small;
+
+          .desc {
+            color: $color-text;
+            height: 36px;
+            line-height: 15px;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+    .new-list {
+      .list-title {
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: $font-size-medium-x;
+        color: $color-theme;
+      }
+
       .flexbox {
-        padding: 10px 10px 8px 10px;
+        padding: 8px 0 6px 0;
       }
 
       .flexitem {
@@ -211,9 +323,8 @@ export default {
       }
 
       .item {
-        margin: 0 12px;
-        border-bottom:1px solid $color-border
-
+        margin: 0 10px;
+        border-bottom: 1px solid $color-border;
 
         .ablum {
           width: 60px;
@@ -239,9 +350,8 @@ export default {
     .loading-container {
       position: absolute;
       width: 100%;
-      top: 70%;
+      top: 50%;
       transform: translateY(-50%);
-
     }
   }
 }

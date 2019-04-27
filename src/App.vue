@@ -14,7 +14,7 @@
     <transition name="slide">
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </transition>-->
-    <transition name="slide">
+    <transition name="slide" mode="out-in">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>

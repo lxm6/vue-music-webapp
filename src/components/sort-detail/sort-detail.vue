@@ -26,7 +26,7 @@
           <div class="switches-wrapper">
             <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
           </div>
-          <div class="recommend-list" ref="recommendList">
+          <div class="recommend-list">
             <li
               @click="selectItem(item)"
               v-for="(item,index) in discList"
@@ -133,6 +133,7 @@ export default {
       getDiscList(this.categoryId, this.sortId).then(res => {
         if (res.code === ERR_OK) {
           this.discList = res.data.list;
+          this.bgImage = this.discList[0].imgurl;
           this.showFlag = false;
         }
       });
