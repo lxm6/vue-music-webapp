@@ -147,7 +147,7 @@
     ></lyricset>
     <audio
       ref="audio"
-      :src="currentSong.url"
+      :src="currentSongUrl"
       @play="ready"
       @error="error"
       @timeupdate="updateTime"
@@ -211,6 +211,7 @@ export default {
       currentShow: "cd",
       // playingLyric: 唱碟下面显示的一行歌词
       playingLyric: "",
+      currentSongUrl: '',
       msg: "",
       isPure: false,
       defaultFontSize: loadFontsize(),
@@ -656,57 +657,51 @@ export default {
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
+         this.currentLyric = null;
         this.currentTime = 0;
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
-        this.$refs.audio.play();
-        this.getLyric();
-      }, 500);
+
       // setTimeout: 解决DOM异常
       // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      // newSong
-      //   .getSongUrl()
-      //   .then(url => {
-      //     this.currentSongUrl = url;
-      //   })
-      //   .then(() => {
-      //     this.getLyric();
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     this.msg = "已跳过无法播放的歌曲";
-      //     this.$refs.topTip.show();
-      //     this.songReady = true;
-      //     if (nextFlag) {
-      //       this.next();
-      //     } else {
-      //       this.prev();
-      //     }
-      //     // this.setPlayingState(false);
-      //     // this.currentLyric=""
-      //     // this.currentSongUrl = "";
-      //   });
+      newSong
+        .getSongUrl()
+        .then(url => {
+          this.currentSongUrl = url;
+        })
+        .then(() => {
+          this.getLyric();
+        })
+        .catch(err => {
+          console.log(err);
+          this.msg = "已跳过无法播放的歌曲";
+          this.$refs.topTip.show();
+          this.songReady = true;
+          if (nextFlag) {
+            this.next();
+          } else {
+            this.prev();
+          }
+        });
     },
-    // currentSongUrl() {
-    //   this.$nextTick(() => {
-    //     this.$refs.audio.play();
-    //   });
-    // },
-    // 监听playing(state数据), 真正控制播放的是audio播放器
-    // playing(newState) {
-    //   setTimeout(() => {
-    //     let audio = this.$refs.audio;
-    //     if (newState) {
-    //       audio.play();
-    //     } else {
-    //       audio.pause();
-    //     }
-    //   }, 500);
-    // },
+    currentSongUrl() {
+      this.$nextTick(() => {
+        this.$refs.audio.play();
+      });
+    },
+    //监听playing(state数据), 真正控制播放的是audio播放器
+    playing(newState) {
+      setTimeout(() => {
+        let audio = this.$refs.audio;
+        if (newState) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }, 500);
+    },
     fullScreen(newVal) {
       if (newVal) {
         setTimeout(() => {

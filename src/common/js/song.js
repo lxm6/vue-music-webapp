@@ -48,28 +48,27 @@ export default class Song {
         });
     });
 }
-  // 获取歌曲url
-//   getSongUrl () {
-//     if (this.url) {
-//       return Promise.resolve(this.url);
-//     }
-//     return getSongVkey(this.mid).then((res) => {
-//       if (res.code === ERR_OK) {
-//         if (res.data.items.length > 0) {
-//           let vkey = res.data.items[0].vkey;
-//           if (!vkey) { 
-//             isEmpty=true;
-//             return Promise.reject(new Error('getSongKey function got vkey is null')); 
-//           }
-//           let currentSongUrl = getSongURL(this.mid, vkey);
-//           this.url = currentSongUrl;
-//           return Promise.resolve(currentSongUrl);
-//         }
-//       }
-//     }).catch((err) => {
-//       return Promise.reject(err);
-//     });
-//   }
+  获取歌曲url
+  getSongUrl () {
+    if (this.url) {
+      return Promise.resolve(this.url);
+    }
+    return getSongVkey(this.mid).then((res) => {
+      if (res.code === ERR_OK) {
+        if (res.data.items.length > 0) {
+          let vkey = res.data.items[0].vkey;
+          if (!vkey) { 
+            return Promise.reject(new Error('getSongKey function got vkey is null')); 
+          }
+          let currentSongUrl = getSongURL(this.mid, vkey);
+          this.url = currentSongUrl;
+          return Promise.resolve(currentSongUrl);
+        }
+      }
+    }).catch((err) => {
+      return Promise.reject(err);
+    });
+  }
 }
 
 
@@ -85,7 +84,7 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=192`
+    url: `https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
   })
 }
 
