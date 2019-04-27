@@ -2,7 +2,7 @@
   <div>
     <div class="recommend" ref="recommend">
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
-      <scroll ref="scroll" class="recommend-content" :data="discList" v-show="discList.length">
+      <scroll ref="scroll" class="recommend-content" :data="discList">
         <div>
           <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
           <div v-if="recommends.length" class="slider-wrapper">
@@ -33,7 +33,7 @@
               <h1>电台</h1>
             </mu-flexbox-item>
           </mu-flexbox>
-          <div class="recommend-list">
+          <div class="recommend-list"  v-show="discList.length">
             <h1 class="list-title">为你推荐歌单</h1>
             <ul>
               <li
@@ -59,7 +59,7 @@
               <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
             </div>
           </div>
-          <div class="new-list">
+          <div class="new-list"  v-show="discList.length">
             <h1 class="list-title">最新歌单</h1>
             <ul>
               <mu-list-item
@@ -350,7 +350,7 @@ export default {
     .loading-container {
       position: absolute;
       width: 100%;
-      top: 50%;
+      top: 70%;
       transform: translateY(-50%);
     }
   }

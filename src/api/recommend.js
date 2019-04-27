@@ -20,8 +20,12 @@ export function getRecommend() {
   return jsonp(url, data, options)
 }
 
+
 /**
- * 获取推荐歌单
+ * @function getDiscList 获取推荐歌单
+ * @param {Number} categoryId 歌单分类id
+ * @param {Number} sortId 歌单类型
+ * @param {Number} ein 歌单数目
  */
 export function getDiscList(categoryId=10000000,sortId=5,ein=49) {
   const url = '/api/getDiscList'
