@@ -43,7 +43,7 @@ export default {
     },
     selectSinger(singer) {
       this.$router.push({
-        path: `/singer/${singer.id}`
+        path: `/main/singer/${singer.id}`
       });
       this.setSinger(singer);
     },

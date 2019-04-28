@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <!-- <transition name="slide"> -->
 
     <div class="recommend" ref="recommend" v-show="recommends.length">
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
@@ -88,7 +88,7 @@
       </scroll>
       <router-view></router-view>
     </div>
-  </transition>
+  <!-- </transition> -->
 
 </template>
 
@@ -129,7 +129,7 @@ export default {
     },
     selectItem(item) {
       this.$router.push({
-        path: `/recommend/${item.dissid}`
+        path: `/main/recommend/${item.dissid}`
       });
       this.setDisc(item);
     },

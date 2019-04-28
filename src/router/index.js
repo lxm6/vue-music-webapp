@@ -85,18 +85,19 @@ const router = new Router({
       path: '/main',
       component: Main,
       children: [{
-          path: 'recommend',
+          path: '/recommend',
           component: Recommend,
           meta: {
             keepAlive: true,
           },
-          children: [{
-            path: ':id',
-            component: Disc,
-            meta: {
-              keepAlive: true,
-            },
-          }]
+
+        },
+        {
+          path: '/main/recommend/:id',
+          component: Disc,
+          meta: {
+            keepAlive: true,
+          },
         },
         {
           path: 'singer',
@@ -148,38 +149,39 @@ const router = new Router({
           },
           children: [{
             name: 'SortDetail',
-            path: '/sortDetail',
+            path: '/main/sort/sortDetail',
             component: SortDetail,
             meta: {
               keepAlive: true,
             },
           }]
         },
+
+        {
+          path: 'user',
+          component: UserCenter,
+          meta: {
+            keepAlive: true,
+          }
+        },
+        {
+          path: '/saveList/:index',
+          component: SaveList,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            path: '/saveList/:index/:id',
+            component: SingerDetail,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+
+        }
       ]
     },
 
-    {
-      path: '/user',
-      component: UserCenter,
-      meta: {
-        keepAlive: true,
-      }
-    },
-    {
-      path: '/saveList/:index',
-      component: SaveList,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        path: '/saveList/:index/:id',
-        component: SingerDetail,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-
-    }
   ]
 })
 router.beforeEach((to, from, next) => {
