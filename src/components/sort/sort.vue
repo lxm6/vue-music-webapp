@@ -1,4 +1,6 @@
 <template>
+  <transition name="slide">
+
   <div class="container">
     <title-Bar :titleBarName="titleBarName"></title-Bar>
     <div class="sort-wrapper" ref="sort">
@@ -25,6 +27,8 @@
       <router-view></router-view>
     </div>
   </div>
+  </transition>
+
 </template>
 
 <script>
@@ -80,6 +84,13 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 .container {
   position: absolute;
   bottom: 0;

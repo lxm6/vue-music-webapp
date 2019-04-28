@@ -1,51 +1,53 @@
 <template>
-  <div class="container">
-    <title-Bar :titleBarName="titleBarName"></title-Bar>
-    <div class="searchWrapper" ref="search">
-      <div class="search">
-        <div class="search-box-wrapper">
-          <search-box ref="searchBox" @query="onQueryChange"></search-box>
-        </div>
-        <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
-          <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
-            <div>
-              <div class="hot-key">
-                <h1 class="title">热门搜索</h1>
-                <ul>
-                  <li
-                    @click="addQuery(item.k)"
-                    class="item"
-                    v-for="(item,index) in hotKey"
-                    :key="index"
-                  >
-                    <span>{{item.k}}</span>
-                  </li>
-                </ul>
+  <transition name="slide">
+    <div class="container">
+      <title-Bar :titleBarName="titleBarName"></title-Bar>
+      <div class="searchWrapper" ref="search">
+        <div class="search">
+          <div class="search-box-wrapper">
+            <search-box ref="searchBox" @query="onQueryChange"></search-box>
+          </div>
+          <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
+            <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
+              <div>
+                <div class="hot-key">
+                  <h1 class="title">热门搜索</h1>
+                  <ul>
+                    <li
+                      @click="addQuery(item.k)"
+                      class="item"
+                      v-for="(item,index) in hotKey"
+                      :key="index"
+                    >
+                      <span>{{item.k}}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="search-history" v-show="searchHistory.length">
+                  <h1 class="title">
+                    <span class="text">搜索历史</span>
+                    <span @click="showConfirm" class="clear">
+                      <i class="icon-clear"></i>
+                    </span>
+                  </h1>
+                  <search-list
+                    @delete="deleteSearchHistory"
+                    @select="addQuery"
+                    :searches="searchHistory"
+                  ></search-list>
+                </div>
               </div>
-              <div class="search-history" v-show="searchHistory.length">
-                <h1 class="title">
-                  <span class="text">搜索历史</span>
-                  <span @click="showConfirm" class="clear">
-                    <i class="icon-clear"></i>
-                  </span>
-                </h1>
-                <search-list
-                  @delete="deleteSearchHistory"
-                  @select="addQuery"
-                  :searches="searchHistory"
-                ></search-list>
-              </div>
-            </div>
-          </scroll>
+            </scroll>
+          </div>
+          <div class="search-result" v-show="query" ref="searchResult">
+            <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
+          </div>
+          <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
         </div>
-        <div class="search-result" v-show="query" ref="searchResult">
-          <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
-        </div>
-        <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
-        <router-view></router-view>
       </div>
+          <router-view></router-view>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -122,6 +124,14 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 
 .container {
   position: absolute;

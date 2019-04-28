@@ -1,27 +1,29 @@
 <template>
-  <div class="user-center" ref="userCenter">
-    <div class="login">
-      <div>
-        <mu-flat-button class="loginBtn">登 录</mu-flat-button>
+  <transition name="slide">
+    <div class="user-center" ref="userCenter">
+      <div class="login">
+        <div>
+          <mu-flat-button class="loginBtn">登 录</mu-flat-button>
+        </div>
       </div>
-    </div>
-    <mu-list class="menu">
-      <mu-list-item class="menu-item" @click="enterList(0)">
-        <mu-icon slot="left" value="favorite_border"/>
-        <h1>我喜欢的</h1>
-      </mu-list-item>
-      <mu-list-item class="menu-item" @click="enterList(1)">
-        <mu-icon slot="left" value="history"/>
-        <h1>最近播放</h1>
-      </mu-list-item>
-      <mu-list-item class="menu-item" @click="enterList(2)">
-        <mu-icon slot="left" value="queue_music"/>
-        <h1>收藏歌单</h1>
-      </mu-list-item>
-    </mu-list>
+      <mu-list class="menu">
+        <mu-list-item class="menu-item" @click="enterList(0)">
+          <mu-icon slot="left" value="favorite_border"/>
+          <h1>我喜欢的</h1>
+        </mu-list-item>
+        <mu-list-item class="menu-item" @click="enterList(1)">
+          <mu-icon slot="left" value="history"/>
+          <h1>最近播放</h1>
+        </mu-list-item>
+        <mu-list-item class="menu-item" @click="enterList(2)">
+          <mu-icon slot="left" value="queue_music"/>
+          <h1>收藏歌单</h1>
+        </mu-list-item>
+      </mu-list>
 
-    <router-view></router-view>
-  </div>
+      <router-view></router-view>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -32,7 +34,7 @@ export default {
       this.$router.push({
         path: `/saveList/${index}`
       });
-    },
+    }
     // enterDiscList(){
     //    this.$router.push({
     //     path: `/saveList/`
@@ -47,6 +49,14 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 
 .user-center {
   position: fixed;

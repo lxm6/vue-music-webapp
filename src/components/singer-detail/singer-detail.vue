@@ -1,5 +1,7 @@
 <template>
-    <music-list :title="title" :bg-image="bgImage" :songs="songs" ></music-list>
+  <transition name="slide">
+    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+  </transition>
 </template>
 
 <script>
@@ -67,6 +69,9 @@ export default {
   bottom: 0;
   background: $color-background;
 }
+.slide-enter-active, .slide-leave-active
+    transition: all 0.3s
 
-
+  .slide-enter, .slide-leave-to
+    transform: translate3d(100%, 0, 0)
 </style>

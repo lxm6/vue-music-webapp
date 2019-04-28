@@ -75,7 +75,6 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
       path: '/',
-      redirect: '/recommend',
       meta: {
         keepAlive: true,
       },
@@ -91,7 +90,7 @@ const router = new Router({
         path: ':id',
         component: Disc,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
     },
@@ -119,7 +118,7 @@ const router = new Router({
         path: ':id',
         component: TopList,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
     },
@@ -133,7 +132,7 @@ const router = new Router({
         path: ':id',
         component: SingerDetail,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
     },
@@ -148,13 +147,13 @@ const router = new Router({
       path: '/saveList/:index',
       component: SaveList,
       meta: {
-        keepAlive: false,
+        keepAlive: true,
       },
       children: [{
         path: '/saveList/:index/:id',
         component: SingerDetail,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
 
@@ -169,7 +168,7 @@ const router = new Router({
         path: '/sortDetail',
         component: SortDetail,
         meta: {
-          keepAlive: false,
+          keepAlive: true,
         },
       }]
     },

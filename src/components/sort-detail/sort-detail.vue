@@ -1,4 +1,5 @@
 <template>
+  <transition name="slide">
     <div class="disc-list">
       <div class="back" @click="back">
         <mu-icon-button icon="arrow_back"/>
@@ -22,11 +23,11 @@
         class="recommend-content"
         ref="discList"
       >
-        <div v-show="discList.length">
+        <div >
           <div class="switches-wrapper">
             <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
           </div>
-          <div class="recommend-list">
+          <div class="recommend-list" v-show="discList.length">
             <li
               @click="selectItem(item)"
               v-for="(item,index) in discList"
@@ -53,6 +54,7 @@
       </scroll>
       <router-view></router-view>
     </div>
+  </transition>
 </template>
 
 <script>
@@ -201,6 +203,14 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
+
 .disc-list {
   position: fixed;
   z-index: 100;
@@ -336,12 +346,12 @@ export default {
     background: $color-background;
     position: absolute;
     width: 100%;
-    top: 50%;
+    top: 63%;
     height: 100%;
     transform: translateY(-50%);
 
     .loading {
-      margin-top: 50%;
+      margin-top: 30%;
     }
   }
 }

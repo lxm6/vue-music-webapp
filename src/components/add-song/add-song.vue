@@ -3,8 +3,8 @@
     <div class="add-song" v-show="addSongVisible" @click.stop>
       <div class="header">
         <h1 class="title">添加歌曲到队列</h1>
-        <div class="close" @click="hide">
-           <mu-icon-button icon="close" color="#31c27c"/>
+         <div class="close" @click="hide">
+          <mu-icon-menu icon="close"/>
         </div>
       </div>
       <div class="search-box-wrapper">
@@ -157,24 +157,32 @@ export default {
     position: relative;
     height: 44px;
     text-align: center;
+    color: $color-theme;
+
+
+    .material-icons {
+      color:$color-theme;
+    }
 
     .title {
       line-height: 50px;
       font-size: $font-size-large;
-      color: $color-theme;
     }
 
     .close {
       position: absolute;
       top: 0;
       right: 6px;
-      z-index: 50;
     }
   }
 
   .search-box-wrapper {
     margin: 10px 20px;
   }
+  .search-list{
+    padding 0 15px;
+    margin-top 10px;
+    }
 
   .shortcut {
     .list-wrapper {
@@ -208,7 +216,7 @@ export default {
     .text {
       font-size: $font-size-medium-x;
       color: #fff;
-      margin-left 10px;
+      margin-left: 10px;
     }
   }
 }

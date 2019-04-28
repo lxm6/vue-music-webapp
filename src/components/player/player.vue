@@ -177,7 +177,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
 import ProgressCircle from "base/progress-circle/progress-circle";
 import { playMode } from "common/js/config";
-import { shuffle } from "common/js/util";
+import { shuffle,downloadSong } from "common/js/util";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
 import Playlist from "components/playlist/playlist";
@@ -617,16 +617,7 @@ export default {
       };
     },
     download() {
-      setTimeout(() => {
-        if (this.currentSongUrl) {
-          /* eslint-disable */
-          const filename = `${this.currentSong.name}.mp3`;
-          const a = document.createElement("a");
-          a.href = this.currentSongUrl;
-          a.download = filename;
-          a.click();
-        }
-      }, 200);
+      downloadSong(this.currentSong.name,this.currentSong.url);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({

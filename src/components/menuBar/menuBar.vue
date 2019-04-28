@@ -2,17 +2,31 @@
   <transition name="list-fade">
     <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
       <div class="list-wrapper">
-        <ul>
-          <li @click="findSinger" v-show="!isDisc">
-            <i class="icon-mine"></i>
+        <ul v-show="!isDisc">
+          <li @click="findSinger">
+            <i>
+              <mu-icon-button icon="person"/>
+            </i>
             <p>查看歌手</p>
           </li>
-          <li @click="deleteOne" v-show="!isDisc">
-            <i class="icon-clear"></i>
+          <li @click="deleteOne">
+            <i>
+              <mu-icon-button icon="delete"/>
+            </i>
             <p>删除</p>
           </li>
-          <li @click="deleteDisc" v-show="isDisc">
-            <i class="icon-clear"></i>
+          <li @click="download">
+            <i>
+              <mu-icon-button icon="file_download"/>
+            </i>
+            <p>下载</p>
+          </li>
+        </ul>
+        <ul v-show="isDisc">
+          <li @click="deleteDisc">
+            <i>
+              <mu-icon-button icon="delete"/>
+            </i>
             <p>删除</p>
           </li>
         </ul>
@@ -46,6 +60,9 @@ export default {
     },
     deleteOne() {
       this.$emit("deleteOne");
+    },
+    download() {
+      this.$emit("download");
     },
     deleteDisc() {
       this.$emit("deleteDisc");
@@ -83,12 +100,14 @@ export default {
         margin-top: 10px;
 
         i {
-          padding: 15px;
           display: inline-block;
-          background-color: #eee;
           border-radius: 8px;
           font-size: $font-size-large;
           margin-bottom: 10px;
+          padding-right: 3px;
+          padding-bottom: 3px;
+          background : #eee;
+          color:#666;
         }
 
         p {

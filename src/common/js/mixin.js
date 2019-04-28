@@ -40,6 +40,7 @@ export const playerMixin = {
     ])
   },
   methods: {
+
     changeModeText() {
       return this.mode === playMode.sequence
         ? "顺序播放"

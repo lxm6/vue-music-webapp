@@ -88,6 +88,7 @@
         @findSinger="findSinger"
         @deleteOne="deleteOne"
         @deleteDisc="deleteDisc"
+        @download="download"
         :isDisc="this.currentIndex===2"
       ></menuBar>
       <router-view></router-view>
@@ -104,6 +105,7 @@ import Confirm from "base/confirm/confirm";
 import Toast from "base/toast/toast";
 import Song from "common/js/song";
 import Singer from "common/js/singer";
+import { downloadSong } from "common/js/util";
 import DeleteSong from "components/delete-song/delete-song";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
@@ -203,6 +205,9 @@ export default {
     showMenu(item) {
       this.item = item;
       this.setMenuBarVisible(true);
+    },
+    download(){
+      downloadSong(this.item.name,this.item.url)
     },
     deleteOne() {
       if (this.currentIndex == 0) {

@@ -1,11 +1,13 @@
 <template>
-  <div class="container">
-    <title-Bar :titleBarName="titleBarName"></title-Bar>
-    <div class="singer" ref="singer">
-      <list-view @select="selectSinger" :data="singers" ref="list"></list-view>
+  <transition name="slide">
+    <div class="container">
+      <title-Bar :titleBarName="titleBarName"></title-Bar>
+      <div class="singer" ref="singer">
+        <list-view @select="selectSinger" :data="singers" ref="list"></list-view>
+      </div>
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -121,6 +123,14 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 
 .container {
   position: absolute;
