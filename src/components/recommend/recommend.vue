@@ -1,102 +1,95 @@
 <template>
   <transition name="slide">
-    <div class="container">
-      <div class="nobug">
-        
-      </div>
-      <div class="recommend" ref="recommend" v-show="recommends.length">
-        <!-- <img src="~@/common/image/paint.png" class="paint"> -->
-        <scroll ref="scroll" class="recommend-content" :data="discList">
-          <div>
-            <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
-            <div v-if="recommends.length" class="slider-wrapper">
-              <slider>
-                <!-- 作为插槽插入组件内部的slot之中 -->
-                <div v-for="(item,index) in recommends" :key="index">
-                  <a @click="openLink(item.linkUrl)">
-                    <img class="needsclick" @load="loadImage" :src="item.picUrl">
-                  </a>
-                </div>
-              </slider>
-            </div>
-            <mu-flexbox class="nav">
-              <mu-flexbox-item class="nav-item">
-                <mu-float-button icon="person" class="demo-float-button" to="/singer"/>
-                <h1>歌手</h1>
-              </mu-flexbox-item>
-              <mu-flexbox-item class="nav-item">
-                <mu-float-button icon="equalizer" class="demo-float-button" to="/rank"/>
-                <h1>排行</h1>
-              </mu-flexbox-item>
-              <mu-flexbox-item class="nav-item">
-                <mu-float-button icon="queue_music" class="demo-float-button" to="/sort"/>
-                <h1>歌单</h1>
-              </mu-flexbox-item>
-              <mu-flexbox-item class="nav-item">
-                <mu-float-button icon="radio" class="demo-float-button" to="/singer"/>
-                <h1>电台</h1>
-              </mu-flexbox-item>
-            </mu-flexbox>
-            <div class="recommend-list" v-show="discList.length">
-              <h1 class="list-title">为你推荐歌单</h1>
-              <ul>
-                <li
-                  @click="selectItem(item)"
-                  v-for="(item,index) in discList"
-                  :key="index"
-                  class="item"
-                >
-                  <div class="ablum">
-                    <img :src="item.imgurl">
-                    <div class="info">
-                      <img src="~@/common/image/earphone.png">
-                      <span>{{Math.round(item.listennum/1000)/10}}万</span>
-                    </div>
-                  </div>
-                  <div class="text">
-                    <p class="desc" v-html="item.dissname"></p>
-                  </div>
-                </li>
-              </ul>
 
-              <div class="changeBtn" @click="changeDisc">
-                <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
+    <div class="recommend" ref="recommend" v-show="recommends.length">
+      <!-- <img src="~@/common/image/paint.png" class="paint"> -->
+      <scroll ref="scroll" class="recommend-content" :data="discList">
+        <div>
+          <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
+          <div v-if="recommends.length" class="slider-wrapper">
+            <slider>
+              <!-- 作为插槽插入组件内部的slot之中 -->
+              <div v-for="(item,index) in recommends" :key="index">
+                <a @click="openLink(item.linkUrl)">
+                  <img class="needsclick" @load="loadImage" :src="item.picUrl">
+                </a>
               </div>
-            </div>
-            <div class="new-list" v-show="discList.length">
-              <h1 class="list-title">最新歌单</h1>
-              <ul>
-                <mu-list-item
-                  @click="selectItem(item)"
-                  v-for="(item,index) in newDiscList"
-                  :key="index"
-                  class="item"
-                >
-                  <mu-flexbox class="flexbox">
-                    <mu-flexbox-item class="flexitem">
-                      <div class="ablum">
-                        <img v-lazy="item.imgurl" width="60" height="60">
-                      </div>
-                    </mu-flexbox-item>
-                    <mu-flexbox-item>
-                      <div class="text">
-                        <p class="desc" v-html="item.dissname"></p>
-                        <h2 class="name" v-html="item.creator.name"></h2>
-                      </div>
-                    </mu-flexbox-item>
-                  </mu-flexbox>
-                </mu-list-item>
-              </ul>
+            </slider>
+          </div>
+          <mu-flexbox class="nav">
+            <mu-flexbox-item class="nav-item">
+              <mu-float-button icon="person" class="demo-float-button" to="/main/singer"/>
+              <h1>歌手</h1>
+            </mu-flexbox-item>
+            <mu-flexbox-item class="nav-item">
+              <mu-float-button icon="equalizer" class="demo-float-button" to="/main/rank"/>
+              <h1>排行</h1>
+            </mu-flexbox-item>
+            <mu-flexbox-item class="nav-item">
+              <mu-float-button icon="queue_music" class="demo-float-button" to="/main/sort"/>
+              <h1>歌单</h1>
+            </mu-flexbox-item>
+          </mu-flexbox>
+          <div class="recommend-list" v-show="discList.length">
+            <h1 class="list-title">为你推荐歌单</h1>
+            <ul>
+              <li
+                @click="selectItem(item)"
+                v-for="(item,index) in discList"
+                :key="index"
+                class="item"
+              >
+                <div class="ablum">
+                  <img :src="item.imgurl">
+                  <div class="info">
+                    <img src="~@/common/image/earphone.png">
+                    <span>{{Math.round(item.listennum/1000)/10}}万</span>
+                  </div>
+                </div>
+                <div class="text">
+                  <p class="desc" v-html="item.dissname"></p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="changeBtn" @click="changeDisc">
+              <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
             </div>
           </div>
-          <div class="loading-container" v-show="!discList.length">
-            <loading></loading>
+          <div class="new-list" v-show="discList.length">
+            <h1 class="list-title">最新歌单</h1>
+            <ul>
+              <mu-list-item
+                @click="selectItem(item)"
+                v-for="(item,index) in newDiscList"
+                :key="index"
+                class="item"
+              >
+                <mu-flexbox class="flexbox">
+                  <mu-flexbox-item class="flexitem">
+                    <div class="ablum">
+                      <img v-lazy="item.imgurl" width="60" height="60">
+                    </div>
+                  </mu-flexbox-item>
+                  <mu-flexbox-item>
+                    <div class="text">
+                      <p class="desc" v-html="item.dissname"></p>
+                      <h2 class="name" v-html="item.creator.name"></h2>
+                    </div>
+                  </mu-flexbox-item>
+                </mu-flexbox>
+              </mu-list-item>
+            </ul>
           </div>
-        </scroll>
-        <router-view></router-view>
-      </div>
+        </div>
+        <div class="loading-container" v-show="!discList.length">
+          <loading></loading>
+        </div>
+      </scroll>
+      <router-view></router-view>
     </div>
   </transition>
+
 </template>
 
 <script>
@@ -188,17 +181,13 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-
-.container {
-  &.slide-enter-active, &.slide-leave-active {
-    transition: all 0.3s;
-  }
-
-  &.slide-enter, &.slide-leave-to {
-    transform: translate3d(100%, 0, 0);
-  }
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
 }
 
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 .recommend {
   position: absolute;
   width: 100%;

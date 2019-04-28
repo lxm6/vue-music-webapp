@@ -3,7 +3,11 @@ import Router from 'vue-router';
 import store from '@/store';
 
 // 路由懒加载
-
+const Main = (resolve) => {
+  import('components/main/main').then((module) => {
+    resolve(module)
+  })
+}
 // 首页-推荐页
 const Recommend = (resolve) => {
   import('components/recommend/recommend').then((module) => {
@@ -75,67 +79,85 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
       path: '/',
-      meta: {
-        keepAlive: true,
-      },
+      redirect: '/main',
+    },
+    {
+      path: '/main',
+      component: Main,
+      children: [{
+          path: 'recommend',
+          component: Recommend,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            path: ':id',
+            component: Disc,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+        },
+        {
+          path: 'singer',
+          component: Singer,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            path: ':id',
+            component: SingerDetail,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+        },
+        {
+          path: 'rank',
+          component: Rank,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            path: ':id',
+            component: TopList,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+        },
+        {
+          path: 'search',
+          component: Search,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            path: ':id',
+            component: SingerDetail,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+        },
+        {
+          path: 'sort',
+          component: Sort,
+          meta: {
+            keepAlive: true,
+          },
+          children: [{
+            name: 'SortDetail',
+            path: '/sortDetail',
+            component: SortDetail,
+            meta: {
+              keepAlive: true,
+            },
+          }]
+        },
+      ]
+    },
 
-    },
-    {
-      path: '/recommend',
-      component: Recommend,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        path: ':id',
-        component: Disc,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-    },
-    {
-      path: '/singer',
-      component: Singer,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        path: ':id',
-        component: SingerDetail,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-    },
-    {
-      path: '/rank',
-      component: Rank,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        path: ':id',
-        component: TopList,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-    },
-    {
-      path: '/search',
-      component: Search,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        path: ':id',
-        component: SingerDetail,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-    },
     {
       path: '/user',
       component: UserCenter,
@@ -157,21 +179,7 @@ const router = new Router({
         },
       }]
 
-    }, {
-      path: '/sort',
-      component: Sort,
-      meta: {
-        keepAlive: true,
-      },
-      children: [{
-        name: 'SortDetail',
-        path: '/sortDetail',
-        component: SortDetail,
-        meta: {
-          keepAlive: true,
-        },
-      }]
-    },
+    }
   ]
 })
 router.beforeEach((to, from, next) => {

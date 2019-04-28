@@ -1,8 +1,8 @@
 <template>
 
   <mu-bottom-nav :value="bottomNav" @change="handleChange">
-    <mu-bottom-nav-item value="recommend" title="音乐" to="/recommend"/>
-    <mu-bottom-nav-item value="user" title="我的" to="/user"/>
+    <mu-bottom-nav-item value="recommend" title="音乐" to="/main"/>
+    <mu-bottom-nav-item value="user" title="我的" to="/main/user"/>
   </mu-bottom-nav>
 </template>
 
