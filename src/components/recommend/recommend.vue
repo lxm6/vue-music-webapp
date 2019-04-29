@@ -240,6 +240,7 @@ export default {
 
       .ablum {
         position: relative;
+        
 
         img {
           width: 100%;

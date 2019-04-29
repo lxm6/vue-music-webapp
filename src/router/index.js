@@ -154,6 +154,13 @@ const router = new Router({
             meta: {
               keepAlive: true,
             },
+            children: [{
+              path: ':id',
+              component: Disc,
+              meta: {
+                keepAlive: true,
+              },
+            }]
           }]
         },
 
@@ -170,8 +177,7 @@ const router = new Router({
           meta: {
             keepAlive: true,
           },
-          children: [
-            {
+          children: [{
               path: '/saveList/:index/:id',
               component: SingerDetail,
               meta: {

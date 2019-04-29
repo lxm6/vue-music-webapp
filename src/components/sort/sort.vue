@@ -101,7 +101,7 @@ export default {
 }
 
 .sort-wrapper {
-  top: 72px;
+  top: $top-height;
   bottom: 0;
   position: fixed;
   width: 100%;
@@ -112,7 +112,7 @@ export default {
 
     .categoriesWrapper {
       background-color: #fff;
-      margin-top: 12px;
+      border-bottom:12px solid #eee;
       display: flex;
       align-items: center;
       text-align: center;

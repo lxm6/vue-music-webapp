@@ -124,7 +124,7 @@ export default {
     },
     selectItem(item) {
       this.$router.push({
-        path: `/sortDetail/${item.dissid}`
+        path: `/main/sort/sortDetail/${item.dissid}`
       });
       this.setDisc(item);
     },

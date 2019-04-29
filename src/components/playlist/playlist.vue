@@ -35,7 +35,10 @@
                     <i class="current" :class="getCurrentIcon(item)"></i>
                   </mu-flexbox-item>
                   <mu-flexbox-item>
-                    <div class="text" :class="getCurrent(item)">{{item.name}}</div>
+                    <div class="text" :class="getCurrent(item)">
+                      <span>{{item.name}} -</span>
+                      <span class="subtext">{{item.singerName}}</span>
+                    </div>
                   </mu-flexbox-item>
                   <mu-flexbox-item class="flexitem2">
                     <span @click.stop="toggleFavorite(item)" class="like">
@@ -129,6 +132,9 @@ export default {
         return "current-play";
       }
       return "";
+    },
+    getName(item) {
+      return `${item.name} - ${item.singerName}`;
     },
     selectItem(item, index) {
       if (this.mode === playMode.random) {
@@ -252,7 +258,7 @@ export default {
     .list-content {
       height: 270px;
       overflow: hidden;
-      padding: 0 15px;
+      padding: 0 12px;
 
       .item {
         height: 45px;
@@ -276,8 +282,12 @@ export default {
         .text {
           no-wrap();
           font-size: $font-size-medium-x;
-          color: $color-text-ll;
           width: 98%;
+          color: $color-text-ll;
+
+          .subtext {
+            font-size: 14px;
+          }
         }
 
         .current-play {

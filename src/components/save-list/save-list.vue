@@ -1,4 +1,6 @@
 <template>
+  <transition name="slide">
+
   <div class="container">
     <title-Bar :titleBarName="titleBarName"></title-Bar>
     <div class="save-list" ref="SaveList">
@@ -89,6 +91,8 @@
       <router-view></router-view>
     </div>
   </div>
+  </transition>
+
 </template>
 
 <script>
@@ -309,6 +313,13 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
 
 .container {
   position: absolute;

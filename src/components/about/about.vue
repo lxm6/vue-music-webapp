@@ -120,17 +120,14 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 
-  &.slide-enter-active, &.slide-leave-active {
-    transition: opacity 0.3s;
-
+ &.slide-enter-active, &.slide-leave-active {
+    transition: opacity 0.4s;
     .leftNav {
-      transition: all 0.3s;
+      transition: all 0.4s;
     }
   }
-
   &.slide-enter, &.slide-leave-to {
     opacity: 0;
-
     .leftNav {
       transform: translate3d(-100%, 0, 0);
     }
@@ -138,7 +135,7 @@ export default {
 }
 
 .leftNav {
-  background-color: $color-highlight-background;
+  background-color: #fff;
   width: 220px;
   height: 100%;
   padding-top: 100px;
