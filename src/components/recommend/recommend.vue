@@ -1,5 +1,4 @@
 <template>
-  <!-- <transition name="slide"> -->
 
     <div class="recommend" ref="recommend" v-show="recommends.length">
       <!-- <img src="~@/common/image/paint.png" class="paint"> -->
@@ -88,7 +87,6 @@
       </scroll>
       <router-view></router-view>
     </div>
-  <!-- </transition> -->
 
 </template>
 
@@ -181,17 +179,11 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
-.slide-enter-active, .slide-leave-active {
-  transition: all 0.3s;
-}
 
-.slide-enter, .slide-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
 .recommend {
   position: absolute;
   width: 100%;
-  top: 94px;
+  top: 90px;
   bottom: 0;
   background: #fff;
 

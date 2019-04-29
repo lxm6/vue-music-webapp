@@ -170,13 +170,16 @@ const router = new Router({
           meta: {
             keepAlive: true,
           },
-          children: [{
-            path: '/saveList/:index/:id',
-            component: SingerDetail,
-            meta: {
-              keepAlive: true,
-            },
-          }]
+          children: [
+            {
+              path: '/saveList/:index/:id',
+              component: SingerDetail,
+              meta: {
+                keepAlive: true,
+              },
+            }
+
+          ]
 
         }
       ]

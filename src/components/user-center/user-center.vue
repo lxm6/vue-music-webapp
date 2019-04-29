@@ -33,11 +33,7 @@ export default {
         path: `/saveList/${index}`
       });
     }
-    // enterDiscList(){
-    //    this.$router.push({
-    //     path: `/saveList/`
-    //   });
-    // }
+
   },
   components: {
     Scroll
@@ -50,10 +46,9 @@ export default {
 
 .user-center {
   position: absolute;
-  top: 94px;
+  top: 90px;
   bottom: 0;
   width: 100%;
-  height: 100%;
   background: #fff;
   padding: 20px;
 

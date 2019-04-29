@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @touchmove.prevent>
     <about ref="about"></about>
     <m-header @open="open"></m-header>
     <tab></tab>
