@@ -181,7 +181,7 @@ export default {
 .recommend {
   position: absolute;
   width: 100%;
-  top: 90px;
+  top: 94px;
   bottom: 0;
   background: #fff;
 

@@ -6,13 +6,8 @@
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>柠檬音乐</title>
-  <meta name="application-name" content="柠檬音乐">
-  <meta name="description" content="免费听QQ音乐付费歌曲的WebApp">
-  <link rel="icon" type="image/png" href="static/favicon.ico">
 
-  <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
-  <meta name="theme-color" content="#00BCD4">
-  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="static/favicon.ico">
 
   <!-- QQ Mobile Browser -->
   <meta name="x5-orientation" content="portrait">
@@ -45,9 +40,9 @@
 </head>
 <style>
   body {
-    overflow: scroll;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-y: hidden!important;
+    overflow-x: hidden!important;
+    overflow:scroll!important;
   }
 
 </style>

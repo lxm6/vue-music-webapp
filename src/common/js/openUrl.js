@@ -29,7 +29,7 @@ export function openUrl(url) {
           }
         });
         if (flag) {
-          if (window.location.href === "https://www.lxm6.top/#/main") {
+          if (window.location.href === "https://www.lxm6.top/#/recommend") {
             if (!first) {
               first = new Date().getTime(); //记录第一次按下回退键的时间
               mui.toast("再按一次退出应用"); //给出提示

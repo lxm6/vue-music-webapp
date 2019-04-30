@@ -160,8 +160,7 @@ export default {
           }
 
           &.active, &:hover {
-            background: $color-theme;
-            color: #fff;
+            background: #eee;
           }
         }
       }

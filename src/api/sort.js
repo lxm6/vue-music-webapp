@@ -7,11 +7,11 @@ import {
 export function getSortTags() {
   const url = '/api/getSortTags'
   const data = Object.assign({}, commonParams, {
+    g_tk: '5381',
     loginUin: 0,
     hostUin: 0,
     platform: 'yqq',
     needNewCode: 0,
-    format: 'json'
   })
 
   return axios.get(url, {
