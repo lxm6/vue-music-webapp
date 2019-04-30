@@ -45,7 +45,7 @@
           <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
         </div>
       </div>
-          <router-view></router-view>
+      <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -125,20 +125,20 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
-.slide-enter-active, .slide-leave-active {
-  transition: all 0.3s;
-}
-
-.slide-enter, .slide-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
-
 .container {
   position: fixed;
   bottom: 0;
   width: 100%;
   top: 0;
-  z-index 100;
+  z-index: 100;
+
+  &.slide-enter-active, &.slide-leave-active {
+    transition: all 0.3s;
+  }
+
+  &.slide-enter, &.slide-leave-to {
+    transform: translate3d(100%, 0, 0);
+  }
 }
 
 .searchWrapper {

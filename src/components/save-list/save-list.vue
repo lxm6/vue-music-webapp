@@ -1,98 +1,101 @@
 <template>
   <transition name="slide">
-
-  <div class="container">
-    <title-Bar :titleBarName="titleBarName"></title-Bar>
-    <div class="save-list" ref="SaveList">
-      <div class="list-wrapper" ref="listWrapper">
-        <scroll ref="Songlist" class="list-scroll" v-if="currentIndex!=2">
-          <div class="list-inner">
-            <div class="btn-wrapper" v-show="!noResult">
-              <div class="play-btn" @click="random">
-                <mu-flat-button :label="palyAll" icon="play_circle_outline" color="#31c27c"/>
+    <div class="container">
+      <title-Bar :titleBarName="titleBarName"></title-Bar>
+      <div class="save-list" ref="SaveList">
+        <div class="list-wrapper" ref="listWrapper">
+          <scroll ref="Songlist" class="list-scroll" v-if="currentIndex!=2">
+            <div class="list-inner">
+              <div class="btn-wrapper" v-show="!noResult">
+                <div class="play-btn" @click="random">
+                  <mu-flat-button :label="palyAll" icon="play_circle_outline" color="#31c27c"/>
+                </div>
+                <div class="del-btn" @click="showDelete">
+                  <mu-flat-button label="删除" icon="delete" color="#31c27c"/>
+                </div>
               </div>
-              <div class="del-btn" @click="showDelete">
-                <mu-flat-button label="删除" icon="delete" color="#31c27c"/>
+              <div class="song-list">
+                <ul>
+                  <mu-list-item
+                    v-for="(item,index) in result"
+                    :key="index"
+                    class="item"
+                    :class="{'current-play-b':getCurrent(item)}"
+                    @click="selectSong(item)"
+                  >
+                    <div class="content" slot="title">
+                      <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+                      <p class="desc" :class="{'current-play':getCurrent(item)}">
+                        <span class="vip" v-show="item.isPay">VIP</span>
+                        <span class="hq">HQ</span>
+                        <span>{{getDesc(item)}}</span>
+                      </p>
+                    </div>
+                    <div @click.stop="showMenu(item)" class="delete" slot="right">
+                      <mu-icon-button icon="more_vert"/>
+                    </div>
+                  </mu-list-item>
+                </ul>
               </div>
             </div>
-            <div class="song-list">
+          </scroll>
+          <scroll
+            ref="DiscList"
+            class="list-scroll"
+            v-if="currentIndex===2"
+            :data="favoriteListList"
+          >
+            <div class="list-inner">
+              <div class="discText" v-html="DiscText"></div>
               <ul>
                 <mu-list-item
-                  v-for="(item,index) in result"
+                  @click="selectItem(item)"
+                  v-for="(item,index) in favoriteListList"
                   :key="index"
-                  class="item"
-                  :class="{'current-play-b':getCurrent(item)}"
-                  @click="selectSong(item)"
+                  class="item2"
                 >
-                  <div class="content" slot="title">
-                    <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
-                    <p class="desc" :class="{'current-play':getCurrent(item)}">
-                      <span class="vip" v-show="item.isPay">VIP</span>
-                      <span class="hq">HQ</span>
-                      <span>{{getDesc(item)}}</span>
-                    </p>
-                  </div>
+                  <mu-flexbox class="flexbox">
+                    <mu-flexbox-item class="flexitem">
+                      <div class="ablum">
+                        <img :src="item.imgurl" width="60" height="60">
+                      </div>
+                    </mu-flexbox-item>
+                    <mu-flexbox-item class="flexitem2">
+                      <div class="text">
+                        <p class="desc" v-html="item.dissname"></p>
+                        <h2 class="name" v-html="item.creator.name"></h2>
+                      </div>
+                    </mu-flexbox-item>
+                  </mu-flexbox>
                   <div @click.stop="showMenu(item)" class="delete" slot="right">
                     <mu-icon-button icon="more_vert"/>
                   </div>
                 </mu-list-item>
               </ul>
             </div>
-          </div>
-        </scroll>
-        <scroll ref="DiscList" class="list-scroll" v-if="currentIndex===2" :data="favoriteListList">
-          <div class="list-inner">
-            <div class="discText" v-html="DiscText"></div>
-            <ul>
-              <mu-list-item
-                @click="selectItem(item)"
-                v-for="(item,index) in favoriteListList"
-                :key="index"
-                class="item2"
-              >
-                <mu-flexbox class="flexbox">
-                  <mu-flexbox-item class="flexitem">
-                    <div class="ablum">
-                      <img :src="item.imgurl" width="60" height="60">
-                    </div>
-                  </mu-flexbox-item>
-                  <mu-flexbox-item class="flexitem2">
-                    <div class="text">
-                      <p class="desc" v-html="item.dissname"></p>
-                      <h2 class="name" v-html="item.creator.name"></h2>
-                    </div>
-                  </mu-flexbox-item>
-                </mu-flexbox>
-                <div @click.stop="showMenu(item)" class="delete" slot="right">
-                  <mu-icon-button icon="more_vert"/>
-                </div>
-              </mu-list-item>
-            </ul>
-          </div>
-        </scroll>
-      </div>
-      <toast ref="toast">
-        <div class="wrapper">
-          <i class="icon-ok"></i>
-          <p class="desc">删除成功</p>
+          </scroll>
         </div>
-      </toast>
-      <delete-song ref="deleteSong" :songs="result" :currentIndex="currentIndex"></delete-song>
-      <div class="no-result-wrapper" v-show="noResult">
-        <no-result :title="noResultDesc"></no-result>
+        <toast ref="toast">
+          <div class="wrapper">
+            <i class="icon-ok"></i>
+            <p class="desc">删除成功</p>
+          </div>
+        </toast>
+        <delete-song ref="deleteSong" :songs="result" :currentIndex="currentIndex"></delete-song>
+        <div class="no-result-wrapper" v-show="noResult">
+          <no-result :title="noResultDesc"></no-result>
+        </div>
+        <menuBar
+          @findSinger="findSinger"
+          @deleteOne="deleteOne"
+          @deleteDisc="deleteDisc"
+          @download="download"
+          :isDisc="currentIndex===2"
+        ></menuBar>
+        <router-view></router-view>
       </div>
-      <menuBar
-        @findSinger="findSinger"
-        @deleteOne="deleteOne"
-        @deleteDisc="deleteDisc"
-        @download="download"
-        :isDisc="currentIndex===2"
-      ></menuBar>
-      <router-view></router-view>
     </div>
-  </div>
   </transition>
-
 </template>
 
 <script>
@@ -114,13 +117,14 @@ export default {
   mixins: [playlistMixin],
   data() {
     return {
-      item: {}
+      item: {},
+      currentIndex:0,
     };
   },
+  created() {
+    this.getCurrentIndex();
+  },
   computed: {
-    currentIndex() {
-      return Number(this.$route.params.index);
-    },
     titleBarName() {
       if (this.currentIndex === 0) {
         return "我的喜欢";
@@ -174,6 +178,9 @@ export default {
   },
 
   methods: {
+    getCurrentIndex() {
+      this.currentIndex=Number(this.$route.params.index)
+    },
     getDesc(song) {
       return `${song.singerName} · ${song.album}`;
     },
@@ -222,7 +229,7 @@ export default {
         name: this.item.singerName
       });
       this.$router.push({
-        path: `/singer/${singer.id}`
+        path: `/user/singer/${singer.id}`
       });
       this.setSinger(singer);
     },
@@ -262,7 +269,7 @@ export default {
     },
     selectItem(item) {
       this.$router.push({
-        path: `/recommend/${item.dissid}`
+        path: `/user/recommend/${item.dissid}`
       });
       this.setDisc(item);
     },
@@ -313,6 +320,7 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+
 .slide-enter-active, .slide-leave-active {
   transition: all 0.3s;
 }
@@ -328,7 +336,7 @@ export default {
   background: $color-background;
   top: 0;
   bottom: 0;
-  z-index 100;
+  z-index: 100;
 }
 
 .save-list {
