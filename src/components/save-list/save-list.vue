@@ -222,7 +222,7 @@ export default {
         name: this.item.singerName
       });
       this.$router.push({
-        path: `/saveList/${this.currentIndex}/${singer.id}`
+        path: `/singer/${singer.id}`
       });
       this.setSinger(singer);
     },
@@ -262,7 +262,7 @@ export default {
     },
     selectItem(item) {
       this.$router.push({
-        path: `/main/recommend/${item.dissid}`
+        path: `/recommend/${item.dissid}`
       });
       this.setDisc(item);
     },
@@ -322,12 +322,13 @@ export default {
 }
 
 .container {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background: $color-background;
   top: 0;
   bottom: 0;
+  z-index 100;
 }
 
 .save-list {

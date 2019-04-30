@@ -134,10 +134,11 @@ export default {
 }
 
 .container {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   top: 0;
+  z-index 100;
 }
 
 .searchWrapper {

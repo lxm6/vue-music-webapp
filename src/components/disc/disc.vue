@@ -1,6 +1,6 @@
 <template>
-    <!-- isDisc 是否是歌单 -->
-     <transition name="slide">
+  <!-- isDisc 是否是歌单 -->
+  <transition name="slide">
     <music-list
       :title="title"
       :bg-image="bgImage"
@@ -9,7 +9,7 @@
       :isFavorite="isFavorite"
       @favoriteChange="toggleFavorite"
     ></music-list>
-     </transition>
+  </transition>
 </template>
 
 <script>

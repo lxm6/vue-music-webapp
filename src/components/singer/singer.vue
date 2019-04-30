@@ -43,7 +43,7 @@ export default {
     },
     selectSinger(singer) {
       this.$router.push({
-        path: `/main/singer/${singer.id}`
+        path: `/singer/${singer.id}`
       });
       this.setSinger(singer);
     },
@@ -133,7 +133,8 @@ export default {
 }
 
 .container {
-  position: absolute;
+  z-index 100;
+  position: fixed;
   bottom: 0;
   width: 100%;
   top: 0;

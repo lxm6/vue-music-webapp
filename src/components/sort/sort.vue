@@ -1,6 +1,5 @@
 <template>
   <transition name="slide">
-
   <div class="container">
     <title-Bar :titleBarName="titleBarName"></title-Bar>
     <div class="sort-wrapper" ref="sort">
@@ -92,7 +91,8 @@ export default {
   transform: translate3d(100%, 0, 0);
 }
 .container {
-  position: absolute;
+  position: fixed;
+  z-index 100;
   bottom: 0;
   width: 100%;
   top: 0;

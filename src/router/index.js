@@ -79,28 +79,20 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
       path: '/',
-      redirect: '/main',
+      redirect: '/recommend'
     },
     {
-      path: '/main',
-      component: Main,
+      path: '/recommend',
+      component: Recommend,
+      meta: {
+        keepAlive: true,
+      },
       children: [{
-          path: '/recommend',
-          component: Recommend,
-          meta: {
-            keepAlive: true,
-          },
-
+          path: ':id',
+          component: Disc
         },
         {
-          path: '/main/recommend/:id',
-          component: Disc,
-          meta: {
-            keepAlive: true,
-          },
-        },
-        {
-          path: 'singer',
+          path: '/singer',
           component: Singer,
           meta: {
             keepAlive: true,
@@ -114,7 +106,7 @@ const router = new Router({
           }]
         },
         {
-          path: 'rank',
+          path: '/rank',
           component: Rank,
           meta: {
             keepAlive: true,
@@ -128,21 +120,7 @@ const router = new Router({
           }]
         },
         {
-          path: 'search',
-          component: Search,
-          meta: {
-            keepAlive: true,
-          },
-          children: [{
-            path: ':id',
-            component: SingerDetail,
-            meta: {
-              keepAlive: true,
-            },
-          }]
-        },
-        {
-          path: 'sort',
+          path: '/sort',
           component: Sort,
           meta: {
             keepAlive: true,
@@ -163,35 +141,50 @@ const router = new Router({
             }]
           }]
         },
-
-        {
-          path: 'user',
-          component: UserCenter,
-          meta: {
-            keepAlive: true,
-          }
-        },
-        {
-          path: '/saveList/:index',
-          component: SaveList,
-          meta: {
-            keepAlive: true,
-          },
-          children: [{
-              path: '/saveList/:index/:id',
-              component: SingerDetail,
-              meta: {
-                keepAlive: true,
-              },
-            }
-
-          ]
-
-        }
       ]
     },
 
+    {
+      path: '/search',
+      component: Search,
+      meta: {
+        keepAlive: true,
+      },
+      children: [{
+        path: ':id',
+        component: SingerDetail,
+        meta: {
+          keepAlive: true,
+        },
+      }]
+    },
+
+    {
+      path: '/user',
+      component: UserCenter,
+      meta: {
+        keepAlive: true,
+      },
+      children: [{
+        path: '/user/saveList/:index',
+        component: SaveList,
+        meta: {
+          keepAlive: true,
+        },
+        children: [{
+          path: '/singer/:id',
+          component: SingerDetail,
+          meta: {
+            keepAlive: true,
+          },
+        }]
+      }]
+    },
+
   ]
+
+
+
 })
 router.beforeEach((to, from, next) => {
   const {

@@ -67,7 +67,7 @@ export default {
   methods: {
     selectItem(item) {
       this.$router.push({
-        path: `/main/rank/${item.id}`
+        path: `/rank/${item.id}`
       });
       this.setTopList(item);
     },
@@ -105,10 +105,10 @@ export default {
   transform: translate3d(100%, 0, 0);
 }
 .container {
+  z-index 100;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height 100%;
   background:$color-background;
   top: 0;
 }
@@ -117,7 +117,6 @@ export default {
   position: fixed;
   width: 100%;
   top: 72px;
-  bottom: 0;
 
   .toplist {
     height: 100%;

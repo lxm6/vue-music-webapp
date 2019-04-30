@@ -19,7 +19,6 @@
         <h1>收藏歌单</h1>
       </mu-list-item>
     </mu-list>
-
     <router-view></router-view>
   </div>
 </template>
@@ -30,7 +29,7 @@ export default {
   methods: {
     enterList(index) {
       this.$router.push({
-        path: `/saveList/${index}`
+        path: `/user/saveList/${index}`
       });
     }
 
@@ -50,7 +49,6 @@ export default {
   bottom: 0;
   width: 100%;
   background: #fff;
-  padding: 20px;
 
   .login {
     margin: 20px auto;
@@ -58,6 +56,8 @@ export default {
     height: 15%;
     border-radius: 7px;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+
 
     .loginBtn {
       display: block;
@@ -77,6 +77,8 @@ export default {
   }
 
   .menu {
+    padding: 20px;
+
     .menu-item {
       border-bottom: 1px solid $color-border;
 

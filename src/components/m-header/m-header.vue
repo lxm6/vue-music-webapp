@@ -5,7 +5,7 @@
     </div>
     <div class="icon"></div>
     <h1 class="text">柠檬音乐</h1>
-    <router-link tag="div" class="mine" to="/main/Search">
+    <router-link tag="div" class="mine" to="/search">
       <mu-icon-button icon="search"/>
     </router-link>
   </div>

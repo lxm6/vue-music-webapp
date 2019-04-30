@@ -1,11 +1,11 @@
 <template>
   <div class="tab">
-    <router-link tag="div" class="tab-item" to="/main">
+    <router-link tag="div" class="tab-item" to="/recommend">
       <mu-flat-button class="demo-flat-button">
         <span class="tab-link">音乐</span>
       </mu-flat-button>
     </router-link>
-    <router-link tag="div" class="tab-item" to="/main/user">
+    <router-link tag="div" class="tab-item" to="/user">
       <mu-flat-button class="demo-flat-button">
         <span class="tab-link">我的</span>
       </mu-flat-button>
@@ -37,7 +37,7 @@ export default {};
     flex: 1;
     text-align: center;
 
-    &.router-link-exact-active {
+    &.router-link-active {
       .tab-link {
         border-bottom:3px solid #fff;
       }
