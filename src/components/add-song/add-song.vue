@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slideDown">
     <div class="add-song" v-show="addSongVisible" @click.stop>
       <div class="header">
         <h1 class="title">添加歌曲到队列</h1>
@@ -137,6 +137,13 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.slideDown-enter-active, .slideDown-leave-active {
+  transition: all 0.3s;
+}
+
+.slideDown-enter, .slideDown-leave-to {
+  transform: translate3d(0, 100%, 0);
+}
 .add-song {
   position: fixed;
   top: 0;
@@ -145,13 +152,6 @@ export default {
   z-index: 200;
   background: $color-background;
 
-  &.slide-enter-active, &.slide-leave-active {
-    transition: all 0.3s;
-  }
-
-  &.slide-enter, &.slide-leave-to {
-    transform: translate3d(0, 100%, 0);
-  }
 
   .header {
     position: relative;

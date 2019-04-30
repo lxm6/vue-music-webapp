@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slideLeft">
     <div class="wrapper" v-show="showFlag" @click="hide">
       <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
 
@@ -120,13 +120,13 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 
- &.slide-enter-active, &.slide-leave-active {
-    transition: opacity 0.4s;
+ &.slideLeft-enter-active, &.slideLeft-leave-active {
+    transition: opacity 0.3s;
     .leftNav {
-      transition: all 0.4s;
+      transition: all 0.3s;
     }
   }
-  &.slide-enter, &.slide-leave-to {
+  &.slideLeft-enter, &.slideLeft-leave-to {
     opacity: 0;
     .leftNav {
       transform: translate3d(-100%, 0, 0);

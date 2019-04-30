@@ -164,14 +164,6 @@ export default {
   z-index: 200;
   background: $color-background;
 
-  &.slide-enter-active, &.slide-leave-active {
-    transition: all 0.3s;
-  }
-
-  &.slide-enter, &.slide-leave-to {
-    transform: translate3d(0, 100%, 0);
-  }
-
   .header {
     position: relative;
     height: 44px;

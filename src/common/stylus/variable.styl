@@ -51,7 +51,6 @@ $color-blue = #50baf8;
 $color-red = #f96666;
 $top-height = 60px;
 
-
 .mu-dialog-title {
   color: $color-theme;
 }
@@ -72,6 +71,7 @@ $top-height = 60px;
 .mu-item.show-left {
   padding-left: 48px;
 }
+
 .mu-buttom-item {
   max-width: 100%;
   border-bottom: 2px solid #d4ef3d;
@@ -94,7 +94,6 @@ $top-height = 60px;
   line-height: 32px;
 }
 
-
 .material-icons {
   font-size: 28px;
 }
@@ -105,4 +104,12 @@ $top-height = 60px;
 
 .mu-appbar-title {
   font-size: 18px;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translate3d(100%, 0, 0);
 }
