@@ -56,6 +56,8 @@ export default {
     }
 
     .icon {
+      display:inline-block;
+      padding 15px;
       extend-click();
 
       .icon-delete {

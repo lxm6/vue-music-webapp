@@ -256,7 +256,7 @@ export default {
     }
 
     .list-content {
-      height: 270px;
+      height: 270px
       overflow: hidden;
       padding: 0 12px;
 
@@ -274,7 +274,7 @@ export default {
         }
 
         .current {
-          width: 20px;
+          width: 16px;
           font-size: $font-size-medium;
           color: $color-theme;
         }
@@ -282,7 +282,7 @@ export default {
         .text {
           no-wrap();
           font-size: $font-size-medium-x;
-          width: 98%;
+          width: 97%;
           color: $color-text-ll;
 
           .subtext {
@@ -296,7 +296,7 @@ export default {
 
         .like {
           extend-click();
-          margin-right: 15px;
+          margin-right: 10px;
           font-size: $font-size-medium-x;
           color: $color-theme;
 
@@ -306,6 +306,7 @@ export default {
         }
 
         .delete {
+          display inline-block;
           extend-click();
           font-size: $font-size-medium;
           color: rgba(0, 0, 0, 0.3);

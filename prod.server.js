@@ -89,7 +89,7 @@ apiRoutes.get('/search', (req, res) => {
 })
 
 // 分类歌单标签
-app.get('/getSortTags', function (req, res) {
+apiRoutes.get('/getSortTags', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'
   axios.get(url, {
     headers: {

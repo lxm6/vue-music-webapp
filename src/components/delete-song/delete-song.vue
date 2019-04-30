@@ -6,7 +6,7 @@
           <mu-icon-menu icon="close"/>
         </div>
         <h1 class="title" v-html="checkText"></h1>
-        <input class="check-btn" type="checkbox" @click="checkedAll" :checked="check">
+        <input class="check-btn" type="checkbox" @click="checkedAll" :checked="check" >
         <div class="delete-btn" @click="showConfirm" :class="disableCls">
           <i class="icon-clear"></i>
         </div>

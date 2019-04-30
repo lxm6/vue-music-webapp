@@ -1,9 +1,9 @@
 <template>
   <transition name="slide">
-    <div class="container">
+    <div class="container"  ref="saveList">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
-      <div class="save-list" ref="SaveList">
-        <div class="list-wrapper" ref="listWrapper">
+      <div class="save-list">
+        <div class="list-wrapper" ref="listWrapper" >
           <scroll ref="Songlist" class="list-scroll" v-if="currentIndex!=2">
             <div class="list-inner">
               <div class="btn-wrapper" v-show="!noResult">
@@ -291,16 +291,16 @@ export default {
   watch: {
     deleteSongVisible() {
       if (this.deleteSongVisible) {
-        this.$refs.SaveList.style["z-index"] = "200";
+        this.$refs.saveList.style["z-index"] = "200";
       } else {
-        this.$refs.SaveList.style["z-index"] = "100";
+        this.$refs.saveList.style["z-index"] = "100";
       }
     },
     menuBarVisible() {
       if (this.menuBarVisible) {
-        this.$refs.SaveList.style["z-index"] = "200";
+        this.$refs.saveList.style["z-index"] = "200";
       } else {
-        this.$refs.SaveList.style["z-index"] = "100";
+        this.$refs.saveList.style["z-index"] = "100";
       }
     }
   },
@@ -325,10 +325,9 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: $color-background;
+  background: #fff;
   top: 0;
   bottom: 0;
-  z-index: 100;
 }
 
 .save-list {

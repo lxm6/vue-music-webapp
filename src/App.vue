@@ -39,6 +39,6 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 #app {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  
+
 }
 </style>
