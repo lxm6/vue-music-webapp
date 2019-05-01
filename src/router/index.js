@@ -46,13 +46,13 @@ const TopList = resolve => {
     resolve(module);
   });
 };
-
-//用户中心
-const UserCenter = resolve => {
-  import("components/user-center/user-center").then(module => {
-    resolve(module);
-  });
-};
+import UserCenter from 'components/user-center/user-center'
+// //用户中心
+// const UserCenter = resolve => {
+//   import("components/user-center/user-center").then(module => {
+//     resolve(module);
+//   });
+// };
 //歌单分类
 const SaveList = resolve => {
   import("components/save-list/save-list").then(module => {

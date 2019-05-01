@@ -29,7 +29,7 @@
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
-              <mu-list-item>
+              <!-- <mu-list-item> -->
                 <mu-flexbox class="flexbox">
                   <mu-flexbox-item class="flexitem1">
                     <i class="current" :class="getCurrentIcon(item)"></i>
@@ -49,7 +49,7 @@
                     </span>
                   </mu-flexbox-item>
                 </mu-flexbox>
-              </mu-list-item>
+              <!-- </mu-list-item> -->
             </li>
           </transition-group>
         </scroll>
@@ -256,11 +256,12 @@ export default {
     }
 
     .list-content {
-      height: 270px
+      height: 260px;
       overflow: hidden;
       padding: 0 12px;
 
       .item {
+        line-height 45px;
         height: 45px;
         overflow: hidden;
         border-top: 1px solid $color-border;
@@ -282,7 +283,7 @@ export default {
         .text {
           no-wrap();
           font-size: $font-size-medium-x;
-          width: 97%;
+          width: 96%;
           color: $color-text-ll;
 
           .subtext {
@@ -306,7 +307,7 @@ export default {
         }
 
         .delete {
-          display inline-block;
+          display: inline-block;
           extend-click();
           font-size: $font-size-medium;
           color: rgba(0, 0, 0, 0.3);
@@ -355,7 +356,7 @@ export default {
     padding: 10px 0;
     margin: 0 auto;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #000;
     border-radius: 5px;
 
     i {

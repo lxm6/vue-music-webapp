@@ -21,7 +21,7 @@
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
             <span class="vip" v-show="item.isPay">VIP</span>
-            <span class="hq">HQ</span>
+            <!-- <span class="hq">HQ</span> -->
             <span>{{getDesc(item)}}</span>
           </p>
           <p

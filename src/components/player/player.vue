@@ -151,6 +151,7 @@
       @error="error"
       @timeupdate="updateTime"
       @ended="end"
+      volume=0.1
     ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
@@ -741,8 +742,8 @@ export default {
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.5;
-      filter: blur(50px);
+      opacity: 0.4;
+      filter: blur(40px);
     }
 
     .top {
@@ -1163,7 +1164,7 @@ export default {
   padding: 10px 0;
   margin: 0 auto;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #000;
   border-radius: 5px;
 
   i {

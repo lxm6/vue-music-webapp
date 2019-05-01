@@ -15,7 +15,7 @@
             <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
             <p class="desc" :class="{'current-play':getCurrent(item)}">
               <span class="vip" v-if="item.isPay">VIP</span>
-              <span class="hq">HQ</span>
+              <!-- <span class="hq">HQ</span> -->
               <span>{{getDesc(item)}}</span>
             </p>
           </div>
