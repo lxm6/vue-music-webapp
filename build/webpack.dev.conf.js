@@ -60,7 +60,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           },
           params: req.query //浏览器请求该接口所带来的参数 
         }).then((response) => { //成功回调
-          res.json(response.data) //response是QQ接口返回的，res是我们自己的。所以要把数据输出给浏览器前端
+          res.json(response.data) //response是QQ音乐接口返回的
         }).catch((e) => {
           console.log(e)
         })

@@ -48,7 +48,7 @@ export default {
     padding 10px 10px;
     margin 0 auto;
     text-align: center;
-    background-color: #000;
+    background-color: rgba(0,0,0,0.8);
     border-radius: 5px;
 
     .desc {

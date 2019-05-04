@@ -159,7 +159,7 @@ export default {
             border-bottom: 1px solid $color-background;
           }
 
-          &.active, &:hover {
+          &:hover {
             background: #eee;
           }
         }

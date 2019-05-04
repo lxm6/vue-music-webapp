@@ -30,7 +30,7 @@ export function getRecommend() {
 export function getDiscList(categoryId=10000000,sortId=5,ein=49) {
   const url = '/api/getDiscList'
   const data = Object.assign({}, commonParams, {
-    platform: 'yqq', // 加引号
+    platform: 'yqq', 
     hostUin: 0,
     sin: 0,
     ein: ein,
@@ -46,7 +46,6 @@ export function getDiscList(categoryId=10000000,sortId=5,ein=49) {
   }).then((res) => {
     return Promise.resolve(res.data)
   })
-
 }
 /**
  * @function getSongList 获取推荐歌单里的歌曲数据
