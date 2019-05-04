@@ -11,13 +11,6 @@
           <mu-list-item title="关于" @click="openAboutDialog" class="mu-list-item"/>
         </mu-list>
       </div>
-      <top-tip ref="topTip">
-        <div class="tip-title">
-          <i class="icon-ok"></i>
-          <span class="text">清除缓存成功</span>
-        </div>
-      </top-tip>
-
         <mu-dialog :open="showAboutDialog" @close="closeAboutDialog" title="关于">
           <mu-list>
             <mu-list-item title="网站" disabled>
@@ -43,16 +36,12 @@
 </template>
 
 <script>
-import TopTip from "base/top-tip/top-tip";
 import Confirm from "base/confirm/confirm";
 import { openUrl } from "common/js/openUrl";
 
 export default {
   props: {
-    delay: {
-      type: Number,
-      default: 1000
-    }
+
   },
   data() {
     return {
@@ -91,13 +80,11 @@ export default {
     },
     confirmClear() {
       localStorage.clear();
-      this.$refs.topTip.show();
       this.refreshPage();
     }
   },
 
   components: {
-    TopTip,
     Confirm
   }
 };
@@ -142,22 +129,6 @@ export default {
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);
 }
 
-.tip-title {
-  text-align: center;
-  padding: 18px 0;
-  font-size: 0;
-
-  .icon-ok {
-    font-size: $font-size-medium-x;
-    color: #fff;
-    margin-right: 6px;
-  }
-
-  .text {
-    font-size: $font-size-medium-x;
-    color: #fff;
-  }
-}
 
 
 </style>

@@ -2,6 +2,32 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 import {playMode} from 'common/js/config'
 import {shuffle} from 'common/js/util'
 
+export const popupMixin = {
+  data() {
+    return {
+      topPopup: false,
+    }
+  },
+  methods: {
+    open(position) {
+      this[position + "Popup"] = true;
+    },
+    close(position) {
+      this[position + "Popup"] = false;
+    },
+  },
+  watch: {
+    topPopup(val) {
+      if (val) {
+        setTimeout(() => {
+          this.topPopup = false;
+        }, 1000);
+      }
+    }
+  },
+
+}
+
 export const playlistMixin = {
   computed: {
     ...mapGetters([

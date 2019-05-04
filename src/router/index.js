@@ -71,81 +71,65 @@ const SortDetail = resolve => {
     resolve(module);
   });
 };
+//注册
+const Register = resolve => {
+  import("components/register/register").then(module => {
+    resolve(module);
+  });
+};
+//登录
+const Login = resolve => {
+  import("components/login/login").then(module => {
+    resolve(module);
+  });
+};
+const ChangePwd = resolve => {
+  import("components/changePwd/changePwd").then(module => {
+    resolve(module);
+  });
+};
 Vue.use(Router);
 const router = new Router({
-  routes: [
-    {
+  routes: [{
       path: "/",
       redirect: "/recommend"
     },
+
     {
       path: "/recommend",
       component: Recommend,
-      meta: {
-        keepAlive: true
-      },
-      children: [
-        {
+      children: [{
           path: ":id",
           component: Disc
         },
         {
           path: "/singer",
           component: Singer,
-          meta: {
-            keepAlive: true
-          },
-          children: [
-            {
-              path: ":id",
-              component: SingerDetail,
-              meta: {
-                keepAlive: true
-              }
-            }
-          ]
+          children: [{
+            path: ":id",
+            component: SingerDetail,
+          }]
         },
         {
           path: "/rank",
           component: Rank,
-          meta: {
-            keepAlive: true
-          },
-          children: [
-            {
-              path: ":id",
-              component: TopList,
-              meta: {
-                keepAlive: true
-              }
-            }
-          ]
+          children: [{
+            path: ":id",
+            component: TopList,
+          }]
         },
         {
           path: "/sort",
           component: Sort,
-          meta: {
-            keepAlive: true
-          },
-          children: [
-            {
-              name: "SortDetail",
-              path: "/main/sort/sortDetail",
-              component: SortDetail,
-              meta: {
-                keepAlive: true
-              },
-              children: [
-                {
-                  path: ":id",
-                  component: Disc,
-                  meta: {
-                    keepAlive: true
-                  }
-                }
-              ]
-            }
-          ]
+          children: [{
+            name: "SortDetail",
+            path: "/main/sort/sortDetail",
+            component: SortDetail,
+            children: [{
+              path: ":id",
+              component: Disc,
+            }]
+          }]
         }
       ]
     },
@@ -153,50 +137,40 @@ const router = new Router({
     {
       path: "/search",
       component: Search,
-      meta: {
-        keepAlive: true
-      },
-      children: [
-        {
-          path: ":id",
-          component: SingerDetail,
-          meta: {
-            keepAlive: true
-          }
-        }
-      ]
+      children: [{
+        path: ":id",
+        component: SingerDetail,
+      }]
     },
 
     {
       path: "/user",
       component: UserCenter,
-      meta: {
-        keepAlive: true
-      },
-      children: [
-        {
+      children: [{
           path: "/user/saveList/:index",
           component: SaveList,
-          meta: {
-            keepAlive: true
-          },
-          children: [
-            {
+          children: [{
               path: "/user/singer/:id",
               component: SingerDetail,
-              meta: {
-                keepAlive: true
-              }
             },
             {
               path: "/user/recommend/:id",
               component: Disc,
-              meta: {
-                keepAlive: true
-              }
             }
           ]
-        }
+        },
+        {
+          path: "/register",
+          component: Register,
+        },
+        {
+          path: "/login",
+          component: Login,
+        },
+        {
+          path: "/changePwd",
+          component: ChangePwd,
+        },
       ]
     }
   ]

@@ -2,7 +2,7 @@
   <div class="user-center" ref="userCenter">
     <div class="login">
       <div>
-        <mu-flat-button class="loginBtn">登 录</mu-flat-button>
+        <mu-flat-button class="loginBtn" to="/login">登 录</mu-flat-button>
       </div>
     </div>
     <mu-list class="menu">
@@ -55,7 +55,7 @@ export default {
     width: 92%;
     height: 15%;
     border-radius: 7px;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.05);
     padding: 20px;
 
 

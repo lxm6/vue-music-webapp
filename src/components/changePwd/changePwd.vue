@@ -5,20 +5,20 @@
       <div class="main">
         <ul class="form-list">
           <li>
-            <mu-text-field label="用户名" labelFloat v-model="form.username"/>
+            <mu-text-field label="旧密码" labelFloat v-model="form.username"/>
           </li>
           <li>
-            <mu-text-field label="密码" type="password" labelFloat v-model="form.password"/>
+            <mu-text-field label="新密码" type="password" labelFloat v-model="form.password"/>
           </li>
           <li>
             <mu-text-field label="确认密码" type="password" labelFloat v-model="form.rePassword"/>
           </li>
           <li>
-            <mu-raised-button label="注册" class="demo-raised-button" primary @click="registerForm"/>
+            <mu-raised-button label="确认" class="demo-raised-button" primary @click="loginForm"/>
           </li>
         </ul>
       </div>
-      <mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">注册成功</mu-popup>
+      <mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">修改密码成功</mu-popup>
     </div>
   </transition>
 </template>
@@ -32,25 +32,22 @@ export default {
   mixins: [popupMixin],
 
   data() {
-    return {
-      titleBarName: "注册",
 
+    return {
+      titleBarName: "修改密码",
       // 注册表单
       form: {
         username: "",
-        password: "",
-        rePassword: ""
+        password: ""
       }
     };
   },
   methods: {
-    registerForm() {
-      this.open("top");
-    }
+    loginForm() {}
   },
 
   components: {
-    TitleBar
+    TitleBar,
   }
 };
 </script>

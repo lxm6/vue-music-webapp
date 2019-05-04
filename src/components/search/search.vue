@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <!-- <transition name="slide"> -->
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="searchWrapper" ref="search">
@@ -47,7 +47,7 @@
       </div>
       <router-view></router-view>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
@@ -135,6 +135,7 @@ export default {
 }
 
 .searchWrapper {
+  
   position: fixed;
   width: 100%;
   top: $top-height;
