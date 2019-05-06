@@ -29,7 +29,7 @@
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
-              <!-- <mu-list-item> -->
+              <mu-list-item>
                 <mu-flexbox class="flexbox">
                   <mu-flexbox-item class="flexitem1">
                     <i class="current" :class="getCurrentIcon(item)"></i>
@@ -49,7 +49,7 @@
                     </span>
                   </mu-flexbox-item>
                 </mu-flexbox>
-              <!-- </mu-list-item> -->
+              </mu-list-item>
             </li>
           </transition-group>
         </scroll>

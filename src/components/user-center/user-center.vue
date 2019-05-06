@@ -55,7 +55,7 @@ export default {
     width: 92%;
     height: 15%;
     border-radius: 7px;
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 6px 6px 6px  rgba(0, 0, 0, 0.05);
     padding: 20px;
 
 

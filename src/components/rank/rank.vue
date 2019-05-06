@@ -1,6 +1,5 @@
 <template>
   <transition name="slide">
-
   <div class="container">
     <title-Bar :titleBarName="titleBarName"></title-Bar>
     <div class="rank" ref="rank">
@@ -111,6 +110,7 @@ export default {
   position: fixed;
   width: 100%;
   top: 72px;
+  bottom: 0
 
   .toplist {
     height: 100%;

@@ -57,7 +57,6 @@ export default class Song {
   //获取歌曲url
   getSongUrl() {
     if (this.url) {
-      console.log("f")
       return Promise.resolve(this.url);
     }
     return getSongVkey(this.mid).then((res) => {

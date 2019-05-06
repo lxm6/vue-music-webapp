@@ -148,11 +148,11 @@
     ></lyricset>
     <audio
       ref="audio"
-      @play="ready"
+      :src="currentSong.url"
+      @canplay="ready"
       @error="error"
       @timeupdate="updateTime"
       @ended="end"
-      volume="0.1"
     ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
@@ -417,13 +417,8 @@ export default {
       this.songReady = false;
     },
     ready() {
-      setTimeout(() => {
-        this.songReady = true;
-      }, 200);
+      this.songReady = true;
       this.savePlayHistory(this.currentSong);
-      if (this.currentLyric) {
-        this.currentLyric.seek(this.currentTime * 1000);
-      }
     },
     error() {
       if (this.currentLyric) {
@@ -656,6 +651,31 @@ export default {
       //   }
       //   return;
       // }
+
+      // setTimeout: 解决DOM异常
+      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
+      // setTimeout: 保证手机从后台切到前台js执行能正常播放
+      // newSong
+      //   .getSongUrl()
+      //   .then(url => {
+      //     this.currentSongUrl = url;
+      //     this.$refs.audio.src = this.currentSongUrl;
+      //     this.$refs.audio.play();
+      //   })
+      //   .then(() => {
+      //     this.getLyric();
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //     this.msg = "已跳过无法播放的歌曲";
+      //     this.$refs.topTip.show();
+      //     this.songReady = true;
+      //     if (nextFlag) {
+      //       this.next();
+      //     } else {
+      //       this.prev();
+      //     }
+      //   });
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -664,58 +684,24 @@ export default {
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
-
-      // setTimeout: 解决DOM异常
-      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
-      // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      newSong
-        .getSongUrl()
-        .then(url => {
-          this.currentSongUrl = url;
-          this.$refs.audio.src = this.currentSongUrl;
-          this.$refs.audio.play();
-        })
-        .then(() => {
-          this.getLyric();
-        })
-        .catch(err => {
-          console.log(err);
-          this.msg = "已跳过无法播放的歌曲";
-          this.$refs.topTip.show();
-          this.songReady = true;
-          if (nextFlag) {
-            this.next();
-          } else {
-            this.prev();
-          }
-        });
+      this.$nextTick(() => {
+        this.$refs.audio.play();
+        this.getLyric();
+      });
     },
 
-    //监听playing(state数据), 真正控制播放的是audio播放器
-    playing(newState) {
-      if (!this.songReady) {
-        return;
-      }
-      const audio = this.$refs.audio;
-      // 根据播放状态变量playing控制播放器
+    playing(newPlaying) {
       this.$nextTick(() => {
-        /* eslint-disable no-unused-expressions */
-        newPlaying ? audio.play() : audio.pause();
+        const audio = this.$refs.audio;
+        newPlaying ? setTimeout(() => audio.play(), 500) : audio.pause();
       });
     },
     fullScreen(newVal) {
       if (newVal) {
         setTimeout(() => {
           this.$refs.lyricList.refresh();
-          this.$refs.progressBar.setProgressOffset(this.percent);
         }, 20);
       }
-    },
-    playing(newPlaying) {
-      const audio = this.$refs.audio;
-      this.$nextTick(() => {
-        newPlaying ? audio.play() : audio.pause();
-      });
     }
   },
   components: {
@@ -725,7 +711,7 @@ export default {
     Playlist,
     Lyricset,
     TopTip,
-    Toast
+    Toast,
   }
 };
 </script>
@@ -1185,6 +1171,7 @@ export default {
     color: $color-text-h;
   }
 }
+
 
 @keyframes rotate {
   0% {
