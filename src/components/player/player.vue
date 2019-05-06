@@ -93,6 +93,7 @@
                 ref="progressBar"
                 :percent="percent"
                 @percentChange="onProgressBarChange"
+                @percentChanging="onProgressBarChanging"
               ></progress-bar>
             </div>
             <span class="time time-r">{{format(currentSong.duration)}}</span>
@@ -151,7 +152,7 @@
       @error="error"
       @timeupdate="updateTime"
       @ended="end"
-      volume=0.1
+      volume="0.1"
     ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
@@ -178,7 +179,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
 import ProgressCircle from "base/progress-circle/progress-circle";
 import { playMode } from "common/js/config";
-import { shuffle,downloadSong } from "common/js/util";
+import { shuffle, downloadSong } from "common/js/util";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
 import Playlist from "components/playlist/playlist";
@@ -269,7 +270,6 @@ export default {
   },
   methods: {
     toggleShow() {
-      console.log("dd");
       if (this.currentShow === "cd") {
         this.currentShow = "lyric";
         this.$refs.middleL.style.opacity = 0;
@@ -431,16 +431,25 @@ export default {
       }
       this.songReady = true;
     },
+    onProgressBarChanging(percent) {
+      this.currentTime = this.currentSong.duration * percent;
+      if (this.currentLyric) {
+        this.currentLyric.seek(this.currentTime * 1000);
+      }
+    },
     // 进度条进度改变
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
-      this.$refs.audio.currentTime = currentTime;
+      // 根据进度条传过来的播放进度更改播放时间
+      this.currentTime = this.$refs.audio.currentTime = currentTime;
+      // 改变歌词播放时间
+      if (this.currentLyric) {
+        // 一定要乘以1000, seek方法的参数以毫秒为单位
+        this.currentLyric.seek(currentTime * 1000);
+      }
+      // 如果暂停, 则开始播放
       if (!this.playing) {
         this.togglePlaying();
-      }
-      if (this.currentLyric) {
-        // 歌词追随进度条滚动而一一对应
-        this.currentLyric.seek(currentTime * 1000);
       }
     },
     // 确保切换模式的时候，当前歌曲是不变的
@@ -618,7 +627,7 @@ export default {
       };
     },
     download() {
-      downloadSong(this.currentSong.name,this.currentSong.url);
+      downloadSong(this.currentSong.name, this.currentSong.url);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
@@ -684,7 +693,6 @@ export default {
 
     //监听playing(state数据), 真正控制播放的是audio播放器
     playing(newState) {
-
       if (!this.songReady) {
         return;
       }

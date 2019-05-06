@@ -1,5 +1,5 @@
 <template>
-  <div @touchmove.prevent>
+  <div id="#app" @touchmove.prevent v-cloak>
     <about ref="about"></about>
     <m-header @open="open"></m-header>
     <tab></tab>
@@ -39,6 +39,9 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 #app {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
+[v-cloak] {
+  display: none !important;
 }
 </style>

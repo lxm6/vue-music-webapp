@@ -2,9 +2,6 @@
 import * as types from './mutation-types'
 
 const matutaions = {
-  [types.SET_SINGER](state, singer) {
-    state.singer = singer
-  },
   [types.SET_PLAYING_STATE](state, flag) {
     state.playing = flag
   },
@@ -22,6 +19,9 @@ const matutaions = {
   },
   [types.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index
+  },
+  [types.SET_SINGER](state, singer) {
+    state.singer = singer
   },
   [types.SET_DISC](state, disc) {
     state.disc = disc

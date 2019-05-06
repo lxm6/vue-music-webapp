@@ -9,7 +9,10 @@ import store from './store'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'common/stylus/index.styl'
-
+import Bmob from "hydrogen-js-sdk";
+// 初始化
+Bmob.initialize("1a1bbad97748771aa413459bee60d38f", "35cbfa01f72d4cbcdea8313b7f279aa7");
+Vue.use(Bmob)
 fastclick.attach(document.body)
 Vue.use(MuseUI)
 Vue.use(Mui);
