@@ -45,3 +45,7 @@ export function getSongVkey(songmid) {
   });
 }
 
+export function getSongURL(songmid, vkey) {
+  return `http://streamoc.music.tc.qq.com/M500${songmid}.mp3?guid=5678663290&vkey=${vkey}&guid=BZQLL&uin=123456&fromtag=6
+  `;
+}

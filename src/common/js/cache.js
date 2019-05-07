@@ -16,7 +16,7 @@ const FONTSIZE = '__Fontsize__'
 const COLOR = '__Color__'
 
 //操作搜索历史数组的方法
-//参数：搜索记录数组，添加的项，前后比较的函数，最大数量
+//参数：数组，添加的项，前后比较的函数，最大数量
 function insertArray(arr, val, compare, maxLen) {
   // 查找要传入的值是否已经在原存储的数据中存在，没有就返回-1
   const index = arr.findIndex(compare)
@@ -31,7 +31,6 @@ function insertArray(arr, val, compare, maxLen) {
     arr.pop()
   }
 }
-
 function deleteFromArray(arr, compare) {
   const index = arr.findIndex(compare)
   if (index > -1) {

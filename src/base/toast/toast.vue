@@ -48,7 +48,8 @@ export default {
     padding 10px 10px;
     margin 0 auto;
     text-align: center;
-    background-color: rgba(0,0,0,0.8);
+    background-color: #000;
+    opacity 0.7;
     border-radius: 5px;
 
     .desc {

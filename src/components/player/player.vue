@@ -437,9 +437,7 @@ export default {
       const currentTime = this.currentSong.duration * percent;
       // 根据进度条传过来的播放进度更改播放时间
       this.currentTime = this.$refs.audio.currentTime = currentTime;
-      // 改变歌词播放时间
       if (this.currentLyric) {
-        // 一定要乘以1000, seek方法的参数以毫秒为单位
         this.currentLyric.seek(currentTime * 1000);
       }
       // 如果暂停, 则开始播放

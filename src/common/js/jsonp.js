@@ -19,9 +19,7 @@ function param(data) {
   let url = ''
   for (let k in data) {
     let value = data[k] !== 'undefined' ? 'data[k]' : ''
-    /* `${}` 用于在字符串中插入变量 */
     url += `&${k}=${encodeURIComponent(data[k])}`
   }
-  /* 要删除第一个& */
   return url ? url.substring(1) : ''
 }
