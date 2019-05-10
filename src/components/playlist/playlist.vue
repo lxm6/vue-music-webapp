@@ -5,8 +5,7 @@
         <div class="list-header">
           <h1 class="title">
             <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text">
-              {{modeText}}
+            <span class="text" v-html="this.playModeText()">
               <span class="text" v-show="mode!=1">({{playlist.length}}首)</span>
             </span>
 
@@ -94,13 +93,6 @@ export default {
     };
   },
   computed: {
-    modeText() {
-      return this.mode === playMode.sequence
-        ? "顺序播放"
-        : this.mode === playMode.random
-        ? "随机播放"
-        : "单曲循环";
-    },
     ...mapGetters(["playListVisible"])
   },
   methods: {

@@ -66,8 +66,7 @@ export const playerMixin = {
     ])
   },
   methods: {
-
-    changeModeText() {
+    playModeText() {
       return this.mode === playMode.sequence
         ? "顺序播放"
         : this.mode === playMode.random
@@ -85,11 +84,9 @@ export const playerMixin = {
       }
       // 播放模式变化时, 当前歌曲下标重新设置
       this.resetCurrentIndex(list)
-      // mutation: setPlayList
       this.setPlaylist(list)
-      this.title=this.changeModeText();
+      this.title=this.playModeText();
       this.$refs.toast2.show();
-
     },
     resetCurrentIndex(list) {
       let index = list.findIndex((item) => {

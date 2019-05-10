@@ -7,7 +7,6 @@ const SEARCH_MAX_LEN = 15
 const PLAY_KEY = '__play__'
 //最近播放100首
 const PLAY_MAX_LEN = 200
-
 const FAVORITE_KEY = '__favorite__'
 const FAVORITE_LIST_KEY = '__favoritelist__';
 const FAVORITE_MAX_LEN = 200

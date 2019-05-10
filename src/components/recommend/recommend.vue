@@ -49,7 +49,6 @@
               </div>
             </li>
           </ul>
-
           <div class="changeBtn" @click="changeDisc">
             <mu-flat-button label="换一批" class="demo-flat-button" icon="refresh" color="#666"/>
           </div>

@@ -29,7 +29,6 @@ export function debounce(func, delay) {
 export function downloadSong(name,url){
   setTimeout(() => {
     if (url) {
-      /* eslint-disable */
       const filename = `${name}.mp3`;
       const a = document.createElement("a");
       a.href = url;

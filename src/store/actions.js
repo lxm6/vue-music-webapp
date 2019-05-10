@@ -2,6 +2,7 @@
  * mutations用action封装,修改多个mutations
  */
 
+
 import * as types from './mutation-types'
 import {
   playMode
@@ -27,8 +28,7 @@ function findIndex(list, song) {
   return list.findIndex((item) => {
     return item.id === song.id
   })
-}
-
+}  
 // 点击歌曲时做出的变化
 // 定义动作, action执行, mutation就会改变, 映射state数据
 // {commit, state} : 提交和获取数据
@@ -56,7 +56,7 @@ export const selectPlay = function ({
   }
   // 点击的当前歌曲下标
   commit(types.SET_CURRENT_INDEX, index)
-  // // 改变为全屏模式
+  // 改变为全屏模式
   // commit(types.SET_FULL_SCREEN, true)
   // 改变当前的播放状态
   commit(types.SET_PLAYING_STATE, true)
@@ -78,7 +78,7 @@ export const randomPlay = function ({
   // 点击的当前歌曲下标
   commit(types.SET_CURRENT_INDEX, 0)
   // 改变为全屏模式
-  commit(types.SET_FULL_SCREEN, true)
+  // commit(types.SET_FULL_SCREEN, true)
   // 改变当前的播放状态
   commit(types.SET_PLAYING_STATE, true)
 }

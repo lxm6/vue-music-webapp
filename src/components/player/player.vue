@@ -359,13 +359,7 @@ export default {
         this.currentLyric.togglePlay();
       }
     },
-    end() {
-      if (this.mode === playMode.loop) {
-        this.loop();
-      } else {
-        this.next();
-      }
-    },
+
     loop() {
       this.$refs.audio.currentTime = 0;
       this.$refs.audio.play();
@@ -381,6 +375,7 @@ export default {
       if (!this.songReady) {
         return;
       }
+      //只有一首歌，单曲循环
       if (this.playlist.length === 1) {
         this.loop();
         return;
@@ -420,6 +415,13 @@ export default {
       this.songReady = true;
       this.savePlayHistory(this.currentSong);
     },
+    end() {
+      if (this.mode === playMode.loop) {
+        this.loop();
+      } else {
+        this.next();
+      }
+    },
     error() {
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -432,7 +434,6 @@ export default {
         this.currentLyric.seek(this.currentTime * 1000);
       }
     },
-    // 进度条进度改变
     onProgressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent;
       // 根据进度条传过来的播放进度更改播放时间
@@ -440,7 +441,6 @@ export default {
       if (this.currentLyric) {
         this.currentLyric.seek(currentTime * 1000);
       }
-      // 如果暂停, 则开始播放
       if (!this.playing) {
         this.togglePlaying();
       }
@@ -677,7 +677,6 @@ export default {
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
-        this.currentLyric = null;
         this.currentTime = 0;
         this.playingLyric = "";
         this.currentLineNum = 0;
@@ -709,7 +708,7 @@ export default {
     Playlist,
     Lyricset,
     TopTip,
-    Toast,
+    Toast
   }
 };
 </script>
@@ -1169,7 +1168,6 @@ export default {
     color: $color-text-h;
   }
 }
-
 
 @keyframes rotate {
   0% {

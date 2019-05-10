@@ -9,7 +9,20 @@ import {
 import {
   Base64
 } from 'js-base64'
+
 export default class Song {
+  /**
+   * @constructor
+   * @param {*} id - 歌曲id
+   * @param {*} mid - 歌曲mid
+   * @param {*} singer - 歌手
+   * @param {*} name - 歌曲名
+   * @param {*} album - 专辑
+   * @param {*} duration - 时长
+   * @param {*} image - 歌曲图片
+   * @param {*} url - 歌曲URL
+   * @param {Boolean} isPay 是否付费歌曲
+   */
   constructor({
     id,
     mid,
@@ -91,7 +104,7 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `https://api.itooi.cn/music/tencent/url?key=579621905&id=${musicData.songmid}&br=192`
+    url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=320`
   })
 }
 
