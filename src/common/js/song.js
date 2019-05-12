@@ -104,7 +104,7 @@ export function createSong(musicData) {
     duration: musicData.interval,
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=320`
+    // url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=320`
   })
 }
 

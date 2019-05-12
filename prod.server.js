@@ -15,7 +15,6 @@ apiRoutes.get('/getDiscList', function (req, res) {
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
-      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response) => {
@@ -31,7 +30,6 @@ apiRoutes.get('/lyric', function (req, res) {
     headers: {
       /* 根据访问的网址限制做的一种伪装 */
       referer: 'https://c.y.qq.com/',
-      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response) => {
@@ -54,7 +52,6 @@ apiRoutes.get('/getSongList', function (req, res) {
   axios.get(url, {
     headers: {
       referer: 'https://y.qq.com/',
-      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response) => {
@@ -78,7 +75,6 @@ apiRoutes.get('/search', (req, res) => {
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
-      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response) => {
@@ -94,10 +90,24 @@ apiRoutes.get('/getSortTags', function (req, res) {
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
-      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+//电台详细
+apiRoutes.get('/api/getRadioDesc', function (req, res) {
+  var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+    },
+    params: req.query
+  }).then((response) => {
+
     res.json(response.data)
   }).catch((e) => {
     console.log(e)

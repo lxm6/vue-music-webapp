@@ -22,7 +22,7 @@ export function getMusicList(topid) {
     tpl: 3,
     page: 'detail',
     type: 'top',
-    platform: 'h5'
+    platform: 'h5',
   })
 
   return jsonp(url, data, options)

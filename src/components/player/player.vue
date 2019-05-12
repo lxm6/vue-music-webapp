@@ -412,8 +412,13 @@ export default {
       this.songReady = false;
     },
     ready() {
-      this.songReady = true;
+      setTimeout(() => {
+        this.songReady = true;
+      }, 200);
       this.savePlayHistory(this.currentSong);
+      if (this.currentLyric) {
+        this.currentLyric.seek(this.currentTime * 1000);
+      }
     },
     end() {
       if (this.mode === playMode.loop) {
@@ -474,7 +479,8 @@ export default {
             this.isPure = false;
           }
           if (this.playing) {
-            this.currentLyric.play();
+            // 如果已经播放了歌曲，要切到对应位置
+            this.currentLyric.seek(this.currentTime * 1000);
           }
         })
         .catch(() => {
@@ -688,9 +694,12 @@ export default {
     },
 
     playing(newPlaying) {
+      if (!this.songReady) {
+        return;
+      }
       this.$nextTick(() => {
         const audio = this.$refs.audio;
-        newPlaying ? setTimeout(() => audio.play(), 500) : audio.pause();
+        newPlaying ? audio.play() : audio.pause();
       });
     },
     fullScreen(newVal) {

@@ -53,7 +53,8 @@ import UserCenter from 'components/user-center/user-center'
 //     resolve(module);
 //   });
 // };
-//歌单分类
+
+//用户歌曲列表
 const SaveList = resolve => {
   import("components/save-list/save-list").then(module => {
     resolve(module);
@@ -65,9 +66,15 @@ const Sort = resolve => {
     resolve(module);
   });
 };
-//歌单分类
+//歌单分类详情
 const SortDetail = resolve => {
   import("components/sort-detail/sort-detail").then(module => {
+    resolve(module);
+  });
+};
+//电台
+const Radio = resolve => {
+  import("components/radio/radio").then(module => {
     resolve(module);
   });
 };
@@ -117,6 +124,10 @@ const router = new Router({
             path: ":id",
             component: TopList,
           }]
+        },
+        {
+          path: "/radio",
+          component: Radio,
         },
         {
           path: "/sort",

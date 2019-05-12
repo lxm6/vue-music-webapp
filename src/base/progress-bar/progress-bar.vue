@@ -58,8 +58,6 @@ export default {
             const rect = this.$refs.progressBar.getBoundingClientRect();
             const offsetWidth = e.pageX - rect.left;
             this._offset(offsetWidth);
-            // 点击progress-btn时候, offsetX获取不对
-            // this._offset(e.offsetX);
             this._triggerPercent();
         },
         setProgressOffset(percent) {

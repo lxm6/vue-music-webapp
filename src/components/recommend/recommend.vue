@@ -27,6 +27,10 @@
             <mu-float-button icon="queue_music" class="demo-float-button" to="/sort"/>
             <h1>歌单</h1>
           </mu-flexbox-item>
+           <mu-flexbox-item class="nav-item">
+            <mu-float-button icon="radio" class="demo-float-button" to="/radio"/>
+            <h1>电台</h1>
+          </mu-flexbox-item>
         </mu-flexbox>
         <div class="recommend-list" v-show="discList.length">
           <h1 class="list-title">为你推荐歌单</h1>
@@ -91,7 +95,6 @@
 import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
-
 import { getRecommend, getDiscList } from "api/recommend";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "common/js/mixin";

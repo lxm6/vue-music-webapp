@@ -33,13 +33,27 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
+      //电台详细
+      app.get('/api/getRadioDesc', function (req, res) {
+        var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+          },
+          params: req.query
+        }).then((response) => {
+         
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
       // 分类歌单标签
       app.get('/api/getSortTags', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
-            host: 'c.y.qq.com'
           },
           params: req.query
         }).then((response) => {
@@ -56,7 +70,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         axios.get(url, { //通过axios发送http请求，同时更改referer和host，并且把参数给服务端
           headers: {
             referer: 'https://c.y.qq.com/',
-            host: 'c.y.qq.com'
           },
           params: req.query //浏览器请求该接口所带来的参数 
         }).then((response) => { //成功回调
@@ -71,7 +84,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
-            host: 'c.y.qq.com'
           },
           params: req.query
         }).then((response) => {
@@ -95,7 +107,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         axios.get(url, {
           headers: {
             referer: 'https://y.qq.com/',
-            host: 'c.y.qq.com'
           },
           params: req.query
         }).then((response) => {
@@ -119,7 +130,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
-            host: 'c.y.qq.com'
           },
           params: req.query
         }).then((response) => {

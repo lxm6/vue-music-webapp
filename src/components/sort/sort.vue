@@ -1,33 +1,32 @@
 <template>
   <transition name="slide">
-  <div class="container">
-    <title-Bar :titleBarName="titleBarName"></title-Bar>
-    <div class="sort-wrapper" ref="sort">
-      <scroll class="sort-tags-wrapper" ref="scroll" :data="categories">
-        <ul>
-          <li class="categoriesWrapper" v-for="(item1,indexs) in categories" :key="indexs">
-            <h4 class="title">{{item1.categoryGroupName}}</h4>
-            <ul class="item-Wrapper">
-              <li
-                v-for="(item2,index) in item1.items"
-                :key="index"
-                class="items"
-                v-html="item2.categoryName"
-                @click="SelectTags(item2)"
-              ></li>
-            </ul>
-          </li>
-        </ul>
+    <div class="container">
+      <title-Bar :titleBarName="titleBarName"></title-Bar>
+      <div class="sort-wrapper" ref="sort">
+        <scroll class="sort-tags-wrapper" ref="scroll" :data="categories">
+          <ul>
+            <li class="categoriesWrapper" v-for="(item1,indexs) in categories" :key="indexs">
+              <h4 class="title">{{item1.categoryGroupName}}</h4>
+              <ul class="item-Wrapper">
+                <li
+                  v-for="(item2,index) in item1.items"
+                  :key="index"
+                  class="items"
+                  v-html="item2.categoryName"
+                  @click="SelectTags(item2)"
+                ></li>
+              </ul>
+            </li>
+          </ul>
 
-        <div class="loading-container" v-show="!categories.length">
-          <loading></loading>
-        </div>
-      </scroll>
-      <router-view></router-view>
+          <div class="loading-container" v-show="!categories.length">
+            <loading></loading>
+          </div>
+        </scroll>
+        <router-view></router-view>
+      </div>
     </div>
-  </div>
   </transition>
-
 </template>
 
 <script>
@@ -85,7 +84,7 @@ export default {
 
 .container {
   position: fixed;
-  z-index 100;
+  z-index: 100;
   bottom: 0;
   width: 100%;
   top: 0;
@@ -105,7 +104,7 @@ export default {
 
     .categoriesWrapper {
       background-color: #fff;
-      border-bottom:12px solid #eee;
+      border-bottom: 12px solid #eee;
       display: flex;
       align-items: center;
       text-align: center;
@@ -157,6 +156,10 @@ export default {
 
           &:last-child {
             border-bottom: 1px solid $color-background;
+          }
+
+          &:active {
+            background: #eee;
           }
 
           &:hover {
