@@ -97,50 +97,6 @@ export default {
     width: 100%;
     background-color: #fff;
 
-    .list-header {
-      position: relative;
-      padding: 10px 30px 10px 20px;
-
-      .title {
-        display: flex;
-        align-items: center;
-
-        .icon {
-          margin-right: 10px;
-          font-size: 30px;
-          color: $color-theme;
-        }
-
-        .text {
-          flex: 1;
-          font-size: $font-size-medium;
-          color: $color-theme;
-        }
-      }
-    }
-
-    .list-content {
-      max-height: 270px;
-      overflow: hidden;
-      padding: 0 20px;
-
-      .item {
-        display: flex;
-        align-items: center;
-        height: 45px;
-        overflow: hidden;
-        border-top: 1px solid $color-border;
-
-        &.list-enter-active, &.list-leave-active {
-          transition: all 0.1s;
-        }
-
-        &.list-enter, &.list-leave-to {
-          height: 0;
-        }
-      }
-    }
-
     .list-operate {
       ul {
         height: 60px;

@@ -105,6 +105,7 @@ export function createSong(musicData) {
     isPay: musicData.pay.payplay === 1,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
     // url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=320`
+    url: `http://dl.stream.qqmusic.qq.com/C400004Gw9X03mxhi6.m4a?guid=577287136&vkey=37A77645DA882CE4C8534C8AC0DD5619F450977C23AC5E70D661307266F512434FB0DA8A87D8B9C246B60614EA7852C9836A925F079389F3&uin=0&fromtag=38`
   })
 }
 

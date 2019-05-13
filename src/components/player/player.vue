@@ -8,7 +8,7 @@
       @after-leave="afterLeave"
     >
       <div class="normal-player" v-show="fullScreen">
-        <div class="background">
+        <div class="background" ref="bg">
           <img width="100%" height="100%" :src="currentSong.image">
         </div>
 
@@ -84,6 +84,9 @@
             <li class="setLyric" @click="showLyricset">
               <img src="./Aa.png" width="24" height="24">
             </li>
+            <li class="setBlur" @click="showSeekBar">
+              <img src="./Aa.png" width="24" height="24">
+            </li>
           </ul>
 
           <div class="progress-wrapper">
@@ -146,6 +149,12 @@
       @setFontSize="setFontSize"
       @setColor="setColor"
     ></lyricset>
+    <seekbar
+      ref="seekBar"
+      :seekBarPercent="seekBarPercent"
+      @percentChange="onSeekBarChange"
+      @percentChanging="onSeekBarChanging"
+    ></seekbar>
     <audio
       ref="audio"
       :src="currentSong.url"
@@ -177,6 +186,7 @@ import animations from "create-keyframe-animation";
 import { prefixStyle } from "common/js/dom";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
+import Seekbar from "base/seekbar/seekbar";
 import ProgressCircle from "base/progress-circle/progress-circle";
 import { playMode } from "common/js/config";
 import { shuffle, downloadSong } from "common/js/util";
@@ -191,7 +201,9 @@ import {
   saveFontsize,
   loadFontsize,
   saveColor,
-  loadColor
+  loadColor,
+  loadBlur,
+  saveBlur
 } from "common/js/cache";
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
@@ -215,6 +227,7 @@ export default {
       currentSongUrl: "",
       msg: "",
       isPure: false,
+      seekBarPercent: 50,
       defaultFontSize: loadFontsize(),
       defaultColor: loadColor(),
       theme: {
@@ -232,7 +245,8 @@ export default {
           { name: "pink", color: "#fa7fbd" },
           { name: "red", color: "#f96666" }
         ]
-      }
+      },
+      defaultBlur:loadBlur(),
     };
   },
   computed: {
@@ -258,6 +272,7 @@ export default {
     disableCls() {
       return this.songReady ? "" : "disable";
     },
+
     // 进度条播放的比例
     percent() {
       return this.currentTime / this.currentSong.duration;
@@ -450,6 +465,14 @@ export default {
         this.togglePlaying();
       }
     },
+    onSeekBarChange(seekBarPercent) {
+      this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;
+      console.log("d")
+      saveBlur(seekBarPercent);
+    },
+    onSeekBarChanging(seekBarPercent) {
+      this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;
+    },
     // 确保切换模式的时候，当前歌曲是不变的
     resetCurrentIndex(list) {
       // findIndex: es6
@@ -509,6 +532,9 @@ export default {
     },
     showLyricset() {
       this.$refs.lyricset.show();
+    },
+    showSeekBar() {
+      this.$refs.seekBar.show();
     },
     // 点击唱片部分
     middleTouchStart(e) {
@@ -717,7 +743,8 @@ export default {
     Playlist,
     Lyricset,
     TopTip,
-    Toast
+    Toast,
+    Seekbar
   }
 };
 </script>
@@ -743,7 +770,7 @@ export default {
       height: 100%;
       z-index: -1;
       opacity: 0.4;
-      filter: blur(40px);
+      filter: blur(50px);
     }
 
     .top {

@@ -13,6 +13,7 @@ const FAVORITE_MAX_LEN = 200
 
 const FONTSIZE = '__Fontsize__'
 const COLOR = '__Color__'
+const BLUR = '__Blur__'
 
 //操作搜索历史数组的方法
 //参数：数组，添加的项，前后比较的函数，最大数量
@@ -138,7 +139,13 @@ export function saveColor(color) {
 export function loadColor() {
   return storage.get(COLOR, "green")
 }
-
+//背景模糊
+export function loadBlur() {
+  return storage.get(BLUR, 50)
+}
+export function saveBlur(blur) {
+  storage.set(BLUR, blur);
+}
 //删除最近播放
 export function deletePlay(query) {
   let play = storage.get(PLAY_KEY, [])

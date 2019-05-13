@@ -19,6 +19,7 @@ const state = {
   addSongVisible: false,
   deleteSongVisible: false,
   lyricsetVisible: false,
+  seekBarVisible: false,
   menuBarVisible: false,
   disc: {},
   topList: {},
