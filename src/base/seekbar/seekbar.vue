@@ -28,20 +28,25 @@
 <script type="text/ecmascript-6">
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { prefixStyle } from "common/js/dom";
-const progressBtnWidth = 16;
+import { saveBlur, loadBlur } from "common/js/cache";
+const progressBtnWidth = 15;
 const transform = prefixStyle("transform");
 export default {
   data() {
     return {
-        percentNum:0
+      percentNum: loadBlur()
     };
   },
   props: {
-    // 播放进度比例
     seekBarPercent: {
       type: Number,
-      default: 0
+      default: 50
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+     this._offset( this.percentNum * 4)
+    });
   },
   computed: {
     ...mapGetters(["seekBarVisible"])
@@ -65,7 +70,6 @@ export default {
         this.$refs.seekBar.clientWidth - progressBtnWidth,
         Math.max(0, this.touch.left + deltaX)
       );
-
       this._offset(offsetWidth);
       this.$emit("percentChanging", this._getPercent());
     },
@@ -76,7 +80,7 @@ export default {
     // 点击进度条
     seekBarClick(e) {
       const rect = this.$refs.seekBar.getBoundingClientRect();
-      const offsetWidth = e.pageX - rect.left;
+      const offsetWidth = Math.min(e.pageX - rect.left, Math.max(0, 200));
       this._offset(offsetWidth);
       this._triggerPercent();
     },
@@ -98,8 +102,10 @@ export default {
     },
     _getPercent() {
       const barWidth = this.$refs.seekBar.clientWidth - progressBtnWidth;
-      this.percentNum=parseInt(Math.round((this.$refs.progress.clientWidth / barWidth)*100)/2);
-    //   this.percentNum=Math.round((this.$refs.progress.clientWidth / barWidth)*100);
+      this.percentNum = parseInt(
+        ((this.$refs.progress.clientWidth / barWidth) * 100) / 2
+      );
+      saveBlur(this.percentNum);
       return this.percentNum;
     },
     show() {
@@ -155,7 +161,9 @@ export default {
     background-color: #fff;
 
     .list-operate {
-      padding: 25px 80px;
+      padding: 25px 0;
+      width: 215px;
+      margin: auto;
 
       .num {
         text-align: center;
@@ -170,7 +178,7 @@ export default {
           position: relative;
           top: 13px;
           height: 3px;
-          background: #999;
+          background: #b7b7b7;
 
           .progress {
             position: absolute;

@@ -202,8 +202,7 @@ import {
   loadFontsize,
   saveColor,
   loadColor,
-  loadBlur,
-  saveBlur
+  loadBlur
 } from "common/js/cache";
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
@@ -245,9 +244,13 @@ export default {
           { name: "pink", color: "#fa7fbd" },
           { name: "red", color: "#f96666" }
         ]
-      },
-      defaultBlur:loadBlur(),
+      }
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.loadBlur();
+    });
   },
   computed: {
     cdCls() {
@@ -284,6 +287,10 @@ export default {
     this.touch = {};
   },
   methods: {
+    loadBlur() {
+      console.log("f");
+      this.$refs.bg.style.filter = `blur(${loadBlur()}px)`;
+    },
     toggleShow() {
       if (this.currentShow === "cd") {
         this.currentShow = "lyric";
@@ -467,8 +474,6 @@ export default {
     },
     onSeekBarChange(seekBarPercent) {
       this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;
-      console.log("d")
-      saveBlur(seekBarPercent);
     },
     onSeekBarChanging(seekBarPercent) {
       this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;

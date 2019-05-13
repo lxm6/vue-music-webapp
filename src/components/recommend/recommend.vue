@@ -115,7 +115,6 @@ export default {
     this._getRecommend();
     this._getDiscList();
   },
-  computed: {},
   methods: {
     openLink(url) {
       openUrl(url);
