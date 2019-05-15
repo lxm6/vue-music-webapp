@@ -4,19 +4,10 @@
       <div class="back" @click="back">
         <mu-icon-button icon="arrow_back"/>
       </div>
-      <div class="video-wrapper">
-        <video
-          ref="video"
-          controls="controls"
-          :poster="this.mv.picurl"
-          width="100%"
-          height="90%"
-          autoplay="true"
-        >
-          <source :src="this.mv.url" type="video/mp4">您的浏览器不支持 video 标签。
-        </video>
+      <div class="video-wrapper"></div>
+      <div class="dplayer">
+        <div ref="dplayer"></div>
       </div>
-
       <div class="info">
         <h2>
           <i class="mv-icon">MV</i>
@@ -33,10 +24,14 @@
       </div>
       <div class="tab">
         <li class="tab-item">
-          <i><mu-icon value="favorite" class="icon"/></i>收藏
+          <i>
+            <mu-icon value="favorite" class="icon"/>
+          </i>收藏
         </li>
         <li class="tab-item">
-          <i><mu-icon value="file_download" class="icon"/></i>下载
+          <i>
+            <mu-icon value="file_download" class="icon"/>
+          </i>下载
         </li>
       </div>
     </div>
@@ -45,13 +40,30 @@
 </template>
 
 <script>
+import 'DPlayer/dist/DPlayer.min.css';
+import DPlayer from "dplayer";
 import { mapGetters } from "vuex";
 
 export default {
   computed: {
     ...mapGetters(["mv"])
   },
-  created() {},
+  mounted() {
+    if (this.mv.url != "") {
+      this.$nextTick(() => {
+        const dp = new DPlayer({
+          container: this.$refs.dplayer,
+          video: {
+            url: this.mv.url,
+            pic: this.mv.picurl
+          },
+          autoplay: true,
+        });
+      });
+    } else {
+      this.$router.back();
+    }
+  },
   methods: {
     back() {
       this.$router.back();
@@ -73,7 +85,6 @@ export default {
 }
 
 .video-wrapper {
-
 }
 
 .tab {
@@ -86,7 +97,7 @@ export default {
     line-height: 40px;
     flex: 1;
     text-align: center;
-    color:#666;
+    color: #666;
   }
 }
 
@@ -121,7 +132,8 @@ export default {
     font-size: 14px;
   }
 }
-.icon{
-  font-size 22px;
+
+.icon {
+  font-size: 22px;
 }
 </style>

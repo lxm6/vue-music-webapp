@@ -60,15 +60,13 @@ export default {
       display: inline-block;
       height: 26px;
       line-height: 27px;
-      padding: 0 8px;
       margin: 0 14px 14px 0;
       color: #333;
       font-size: 14px;
       cursor: pointer;
 
       &:hover {
-        background: #31c27c;
-        color: #fff;
+        color: $color-theme;
       }
 
       &:first-child {
@@ -76,8 +74,7 @@ export default {
       }
 
       &.active {
-        background: #31c27c;
-        color: #fff;
+        color: $color-theme;
       }
     }
   }
