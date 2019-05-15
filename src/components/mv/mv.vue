@@ -3,38 +3,38 @@
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="mv-wrapper">
-        <scroll :data="mvlist" class="mvlist-wrapper" ref="mvlist">
-          <div class="tags">
-            <Tags
-              v-if="taglist"
-              titleName="排序"
-              :tag="switches"
-              :currentId="currentType"
-              @selectItemTag="selectOrder"
-            />
-            <Tags
-              v-if="taglist"
-              titleName="地区"
-              :tag="taglist.area"
-              :currentId="currentAreaId"
-              @selectItemTag="selectAreaIndex"
-            />
-            <Tags
-              v-if="taglist"
-              titleName="类型"
-              :tag="taglist.tag"
-              :currentId="currentTagId"
-              @selectItemTag="selectTagIndex"
-            />
-            <Tags
-              v-if="taglist"
-              titleName="年份"
-              :tag="taglist.year"
-              :currentId="currentYearId"
-              @selectItemTag="selectYearIndex"
-            />
-          </div>
+        <scroll class="mvlist-wrapper" ref="mvlist" :data="mvlist">
           <div>
+            <div class="tags">
+              <Tags
+                v-if="taglist"
+                titleName="排序"
+                :tag="switches"
+                :currentId="currentType"
+                @selectItemTag="selectOrder"
+              />
+              <Tags
+                v-if="taglist"
+                titleName="地区"
+                :tag="taglist.area"
+                :currentId="currentAreaId"
+                @selectItemTag="selectAreaIndex"
+              />
+              <Tags
+                v-if="taglist"
+                titleName="类型"
+                :tag="taglist.tag"
+                :currentId="currentTagId"
+                @selectItemTag="selectTagIndex"
+              />
+              <Tags
+                v-if="taglist"
+                titleName="年份"
+                :tag="taglist.year"
+                :currentId="currentYearId"
+                @selectItemTag="selectYearIndex"
+              />
+            </div>
             <div class="mv-list" v-show="mvlist.length">
               <li
                 @click="selectItem(item)"
@@ -87,7 +87,7 @@ export default {
       currentYearId: 0,
       pageno: 0,
       allpage: null,
-      switches: [{ id: 2, title: "推荐" },{ id: 1, title: "最新" }]
+      switches: [{ id: 2, title: "推荐" }, { id: 1, title: "最新" }]
     };
   },
   created() {
@@ -148,7 +148,6 @@ export default {
           this.mvlist = this.MvData.mvlist;
           this.taglist = this.MvData.taglist;
           this.allpage = this.MvData.sum;
-          console.log(this.currentType);
         }
       });
     },
@@ -188,7 +187,6 @@ export default {
       });
     },
 
-
     ...mapMutations({
       setPlayState: "SET_PLAYING_STATE",
       setMV: "SET_MV"
@@ -217,19 +215,17 @@ export default {
 }
 
 .mv-wrapper {
-  padding: 15px;
   top: $top-height;
   bottom: 0;
   position: fixed;
   width: 100%;
 
   .mvlist-wrapper {
+    padding 15px;
     height: 100%;
     overflow: hidden;
 
     .mv-list {
-      z-index: 100;
-
       .ablum {
         position: relative;
 
@@ -278,6 +274,7 @@ export default {
 
           .name {
             color: $color-text-l;
+            no-wrap();
           }
 
           .desc {
@@ -291,7 +288,6 @@ export default {
     }
   }
 }
-
 
 .loading-container {
   position: absolute;

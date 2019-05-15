@@ -10,7 +10,7 @@
           controls="controls"
           :poster="this.mv.picurl"
           width="100%"
-          height="auto"
+          height="90%"
           autoplay="true"
         >
           <source :src="this.mv.url" type="video/mp4">您的浏览器不支持 video 标签。
@@ -33,10 +33,10 @@
       </div>
       <div class="tab">
         <li class="tab-item">
-          <mu-icon value="favorite"/>收藏
+          <i><mu-icon value="favorite" class="icon"/></i>收藏
         </li>
         <li class="tab-item">
-          <mu-icon value="file_download"/>下载
+          <i><mu-icon value="file_download" class="icon"/></i>下载
         </li>
       </div>
     </div>
@@ -73,6 +73,7 @@ export default {
 }
 
 .video-wrapper {
+
 }
 
 .tab {
@@ -85,6 +86,7 @@ export default {
     line-height: 40px;
     flex: 1;
     text-align: center;
+    color:#666;
   }
 }
 
@@ -118,5 +120,8 @@ export default {
     padding: 3px;
     font-size: 14px;
   }
+}
+.icon{
+  font-size 22px;
 }
 </style>
