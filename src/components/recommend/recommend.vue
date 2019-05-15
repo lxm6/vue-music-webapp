@@ -27,9 +27,9 @@
             <mu-float-button icon="queue_music" class="demo-float-button" to="/sort"/>
             <h1>歌单</h1>
           </mu-flexbox-item>
-           <mu-flexbox-item class="nav-item">
-            <mu-float-button icon="radio" class="demo-float-button" to="/radio"/>
-            <h1>电台</h1>
+          <mu-flexbox-item class="nav-item">
+            <mu-float-button icon="ondemand_video" class="demo-float-button" to="/mv"/>
+            <h1>MV</h1>
           </mu-flexbox-item>
         </mu-flexbox>
         <div class="recommend-list" v-show="discList.length">
@@ -45,7 +45,7 @@
                 <img :src="item.imgurl">
                 <div class="info">
                   <img src="~@/common/image/earphone.png">
-                  <span>{{Math.round(item.listennum/1000)/10}}万</span>
+                  <span>{{formatNum(item.listennum)}}</span>
                 </div>
               </div>
               <div class="text">
@@ -116,6 +116,13 @@ export default {
     this._getDiscList();
   },
   methods: {
+    formatNum(num) {
+      if (num > 10000) {
+        return Math.round(num / 1000) / 10 + "万";
+      } else {
+        return num;
+      }
+    },
     openLink(url) {
       openUrl(url);
     },
@@ -241,6 +248,7 @@ export default {
         position: relative;
 
         img {
+          border-radius: 4px;
           width: 100%;
           height: 100%;
         }

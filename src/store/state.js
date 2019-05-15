@@ -23,6 +23,7 @@ const state = {
   menuBarVisible: false,
   disc: {},
   topList: {},
+  mv:{},
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
   favoriteList: loadFavorite(),

@@ -288,7 +288,6 @@ export default {
   },
   methods: {
     loadBlur() {
-      console.log("f");
       this.$refs.bg.style.filter = `blur(${loadBlur()}px)`;
     },
     toggleShow() {

@@ -23,6 +23,9 @@ const matutaions = {
   [types.SET_SINGER](state, singer) {
     state.singer = singer
   },
+  [types.SET_MV](state, mv) {
+    state.mv = mv
+  },
   [types.SET_DISC](state, disc) {
     state.disc = disc
   },

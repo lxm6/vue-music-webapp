@@ -27,16 +27,16 @@ export function getRecommend() {
  * @param {Number} sortId 歌单类型
  * @param {Number} ein 歌单数目
  */
-export function getDiscList(categoryId=10000000,sortId=5,ein=49) {
+export function getDiscList(categoryId,sortId,ein) {
   const url = '/api/getDiscList'
   const data = Object.assign({}, commonParams, {
     platform: 'yqq', 
     hostUin: 0,
     sin: 0,
-    ein: ein,
-    sortId: sortId,
+    ein: ein?ein:49,
+    sortId: sortId?sortId:5,
     needNewCode: 0,
-    categoryId: categoryId,
+    categoryId: categoryId?categoryId:100000000,
     rnd: Math.random(),
     format: 'json'
   })

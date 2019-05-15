@@ -104,7 +104,7 @@ export default {
 
     .categoriesWrapper {
       background-color: #fff;
-      border-bottom: 12px solid #eee;
+      border-top: 12px solid #eee;
       display: flex;
       align-items: center;
       text-align: center;

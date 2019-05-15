@@ -23,7 +23,7 @@
         class="recommend-content"
         ref="discList"
       >
-        <div >
+        <div>
           <div class="switches-wrapper">
             <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
           </div>
@@ -38,7 +38,7 @@
                 <img v-lazy="item.imgurl" :key="item.imgurl">
                 <div class="info">
                   <img src="~@/common/image/earphone.png">
-                  <span>{{Math.round(item.listennum/1000)/10}}万</span>
+                  <span>{{formatNum(item.listennum)}}</span>
                 </div>
               </div>
               <div class="text">
@@ -111,6 +111,13 @@ export default {
     this.$refs.discList.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
+    formatNum(num) {
+      if (num > 10000) {
+        return Math.round(num / 1000) / 10 + "万";
+      } else {
+        return num;
+      }
+    },
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.discList.$el.style.bottom = bottom;
@@ -203,7 +210,6 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
-
 .disc-list {
   position: fixed;
   z-index: 100;
@@ -228,7 +234,7 @@ export default {
   }
 
   .small-title {
-    top: 4px;
+    top: 7px;
     line-height: 40px;
     font-size: 18px;
     letter-spacing: 0;
@@ -283,6 +289,7 @@ export default {
         position: relative;
 
         img {
+          border-radius: 6px;
           width: 100%;
           height: 100%;
         }
@@ -297,9 +304,13 @@ export default {
           flex-direction: row;
           align-items: center;
 
+          span {
+            margin-top: 3px;
+          }
+
           img {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             display: inline-block;
             margin-right: 3px;
           }
@@ -317,6 +328,7 @@ export default {
         }
 
         .text {
+          height: 50px;
           overflow: hidden;
           font-size: $font-size-small;
 
@@ -326,9 +338,9 @@ export default {
 
           .desc {
             color: $color-text;
-            height: 36px;
-            line-height: 15px;
-            margin-top: 5px;
+            line-height: 16px;
+            margin-bottom: 5px;
+            limit_lines();
           }
         }
       }

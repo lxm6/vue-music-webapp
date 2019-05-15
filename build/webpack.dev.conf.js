@@ -33,9 +33,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
-      //电台详细
-      app.get('/api/getRadioDesc', function (req, res) {
-        var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+      //mvURL
+      app.get('/api/getMvUrl', function (req, res) {
+        const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
@@ -48,6 +48,22 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       })
+        //MV列表
+        app.get('/api/getMvlist', function (req, res) {
+          const url = 'https://c.y.qq.com/mv/fcgi-bin/getmv_by_tag'
+          axios.get(url, {
+            headers: {
+              referer: 'https://c.y.qq.com/',
+            },
+            params: req.query
+          }).then((response) => {
+         
+            res.json(response.data)
+          }).catch((e) => {
+            console.log(e)
+          })
+        })
+     
       // 分类歌单标签
       app.get('/api/getSortTags', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'

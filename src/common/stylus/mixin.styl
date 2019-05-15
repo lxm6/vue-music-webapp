@@ -27,4 +27,13 @@ extend-click() {
     bottom: -10px;
   }
 }
-
+//超出两行显示省略号
+limit_lines() {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

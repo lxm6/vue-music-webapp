@@ -26,7 +26,7 @@ export function debounce(func, delay) {
   }
 }
 
-export function downloadSong(name,url){
+export function downloadSong(name, url) {
   setTimeout(() => {
     if (url) {
       const filename = `${name}.mp3`;
@@ -36,4 +36,15 @@ export function downloadSong(name,url){
       a.click();
     }
   }, 200);
+}
+export function getUid() {
+  let _uid = ''
+  if (_uid) {
+    return _uid
+  }
+  if (!_uid) {
+    const t = (new Date).getUTCMilliseconds()
+    _uid = '' + Math.round(2147483647 * Math.random()) * t % 1e10
+  }
+  return _uid
 }

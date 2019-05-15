@@ -10,7 +10,7 @@
         <mu-list class="mu-list-class">
           <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
           <mu-list-item title="清除缓存" @click="showConfirm" class="mu-list-item"/>
-          <mu-list-item title="刷新页面" @click="refreshPage" class="mu-list-item"/>
+          <mu-list-item title="刷新" @click="refreshPage" class="mu-list-item"/>
           <mu-list-item title="关于" @click="openAboutDialog" class="mu-list-item"/>
         </mu-list>
       </div>

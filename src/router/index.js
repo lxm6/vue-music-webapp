@@ -72,9 +72,15 @@ const SortDetail = resolve => {
     resolve(module);
   });
 };
-//电台
-const Radio = resolve => {
-  import("components/radio/radio").then(module => {
+//mv
+const MV = resolve => {
+  import("components/mv/mv").then(module => {
+    resolve(module);
+  });
+};
+//mv详情
+const MVDetail = resolve => {
+  import("components/mv-detail/mv-detail").then(module => {
     resolve(module);
   });
 };
@@ -126,8 +132,12 @@ const router = new Router({
           }]
         },
         {
-          path: "/radio",
-          component: Radio,
+          path: "/mv",
+          component: MV,
+          children: [{
+            path: ":id",
+            component: MVDetail,
+          }]
         },
         {
           path: "/sort",

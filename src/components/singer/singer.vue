@@ -48,12 +48,10 @@ export default {
       this.setSinger(singer);
     },
     _getSingerList() {
-      // for (let index = 1; index < 5; index++) {
       getSingerList(1).then(res => {
         if (res.code === ERR_OK) {
           this.singers = this._normalizeSinger(res.data.list);
 
-          // this.singers = [...this.singers, ...res.data.list];
         }
       });
     },
