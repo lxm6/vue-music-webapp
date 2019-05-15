@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import 'DPlayer/dist/DPlayer.min.css';
+import "DPlayer/dist/DPlayer.min.css";
 import DPlayer from "dplayer";
 import { mapGetters } from "vuex";
 
@@ -49,20 +49,17 @@ export default {
     ...mapGetters(["mv"])
   },
   mounted() {
-    if (this.mv.url != "") {
-      this.$nextTick(() => {
-        const dp = new DPlayer({
-          container: this.$refs.dplayer,
-          video: {
-            url: this.mv.url,
-            pic: this.mv.picurl
-          },
-          autoplay: true,
-        });
+    this.$nextTick(() => {
+      const dp = new DPlayer({
+        container: this.$refs.dplayer,
+        video: {
+          url: this.mv.url,
+          pic: this.mv.picurl
+        },
+        autoplay: true
       });
-    } else {
-      this.$router.back();
-    }
+     
+    });
   },
   methods: {
     back() {

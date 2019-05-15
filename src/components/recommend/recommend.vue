@@ -185,6 +185,7 @@ export default {
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+@import '~common/stylus/mixin';
 
 .recommend {
   position: absolute;
@@ -251,6 +252,7 @@ export default {
           border-radius: 4px;
           width: 100%;
           height: 100%;
+          filter: brightness(90%);
         }
 
         .info {
@@ -289,9 +291,10 @@ export default {
 
           .desc {
             color: $color-text;
-            height: 36px;
-            line-height: 15px;
+            height: 35px;
+            line-height: 17px;
             margin-top: 5px;
+            limit_lines();
           }
         }
       }

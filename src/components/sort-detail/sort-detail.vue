@@ -292,6 +292,8 @@ export default {
           border-radius: 6px;
           width: 100%;
           height: 100%;
+          filter: brightness(90%);
+
         }
 
         .info {
