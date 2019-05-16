@@ -12,7 +12,12 @@
       <li v-for="(group,index) in data" class="list-group" ref="listGroup" :key="index">
         <h2 class="list-group-title">{{group.title.replace(/9/,"#")}}</h2>
         <uL>
-          <li @click="selectItem(item)" v-for="(item,index) in group.items" class="list-group-item" :key="index">
+          <li
+            @click="selectItem(item)"
+            v-for="(item,index) in group.items"
+            class="list-group-item"
+            :key="index"
+          >
             <img class="avatar" v-lazy="item.avatar">
             <span class="name">{{item.name}}</span>
           </li>
@@ -33,11 +38,10 @@
           :key="index"
           @click="cshortcut(index,item)"
         >{{item}}</li>
-
       </ul>
     </div>
     <toast :title="title" ref="toast">
-       <div class="content">
+      <div class="content">
         <p class="desc">{{title}}</p>
       </div>
     </toast>
@@ -62,13 +66,12 @@ export default {
     data: {
       type: Array,
       default: []
-    },
-    
+    }
   },
   computed: {
     shortcutList() {
       return this.data.map(group => {
-        return group.title.replace(/9/,"#").substr(0, 1);
+        return group.title.replace(/9/, "#").substr(0, 1);
       });
     },
     fixedTitle() {
@@ -76,13 +79,13 @@ export default {
         return "";
       }
       return this.data[this.currentIndex]
-        ? this.data[this.currentIndex].title.replace(/9/,"#")
+        ? this.data[this.currentIndex].title.replace(/9/, "#")
         : "";
     }
   },
   data() {
     return {
-      title:"",
+      title: "",
       scrollY: -1,
       currentIndex: 0,
       diff: -1
@@ -95,9 +98,9 @@ export default {
     this.listHeight = [];
   },
   methods: {
-    cshortcut(index,item){
-        this.title=item;
-       this.$refs.toast.show();
+    cshortcut(index, item) {
+      this.title = item;
+      this.$refs.toast.show();
       this._scrollTo(index);
     },
     selectItem(item) {
@@ -193,13 +196,17 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
 .listview {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: $color-highlight-background;
+  background: $color-background;
+
   .list-group {
+    background: #fff;
+
     .list-group-title {
       height: 30px;
       line-height: 30px;
@@ -208,16 +215,19 @@ export default {
       color: $color-text-l;
       background: $color-background;
     }
+
     .list-group-item {
       display: flex;
       align-items: center;
       padding: 7px 0 7px 20px;
-      border-bottom 1px solid $color-border
+      border-bottom: 1px solid $color-border;
+
       .avatar {
         width: 45px;
         height: 45px;
         border-radius: 50%;
       }
+
       .name {
         margin-left: 20px;
         color: $color-text;
@@ -225,6 +235,7 @@ export default {
       }
     }
   }
+
   .list-shortcut {
     position: absolute;
     z-index: 30;
@@ -237,23 +248,27 @@ export default {
     text-align: center;
     background: #eee;
     font-family: Helvetica;
+
     .item {
       padding: 3px;
       line-height: 1;
       color: $color-text-l;
       font-size: $font-size-small;
-      cursor:default
+      cursor: default;
+
       &.current {
         color: $color-theme;
-        font-weight bold
+        font-weight: bold;
       }
     }
   }
+
   .list-fixed {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+
     .fixed-title {
       height: 30px;
       line-height: 30px;
@@ -263,23 +278,26 @@ export default {
       background: $color-background;
     }
   }
+
   .loading-container {
     position: absolute;
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
   }
+
   .content {
     width: 50px;
-    height 50px;
-    margin 0 auto;
-    line-height 50px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 50px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
+
     .desc {
       font-size: $font-size-large;
-      font-weight bold;
+      font-weight: bold;
       color: $color-text-h;
     }
   }

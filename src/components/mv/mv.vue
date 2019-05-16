@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
-      <div class="mv-wrapper">
+      <div class="mv-wrapper" ref="mv">
         <scroll class="mvlist-wrapper" ref="mvlist" :data="mvlist">
           <div>
             <Tags
@@ -20,7 +20,6 @@
               :currentId="currentAreaId"
               :area="true"
               @selectItemTag="selectAreaIndex"
-
             />
             <Tags
               v-if="taglist"
@@ -77,9 +76,14 @@ import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import { getMvlist, getMvUrl } from "api/mv";
 import { ERR_OK } from "api/config";
+import { playlistMixin } from "common/js/mixin";
+
 export default {
+  mixins: [playlistMixin],
+
   data() {
     return {
+
       mvlist: [],
       MvData: {},
       titleBarName: "MV",
@@ -96,10 +100,14 @@ export default {
   created() {
     this._getMvlist();
   },
-
+  computed: {
+    ...mapGetters(["mv"])
+  },
   methods: {
-    computed: {
-      ...mapGetters(["mv"])
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? "60px" : "";
+      this.$refs.mv.style.bottom = bottom;
+      this.$refs.mvlist.refresh();
     },
     filterSinger(singer) {
       let ret = [];
@@ -235,6 +243,7 @@ export default {
         position: relative;
 
         img {
+          filter: brightness(90%);
           width: 100%;
           height: 100%;
         }

@@ -36,14 +36,17 @@
             >
               <div class="ablum">
                 <img v-lazy="item.imgurl" :key="item.imgurl">
-                <div class="info">
+                <div class="listen">
                   <img src="~@/common/image/earphone.png">
                   <span>{{formatNum(item.listennum)}}</span>
+                </div>
+                 <div class="creator">
+                   <i class="icon-mine"></i>
+                  <span>{{item.creator.name}}</span>
                 </div>
               </div>
               <div class="text">
                 <p class="desc" v-html="item.dissname"></p>
-                <h2 class="name" v-html="item.creator.name"></h2>
               </div>
             </li>
           </div>
@@ -282,7 +285,7 @@ export default {
 
     .recommend-list {
       background: $color-background;
-      padding: 15px;
+      padding: 10px;
       z-index: 100;
 
       .ablum {
@@ -292,16 +295,16 @@ export default {
           border-radius: 6px;
           width: 100%;
           height: 100%;
-          filter: brightness(90%);
+          filter: brightness(85%);
 
         }
 
-        .info {
+        .listen{
           position: absolute;
-          bottom: 5px;
-          left: 5px;
+          top: 5px;
+          right: 5px;
           color: #fff;
-          font-size: 10px;
+          font-size: 11px;
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -318,30 +321,42 @@ export default {
           }
         }
       }
+        
+        .creator{
+          position: absolute;
+          bottom: 8px;
+          left: 5px;
+          color: #fff;
+          font-size: 12px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          span {
+            margin-left 4px;
+            margin-top 2px;
+          }
+        }
 
       .item {
-        width: 48%;
+        width: 48.5%;
         cursor: pointer;
         margin-bottom: 10px;
         display: inline-block;
 
         &:nth-child(odd) {
-          margin-right: 12px;
+          margin-right: 10px;
         }
 
         .text {
-          height: 50px;
+          margin-top 3px;
+          height: 35px;
           overflow: hidden;
-          font-size: $font-size-small;
-
-          .name {
-            color: $color-text-l;
-          }
+          font-size: 13px;
 
           .desc {
             color: $color-text;
-            line-height: 16px;
-            margin-bottom: 5px;
+            line-height: 18px;
             limit_lines();
           }
         }

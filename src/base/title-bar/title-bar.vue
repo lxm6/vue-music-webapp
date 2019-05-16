@@ -25,7 +25,7 @@ export default {
 @import '~common/stylus/variable';
 .titleBar{
   height $top-height;
-  background-color:#fff
+  background-color:$color-background
 
 }
 </style>
