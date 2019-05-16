@@ -96,10 +96,10 @@ export default {
 
     .item {
       flex: 0 0 auto;
-      padding: 0 8px;
+      margin-right 12px;
       height: 22px;
       line-height: 22px;
-      margin-top: 10px;
+      margin-bottom: 10px;
       color: #333;
       font-size: 14px;
       cursor: pointer;

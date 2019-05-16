@@ -40,8 +40,8 @@
                   <img src="~@/common/image/earphone.png">
                   <span>{{formatNum(item.listennum)}}</span>
                 </div>
-                 <div class="creator">
-                   <i class="icon-mine"></i>
+                <div class="creator">
+                  <i class="icon-mine"></i>
                   <span>{{item.creator.name}}</span>
                 </div>
               </div>
@@ -51,10 +51,10 @@
             </li>
           </div>
         </div>
-        <div v-show="showFlag" class="loading-container">
-          <loading></loading>
-        </div>
       </scroll>
+      <div v-show="showFlag" class="loading-container">
+        <loading></loading>
+      </div>
       <router-view></router-view>
     </div>
   </transition>
@@ -275,7 +275,7 @@ export default {
 
     .switches-wrapper {
       background: $color-background;
-      padding-top: 10px;
+      padding: 10px 0;
 
       .switches {
         width: 148px;
@@ -296,10 +296,9 @@ export default {
           width: 100%;
           height: 100%;
           filter: brightness(85%);
-
         }
 
-        .listen{
+        .listen {
           position: absolute;
           top: 5px;
           right: 5px;
@@ -321,22 +320,22 @@ export default {
           }
         }
       }
-        
-        .creator{
-          position: absolute;
-          bottom: 8px;
-          left: 5px;
-          color: #fff;
-          font-size: 12px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
 
-          span {
-            margin-left 4px;
-            margin-top 2px;
-          }
+      .creator {
+        position: absolute;
+        bottom: 8px;
+        left: 5px;
+        color: #fff;
+        font-size: 12px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        span {
+          margin-left: 4px;
+          margin-top: 2px;
         }
+      }
 
       .item {
         width: 48.5%;
@@ -349,7 +348,7 @@ export default {
         }
 
         .text {
-          margin-top 3px;
+          margin-top: 3px;
           height: 35px;
           overflow: hidden;
           font-size: 13px;
@@ -365,15 +364,19 @@ export default {
   }
 
   .loading-container {
-    background: $color-background;
-    position: absolute;
+    position: fixed;
     width: 100%;
-    top: 63%;
-    height: 100%;
+    height 100%
+    top: 50%;
     transform: translateY(-50%);
 
     .loading {
-      margin-top: 30%;
+      width 75px;
+      height:70px;
+      padding 5px;
+      border-radius 5px;
+      background: #eee;
+      margin 300px auto;
     }
   }
 }

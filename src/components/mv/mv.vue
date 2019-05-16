@@ -36,31 +36,36 @@
               @selectItemTag="selectYearIndex"
             />
             <div class="mv-list" v-show="mvlist.length">
-              <li
+              <mu-list-item
                 @click="selectItem(item)"
                 v-for="(item,index) in mvlist"
                 :key="index"
                 class="item"
               >
-                <div class="ablum">
-                  <img v-lazy="item.picurl" :key="item.picurl">
-                  <div class="info">
-                    <img src="~@/common/image/video.png">
-                    <span>{{formatNum(item.listennum)}}</span>
-                  </div>
-                </div>
-                <div class="text">
-                  <p class="desc" v-html="item.mvtitle"></p>
-                  <p class="name" v-html="filterSinger(item.singers)"></p>
-                </div>
-              </li>
+                <mu-flexbox class="flexbox">
+                  <mu-flexbox-item class="flexitem">
+                    <div class="ablum">
+                      <img v-lazy="item.picurl" :key="item.picurl">
+                      <div class="info">
+                        <img src="~@/common/image/video.png">
+                        <span>{{formatNum(item.listennum)}}</span>
+                      </div>
+                    </div>
+                  </mu-flexbox-item>
+                  <mu-flexbox-item>
+                    <div class="text">
+                      <p class="desc" v-html="item.mvtitle"></p>
+                      <p class="name" v-html="filterSinger(item.singers)"></p>
+                    </div>
+                  </mu-flexbox-item>
+                </mu-flexbox>
+              </mu-list-item>
             </div>
           </div>
-
-          <div v-show="!mvlist.length" class="loading-container">
-            <loading></loading>
-          </div>
         </scroll>
+        <div class="loading-container" ref="loading">
+          <loading></loading>
+        </div>
         <router-view></router-view>
       </div>
     </div>
@@ -83,7 +88,6 @@ export default {
 
   data() {
     return {
-
       mvlist: [],
       MvData: {},
       titleBarName: "MV",
@@ -94,7 +98,10 @@ export default {
       currentYearId: 0,
       pageno: 0,
       allpage: null,
-      switches: [{ id: 2, title: "推荐" }, { id: 1, title: "最新" }]
+      switches: [{ id: 2, title: "推荐" }, { id: 1, title: "最新" }],
+      pullup: true,
+      beforeScroll: true,
+      hasMore: true
     };
   },
   created() {
@@ -129,21 +136,25 @@ export default {
     selectOrder(item) {
       this.currentType = item.id;
       this.pageno = 0;
+      this.$refs.loading.style.display = "block";
       this._getMvlist();
     },
     selectAreaIndex(item) {
       this.currentAreaId = item.id;
       this.pageno = 0;
+      this.$refs.loading.style.display = "block";
       this._getMvlist();
     },
     selectTagIndex(item) {
       this.currentTagId = item.id;
       this.pageno = 0;
+      this.$refs.loading.style.display = "block";
       this._getMvlist();
     },
     selectYearIndex(item) {
       this.currentYearId = item.id;
       this.pageno = 0;
+      this.$refs.loading.style.display = "block";
       this._getMvlist();
     },
     _getMvlist() {
@@ -159,6 +170,7 @@ export default {
           this.mvlist = this.MvData.mvlist;
           this.taglist = this.MvData.taglist;
           this.allpage = this.MvData.sum;
+          this.$refs.loading.style.display = "none";
         }
       });
     },
@@ -226,26 +238,28 @@ export default {
 }
 
 .mv-wrapper {
-  top: 65px;
+  top: $top-height;
   bottom: 0;
   position: fixed;
   width: 100%;
+  padding: 10px 0;
 
   .mvlist-wrapper {
-    padding: 10px;
     height: 100%;
     overflow: hidden;
+    margin-left: 10px;
 
     .mv-list {
       margin-top: 10px;
 
       .ablum {
-        position: relative;
+        width: 140px;
+        box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.1);
 
         img {
           filter: brightness(90%);
-          width: 100%;
-          height: 100%;
+          width: 140px;
+          height: 81px;
         }
 
         .info {
@@ -271,30 +285,29 @@ export default {
         }
       }
 
-      .item {
-        width: 49%;
-        cursor: pointer;
-        margin-bottom: 10px;
-        display: inline-block;
+      .flexitem {
+        flex: 0 0 145px !important;
+      }
 
-        &:nth-child(odd) {
-          margin-right: 6px;
-        }
+      .item {
+        padding-right: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-top: 1px solid $color-border;
 
         .text {
-          height: 50px;
           overflow: hidden;
-          font-size: $font-size-small;
+          font-size: 13px;
+          line-height: 22px;
 
           .name {
             color: $color-text-l;
+            margin-top: 5px;
             no-wrap();
           }
 
           .desc {
             color: $color-text;
-            line-height: 16px;
-            margin-bottom: 5px;
             limit_lines();
           }
         }
@@ -304,9 +317,19 @@ export default {
 }
 
 .loading-container {
-  position: absolute;
+  position: fixed;
   width: 100%;
+  height: 100%;
   top: 50%;
   transform: translateY(-50%);
+
+  .loading {
+    width: 75px;
+    height: 70px;
+    padding: 5px;
+    border-radius: 5px;
+    background: #eee;
+    margin: 300px auto;
+  }
 }
 </style>
