@@ -1,8 +1,9 @@
 <template>
-  <div class="tag-wrapper">
-    <div v-if="titleName" class="titleName">{{titleName}}</div>
-    <ul class="content">
+  <div class="tag-wrapper" ref="tab">
+    <ul class="content" ref="tabWrapper">
+      <li ref="tabitem" class="item">{{titleName}}</li>
       <li
+        ref="tabitem"
         class="item"
         v-for="item in tag"
         :class="currentId=== item.id? 'active':'' "
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import BScroll from "better-scroll";
 export default {
   props: {
     tag: {
@@ -27,11 +29,45 @@ export default {
     titleName: {
       type: String,
       default: ""
+    },
+    area: {
+      type: Boolean,
+      default: false
     }
+  },
+  created() {
+    this.$nextTick(() => {
+      this.InitTabScroll();
+    });
   },
   methods: {
     selectItem(item) {
       this.$emit("selectItemTag", item);
+    },
+    InitTabScroll() {
+      let width = 0;
+      for (let i = 0; i < this.tag.length; i++) {
+        width += this.$refs.tabitem[0].getBoundingClientRect().width;
+      }
+      if (this.area) {
+        this.$refs.tabWrapper.style.width = width + 200 + "px";
+      } else {
+        this.$refs.tabWrapper.style.width = width + 100 + "px";
+      }
+
+      this.$nextTick(() => {
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$refs.tab, {
+            startX: 0,
+            click: true,
+            scrollX: true,
+            scrollY: false,
+            eventPassthrough: "vertical"
+          });
+        } else {
+          this.scroll.refresh();
+        }
+      });
     }
   }
 };
@@ -42,6 +78,8 @@ export default {
 
 .tag-wrapper {
   position: relative;
+  width: 100%;
+  overflow: hidden;
 
   .titleName {
     position: absolute;
@@ -54,26 +92,19 @@ export default {
   }
 
   .content {
-    padding-left: 50px;
+    display: flex;
 
     .item {
-      display: inline-block;
-      height: 26px;
-      line-height: 27px;
-      margin: 0 14px 14px 0;
+      flex: 0 0 auto;
+      padding: 0 8px;
+      height: 22px;
+      line-height: 22px;
+      margin-top: 10px;
       color: #333;
       font-size: 14px;
       cursor: pointer;
 
-      &:hover {
-        color: $color-theme;
-      }
-
-      &:first-child {
-        font-size: 15px;
-      }
-
-      &.active {
+      &:hover, &.active {
         color: $color-theme;
       }
     }

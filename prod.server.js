@@ -98,9 +98,9 @@ apiRoutes.get('/getSortTags', function (req, res) {
     console.log(e)
   })
 })
-//电台详细
-apiRoutes.get('/api/getRadioDesc', function (req, res) {
-  var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+//mvURL
+apiRoutes.get('/api/getMvUrl', function (req, res) {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
@@ -113,6 +113,22 @@ apiRoutes.get('/api/getRadioDesc', function (req, res) {
     console.log(e)
   })
 })
+//MV列表
+apiRoutes.get('/api/getMvlist', function (req, res) {
+  const url = 'https://c.y.qq.com/mv/fcgi-bin/getmv_by_tag'
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+    },
+    params: req.query
+  }).then((response) => {
+
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
 app.use('/api', apiRoutes)
 
 app.use(express.static('./dist'))

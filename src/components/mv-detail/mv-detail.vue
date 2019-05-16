@@ -82,6 +82,8 @@ export default {
 }
 
 .video-wrapper {
+  height auto;
+  width 100%
 }
 
 .tab {

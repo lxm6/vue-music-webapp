@@ -5,36 +5,37 @@
       <div class="mv-wrapper">
         <scroll class="mvlist-wrapper" ref="mvlist" :data="mvlist">
           <div>
-            <div class="tags">
-              <Tags
-                v-if="taglist"
-                titleName="排序"
-                :tag="switches"
-                :currentId="currentType"
-                @selectItemTag="selectOrder"
-              />
-              <Tags
-                v-if="taglist"
-                titleName="地区"
-                :tag="taglist.area"
-                :currentId="currentAreaId"
-                @selectItemTag="selectAreaIndex"
-              />
-              <Tags
-                v-if="taglist"
-                titleName="类型"
-                :tag="taglist.tag"
-                :currentId="currentTagId"
-                @selectItemTag="selectTagIndex"
-              />
-              <Tags
-                v-if="taglist"
-                titleName="年份"
-                :tag="taglist.year"
-                :currentId="currentYearId"
-                @selectItemTag="selectYearIndex"
-              />
-            </div>
+            <Tags
+              v-if="taglist"
+              titleName="排序"
+              :tag="switches"
+              :currentId="currentType"
+              @selectItemTag="selectOrder"
+            />
+
+            <Tags
+              v-if="taglist"
+              titleName="地区"
+              :tag="taglist.area"
+              :currentId="currentAreaId"
+              :area="true"
+              @selectItemTag="selectAreaIndex"
+
+            />
+            <Tags
+              v-if="taglist"
+              titleName="类型"
+              :tag="taglist.tag"
+              :currentId="currentTagId"
+              @selectItemTag="selectTagIndex"
+            />
+            <Tags
+              v-if="taglist"
+              titleName="年份"
+              :tag="taglist.year"
+              :currentId="currentYearId"
+              @selectItemTag="selectYearIndex"
+            />
             <div class="mv-list" v-show="mvlist.length">
               <li
                 @click="selectItem(item)"
@@ -56,6 +57,7 @@
               </li>
             </div>
           </div>
+
           <div v-show="!mvlist.length" class="loading-container">
             <loading></loading>
           </div>
@@ -68,6 +70,7 @@
 
 <script>
 import { mapMutations, mapGetters } from "vuex";
+
 import TitleBar from "base/title-bar/title-bar";
 import Tags from "base/tags/tags";
 import Loading from "base/loading/loading";
@@ -215,17 +218,19 @@ export default {
 }
 
 .mv-wrapper {
-  top: $top-height;
+  top: 65px;
   bottom: 0;
   position: fixed;
   width: 100%;
 
   .mvlist-wrapper {
-    padding 15px;
+    padding: 10px;
     height: 100%;
     overflow: hidden;
 
     .mv-list {
+      margin-top: 10px;
+
       .ablum {
         position: relative;
 
