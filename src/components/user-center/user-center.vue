@@ -45,7 +45,7 @@ export default {
 
 .user-center {
   position: absolute;
-  top: 94px;
+  top: 90px;
   bottom: 0;
   width: 100%;
   background: #fff;

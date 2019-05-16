@@ -3,7 +3,17 @@
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="mv-wrapper" ref="mv">
-        <scroll class="mvlist-wrapper" ref="mvlist" :data="mvlist">
+        <scroll
+          class="mvlist-wrapper"
+          ref="mvlist"
+          :data="mvlist"
+          :pullup="pullup"
+          @scroll="scroll"
+          @scrollToEnd="searchMore"
+          :beforeScroll="beforeScroll"
+          :listen-scroll="listenScroll"
+          :probe-type="probeType"
+        >
           <div>
             <Tags
               v-if="taglist"
@@ -18,7 +28,6 @@
               titleName="地区"
               :tag="taglist.area"
               :currentId="currentAreaId"
-              :area="true"
               @selectItemTag="selectAreaIndex"
             />
             <Tags
@@ -61,13 +70,18 @@
                 </mu-flexbox>
               </mu-list-item>
             </div>
+            <loading2 v-show="hasMore&& mvlist.length"></loading2>
+            <div class="tip" v-show="!hasMore">没有更多数据了</div>
           </div>
         </scroll>
         <div class="loading-container" ref="loading">
           <loading></loading>
         </div>
-        <router-view></router-view>
       </div>
+      <div class="backTop" v-show="showBackTop" @click="backTop">
+        <mu-float-button icon="keyboard_arrow_up" class="demo-float-button"/>
+      </div>
+    <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -78,6 +92,7 @@ import { mapMutations, mapGetters } from "vuex";
 import TitleBar from "base/title-bar/title-bar";
 import Tags from "base/tags/tags";
 import Loading from "base/loading/loading";
+import Loading2 from "base/loading/loading2";
 import Scroll from "base/scroll/scroll";
 import { getMvlist, getMvUrl } from "api/mv";
 import { ERR_OK } from "api/config";
@@ -101,21 +116,38 @@ export default {
       switches: [{ id: 2, title: "推荐" }, { id: 1, title: "最新" }],
       pullup: true,
       beforeScroll: true,
-      hasMore: true
+      hasMore: true,
+      scrollY: 0,
+      showBackTop: false
     };
+  },
+  beforeMount() {
+    this.$Lazyload.config({ loading: require('common/image/lazyimg2.png') });
   },
   created() {
     this._getMvlist();
+    this.probeType = 3;
+    this.listenScroll = true;
   },
   computed: {
     ...mapGetters(["mv"])
   },
   methods: {
+    scroll(pos) {
+      this.scrollY = pos.y;
+    },
+    backTop() {
+      this.$refs.mvlist.scrollTo(0, 0, 500);
+    },
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.mv.style.bottom = bottom;
       this.$refs.mvlist.refresh();
     },
+    listScroll() {
+      this.$emit("listScroll");
+    },
+
     filterSinger(singer) {
       let ret = [];
       if (!singer) {
@@ -156,6 +188,29 @@ export default {
       this.pageno = 0;
       this.$refs.loading.style.display = "block";
       this._getMvlist();
+    },
+    searchMore() {
+      if (!this.hasMore) {
+        return;
+      }
+      this.pageno++;
+      getMvlist({
+        type: this.currentType,
+        year: this.currentYearId,
+        area: this.currentAreaId,
+        tag: this.currentTagId,
+        pageno: this.pageno
+      }).then(res => {
+        if (res.code === ERR_OK) {
+          this.mvlist = this.mvlist.concat(res.data.mvlist);
+          this._checkMore(this.mvlist);
+        }
+      });
+    },
+    _checkMore() {
+      if (this.mvlist.length == this.allpage) {
+        this.hasMore = false;
+      }
     },
     _getMvlist() {
       getMvlist({
@@ -215,9 +270,19 @@ export default {
       setMV: "SET_MV"
     })
   },
+  watch: {
+    scrollY(newVal) {
+      if (newVal < -1000) {
+        this.showBackTop = true;
+      } else {
+        this.showBackTop = false;
+      }
+    }
+  },
   components: {
     Scroll,
     Loading,
+    Loading2,
     TitleBar,
     Tags
   }
@@ -290,7 +355,7 @@ export default {
       }
 
       .item {
-        padding-right: 8px;
+        margin-right: 8px;
         margin-bottom: 8px;
         cursor: pointer;
         border-top: 1px solid $color-border;
@@ -330,6 +395,26 @@ export default {
     border-radius: 5px;
     background: #eee;
     margin: 300px auto;
+  }
+}
+
+.tip {
+  color: $color-text-ll;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.backTop {
+  z-index: 999;
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+
+  .mu-float-button {
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    color: $color-theme;
   }
 }
 </style>

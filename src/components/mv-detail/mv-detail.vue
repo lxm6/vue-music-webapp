@@ -73,7 +73,7 @@ export default {
 
 .container {
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
   bottom: 0;
   width: 100%;
   top: 0;

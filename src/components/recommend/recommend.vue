@@ -190,7 +190,7 @@ export default {
 .recommend {
   position: absolute;
   width: 100%;
-  top: 94px;
+  top: 90px;
   bottom: 0;
   background: #fff;
 
@@ -319,7 +319,7 @@ export default {
 
       .item {
         margin: 0 10px;
-        border-bottom: 1px solid $color-border;
+        border-top: 1px solid $color-border;
 
         .ablum {
           width: 60px;

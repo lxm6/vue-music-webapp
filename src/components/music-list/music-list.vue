@@ -187,7 +187,7 @@ export default {
       let zIndex = 0;
       let blur = 0;
       const percent = Math.abs(newVal / this.imageHeight);
-      if (newVal < -600) {
+      if (newVal < -1000) {
         this.showBackTop = true;
       } else {
         this.showBackTop = false;

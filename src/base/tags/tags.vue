@@ -30,10 +30,7 @@ export default {
       type: String,
       default: ""
     },
-    area: {
-      type: Boolean,
-      default: false
-    }
+
   },
   created() {
     this.$nextTick(() => {
@@ -45,15 +42,11 @@ export default {
       this.$emit("selectItemTag", item);
     },
     InitTabScroll() {
-      let width = 0;
+      let width = 50;
       for (let i = 0; i < this.tag.length; i++) {
-        width += this.$refs.tabitem[0].getBoundingClientRect().width;
+        width += this.$refs.tabitem[0].getBoundingClientRect().width+20;
       }
-      if (this.area) {
-        this.$refs.tabWrapper.style.width = width + 200 + "px";
-      } else {
-        this.$refs.tabWrapper.style.width = width + 100 + "px";
-      }
+       this.$refs.tabWrapper.style.width = width + "px";
 
       this.$nextTick(() => {
         if (!this.scroll) {

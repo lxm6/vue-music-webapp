@@ -22,10 +22,11 @@ export default {};
 
 .tab {
   display: flex;
-  height: 50px;
-  line-height: 44px;
+  height: 42px;
+  line-height: 26px;
   font-size: 18px;
   background-color: $color-theme;
+  border-bottom: 3px solid #d4ef3f;
 
   .tab-item {
     flex: 1;
@@ -33,7 +34,7 @@ export default {};
 
     .tab-link {
       color: #fff;
-      display inline-block;
+      display: inline-block;
     }
 
     &.router-link-active {

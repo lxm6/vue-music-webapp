@@ -17,7 +17,7 @@ fastclick.attach(document.body)
 Vue.use(MuseUI)
 Vue.use(Mui);
 Vue.use(VueLazyload, {
-  loading: require('common/image/default.png')
+  loading: require('common/image/lazyimg1.png')
 })
 /* eslint-disable no-new */
 new Vue({
