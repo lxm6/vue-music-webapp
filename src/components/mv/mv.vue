@@ -272,7 +272,7 @@ export default {
   },
   watch: {
     scrollY(newVal) {
-      if (newVal < -1000) {
+      if (newVal < -1600) {
         this.showBackTop = true;
       } else {
         this.showBackTop = false;
