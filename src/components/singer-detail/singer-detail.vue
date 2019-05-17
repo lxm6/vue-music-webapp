@@ -1,6 +1,9 @@
 <template>
   <transition name="slide">
-    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+    <div class="singer-detail">
+      <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+      <router-view></router-view>
+    </div>
   </transition>
 </template>
 
@@ -69,5 +72,4 @@ export default {
   bottom: 0;
   background: $color-background;
 }
-
 </style>

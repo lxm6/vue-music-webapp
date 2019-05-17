@@ -21,7 +21,9 @@ export default class Song {
    * @param {*} duration - 时长
    * @param {*} image - 歌曲图片
    * @param {*} url - 歌曲URL
+   * @param {*} vid - mv的id
    * @param {Boolean} isPay 是否付费歌曲
+   * @param {Boolean} isOnly 是否独家
    */
   constructor({
     id,
@@ -34,6 +36,8 @@ export default class Song {
     image,
     url,
     isPay = false,
+    isOnly = false,
+    vid,
   }) {
     this.id = id
     this.mid = mid
@@ -44,6 +48,8 @@ export default class Song {
     this.duration = duration
     this.image = image
     this.isPay = isPay;
+    this.isOnly = isOnly;
+    this.vid = vid;
     if (url) {
       this.url = url;
     }
@@ -102,7 +108,9 @@ export function createSong(musicData) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
+    vid:musicData.vid?musicData.vid:'',
     isPay: musicData.pay.payplay === 1,
+    isOnly: musicData.isonly===1 ,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
     url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=192`
   })

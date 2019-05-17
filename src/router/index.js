@@ -121,6 +121,10 @@ const router = new Router({
           children: [{
             path: ":id",
             component: SingerDetail,
+            children: [{
+              path: ":id",
+              component: MVDetail,
+            }]
           }]
         },
         {

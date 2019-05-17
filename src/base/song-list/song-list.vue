@@ -8,17 +8,21 @@
         :class="{'current-play-b':getCurrent(item)}"
         @click="selectSong(item,index)"
       >
-          <div class="rank" v-show="rank" >
-            <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
-          </div>
-          <div class="content">
-            <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
-            <p class="desc" :class="{'current-play':getCurrent(item)}">
-              <span class="vip" v-if="item.isPay">VIP</span>
-              <span class="hq">HQ</span>
-              <span>{{getDesc(item)}}</span>
-            </p>
-          </div>
+        <div class="rank" v-show="rank">
+          <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
+        </div>
+        <div class="content">
+          <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+          <p class="desc" :class="{'current-play':getCurrent(item)}">
+            <span class="vip" v-if="item.isPay">VIP</span>
+            <span class="hq">HQ</span>
+            <span class="vip" v-if="item.isOnly">独家</span>
+            <span class="singername">{{getDesc(item)}}</span>
+          </p>
+        </div>
+        <div @click.stop="playMV(item)" class="mv-icon" slot="right" v-show="item.vid!=''">
+          <mu-icon-button icon="ondemand_video"/>
+        </div>
       </mu-list-item>
     </mu-list>
   </div>
@@ -57,6 +61,11 @@ export default {
     getDesc(song) {
       return `${song.singerName} · ${song.album}`;
     },
+    playMV(item) {
+       this.$router.push({
+        path: `/singer/${item.singerMid}/${item.vid}`
+       })
+    },
     selectSong(item, index) {
       this.$emit("select", item, index);
     },
@@ -77,25 +86,22 @@ export default {
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
 .song-list {
   // padding-top: 8px;
-
   .listitem {
     box-sizing: border-box;
     border-left: 5px solid #fff;
 
-
     .rank {
-      float left;
+      float: left;
       width: 54px;
-      height 63px;
+      height: 63px;
       margin: 10px 15 0 10px;
       text-align: center;
-      line-height 78px;
+      line-height: 78px;
 
       .icon {
         display: inline-block;
@@ -125,17 +131,15 @@ export default {
     .content {
       line-height: 20px;
       overflow: hidden;
-      margin-left 20px;
-      padding 10px 10px  2px 0;
+      margin-left: 20px;
+      padding: 10px 10px 2px 0;
       border-bottom: 1px solid $color-border;
-
 
       .name {
         no-wrap();
         font-size: $font-size-medium-x;
         color: $color-text;
         display: inline-block;
-        width: 98%;
       }
 
       .desc {
@@ -144,7 +148,6 @@ export default {
         no-wrap();
         color: $color-text-l;
         width: 98%;
-
       }
 
       .vip, .hq {
@@ -159,7 +162,11 @@ export default {
         padding: 1px 3px;
         color: orange;
         border: 1px solid orange;
-        margin-right: 4px;
+      }
+
+      .singername {
+        margin-top: 2px;
+        margin-left: 3px;
       }
 
       .current-play {
@@ -172,4 +179,13 @@ export default {
     border-left: 5px solid $color-theme;
   }
 }
+
+.mv-icon {
+  margin-right: 6px;
+  color: rgba(0, 0, 0, 0.2);
+}
+.material-icons {
+  font-size: 24px;
+}
+
 </style>

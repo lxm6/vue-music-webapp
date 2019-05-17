@@ -251,6 +251,7 @@ export default {
             return;
           }
           this.setMV({
+            vid:vid,
             mvtitle: item.mvtitle,
             singername: this.filterSinger(item.singers),
             picurl: item.picurl,
@@ -261,7 +262,7 @@ export default {
         }
       }
       this.$router.push({
-        path: `/mv/${vid}`
+        path: `/mv/${this.mv.vid}`
       });
     },
 
