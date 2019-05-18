@@ -18,8 +18,8 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
-          <div class="download" @click="download">
-            <mu-icon-button icon="file_download" slot="right"/>
+          <div class="mv-icon" @click="playMV(currentSong.vid)" v-show="currentSong.vid!=''">
+            MV
           </div>
         </div>
 
@@ -77,15 +77,19 @@
                 :class="getFavoriteIcon(currentSong)"
               ></i>
             </li>
+            <li class="setLyric" @click="showLyricset">
+              <img src="./Aa.png" width="22" height="22">
+            </li>
             <li class="dot-wrapper">
               <span class="dot" :class="{'active':currentShow==='cd' }" @click.stop="toggleShow"></span>
               <span class="dot" :class="{'active':currentShow==='lyric'}" @click.stop="toggleShow"></span>
             </li>
-            <li class="setLyric" @click="showLyricset">
-              <img src="./Aa.png" width="24" height="24">
-            </li>
+
             <li class="setBlur" @click="showSeekBar">
-              <img src="./Aa.png" width="24" height="24">
+              <img src="./setblur.png" width="24" height="24">
+            </li>
+            <li class="setLyric" @click="download">
+              <img src="./download.png" width="23" height="23">
             </li>
           </ul>
 
@@ -655,6 +659,9 @@ export default {
         scale
       };
     },
+    playMV(vid){
+      
+    },
     download() {
       downloadSong(this.currentSong.name, this.currentSong.url);
     },
@@ -800,10 +807,15 @@ export default {
         font-size: $font-size-medium;
       }
 
-      .download {
-        top: 0px;
+      .mv-icon {
+        top: 12px;
         position: absolute;
-        right: 0;
+        right: 10px;
+        font-size: 14px;
+        padding: 2px 4px;
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 3px;
       }
 
       .setlyric {
@@ -994,7 +1006,7 @@ export default {
       }
 
       .operator-wrapper {
-        padding: 0px 20%;
+        padding: 0px 14%;
         text-align: center;
         display: flex;
         align-items: center;
@@ -1005,7 +1017,7 @@ export default {
         }
 
         .favorite {
-          font-size: $font-size-large-x;
+          font-size: 19px;
 
           .icon-favorite {
             color: $color-sub-theme;

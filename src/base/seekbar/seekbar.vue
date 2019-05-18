@@ -3,7 +3,7 @@
     <div class="seekbar" @click="hide" v-show="seekBarVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-operate">
-          <h2 class="num">{{percentNum}}</h2>
+          <h2>背景模糊度：{{percentNum}}</h2>
           <div class="seek-bar" ref="seekBar" @click="seekBarClick">
             <div class="bar-inner">
               <div class="progress" ref="progress"></div>
@@ -163,9 +163,9 @@ export default {
     .list-operate {
       padding: 25px 0;
       width: 215px;
-      margin: auto;
+      margin: 0 auto;
 
-      .num {
+      h2 {
         text-align: center;
         font-size: 18px;
         margin-bottom: 10px;
