@@ -42,7 +42,7 @@
               class="item"
             >
               <div class="ablum">
-                <img :src="item.imgurl">
+                <img :src="item.imgurl" >
                 <div class="info">
                   <img src="~@/common/image/earphone.png">
                   <span>{{formatNum(item.listennum)}}</span>

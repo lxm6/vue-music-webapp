@@ -99,7 +99,7 @@ apiRoutes.get('/getSortTags', function (req, res) {
   })
 })
 //mvURL
-apiRoutes.get('/api/getMvUrl', function (req, res) {
+apiRoutes.get('/getMvUrl', function (req, res) {
   const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
   axios.get(url, {
     headers: {
@@ -114,7 +114,7 @@ apiRoutes.get('/api/getMvUrl', function (req, res) {
   })
 })
 //MV列表
-apiRoutes.get('/api/getMvlist', function (req, res) {
+apiRoutes.get('/getMvlist', function (req, res) {
   const url = 'https://c.y.qq.com/mv/fcgi-bin/getmv_by_tag'
   axios.get(url, {
     headers: {

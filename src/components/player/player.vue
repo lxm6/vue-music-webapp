@@ -1,5 +1,13 @@
 <template>
   <div class="player" v-show="playlist.length>0">
+    <transition name="slideDown">
+      <div class="video-wrapper" v-show="videoVisible">
+        <div class="back" @click="closeplayer">
+          <mu-icon-menu icon="close"/>
+        </div>
+        <div class="dplayer" ref="dplayer"></div>
+      </div>
+    </transition>
     <transition
       name="normal"
       @enter="enter"
@@ -18,9 +26,7 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
-          <div class="mv-icon" @click="playMV(currentSong.vid)" v-show="currentSong.vid!=''">
-            MV
-          </div>
+          <div class="mv-icon" @click="playMV(currentSong.vid)" v-show="currentSong.vid!=''">MV</div>
         </div>
 
         <div
@@ -201,6 +207,10 @@ import Lyricset from "components/lyricset/lyricset";
 import TopTip from "base/top-tip/top-tip";
 import Toast from "base/toast/toast";
 import { playerMixin } from "common/js/mixin";
+import { getMvUrl } from "api/mv";
+import { ERR_OK } from "api/config";
+import "DPlayer/dist/DPlayer.min.css";
+import DPlayer from "dplayer";
 import {
   saveFontsize,
   loadFontsize,
@@ -285,7 +295,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex"])
+    ...mapGetters(["fullScreen", "playing", "currentIndex","videoVisible"])
   },
   created() {
     this.touch = {};
@@ -659,15 +669,59 @@ export default {
         scale
       };
     },
-    playMV(vid){
-      
+    playMV(vid) {
+      this.setVideoVisible(true);
+      this.currentLyric.stop();
+      this.getMV(vid);
+    },
+
+    closeplayer() {
+      this.setVideoVisible(false);
+
+    },
+    async getMV(vid) {
+      const response = await getMvUrl(vid);
+      if (response.code === ERR_OK) {
+        const MvUrlData = response.getMvUrl;
+        if (MvUrlData.code === ERR_OK) {
+          const mvUrl_mp4 = MvUrlData.data[vid].mp4;
+
+          const result = [];
+          for (let i = 0; i < mvUrl_mp4.length; i++) {
+            if (mvUrl_mp4[i].freeflow_url.length !== 0) {
+              for (let j = 0; j < mvUrl_mp4[i].freeflow_url.length; j++) {
+                result.unshift(mvUrl_mp4[i].freeflow_url[j]);
+              }
+            }
+          }
+
+          if (result.length === 0) {
+            console.log("无法播放");
+            return;
+          }
+          this.setPlayingState(false);
+          this.initVideo(result[0]);
+        }
+      }
+    },
+    initVideo(url) {
+      this.$nextTick(() => {
+        const dp = new DPlayer({
+          container: this.$refs.dplayer,
+          video: {
+            url: url
+          },
+          autoplay: true
+        });
+      });
     },
     download() {
       downloadSong(this.currentSong.name, this.currentSong.url);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN"
+      setFullScreen: "SET_FULL_SCREEN",
+      setVideoVisible: "SET_VIDEO_VISIBLE",
     }),
     ...mapActions(["savePlayHistory"])
   },
@@ -1229,5 +1283,31 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.video-wrapper {
+  position: fixed;
+  z-index: 200;
+  bottom: 0;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  background: #000;
+}
+
+.dplayer {
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  width: 100%;
+}
+
+
+  .slideDown-enter-active, .slideDown-leave-active {
+  transition: all 0.3s;
+}
+
+.slideDown-enter, .slideDown-leave-to {
+  transform: translate3d(0, 100%, 0);
 }
 </style>

@@ -11,33 +11,34 @@
 </template>
 
 <script>
-import "DPlayer/dist/DPlayer.min.css";
-import DPlayer from "dplayer";
-import TitleBar from "base/title-bar/title-bar";
-import { mapGetters ,mapMutations} from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { getMvUrl } from "api/mv";
 import { ERR_OK } from "api/config";
-
+import "DPlayer/dist/DPlayer.min.css";
+import DPlayer from "dplayer";
 export default {
   computed: {
-    ...mapGetters(["mv", "playing"])
+    ...mapGetters([ "playing"])
   },
   created() {
     this.init();
+    this.setPlayingState(false);
+
   },
 
   methods: {
     ...mapMutations({
-      setPlayingState: "SET_PLAYING_STATE"
+      setPlayingState: "SET_PLAYING_STATE",
     }),
     init() {
-      if (!this.mv.vid) {
-        this.getMV(this.$route.params.id);
-      } else {
-        this.initVideo(this.mv.url);
+      if (window.history.length <= 1) {
+        this.$router.push({ path: "/" });
+        return;
       }
+      this.getMV(this.$route.params.id);
     },
     async getMV(vid) {
+
       const response = await getMvUrl(vid);
       if (response.code === ERR_OK) {
         const MvUrlData = response.getMvUrl;
@@ -62,30 +63,19 @@ export default {
       }
     },
     initVideo(url) {
-      this.setPlayingState(!this.playing);
       this.$nextTick(() => {
         const dp = new DPlayer({
           container: this.$refs.dplayer,
           video: {
             url: url,
-            pic: this.mv.picurl
           },
           autoplay: true
         });
       });
     },
     back() {
-      if (window.history.length <= 1) {
-        // window.location.href="https://www.lxm6.top"
-        this.$router.push({ path: "/" });
-        return false;
-      } else {
-        this.$router.back();
-      }
+      this.$router.back();
     }
-  },
-  components: {
-    TitleBar
   }
 };
 </script>

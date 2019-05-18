@@ -219,21 +219,25 @@ router.beforeEach((to, from, next) => {
     addSongVisible,
     deleteSongVisible,
     lyricsetVisible,
-    menuBarVisible
+    menuBarVisible,
+    seekBarVisible,
+    videoVisible
   } = store.getters;
 
   if (addSongVisible) {
     store.commit("SET_ADD_SONG_VISIBLE", false);
-    next(false);
-  }
-  if (playListVisible) {
-    store.commit("SET_PLAY_LIST_VISIBLE", false);
     next(false);
   } else if (playListVisible) {
     store.commit("SET_PLAY_LIST_VISIBLE", false);
     next(false);
   } else if (lyricsetVisible) {
     store.commit("SET_LYRICSET_VISIBLE", false);
+    next(false);
+  } else if (seekBarVisible) {
+    store.commit("SET_SEEKBAR_VISIBLE", false);
+    next(false);
+  } else if (videoVisible) {
+    store.commit("SET_VIDEO_VISIBLE", false);
     next(false);
   } else if (fullScreen) {
     store.commit("SET_FULL_SCREEN", false);

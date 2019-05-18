@@ -65,6 +65,7 @@
                     <div class="text">
                       <p class="desc" v-html="item.mvtitle"></p>
                       <p class="name" v-html="filterSinger(item.singers)"></p>
+                      <p class="name" v-html="item.publictime"></p>
                     </div>
                   </mu-flexbox-item>
                 </mu-flexbox>
@@ -129,9 +130,7 @@ export default {
     this.probeType = 3;
     this.listenScroll = true;
   },
-  computed: {
-    ...mapGetters(["mv"])
-  },
+
   methods: {
     scroll(pos) {
       this.scrollY = pos.y;
@@ -229,46 +228,14 @@ export default {
         }
       });
     },
-    async selectItem(item) {
-      const vid = item.vid;
-      const response = await getMvUrl(vid);
-      if (response.code === ERR_OK) {
-        const MvUrlData = response.getMvUrl;
-        if (MvUrlData.code === ERR_OK) {
-          const mvUrl_mp4 = MvUrlData.data[vid].mp4;
-
-          const result = [];
-          for (let i = 0; i < mvUrl_mp4.length; i++) {
-            if (mvUrl_mp4[i].freeflow_url.length !== 0) {
-              for (let j = 0; j < mvUrl_mp4[i].freeflow_url.length; j++) {
-                result.unshift(mvUrl_mp4[i].freeflow_url[j]);
-              }
-            }
-          }
-
-          if (result.length === 0) {
-            console.log("无法播放");
-            return;
-          }
-          this.setMV({
-            vid:vid,
-            mvtitle: item.mvtitle,
-            singername: this.filterSinger(item.singers),
-            picurl: item.picurl,
-            publictime: item.publictime,
-            listennum: this.formatNum(item.listennum),
-            url: result[0]
-          });
-        }
-      }
+   selectItem(item) {
       this.$router.push({
-        path: `/mv/${this.mv.vid}`
+        path: `/mv/${item.vid}`
       });
     },
 
     ...mapMutations({
       setPlayState: "SET_PLAYING_STATE",
-      setMV: "SET_MV"
     })
   },
   watch: {
@@ -339,7 +306,7 @@ export default {
           align-items: center;
 
           span {
-            margin-top: 3px;
+            margin-top: 2px;
           }
 
           img {
@@ -357,24 +324,25 @@ export default {
 
       .item {
         margin-right: 8px;
-        margin-bottom: 8px;
+        margin-bottom 8px;
         cursor: pointer;
         border-top: 1px solid $color-border;
 
         .text {
           overflow: hidden;
-          font-size: 13px;
+          font-size: 14px;
           line-height: 22px;
 
           .name {
+            font-size: 12px;
             color: $color-text-l;
-            margin-top: 5px;
             no-wrap();
           }
 
           .desc {
             color: $color-text;
             limit_lines();
+
           }
         }
       }

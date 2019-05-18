@@ -21,3 +21,4 @@ export const deleteSongVisible = state => state.deleteSongVisible;
 export const lyricsetVisible = state => state.lyricsetVisible;
 export const seekBarVisible = state => state.seekBarVisible;
 export const menuBarVisible = state => state.menuBarVisible;
+export const videoVisible = state => state.videoVisible;

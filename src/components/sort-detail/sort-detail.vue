@@ -91,7 +91,7 @@ export default {
           name: "最新"
         },
         {
-          name: "最热"
+          name: "推荐"
         }
       ]
     };
@@ -151,7 +151,7 @@ export default {
       });
     },
     _getDiscList() {
-      if (!this.categoryId) {
+      if (!this.categoryId&&window.history.length>= 1) {
         this.$router.push("/sort");
         return;
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="music-list">
     <div class="back" @click="back">
-       <mu-icon-button icon="arrow_back"/>
+      <mu-icon-button icon="arrow_back"/>
     </div>
     <div class="title">
       <h1 v-html="title"></h1>
@@ -245,16 +245,19 @@ export default {
     left: 10%;
     z-index: 40;
     width: 80%;
-    no-wrap();
     text-align: center;
     line-height: 40px;
     font-size: $font-size-large;
     color: #fff;
-  }
 
-  p {
-    font-size: $font-size-medium;
-    color: #f4f4f4;
+    h1 {
+      no-wrap();
+    }
+
+    p {
+      font-size: $font-size-medium;
+      color: #f4f4f4;
+    }
   }
 
   .bg-image {
@@ -285,7 +288,7 @@ export default {
         background-color: rgba(0, 0, 0, 0.1);
         font-size: 0;
 
-        &:active  {
+        &:active {
           background-color: rgba(0, 0, 0, 0.3);
         }
 
