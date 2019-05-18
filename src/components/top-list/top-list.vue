@@ -1,14 +1,17 @@
 <template>
   <transition name="slide">
-    <music-list
-      :rank="rank"
-      :title="title"
-      :updateTime="updateTime"
-      :info="info"
-      :bg-image="bgImage"
-      :songs="songs"
-    ></music-list>
-      </transition>
+    <div class="top-list">
+      <music-list
+        :rank="rank"
+        :title="title"
+        :updateTime="updateTime"
+        :info="info"
+        :bg-image="bgImage"
+        :songs="songs"
+      ></music-list>
+      <router-view></router-view>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -91,4 +94,12 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 
+.top-list {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 </style>

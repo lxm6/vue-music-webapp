@@ -1,16 +1,16 @@
 <template>
-  <!-- <transition name="slide"> -->
+  <transition name="slide">
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="searchWrapper" ref="search">
-        <div class="search">
+        <div class="search" >
           <div class="search-box-wrapper">
             <search-box ref="searchBox" @query="onQueryChange"></search-box>
           </div>
           <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
             <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
               <div>
-                <div class="hot-key">
+                <div class="hot-key" v-show="hotKey.length">
                   <h1 class="title">热门搜索</h1>
                   <ul>
                     <li
@@ -47,7 +47,7 @@
       </div>
       <router-view></router-view>
     </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>
@@ -127,13 +127,14 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+  left 0;
+  right:0;
   top: 0;
   z-index: 100;
 
 }
 
 .searchWrapper {
-  
   position: fixed;
   width: 100%;
   top: $top-height;
@@ -143,7 +144,7 @@ export default {
 
 .search {
   .search-box-wrapper {
-    padding: 12px 15px;
+    padding: 11px 15px;
     background-color: $color-background;
   }
 

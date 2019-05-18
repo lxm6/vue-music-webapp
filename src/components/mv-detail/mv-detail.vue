@@ -1,15 +1,12 @@
 <template>
   <transition name="slide">
     <div class="container">
-      <div class="video-wrapper">
-        <div class="back" @click="back">
-          <mu-icon-button icon="arrow_back"/>
-        </div>
-        <div ref="dplayer" class="dplayer"></div>
+      <div class="back" @click="back">
+        <mu-icon-button icon="arrow_back"/>
       </div>
+      <div ref="dplayer" class="dplayer"></div>
     </div>
     <router-view></router-view>
-
   </transition>
 </template>
 
@@ -17,19 +14,22 @@
 import "DPlayer/dist/DPlayer.min.css";
 import DPlayer from "dplayer";
 import TitleBar from "base/title-bar/title-bar";
-import { mapGetters } from "vuex";
+import { mapGetters ,mapMutations} from "vuex";
 import { getMvUrl } from "api/mv";
 import { ERR_OK } from "api/config";
 
 export default {
   computed: {
-    ...mapGetters(["mv"])
+    ...mapGetters(["mv", "playing"])
   },
   created() {
     this.init();
   },
 
   methods: {
+    ...mapMutations({
+      setPlayingState: "SET_PLAYING_STATE"
+    }),
     init() {
       if (!this.mv.vid) {
         this.getMV(this.$route.params.id);
@@ -62,6 +62,7 @@ export default {
       }
     },
     initVideo(url) {
+      this.setPlayingState(!this.playing);
       this.$nextTick(() => {
         const dp = new DPlayer({
           container: this.$refs.dplayer,
@@ -74,7 +75,13 @@ export default {
       });
     },
     back() {
-      this.$router.back();
+      if (window.history.length <= 1) {
+        // window.location.href="https://www.lxm6.top"
+        this.$router.push({ path: "/" });
+        return false;
+      } else {
+        this.$router.back();
+      }
     }
   },
   components: {

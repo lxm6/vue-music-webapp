@@ -127,7 +127,7 @@ export default {
   computed: {
     titleBarName() {
       if (this.currentIndex === 0) {
-        return "我的喜欢";
+        return "我喜欢的";
       } else if (this.currentIndex === 1) {
         return "最近播放";
       } else {

@@ -102,7 +102,7 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background:$color-background;
+  background $color-background;
   top: 0;
 }
 

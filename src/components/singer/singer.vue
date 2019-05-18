@@ -127,6 +127,8 @@ export default {
   bottom: 0;
   width: 100%;
   top: 0;
+  background $color-background;
+
 }
 
 .singer {

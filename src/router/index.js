@@ -113,7 +113,11 @@ const router = new Router({
       component: Recommend,
       children: [{
           path: ":id",
-          component: Disc
+          component: Disc,
+          children: [{
+            path: ":id",
+            component: MVDetail,
+          }]
         },
         {
           path: "/singer",
@@ -133,6 +137,10 @@ const router = new Router({
           children: [{
             path: ":id",
             component: TopList,
+            children: [{
+              path: ":id",
+              component: MVDetail,
+            }]
           }]
         },
         {
@@ -148,11 +156,15 @@ const router = new Router({
           component: Sort,
           children: [{
             name: "SortDetail",
-            path: "/main/sort/sortDetail",
+            path: "/sort/sortDetail",
             component: SortDetail,
             children: [{
               path: ":id",
               component: Disc,
+              children: [{
+                path: ":id",
+                component: MVDetail,
+              }]
             }]
           }]
         }

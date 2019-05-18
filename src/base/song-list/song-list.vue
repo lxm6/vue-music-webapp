@@ -44,9 +44,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["currentSong"])
+    ...mapGetters(["currentSong"]) 
   },
   methods: {
+
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;
@@ -63,7 +64,7 @@ export default {
     },
     playMV(item) {
        this.$router.push({
-        path: `/singer/${item.singerMid}/${item.vid}`
+        path: `${this.$route.path}/${item.vid}`
        })
     },
     selectSong(item, index) {
@@ -90,7 +91,6 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
-  // padding-top: 8px;
   .listitem {
     box-sizing: border-box;
     border-left: 5px solid #fff;
@@ -184,8 +184,8 @@ export default {
   margin-right: 6px;
   color: rgba(0, 0, 0, 0.2);
 }
+
 .material-icons {
   font-size: 24px;
 }
-
 </style>
