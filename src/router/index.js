@@ -214,6 +214,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   const {
+    playing,
     fullScreen,
     playListVisible,
     addSongVisible,
@@ -221,7 +222,8 @@ router.beforeEach((to, from, next) => {
     lyricsetVisible,
     menuBarVisible,
     seekBarVisible,
-    videoVisible
+    videoVisible,
+    miniPlayerVisible
   } = store.getters;
 
   if (addSongVisible) {
@@ -247,7 +249,7 @@ router.beforeEach((to, from, next) => {
     next(false);
   } else if (menuBarVisible) {
     store.commit("SET_MENUBAR_VISIBLE", false);
-    next(true);
+    next(false);
   } else {
     next(true);
   }

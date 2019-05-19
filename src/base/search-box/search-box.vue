@@ -8,6 +8,8 @@
 
 <script>
 import { debounce } from "common/js/util";
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   props: {
     placeholder: {
@@ -20,7 +22,9 @@ export default {
       query: ""
     };
   },
+
   methods: {
+
     clear() {
       this.query = "";
     },
@@ -29,7 +33,8 @@ export default {
     },
     blur() {
       this.$refs.query.blur();
-    }
+    },
+
   },
   created() {
     this.$watch(
@@ -60,7 +65,7 @@ export default {
   }
 
   .box {
-    outline:none
+    outline: none;
     flex: 1;
     margin: 0 5px;
     line-height: 18px;

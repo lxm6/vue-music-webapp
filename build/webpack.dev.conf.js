@@ -83,7 +83,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       // 推荐列表
       app.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-        axios.get(url, { //通过axios发送http请求，同时更改referer和host，并且把参数给服务端
+        axios.get(url, { //通过axios发送http请求，同时更改referer，并且把参数给服务端
           headers: {
             referer: 'https://c.y.qq.com/',
           },

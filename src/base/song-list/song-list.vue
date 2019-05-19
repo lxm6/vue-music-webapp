@@ -15,13 +15,13 @@
           <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
           <p class="desc" :class="{'current-play':getCurrent(item)}">
             <span class="vip" v-if="item.isPay">VIP</span>
-            <span class="hq">HQ</span>
-            <span class="vip" v-if="item.isOnly">独家</span>
+            <span class="only" v-if="item.isOnly">独家</span>
+            <span class="mv" v-if="item.vid!=''">MV</span>
             <span class="singername">{{getDesc(item)}}</span>
           </p>
         </div>
-        <div @click.stop="playMV(item)" class="mv-icon" slot="right" v-show="item.vid!=''">
-          <mu-icon-button icon="ondemand_video"/>
+        <div @click.stop="playMV(item)" class="mv-icon" slot="right">
+          <mu-icon-button icon="more_vert"/>
         </div>
       </mu-list-item>
     </mu-list>
@@ -44,10 +44,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["currentSong"]) 
+    ...mapGetters(["currentSong"])
   },
   methods: {
-
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;
@@ -63,9 +62,9 @@ export default {
       return `${song.singerName} · ${song.album}`;
     },
     playMV(item) {
-       this.$router.push({
+      this.$router.push({
         path: `${this.$route.path}/${item.vid}`
-       })
+      });
     },
     selectSong(item, index) {
       this.$emit("select", item, index);
@@ -150,25 +149,24 @@ export default {
         width: 98%;
       }
 
-      .vip, .hq {
-        font-size: 7px;
-        padding: 1px 2px;
+      .only, .mv,.vip {
+        font-size: 8px;
+        padding: 2px 2px;
         color: $color-theme;
         border: 1px solid $color-theme;
         border-radius: 3px;
+        margin-right: 1px;
       }
-
-      .hq {
-        padding: 1px 3px;
+      .vip {
+        padding: 2px 3px 2px 3px;
+        color: $color-theme;
+        border: 1px solid $color-theme;
+      }
+      .mv {
+        padding: 2px 3px 2px 3px;
         color: orange;
         border: 1px solid orange;
       }
-
-      .singername {
-        margin-top: 2px;
-        margin-left: 3px;
-      }
-
       .current-play {
         color: $color-theme;
       }

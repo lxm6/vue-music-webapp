@@ -132,7 +132,7 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" v-show="!fullScreen" @click="open">
+      <div class="mini-player"  v-show="!fullScreen && miniPlayerVisible" @click="open">
         <div class="icon">
           <img :class="cdCls" width="40" height="40" :src="currentSong.image">
         </div>
@@ -295,7 +295,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex","videoVisible"])
+    ...mapGetters(["fullScreen", "playing", "currentIndex","videoVisible","miniPlayerVisible"])
   },
   created() {
     this.touch = {};
@@ -1071,7 +1071,7 @@ export default {
         }
 
         .favorite {
-          font-size: 19px;
+          font-size: 21px;
 
           .icon-favorite {
             color: $color-sub-theme;

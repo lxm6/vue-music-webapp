@@ -287,6 +287,7 @@ export default {
         border-radius: 100px;
         background-color: rgba(0, 0, 0, 0.1);
         font-size: 0;
+        cursor pointer;
 
         &:active {
           background-color: rgba(0, 0, 0, 0.3);

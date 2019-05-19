@@ -1,9 +1,9 @@
 <template>
   <transition name="slide">
-    <div class="container"  ref="saveList">
+    <div class="container" ref="saveList">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="save-list">
-        <div class="list-wrapper" ref="listWrapper" >
+        <div class="list-wrapper" ref="listWrapper">
           <scroll ref="Songlist" class="list-scroll" v-if="currentIndex!=2">
             <div class="list-inner">
               <div class="btn-wrapper" v-show="!noResult">
@@ -26,8 +26,9 @@
                     <div class="content" slot="title">
                       <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
                       <p class="desc" :class="{'current-play':getCurrent(item)}">
-                        <span class="vip" v-show="item.isPay">VIP</span>
-                        <span class="hq">HQ</span>
+                        <span class="vip" v-if="item.isPay">VIP</span>
+                        <span class="only" v-if="item.isOnly">独家</span>
+                        <span class="mv" v-if="item.vid!=''">MV</span>
                         <span>{{getDesc(item)}}</span>
                       </p>
                     </div>
@@ -118,7 +119,7 @@ export default {
   data() {
     return {
       item: {},
-      currentIndex:0,
+      currentIndex: 0
     };
   },
   created() {
@@ -179,7 +180,7 @@ export default {
 
   methods: {
     getCurrentIndex() {
-      this.currentIndex=Number(this.$route.params.index)
+      this.currentIndex = Number(this.$route.params.index);
     },
     getDesc(song) {
       return `${song.singerName} · ${song.album}`;
@@ -413,19 +414,25 @@ export default {
                 width: 100%;
               }
 
-              .vip, .hq {
-                font-size: 7px;
-                padding: 1px 2px;
+              .only, .mv, .vip {
+                font-size: 8px;
+                padding: 2px 2px;
                 color: $color-theme;
                 border: 1px solid $color-theme;
                 border-radius: 3px;
+                margin-right: 1px;
               }
 
-              .hq {
-                padding: 1px 3px;
+              .vip {
+                padding: 2px 3px 2px 3px;
+                color: $color-theme;
+                border: 1px solid $color-theme;
+              }
+
+              .mv {
+                padding: 2px 3px 2px 3px;
                 color: orange;
                 border: 1px solid orange;
-                margin-right: 4px;
               }
 
               .current-play {

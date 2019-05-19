@@ -50,9 +50,7 @@ export default class Song {
     this.isPay = isPay;
     this.isOnly = isOnly;
     this.vid = vid;
-    if (url) {
-      this.url = url;
-    }
+    this.url = url;
   }
 
   // 获取歌曲的歌词

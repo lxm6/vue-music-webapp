@@ -65,5 +65,8 @@ const matutaions = {
   [types.SET_VIDEO_VISIBLE](state, visible) {
     state.videoVisible = visible;
   },
+  [types.SET_MINI_PLAYER_VISIBLE](state, visible) {
+    state.miniPlayerVisible = visible;
+},
 }
 export default matutaions

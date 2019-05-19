@@ -20,8 +20,9 @@
         <div class="name" slot="title">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
-            <span class="vip" v-show="item.isPay">VIP</span>
-            <span class="hq">HQ</span>
+             <span class="vip" v-if="item.isPay">VIP</span>
+            <span class="vip" v-if="item.isOnly">独家</span>
+            <span class="mv" v-if="item.vid!=''"> MV</span>
             <span>{{getDesc(item)}}</span>
           </p>
           <p
@@ -96,6 +97,7 @@ export default {
       search(this.query, this.page, this.showSinger, perpage).then(res => {
         if (res.code === ERR_OK) {
           this.result = this._genResult(res.data);
+          console.log(this.result)
           this._checkMore(res.data);
         }
       });
@@ -230,15 +232,15 @@ export default {
         font-size 16px;
       }
 
-      .vip, .hq {
-        font-size: 5px;
+      .vip, .mv {
+        font-size: 9px;
         padding: 1px 2px;
         color: $color-theme;
         border: 1px solid $color-theme;
         border-radius: 3px;
       }
 
-      .hq {
+      .mv {
         padding: 1px 3px;
         color: orange;
         border: 1px solid orange;
@@ -246,11 +248,11 @@ export default {
       }
 
       .subtext {
-        font-size: $font-size-small;
+        font-size: 13px;
         no-wrap();
         color: $color-text-l;
         width: 98%;
-        margin-top 7px;
+        padding 10px 0 2px 0;
       }
     }
 

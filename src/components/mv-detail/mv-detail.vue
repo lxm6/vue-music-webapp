@@ -18,17 +18,18 @@ import "DPlayer/dist/DPlayer.min.css";
 import DPlayer from "dplayer";
 export default {
   computed: {
-    ...mapGetters([ "playing"])
+    ...mapGetters(["playing", "miniPlayerVisible"])
   },
   created() {
     this.init();
     this.setPlayingState(false);
-
+    this.setMiniPlayerVisible(false);
   },
 
   methods: {
     ...mapMutations({
       setPlayingState: "SET_PLAYING_STATE",
+      setMiniPlayerVisible: "SET_MINI_PLAYER_VISIBLE"
     }),
     init() {
       if (window.history.length <= 1) {
@@ -38,7 +39,6 @@ export default {
       this.getMV(this.$route.params.id);
     },
     async getMV(vid) {
-
       const response = await getMvUrl(vid);
       if (response.code === ERR_OK) {
         const MvUrlData = response.getMvUrl;
@@ -67,7 +67,7 @@ export default {
         const dp = new DPlayer({
           container: this.$refs.dplayer,
           video: {
-            url: url,
+            url: url
           },
           autoplay: true
         });
@@ -75,6 +75,8 @@ export default {
     },
     back() {
       this.$router.back();
+      this.setMiniPlayerVisible(true);
+
     }
   }
 };

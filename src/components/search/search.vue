@@ -177,6 +177,7 @@ export default {
           border: 1px solid $color-text-l;
           font-size: $font-size-medium;
           color: $color-text-l;
+          cursor:pointer;
         }
       }
 
