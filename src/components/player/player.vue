@@ -1,7 +1,7 @@
 <template>
   <div class="player" v-show="playlist.length>0">
     <transition name="slideDown">
-      <div class="video-wrapper" v-show="videoVisible">
+      <div class="video-wrapper" v-if="videoVisible">
         <div class="back" @click="closeplayer">
           <mu-icon-menu icon="close"/>
         </div>
@@ -94,7 +94,7 @@
             <li class="setBlur" @click="showSeekBar">
               <img src="./setblur.png" width="24" height="24">
             </li>
-            <li class="setLyric" @click="openDownloadBox">
+            <li class="setLyric" @click="opendialog">
               <img src="./download.png" width="23" height="23">
             </li>
           </ul>
@@ -189,9 +189,9 @@
         <p class="desc">{{title}}</p>
       </div>
     </toast>
-    <mu-dialog :open="downloadBox" @close="closeDownloadBox">
+    <mu-dialog :open="dialog" @close="closedialog">
       是否下载这首歌曲？
-      <mu-flat-button slot="actions" primary @click="closeDownloadBox" label="取消"/>
+      <mu-flat-button slot="actions" primary @click="closedialog" label="取消"/>
       <mu-flat-button slot="actions" primary @click="download" label="确定"/>
     </mu-dialog>
   </div>
@@ -230,7 +230,7 @@ export default {
   mixins: [playerMixin],
   data() {
     return {
-      downloadBox: false,
+      dialog: false,
       title: "",
       songReady: false,
       currentTime: 0,
@@ -683,12 +683,18 @@ export default {
     },
     playMV(vid) {
       this.setVideoVisible(true);
+      if(this.currentLyric){
       this.currentLyric.stop();
+      }
       this.getMV(vid);
     },
 
     closeplayer() {
       this.setVideoVisible(false);
+        this.setPlayingState(true);
+              if (this.currentLyric) {
+        this.currentLyric.seek(this.currentTime * 1000);
+      }
     },
     async getMV(vid) {
       const response = await getMvUrl(vid);
@@ -710,7 +716,7 @@ export default {
             console.log("无法播放");
             return;
           }
-          this.setPlayingState(false);
+          this.setPlayingState(false)
           this.initVideo(result[0]);
         }
       }
@@ -726,14 +732,14 @@ export default {
         });
       });
     },
-     openDownloadBox() {
-        this.downloadBox = true;
+     opendialog() {
+        this.dialog = true;
         },
-    closeDownloadBox() {
-      this.downloadBox = false;
+    closedialog() {
+      this.dialog = false;
     },
     download() {
-       this.closeDownloadBox();
+       this.closedialog();
       downloadSong(this.currentSong.name, this.currentSong.url);
     },
     // 数据通过mutations设置到state上
@@ -1280,7 +1286,7 @@ export default {
   margin: 0 auto;
   text-align: center;
   border-radius: 5px;
-    background-color #000;
+  background-color #000;
 
 
   i {
