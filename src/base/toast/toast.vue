@@ -49,7 +49,6 @@ export default {
     margin 0 auto;
     text-align: center;
     background-color: #000;
-    opacity 0.7;
     border-radius: 5px;
 
     .desc {

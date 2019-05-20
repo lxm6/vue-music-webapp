@@ -1,7 +1,6 @@
 <template>
   <transition name="slideLeft">
     <div class="wrapper" v-show="showFlag" @click="hide">
-      <confirm ref="confirm" @confirm="confirmClear" text="是否清除缓存？" confirmBtnText="清除"></confirm>
 
       <div @click.stop class="leftNav">
         <div class="cover">
@@ -9,7 +8,7 @@
         </div>
         <mu-list class="mu-list-class">
           <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
-          <mu-list-item title="清除缓存" @click="showConfirm" class="mu-list-item"/>
+          <mu-list-item title="清除缓存" @click="open" class="mu-list-item"/>
           <mu-list-item title="刷新" @click="refreshPage" class="mu-list-item"/>
           <mu-list-item title="关于" @click="openAboutDialog" class="mu-list-item"/>
         </mu-list>
@@ -32,12 +31,16 @@
           </mu-list-item>
         </mu-list>
       </mu-dialog>
+      <mu-dialog :open="dialog"  @close="close">
+      是否清除缓存？
+      <mu-flat-button slot="actions" primary @click="close" label="取消"/>
+      <mu-flat-button slot="actions" primary @click="clear" label="确定"/>
+    </mu-dialog>
     </div>
   </transition>
 </template>
 
 <script>
-import Confirm from "base/confirm/confirm";
 import { openUrl } from "common/js/openUrl";
 
 export default {
@@ -45,7 +48,8 @@ export default {
   data() {
     return {
       showFlag: false,
-      showAboutDialog: false
+      showAboutDialog: false,
+       dialog: false,
     };
   },
   methods: {
@@ -72,19 +76,19 @@ export default {
     openGitHub() {
       openUrl("https://github.com/lxm6/vue-music-webapp");
     },
-
-    showConfirm() {
-      this.$refs.confirm.show();
+    open () {
+      this.dialog = true
     },
-    confirmClear() {
+    close () {
+      this.dialog = false
+    },
+    clear() {
+      this.close();
       localStorage.clear();
       this.refreshPage();
     }
   },
 
-  components: {
-    Confirm
-  }
 };
 </script>
 

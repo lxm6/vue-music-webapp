@@ -3,7 +3,7 @@
     <div class="container">
       <title-Bar :titleBarName="titleBarName"></title-Bar>
       <div class="searchWrapper" ref="search">
-        <div class="search" >
+        <div class="search">
           <div class="search-box-wrapper">
             <search-box ref="searchBox" @query="onQueryChange"></search-box>
           </div>
@@ -26,7 +26,7 @@
                 <div class="search-history" v-show="searchHistory.length">
                   <h1 class="title">
                     <span class="text">搜索历史</span>
-                    <span @click="showConfirm" class="clear">
+                    <span @click="open" class="clear">
                       <i class="icon-clear"></i>
                     </span>
                   </h1>
@@ -42,7 +42,12 @@
           <div class="search-result" v-show="query" ref="searchResult">
             <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
           </div>
-          <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm>
+          <!-- <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空搜索历史？" confirmBtnText="清空"></confirm> -->
+          <mu-dialog :open="dialog" @close="close">
+            是否清空搜索历史？
+            <mu-flat-button slot="actions" primary @click="close" label="取消"/>
+            <mu-flat-button slot="actions" primary @click="clear" label="确定"/>
+          </mu-dialog>
         </div>
       </div>
       <router-view></router-view>
@@ -56,7 +61,6 @@ import TitleBar from "base/title-bar/title-bar";
 import SearchList from "base/search-list/search-list";
 import Scroll from "base/scroll/scroll";
 import Suggest from "components/suggest/suggest";
-import Confirm from "base/confirm/confirm";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
 import { mapActions, mapGetters } from "vuex";
@@ -71,7 +75,8 @@ export default {
     return {
       titleBarName: "搜索",
       hotKey: [],
-      query: ""
+      query: "",
+      dialog:false
     };
   },
   computed: {
@@ -88,8 +93,15 @@ export default {
       this.$refs.shortcutWrapper.style.bottom = bottom;
       this.$refs.shortcut.refresh();
     },
-    showConfirm() {
-      this.$refs.confirm.show();
+    open () {
+      this.dialog = true
+    },
+    close () {
+      this.dialog = false
+    },
+    clear(){
+      this.close();
+      this.clearSearchHistory();
     },
     _getHotKey() {
       getHotKey().then(res => {
@@ -113,7 +125,6 @@ export default {
     SearchBox,
     SearchList,
     Scroll,
-    Confirm,
     Suggest,
     TitleBar
   }
@@ -127,11 +138,10 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  left 0;
-  right:0;
+  left: 0;
+  right: 0;
   top: 0;
   z-index: 100;
-
 }
 
 .searchWrapper {
@@ -172,12 +182,12 @@ export default {
         .item {
           display: inline-block;
           padding: 5px 10px;
-          margin: 0 12px 10px 0;
+          margin: 0 10px 10px 0;
           border-radius: 15px;
           border: 1px solid $color-text-l;
           font-size: $font-size-medium;
           color: $color-text-l;
-          cursor:pointer;
+          cursor: pointer;
         }
       }
 

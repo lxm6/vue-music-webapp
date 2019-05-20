@@ -34,7 +34,7 @@ export function downloadSong(name, url) {
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
-      a[0].click();
+      a.click();
     }
   }, 200);
 }

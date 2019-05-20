@@ -6,8 +6,8 @@
           <mu-icon-menu icon="close"/>
         </div>
         <h1 class="title" v-html="checkText"></h1>
-        <input class="check-btn" type="checkbox" @click="checkedAll" :checked="check" >
-        <div class="delete-btn" @click="showConfirm" :class="disableCls">
+        <input class="check-btn" type="checkbox" @click="checkedAll" :checked="check">
+        <div class="delete-btn" @click="open" :class="disableCls">
           <i class="icon-clear"></i>
         </div>
       </div>
@@ -42,7 +42,11 @@
           <p class="desc">删除成功</p>
         </div>
       </toast>
-      <confirm ref="confirm" @confirm="deleteSong" text="是否清除所选歌曲？" confirmBtnText="清除"></confirm>
+      <mu-dialog :open="dialog" @close="close">
+        是否删除所选歌曲？
+        <mu-flat-button slot="actions" primary @click="close" label="取消"/>
+        <mu-flat-button slot="actions" primary @click="clear" label="确定"/>
+      </mu-dialog>
     </div>
   </transition>
 </template>
@@ -51,7 +55,6 @@
 import SongList from "base/song-list/song-list";
 import Scroll from "base/scroll/scroll";
 import Toast from "base/toast/toast";
-import Confirm from "base/confirm/confirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import Song from "common/js/song";
 
@@ -70,7 +73,8 @@ export default {
     return {
       isCheckedAll: false,
       ischeck: true,
-      checkboxList: []
+      checkboxList: [],
+      dialog: false
     };
   },
   computed: {
@@ -97,6 +101,19 @@ export default {
     ...mapGetters(["favoriteList", "playHistory", "deleteSongVisible"])
   },
   methods: {
+    open() {
+      if (this.checkboxList.length != 0) {
+        this.dialog = true;
+      }
+    },
+    close() {
+      this.dialog = false;
+    },
+    clear() {
+      this.close();
+      this.deleteSong();
+      this.checkboxList = [];
+    },
     show() {
       this.setDeleteSongVisible(true);
     },
@@ -106,12 +123,7 @@ export default {
     getDesc(song) {
       return `${song.singerName} · ${song.album}`;
     },
-    showConfirm() {
-      if (this.checkboxList.length == 0) {
-        return;
-      }
-      this.$refs.confirm.show();
-    },
+
     checkedAll() {
       if (this.isCheckedAll) {
         this.checkboxList = [];
@@ -147,8 +159,7 @@ export default {
   components: {
     SongList,
     Scroll,
-    Toast,
-    Confirm
+    Toast
   }
 };
 </script>

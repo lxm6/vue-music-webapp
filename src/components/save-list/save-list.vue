@@ -93,6 +93,7 @@
           @download="download"
           :isDisc="currentIndex===2"
         ></menuBar>
+
         <router-view></router-view>
       </div>
     </div>
@@ -104,7 +105,6 @@ import TitleBar from "base/title-bar/title-bar";
 import Scroll from "base/scroll/scroll";
 import SongList from "base/song-list/song-list";
 import NoResult from "base/no-result/no-result";
-import Confirm from "base/confirm/confirm";
 import Toast from "base/toast/toast";
 import Song from "common/js/song";
 import Singer from "common/js/singer";
@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       item: {},
-      currentIndex: 0
+      currentIndex: 0,
     };
   },
   created() {
@@ -179,6 +179,7 @@ export default {
   },
 
   methods: {
+
     getCurrentIndex() {
       this.currentIndex = Number(this.$route.params.index);
     },
@@ -309,7 +310,6 @@ export default {
     Scroll,
     SongList,
     NoResult,
-    Confirm,
     Toast,
     DeleteSong,
     MenuBar,

@@ -348,7 +348,7 @@ export default {
     padding: 10px 0;
     margin: 0 auto;
     text-align: center;
-    background-color: #000;
+    background-color #000;
     border-radius: 5px;
 
     i {

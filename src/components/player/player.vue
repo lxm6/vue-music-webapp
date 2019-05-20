@@ -94,7 +94,7 @@
             <li class="setBlur" @click="showSeekBar">
               <img src="./setblur.png" width="24" height="24">
             </li>
-            <li class="setLyric" @click="download">
+            <li class="setLyric" @click="openDownloadBox">
               <img src="./download.png" width="23" height="23">
             </li>
           </ul>
@@ -132,7 +132,7 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player"  v-show="!fullScreen && miniPlayerVisible" @click="open">
+      <div class="mini-player" v-show="!fullScreen && miniPlayerVisible" @click="open">
         <div class="icon">
           <img :class="cdCls" width="40" height="40" :src="currentSong.image">
         </div>
@@ -189,6 +189,11 @@
         <p class="desc">{{title}}</p>
       </div>
     </toast>
+    <mu-dialog :open="downloadBox" @close="closeDownloadBox">
+      是否下载这首歌曲？
+      <mu-flat-button slot="actions" primary @click="closeDownloadBox" label="取消"/>
+      <mu-flat-button slot="actions" primary @click="download" label="确定"/>
+    </mu-dialog>
   </div>
 </template>
 <script>
@@ -225,6 +230,7 @@ export default {
   mixins: [playerMixin],
   data() {
     return {
+      downloadBox: false,
       title: "",
       songReady: false,
       currentTime: 0,
@@ -295,7 +301,13 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex","videoVisible","miniPlayerVisible"])
+    ...mapGetters([
+      "fullScreen",
+      "playing",
+      "currentIndex",
+      "videoVisible",
+      "miniPlayerVisible"
+    ])
   },
   created() {
     this.touch = {};
@@ -677,7 +689,6 @@ export default {
 
     closeplayer() {
       this.setVideoVisible(false);
-
     },
     async getMV(vid) {
       const response = await getMvUrl(vid);
@@ -715,13 +726,20 @@ export default {
         });
       });
     },
+     openDownloadBox() {
+        this.downloadBox = true;
+        },
+    closeDownloadBox() {
+      this.downloadBox = false;
+    },
     download() {
+       this.closeDownloadBox();
       downloadSong(this.currentSong.name, this.currentSong.url);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
-      setVideoVisible: "SET_VIDEO_VISIBLE",
+      setVideoVisible: "SET_VIDEO_VISIBLE"
     }),
     ...mapActions(["savePlayHistory"])
   },
@@ -1261,8 +1279,9 @@ export default {
   padding: 10px 0;
   margin: 0 auto;
   text-align: center;
-  background-color: #000;
   border-radius: 5px;
+    background-color #000;
+
 
   i {
     display: inline-block;
@@ -1302,8 +1321,7 @@ export default {
   width: 100%;
 }
 
-
-  .slideDown-enter-active, .slideDown-leave-active {
+.slideDown-enter-active, .slideDown-leave-active {
   transition: all 0.3s;
 }
 
