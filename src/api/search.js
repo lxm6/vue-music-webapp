@@ -24,7 +24,7 @@ export function search(query, page, zhida, perpage) {
   const data = Object.assign({}, commonParams, {
       w: query,  //搜索内容
       p: page,   //搜索第几页数据
-      perpage,     //每一页返回的数据条数
+      perpage:perpage,     //每一页展示几条数据
       catZhida: zhida ? 1 : 0,  //是否进行搜索歌手
       uin: 0,
       needNewCode: 1,

@@ -20,9 +20,9 @@
         <div class="name" slot="title">
           <p class="text" v-html="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
-             <span class="vip" v-if="item.isPay">VIP</span>
+            <span class="vip" v-if="item.isPay">VIP</span>
             <span class="vip" v-if="item.isOnly">独家</span>
-            <span class="mv" v-if="item.vid!=''"> MV</span>
+            <span class="mv" v-if="item.vid!=''">MV</span>
             <span>{{getDesc(item)}}</span>
           </p>
           <p
@@ -57,7 +57,7 @@ import Singer from "common/js/singer";
 import TopTip from "base/top-tip/top-tip";
 const TYPE_SINGER = "singer";
 const perpage = 20;
-
+let pagenum;
 export default {
   props: {
     showSinger: {
@@ -96,8 +96,9 @@ export default {
       this.$refs.suggest.scrollTo(0, 0);
       search(this.query, this.page, this.showSinger, perpage).then(res => {
         if (res.code === ERR_OK) {
+          pagenum = Math.ceil(res.data.song.totalnum / perpage); //总页数
+          console.log(pagenum);
           this.result = this._genResult(res.data);
-          console.log(this.result)
           this._checkMore(res.data);
         }
       });
@@ -113,6 +114,12 @@ export default {
           this._checkMore(res.data);
         }
       });
+    },
+    _checkMore(data) {
+      const song = data.song;
+      if (!song.list.length || pagenum == this.page) {
+        this.hasMore = false;
+      }
     },
     listScroll() {
       this.$emit("listScroll");
@@ -176,15 +183,7 @@ export default {
       });
       return ret;
     },
-    _checkMore(data) {
-      const song = data.song;
-      if (
-        !song.list.length ||
-        song.curnum + song.curpage * perpage > song.totalnum
-      ) {
-        this.hasMore = false;
-      }
-    },
+
     ...mapMutations({
       setSinger: "SET_SINGER"
     }),
@@ -229,7 +228,7 @@ export default {
 
       .text {
         no-wrap();
-        font-size 16px;
+        font-size: 16px;
       }
 
       .vip, .mv {
@@ -252,7 +251,7 @@ export default {
         no-wrap();
         color: $color-text-l;
         width: 98%;
-        padding 10px 0 2px 0;
+        padding: 10px 0 2px 0;
       }
     }
 
