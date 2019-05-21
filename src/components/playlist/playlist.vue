@@ -9,7 +9,7 @@
               <span class="text" v-show="mode!=1">({{playlist.length}}首)</span>
             </span>
 
-            <span class="clear" @click="showConfirm">
+            <span class="clear" @click="opendialog">
               <i class="icon-clear"></i>
             </span>
           </h1>
@@ -19,6 +19,7 @@
           :data="sequenceList"
           class="list-content"
           :refreshDelay="refreshDelay"
+          :scrollbar="false"
         >
           <transition-group name="list" tag="ul">
             <li
@@ -28,7 +29,6 @@
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
-              <mu-list-item>
                 <mu-flexbox class="flexbox">
                   <mu-flexbox-item class="flexitem1">
                     <i class="current" :class="getCurrentIcon(item)"></i>
@@ -40,16 +40,12 @@
                     </div>
                   </mu-flexbox-item>
                   <mu-flexbox-item class="flexitem2">
-                    <span @click.stop="toggleFavorite(item)" class="like">
-                      <i :class="getFavoriteIcon(item)"></i>
-                    </span>
                     <span @click.stop="deleteOne(item)" class="delete">
                       <i class="icon-delete"></i>
                     </span>
                   </mu-flexbox-item>
                 </mu-flexbox>
-              </mu-list-item>
-            </li>
+              </li>
           </transition-group>
         </scroll>
         <div class="list-operate">
@@ -60,14 +56,12 @@
         </div>
         <mu-flat-button @click="hide" label="关闭" class="demo-flat-button"/>
       </div>
-      <confirm ref="confirm" @confirm="confirmClear" text="是否清空播放列表？" confirmBtnText="清空"></confirm>
       <add-song ref="addSong"></add-song>
-      <toast :title="title" ref="toast1">
-        <div class="content">
-          <i class="icon-ok"></i>
-          <p class="desc">{{title}}</p>
-        </div>
-      </toast>
+    <mu-dialog :open="dialog" @close="closedialog">
+      是否清空播放列表？
+      <mu-flat-button slot="actions" primary @click="closedialog" label="取消"/>
+      <mu-flat-button slot="actions" primary @click="confirmClear" label="确定"/>
+    </mu-dialog>
       <toast :title="title" ref="toast2">
         <div class="content">
           <p class="desc">{{title}}</p>
@@ -80,7 +74,6 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { playMode } from "common/js/config";
 import Scroll from "base/scroll/scroll";
-import Confirm from "base/confirm/confirm";
 import AddSong from "components/add-song/add-song";
 import Toast from "base/toast/toast";
 import { playerMixin } from "common/js/mixin";
@@ -88,6 +81,7 @@ export default {
   mixins: [playerMixin],
   data() {
     return {
+      dialog: false,
       refreshDelay: 120,
       title: ""
     };
@@ -106,12 +100,15 @@ export default {
     hide() {
       this.setPlayListVisible(false);
     },
-    showConfirm() {
-      this.$refs.confirm.show();
+    opendialog() {
+      this.dialog = true;
+    },
+    closedialog() {
+      this.dialog = false;
     },
     confirmClear() {
       this.deleteSongList();
-      this.hide();
+      this.closedialog();
     },
     getCurrentIcon(item) {
       if (this.currentSong.id === item.id) {
@@ -164,7 +161,6 @@ export default {
   },
   components: {
     Scroll,
-    Confirm,
     AddSong,
     Toast
   }
@@ -244,7 +240,7 @@ export default {
     }
 
     .flexitem2 {
-      flex: 0 0 50px !important;
+      flex: 0 0 10px !important;
     }
 
     .list-content {

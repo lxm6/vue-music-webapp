@@ -45,7 +45,7 @@ export default {
 
 .user-center {
   position: absolute;
-  top: 90px;
+  top: 84px;
   bottom: 0;
   width: 100%;
   background: #fff;
@@ -53,7 +53,7 @@ export default {
   .login {
     margin: 20px auto;
     width: 92%;
-    height: 15%;
+    height: 88px;
     border-radius: 7px;
     box-shadow: 6px 6px 6px  rgba(0, 0, 0, 0.05);
     padding: 20px;

@@ -20,12 +20,11 @@
             <span class="singername">{{getDesc(item)}}</span>
           </p>
         </div>
-        <div @click.stop="selectMV(item.vid)" class="mv-icon" slot="right">
+        <div @click.stop="showMenu(item)" class="mv-icon" slot="right">
           <mu-icon-button icon="more_vert"/>
         </div>
       </mu-list-item>
     </mu-list>
-    
   </div>
 </template>
 
@@ -46,17 +45,25 @@ export default {
   },
   data() {
     return {
-      vid:'',
-    }
+      item: {},
+    };
   },
 
   computed: {
-    ...mapGetters(["currentSong","videoVisible"])
+    ...mapGetters(["currentSong", "videoVisible", ])
   },
   methods: {
     ...mapMutations({
-      setVideoVisible: "SET_VIDEO_VISIBLE"
+      setVideoVisible: "SET_VIDEO_VISIBLE",
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
+
     }),
+    playMV() {
+      this.selectMV(this.item.vid);
+    },
+    showMenu(item) {
+      this.$emit("showMenu",item);
+    },
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;
@@ -71,16 +78,11 @@ export default {
     getDesc(song) {
       return `${song.singerName} · ${song.album}`;
     },
-    playMV(item) {
-      this.vid=item.vid;
-      this.setVideoVisible(true);
-    },
+
     selectSong(item, index) {
       this.$emit("select", item, index);
     },
-    selectMV(vid) {
-      this.$emit("selectMV", vid);
-    },
+
     getRankCls(index) {
       if (index <= 2) {
         return `icon icon${index}`;
@@ -95,8 +97,8 @@ export default {
       }
     }
   },
-  components:{
-    MVplayer
+  components: {
+    MVplayer,
   }
 };
 </script>
@@ -105,6 +107,7 @@ export default {
 @import '~common/stylus/mixin';
 
 .song-list {
+  
   .listitem {
     box-sizing: border-box;
     border-left: 5px solid #fff;
@@ -164,7 +167,7 @@ export default {
         width: 98%;
       }
 
-      .only, .mv,.vip {
+      .only, .mv, .vip {
         font-size: 8px;
         padding: 2px 2px;
         color: $color-theme;
@@ -172,16 +175,19 @@ export default {
         border-radius: 3px;
         margin-right: 1px;
       }
+
       .vip {
         padding: 2px 3px 2px 3px;
         color: $color-theme;
         border: 1px solid $color-theme;
       }
+
       .mv {
         padding: 2px 3px 2px 3px;
         color: orange;
         border: 1px solid orange;
       }
+
       .current-play {
         color: $color-theme;
       }

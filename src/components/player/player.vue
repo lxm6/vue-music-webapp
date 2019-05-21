@@ -72,7 +72,7 @@
               <i
                 @click="toggleFavorite(currentSong)"
                 class="icon"
-                :class="getFavoriteIcon(currentSong)"
+                :class="getFavorite(currentSong)?'icon-favorite':'icon-not-favorite'"
               ></i>
             </li>
             <li class="setLyric" @click="showLyricset">
@@ -300,7 +300,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex", "videoVisible"])
+    ...mapGetters(["fullScreen", "playing", "currentIndex", "videoVisible","miniPlayerVisible"])
   },
   created() {
     this.touch = {};
@@ -682,7 +682,9 @@ export default {
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN"
+      setFullScreen: "SET_FULL_SCREEN",
+      setMiniPlayerVisible:"SET_MINIPLAYER_VISIBLE"
+
     }),
     ...mapActions(["savePlayHistory", "selectMV"])
   },
@@ -709,6 +711,8 @@ export default {
     },
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
+        // this.setMiniPlayerVisible(true);
+
       if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
         return;
       }

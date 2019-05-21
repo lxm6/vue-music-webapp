@@ -47,7 +47,7 @@
           >{{ item.name }}</li>
         </ul>
         <div class="content" v-if="currentIndex===1&&rank" v-html="info"></div>
-        <song-list :rank="rank" :songs="songs" @select="selectItem" @selectMV="selectMV" v-if="currentIndex===0"></song-list>
+        <song-list :rank="rank" :songs="songs" @select="selectItem" @showMenu="showMenu" v-if="currentIndex===0"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">
         <loading></loading>
@@ -58,6 +58,8 @@
         <span class="text">付费歌曲不能播放</span>
       </div>
     </top-tip>
+    <menuBar :item=item :isSinger="isSinger"></menuBar>
+
   </div>
 </template>
 
@@ -66,9 +68,10 @@ import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
 import SongList from "base/song-list/song-list";
 import { prefixStyle } from "common/js/dom";
-import { mapActions } from "vuex";
+import { mapActions,mapGetters,mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 import TopTip from "base/top-tip/top-tip";
+import MenuBar from "components/menuBar/menuBar";
 
 const RESERVED_HEIGHT = 50;
 const transform = prefixStyle("transform");
@@ -105,6 +108,10 @@ export default {
       type: Boolean,
       default: false
     },
+      isSinger: {
+      type: Boolean,
+      default: false
+    },
     isFavorite: {
       type: Boolean,
       default: false
@@ -115,13 +122,16 @@ export default {
       scrollY: 0,
       showBackTop: false,
       currentIndex: 0,
-      items: [{ name: "歌曲" }, { name: "详情" }]
+      items: [{ name: "歌曲" }, { name: "详情" }],
+      item:{}
     };
   },
   computed: {
     bgStyle() {
       return `background-image:url(${this.bgImage})`;
-    }
+    },
+    ...mapGetters(["menuBarVisible"])
+    
   },
   created() {
     this.probeType = 3;
@@ -134,6 +144,14 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`;
   },
   methods: {
+    ...mapMutations({
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
+
+    }),
+    showMenu(item){
+      this.item=item;
+      this.setMenuBarVisible(true);
+    },
     backTop() {
       this.$refs.list.scrollTo(0, 0, 500);
     },
@@ -155,10 +173,7 @@ export default {
     back() {
       this.$router.back();
     },
-    selectMV(vid){
-      this.selectMV(vid);
 
-    },
     selectItem(item, index) {
       // if (item.isPay) {
       //   this.$refs.topTip.show();
@@ -181,7 +196,7 @@ export default {
     toggleFavorite() {
       this.$emit("favoriteChange");
     },
-    ...mapActions(["selectPlay", "randomPlay","selectMV"])
+    ...mapActions(["selectPlay", "randomPlay"])
   },
   watch: {
     scrollY(newVal) {
@@ -225,7 +240,9 @@ export default {
     Scroll,
     Loading,
     SongList,
-    TopTip
+    TopTip,
+    MenuBar
+
   }
 };
 </script>
@@ -372,7 +389,7 @@ export default {
     z-index: 300;
     position: absolute;
     bottom: 80px;
-    right: 20px;
+    right: 30px;
 
     .mu-float-button {
       background-color: #fff;

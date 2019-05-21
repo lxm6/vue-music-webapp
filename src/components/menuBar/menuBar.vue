@@ -3,19 +3,39 @@
     <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
       <div class="list-wrapper">
         <ul v-show="!isDisc">
-          <li @click="findSinger">
+          <li @click.stop="nextPlay" v-if="playlist.length>0">
+            <i>
+              <mu-icon-button icon="skip_next"/>
+            </i>
+            <p >下一首播放</p>
+          </li>
+          <li @click.stop="toggleLike" v-if="!isSavelist">
+            <i>
+              <mu-icon-button icon="favorite" v-if="getFavorite(item)"/>
+              <mu-icon-button icon='favorite_border' v-if="!getFavorite(item)"/>
+            </i>
+            <p >{{getFavorite(item)?'取消喜欢':'我喜欢'}}</p>
+          </li>
+          <li @click.stop="playMV" v-if="item.vid">
+            <i>
+              <mu-icon-button icon="ondemand_video"/>
+            </i>
+            <p>播放视频</p>
+          </li>
+          <li @click.stop="findSinger" v-if="!isSinger">
             <i>
               <mu-icon-button icon="person"/>
             </i>
             <p>查看歌手</p>
           </li>
-          <li @click="deleteOne">
+
+          <li @click.stop="deleteOne" v-if="isSavelist">
             <i>
               <mu-icon-button icon="delete"/>
             </i>
             <p>删除</p>
           </li>
-          <li @click="download">
+          <li @click.stop="download">
             <i>
               <mu-icon-button icon="file_download"/>
             </i>
@@ -23,7 +43,7 @@
           </li>
         </ul>
         <ul v-show="isDisc">
-          <li @click="deleteDisc">
+          <li @click.stop="deleteDisc">
             <i>
               <mu-icon-button icon="delete"/>
             </i>
@@ -32,21 +52,51 @@
         </ul>
         <mu-flat-button @click="hide" label="取消" class="demo-flat-button"/>
       </div>
+        <toast :title="title" ref="toast1">
+        <div class="content">
+          <i class="icon-ok"></i>
+          <p class="desc">{{title}}</p>
+        </div>
+      </toast>
     </div>
   </transition>
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { downloadSong } from "common/js/util";
+import Singer from "common/js/singer";
+import { playerMixin } from "common/js/mixin";
+import Toast from "base/toast/toast";
+import Song from "common/js/song";
 
 export default {
+  mixins: [playerMixin],
+  data() {
+    return {
+      title: ""
+      
+    }
+  },
+
   props: {
     isDisc: {
+      type: Boolean,
+      default: false
+    },
+    item: {
+      type: Object
+    },
+    isSinger: {
+      type: Boolean,
+      default: false
+    },
+    isSavelist: {
       type: Boolean,
       default: false
     }
   },
   computed: {
-    ...mapGetters(["menuBarVisible"])
+    ...mapGetters(["menuBarVisible","playlist"])
   },
   methods: {
     show() {
@@ -54,25 +104,56 @@ export default {
     },
     hide() {
       this.setMenuBarVisible(false);
+
     },
     findSinger() {
-      this.$emit("findSinger");
+      this.hide();
+      const singer = new Singer({
+        id: this.item.singerMid,
+        name: this.item.singerName
+      });
+      this.$router.push({
+        path: `${this.$route.path}/${singer.id}`
+      });
+      this.setSinger(singer);
     },
     deleteOne() {
+      this.hide();
       this.$emit("deleteOne");
     },
     download() {
-      this.$emit("download");
+      this.hide();
+      downloadSong(this.item.name, this.item.url);
     },
     deleteDisc() {
+      this.hide();
       this.$emit("deleteDisc");
     },
+    playMV() {
+      this.hide();
+      this.selectMV(this.item.vid);
+    },
+    toggleLike() {
+      this.hide();
+      this.toggleFavorite(this.item);
+    },
+    nextPlay() {
+      this.hide();
+        this.insertSong([new Song(this.item), true]);
+    },
     ...mapMutations({
-      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
-    })
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE",
+      setSinger: "SET_SINGER",
+    }),
+    ...mapActions(["selectMV","insertSong"]),
+
+  },
+  components:{
+    Toast
   }
 };
 </script>
+
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
@@ -90,13 +171,13 @@ export default {
     ul {
       width: 100%;
       height: 120px;
-      padding: 10px;
+      padding: 8px;
 
       li {
         color: $color-text-ll;
         float: left;
         text-align: center;
-        margin-left: 20px;
+        margin-left: 12px;
         margin-top: 10px;
 
         i {
@@ -104,10 +185,8 @@ export default {
           border-radius: 8px;
           font-size: $font-size-large;
           margin-bottom: 10px;
-          padding-right: 3px;
-          padding-bottom: 3px;
-          background : #eee;
-          color:#666;
+          background: #eee;
+          color: #666;
         }
 
         p {
@@ -149,4 +228,22 @@ export default {
     background-color: #fff;
   }
 }
+  .content {
+    width: 140px;
+    padding: 10px 0;
+    margin: 0 auto;
+    text-align: center;
+    background-color #000;
+    border-radius: 5px;
+
+    i {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: $font-size-medium;
+      color: $color-text-h;
+    }
+  }
 </style>

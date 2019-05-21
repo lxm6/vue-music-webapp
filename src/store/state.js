@@ -22,6 +22,7 @@ const state = {
   seekBarVisible: false,
   menuBarVisible: false,
   videoVisible: false,
+  miniPlayerVisible: true,
   disc: {},
   topList: {},
   vid:'',

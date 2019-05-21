@@ -25,7 +25,7 @@ export default {
       type: Array,
       default: null
     },
-    //上拉刷新
+    //上拉
     pullup: {
       type: Boolean,
       default: false
@@ -46,12 +46,6 @@ export default {
       type: Boolean,
       default: true
     },
-    //是否启用硬件加速
-     HWCompositing: {
-      type: Boolean,
-      default: true
-    },
-    
   },
   mounted() {
     setTimeout(() => {

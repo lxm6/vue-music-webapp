@@ -56,9 +56,6 @@ export const selectPlay = function ({
   }
   // 点击的当前歌曲下标
   commit(types.SET_CURRENT_INDEX, index)
-  // 改变为全屏模式
-  // commit(types.SET_FULL_SCREEN, true)
-  // 改变当前的播放状态
   commit(types.SET_PLAYING_STATE, true)
 }
 
@@ -77,9 +74,6 @@ export const randomPlay = function ({
   commit(types.SET_PLAYLIST, randomList)
   // 点击的当前歌曲下标
   commit(types.SET_CURRENT_INDEX, 0)
-  // 改变为全屏模式
-  // commit(types.SET_FULL_SCREEN, true)
-  // 改变当前的播放状态
   commit(types.SET_PLAYING_STATE, true)
 }
 
@@ -98,7 +92,6 @@ export const insertSong = function ({
   let currentSong = playlist[currentIndex]
   // 查找当前列表中是否有待插入的歌曲并返回其索引
   let fpIndex = findIndex(playlist, song)
-  // 因为是插入歌曲，所以索引+1
   currentIndex++
   // 插入这首歌到当前索引位置
   playlist.splice(currentIndex, 0, song)
@@ -128,7 +121,6 @@ export const insertSong = function ({
   commit(types.SET_SEQUENCE_LIST, sequenceList)
   if (!isAdd) {
     commit(types.SET_CURRENT_INDEX, currentIndex)
-    commit(types.SET_FULL_SCREEN, true)
     commit(types.SET_PLAYING_STATE, true)
   }
 

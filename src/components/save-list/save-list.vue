@@ -87,11 +87,11 @@
           <no-result :title="noResultDesc"></no-result>
         </div>
         <menuBar
-          @findSinger="findSinger"
-          @deleteOne="deleteOne"
-          @deleteDisc="deleteDisc"
-          @download="download"
+        @deleteOne="deleteOne"
+        @deleteDisc="deleteDisc"
+          :item=item
           :isDisc="currentIndex===2"
+          :isSavelist="true"
         ></menuBar>
 
         <router-view></router-view>

@@ -95,18 +95,24 @@ export const playerMixin = {
       this.setCurrentIndex(index)
     },
 
-    getFavoriteIcon(song) {
+    // getFavoriteIcon(song) {
+    //   if (this.isFavorite(song)) {
+    //     return 'icon-favorite'
+    //   }
+    //   return 'icon-not-favorite'
+    // },
+    getFavorite(song) {
       if (this.isFavorite(song)) {
-        return 'icon-favorite'
+        return true
       }
-      return 'icon-not-favorite'
+      return false
     },
     toggleFavorite(song) {
       if (this.isFavorite(song)) {
         this.title="已取消喜欢"
         this.deleteFavoriteList(song);
       } else {
-        this.title="已收藏到我喜欢"
+        this.title="已添加到我喜欢"
         this.saveFavoriteList(song);
       }
       this.$refs.toast1.show();
@@ -121,7 +127,7 @@ export const playerMixin = {
     deleteOne(item) {
       this.deleteSong(item);
       this.title="删除成功"
-      this.$refs.toast1.show();this.$refs.toast1.show();
+      this.$refs.toast2.show();
       if (!this.playlist.length) {
         this.hide();
       }

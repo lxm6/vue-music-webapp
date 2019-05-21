@@ -28,7 +28,7 @@ export default {
 
 .m-header {
   position: relative;
-  height: 48px;
+  height: 42px;
   text-align: center;
   color: $color-text-h;
   background-color: $color-theme;
