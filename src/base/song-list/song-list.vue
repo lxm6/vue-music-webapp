@@ -20,16 +20,18 @@
             <span class="singername">{{getDesc(item)}}</span>
           </p>
         </div>
-        <div @click.stop="playMV(item)" class="mv-icon" slot="right">
+        <div @click.stop="selectMV(item.vid)" class="mv-icon" slot="right">
           <mu-icon-button icon="more_vert"/>
         </div>
       </mu-list-item>
     </mu-list>
+    
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import MVplayer from "components/MVplayer/MVplayer";
 
 export default {
   props: {
@@ -42,11 +44,19 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      vid:'',
+    }
+  },
 
   computed: {
-    ...mapGetters(["currentSong"])
+    ...mapGetters(["currentSong","videoVisible"])
   },
   methods: {
+    ...mapMutations({
+      setVideoVisible: "SET_VIDEO_VISIBLE"
+    }),
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
         return true;
@@ -62,12 +72,14 @@ export default {
       return `${song.singerName} · ${song.album}`;
     },
     playMV(item) {
-      this.$router.push({
-        path: `${this.$route.path}/${item.vid}`
-      });
+      this.vid=item.vid;
+      this.setVideoVisible(true);
     },
     selectSong(item, index) {
       this.$emit("select", item, index);
+    },
+    selectMV(vid) {
+      this.$emit("selectMV", vid);
     },
     getRankCls(index) {
       if (index <= 2) {
@@ -82,6 +94,9 @@ export default {
         return index + 1;
       }
     }
+  },
+  components:{
+    MVplayer
   }
 };
 </script>

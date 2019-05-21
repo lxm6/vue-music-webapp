@@ -78,12 +78,6 @@ const MV = resolve => {
     resolve(module);
   });
 };
-//mv详情
-const MVDetail = resolve => {
-  import("components/mv-detail/mv-detail").then(module => {
-    resolve(module);
-  });
-};
 //注册
 const Register = resolve => {
   import("components/register/register").then(module => {
@@ -114,10 +108,6 @@ const router = new Router({
       children: [{
           path: ":id",
           component: Disc,
-          children: [{
-            path: ":id",
-            component: MVDetail,
-          }]
         },
         {
           path: "/singer",
@@ -125,10 +115,6 @@ const router = new Router({
           children: [{
             path: ":id",
             component: SingerDetail,
-            children: [{
-              path: ":id",
-              component: MVDetail,
-            }]
           }]
         },
         {
@@ -137,19 +123,12 @@ const router = new Router({
           children: [{
             path: ":id",
             component: TopList,
-            children: [{
-              path: ":id",
-              component: MVDetail,
-            }]
+   
           }]
         },
         {
           path: "/mv",
           component: MV,
-          children: [{
-            path: ":id",
-            component: MVDetail,
-          }]
         },
         {
           path: "/sort",
@@ -161,10 +140,7 @@ const router = new Router({
             children: [{
               path: ":id",
               component: Disc,
-              children: [{
-                path: ":id",
-                component: MVDetail,
-              }]
+            
             }]
           }]
         }
@@ -214,7 +190,6 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   const {
-    playing,
     fullScreen,
     playListVisible,
     addSongVisible,
@@ -223,7 +198,6 @@ router.beforeEach((to, from, next) => {
     menuBarVisible,
     seekBarVisible,
     videoVisible,
-    miniPlayerVisible
   } = store.getters;
 
   if (addSongVisible) {

@@ -8,7 +8,6 @@ import {
   loadFavoriteList
 } from 'common/js/cache'
 const state = {
-  miniPlayerVisible: true,
   playing: false, //播放状态
   fullScreen: false, //播放器展开方式，全屏或收起
   playlist: [], //播放列表
@@ -25,7 +24,7 @@ const state = {
   videoVisible: false,
   disc: {},
   topList: {},
-  mv: {},
+  vid:'',
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
   favoriteList: loadFavorite(),

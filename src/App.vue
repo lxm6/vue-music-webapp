@@ -7,20 +7,19 @@
       <router-view></router-view>
     </keep-alive>
     <player></player>
+    <MVplayer></MVplayer>
+
   </div>
 </template>
 
 <script>
+import MVplayer from "components/MVplayer/MVplayer";
 import Player from "components/player/player";
 import MHeader from "components/m-header/m-header";
 import About from "components/about/about";
 import Tab from "components/tab/tab";
 export default {
-  data() {
-    return {
-      fullscreen: false
-    };
-  },
+
   methods: {
     open() {
       this.$refs.about.show();
@@ -31,7 +30,8 @@ export default {
     Player,
     MHeader,
     Tab,
-    About
+    About,
+    MVplayer
   }
 };
 </script>

@@ -124,7 +124,6 @@ export const insertSong = function ({
     }
   }
 
-  // 提交修改
   commit(types.SET_PLAYLIST, playlist)
   commit(types.SET_SEQUENCE_LIST, sequenceList)
   if (!isAdd) {
@@ -134,6 +133,13 @@ export const insertSong = function ({
   }
 
 }
+export const selectMV = function ({
+  commit,
+}, vid) {
+  commit(types.SET_VIDEO_VISIBLE, true)
+  commit(types.SET_VID, vid)
+}
+
 
 //保存搜索历史
 export const saveSearchHistory = function ({
@@ -190,6 +196,7 @@ export const deleteSongList = function ({
   commit(types.SET_SEQUENCE_LIST, [])
   commit(types.SET_PLAYING_STATE, false)
 }
+
 
 // 保存播放历史
 export const savePlayHistory = function ({

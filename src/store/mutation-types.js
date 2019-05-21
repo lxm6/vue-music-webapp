@@ -9,7 +9,6 @@ export const SET_PLAY_MODE = 'SET_PLAY_MODE'
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 
 export const SET_DISC = 'SET_DISC'
-export const SET_MV = 'SET_MV'
 
 export const SET_TOP_LIST = 'SET_TOP_LIST'
 
@@ -35,4 +34,5 @@ export const SET_MENUBAR_VISIBLE = 'SET_MENUBAR_VISIBLE';
 
 export const SET_VIDEO_VISIBLE = 'SET_VIDEO_VISIBLE';
 
-export const SET_MINI_PLAYER_VISIBLE = 'SET_MINI_PLAYER_VISIBLE';
+export const SET_VID = 'SET_VID';
+

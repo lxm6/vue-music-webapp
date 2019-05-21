@@ -47,7 +47,7 @@
           >{{ item.name }}</li>
         </ul>
         <div class="content" v-if="currentIndex===1&&rank" v-html="info"></div>
-        <song-list :rank="rank" :songs="songs" @select="selectItem" v-if="currentIndex===0"></song-list>
+        <song-list :rank="rank" :songs="songs" @select="selectItem" @selectMV="selectMV" v-if="currentIndex===0"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">
         <loading></loading>
@@ -155,7 +155,10 @@ export default {
     back() {
       this.$router.back();
     },
+    selectMV(vid){
+      this.selectMV(vid);
 
+    },
     selectItem(item, index) {
       // if (item.isPay) {
       //   this.$refs.topTip.show();
@@ -178,7 +181,7 @@ export default {
     toggleFavorite() {
       this.$emit("favoriteChange");
     },
-    ...mapActions(["selectPlay", "randomPlay"])
+    ...mapActions(["selectPlay", "randomPlay","selectMV"])
   },
   watch: {
     scrollY(newVal) {
@@ -366,7 +369,7 @@ export default {
   }
 
   .backTop {
-    z-index: 999;
+    z-index: 300;
     position: absolute;
     bottom: 80px;
     right: 20px;

@@ -1,12 +1,11 @@
 <template>
   <transition name="slide">
-    <div class="container">
-      <div class="back" @click="back">
-        <mu-icon-button icon="arrow_back"/>
+    <div class="video-wrapper" v-if="videoVisible">
+      <div class="back" @click="closeplayer">
+        <mu-icon-menu icon="close"/>
       </div>
-      <div ref="dplayer" class="dplayer"></div>
+      <div class="dplayer" ref="dplayerd"></div>
     </div>
-    <router-view></router-view>
   </transition>
 </template>
 
@@ -18,25 +17,24 @@ import "DPlayer/dist/DPlayer.min.css";
 import DPlayer from "dplayer";
 export default {
   computed: {
-    ...mapGetters(["playing", "miniPlayerVisible"])
-  },
-  created() {
-    this.init();
-    this.setPlayingState(false);
-    this.setMiniPlayerVisible(false);
+    ...mapGetters(["videoVisible", "vid"])
   },
 
   methods: {
     ...mapMutations({
-      setPlayingState: "SET_PLAYING_STATE",
-      setMiniPlayerVisible: "SET_MINI_PLAYER_VISIBLE"
+      setVideoVisible: "SET_VIDEO_VISIBLE"
     }),
-    init() {
-      if (window.history.length <= 1) {
-        this.$router.push({ path: "/" });
-        return;
+    is_weixn_qq() {
+      var ua = navigator.userAgent.toLowerCase();
+      //微信
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return
+      } else if (ua.match(/QQ/i) == "qq") {
+        this.$refs.dplayerd.style.top='35px';
       }
-      this.getMV(this.$route.params.id);
+    },
+    closeplayer() {
+      this.setVideoVisible(false);
     },
     async getMV(vid) {
       const response = await getMvUrl(vid);
@@ -63,20 +61,30 @@ export default {
       }
     },
     initVideo(url) {
-      this.$nextTick(() => {
+      this.$nextTick(() => {  
         const dp = new DPlayer({
-          container: this.$refs.dplayer,
+          container: this.$refs.dplayerd,
           video: {
             url: url
           },
           autoplay: true
         });
-      });
-    },
-    back() {
-      this.$router.back();
-      this.setMiniPlayerVisible(true);
+        this.is_weixn_qq();
 
+      });
+    }
+  },
+  watch: {
+    videoVisible(visible) {
+      if (visible) {
+
+        if (!this.vid) {
+          this.setVideoVisible(false);
+        } else {
+          this.getMV(this.vid);
+
+        }
+      }
     }
   }
 };
@@ -84,9 +92,9 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
 
-.container {
+.video-wrapper {
   position: fixed;
-  z-index: 1000;
+  z-index: 500;
   bottom: 0;
   width: 100%;
   top: 0;
@@ -95,13 +103,9 @@ export default {
 }
 
 .dplayer {
-  position: fixed;
-  top: 40px;
-  bottom: 0;
-  width: 100%;
-}
-
-.back {
   position: absolute;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
 }
 </style>

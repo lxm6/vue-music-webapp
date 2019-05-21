@@ -23,9 +23,6 @@ const matutaions = {
   [types.SET_SINGER](state, singer) {
     state.singer = singer
   },
-  [types.SET_MV](state, mv) {
-    state.mv = mv
-  },
   [types.SET_DISC](state, disc) {
     state.disc = disc
   },
@@ -65,8 +62,10 @@ const matutaions = {
   [types.SET_VIDEO_VISIBLE](state, visible) {
     state.videoVisible = visible;
   },
-  [types.SET_MINI_PLAYER_VISIBLE](state, visible) {
-    state.miniPlayerVisible = visible;
-},
+  [types.SET_VID](state,vid ) {
+    state.vid = vid;
+  },
+
+
 }
 export default matutaions

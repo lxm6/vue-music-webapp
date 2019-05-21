@@ -46,7 +46,7 @@
             />
             <div class="mv-list" v-show="mvlist.length">
               <mu-list-item
-                @click="selectItem(item)"
+                @click="selectItem(item.vid)"
                 v-for="(item,index) in mvlist"
                 :key="index"
                 class="item"
@@ -82,13 +82,13 @@
       <div class="backTop" v-show="showBackTop" @click="backTop">
         <mu-float-button icon="keyboard_arrow_up" class="demo-float-button"/>
       </div>
-    <router-view></router-view>
+      <router-view></router-view>
     </div>
   </transition>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 
 import TitleBar from "base/title-bar/title-bar";
 import Tags from "base/tags/tags";
@@ -123,7 +123,7 @@ export default {
     };
   },
   beforeMount() {
-    this.$Lazyload.config({ loading: require('common/image/lazyimg2.png') });
+    this.$Lazyload.config({ loading: require("common/image/lazyimg2.png") });
   },
   created() {
     this._getMvlist();
@@ -228,15 +228,13 @@ export default {
         }
       });
     },
-   selectItem(item) {
-      this.$router.push({
-        path: `/mv/${item.vid}`
-      });
+    selectItem(vid) {
+      this.selectMV(vid);
     },
-
     ...mapMutations({
-      setPlayState: "SET_PLAYING_STATE",
-    })
+      setPlayState: "SET_PLAYING_STATE"
+    }),
+    ...mapActions(["selectMV"])
   },
   watch: {
     scrollY(newVal) {
@@ -324,7 +322,7 @@ export default {
 
       .item {
         margin-right: 8px;
-        margin-bottom 8px;
+        margin-bottom: 8px;
         cursor: pointer;
         border-top: 1px solid $color-border;
 
@@ -342,7 +340,6 @@ export default {
           .desc {
             color: $color-text;
             limit_lines();
-
           }
         }
       }
@@ -374,7 +371,7 @@ export default {
 }
 
 .backTop {
-  z-index: 999;
+  z-index: 300;
   position: absolute;
   bottom: 80px;
   right: 20px;

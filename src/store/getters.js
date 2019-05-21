@@ -9,7 +9,6 @@ export const currentSong = (state) => {
   return state.playlist[state.currentIndex] || {}
 }
 export const disc = state => state.disc
-export const mv = state => state.mv
 export const topList = state => state.topList
 export const searchHistory = state => state.searchHistory
 export const playHistory = state => state.playHistory
@@ -22,4 +21,4 @@ export const lyricsetVisible = state => state.lyricsetVisible;
 export const seekBarVisible = state => state.seekBarVisible;
 export const menuBarVisible = state => state.menuBarVisible;
 export const videoVisible = state => state.videoVisible;
-export const miniPlayerVisible = state => state.miniPlayerVisible;
+export const vid = state => state.vid;

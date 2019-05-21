@@ -1,13 +1,5 @@
 <template>
   <div class="player" v-show="playlist.length>0">
-    <transition name="slideDown">
-      <div class="video-wrapper" v-if="videoVisible">
-        <div class="back" @click="closeplayer">
-          <mu-icon-menu icon="close"/>
-        </div>
-        <div class="dplayer" ref="dplayer"></div>
-      </div>
-    </transition>
     <transition
       name="normal"
       @enter="enter"
@@ -26,7 +18,7 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singerName"></h2>
-          <div class="mv-icon" @click="playMV(currentSong.vid)" v-show="currentSong.vid!=''">MV</div>
+          <div class="mv-icon" @click="selectMV(currentSong.vid)" v-show="currentSong.vid!=''">MV</div>
         </div>
 
         <div
@@ -132,13 +124,13 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" v-show="!fullScreen && miniPlayerVisible" @click="open">
+      <div class="mini-player" v-show="!fullScreen" @click="open">
         <div class="icon">
           <img :class="cdCls" width="40" height="40" :src="currentSong.image">
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
-          <p class="desc" v-html="this.playing&&playingLyric?playingLyric:currentSong.singerName"></p>
+          <p class="desc" v-html="minilyric"></p>
         </div>
         <div class="control">
           <progress-circle :radius="radius" :percent="percent">
@@ -226,6 +218,8 @@ import {
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
 let nextFlag = true;
+let playingFlag;
+
 export default {
   mixins: [playerMixin],
   data() {
@@ -273,6 +267,11 @@ export default {
     });
   },
   computed: {
+    minilyric() {
+      return this.playing && this.playingLyric
+        ? this.playingLyric
+        : this.currentSong.singerName;
+    },
     cdCls() {
       return this.playing ? "play" : "play pause";
     },
@@ -301,13 +300,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters([
-      "fullScreen",
-      "playing",
-      "currentIndex",
-      "videoVisible",
-      "miniPlayerVisible"
-    ])
+    ...mapGetters(["fullScreen", "playing", "currentIndex", "videoVisible"])
   },
   created() {
     this.touch = {};
@@ -347,11 +340,9 @@ export default {
     hide() {
       this.showFlag = false;
     },
-    // 唱片界面缩小到底部
     back() {
       this.setFullScreen(false);
     },
-    // 底部界面放大到唱片界面
     open() {
       this.setFullScreen(true);
     },
@@ -389,7 +380,6 @@ export default {
       this.$refs.cdWrapper.style[
         transform
       ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-      // 监听事件
       this.$refs.cdWrapper.addEventListener("transitionend", done);
     },
     afterLeave() {
@@ -401,7 +391,6 @@ export default {
         return;
       }
       this.setPlayingState(!this.playing);
-      // 当歌词滚动时才能播放,防止停止播放时歌词还在滚动
       if (this.currentLyric) {
         this.currentLyric.togglePlay();
       }
@@ -413,7 +402,6 @@ export default {
       this.setPlayingState(true);
       // 进入循环播放时，歌曲一开始就要求歌词位于最开始
       if (this.currentLyric) {
-        // 歌曲跳到最开始
         this.currentLyric.seek(0);
       }
     },
@@ -681,81 +669,47 @@ export default {
         scale
       };
     },
-    playMV(vid) {
-      this.setVideoVisible(true);
-      if(this.currentLyric){
-      this.currentLyric.stop();
-      }
-      this.getMV(vid);
-    },
 
-    closeplayer() {
-      this.setVideoVisible(false);
-        this.setPlayingState(true);
-              if (this.currentLyric) {
-        this.currentLyric.seek(this.currentTime * 1000);
-      }
+    opendialog() {
+      this.dialog = true;
     },
-    async getMV(vid) {
-      const response = await getMvUrl(vid);
-      if (response.code === ERR_OK) {
-        const MvUrlData = response.getMvUrl;
-        if (MvUrlData.code === ERR_OK) {
-          const mvUrl_mp4 = MvUrlData.data[vid].mp4;
-
-          const result = [];
-          for (let i = 0; i < mvUrl_mp4.length; i++) {
-            if (mvUrl_mp4[i].freeflow_url.length !== 0) {
-              for (let j = 0; j < mvUrl_mp4[i].freeflow_url.length; j++) {
-                result.unshift(mvUrl_mp4[i].freeflow_url[j]);
-              }
-            }
-          }
-
-          if (result.length === 0) {
-            console.log("无法播放");
-            return;
-          }
-          this.setPlayingState(false)
-          this.initVideo(result[0]);
-        }
-      }
-    },
-    initVideo(url) {
-      this.$nextTick(() => {
-        const dp = new DPlayer({
-          container: this.$refs.dplayer,
-          video: {
-            url: url
-          },
-          autoplay: true
-        });
-      });
-    },
-     opendialog() {
-        this.dialog = true;
-        },
     closedialog() {
       this.dialog = false;
     },
     download() {
-       this.closedialog();
+      this.closedialog();
       downloadSong(this.currentSong.name, this.currentSong.url);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN",
-      setVideoVisible: "SET_VIDEO_VISIBLE"
+      setFullScreen: "SET_FULL_SCREEN"
     }),
-    ...mapActions(["savePlayHistory"])
+    ...mapActions(["savePlayHistory", "selectMV"])
   },
   watch: {
+    videoVisible(visible) {
+      if (visible) {
+        if (this.playing) {
+          this.setPlayingState(false);
+          if (this.currentLyric) {
+            this.currentLyric.stop();
+          }
+        }else{
+          playingFlag=false
+        }
+      } else {
+        if(playingFlag){
+       this.setPlayingState(true);
+          if (this.currentLyric) {
+            this.currentLyric.seek(this.currentTime * 1000);
+        }
+        }
+   
+      }
+    },
     // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-      if (!newSong || !newSong.id) {
-        return;
-      }
-      if (newSong.id === oldSong.id) {
+      if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
         return;
       }
       // // 如果是付费歌曲
@@ -808,13 +762,14 @@ export default {
       });
     },
 
-    playing(newPlaying) {
+    playing(newPlaying,oldlaying) {
       if (!this.songReady) {
         return;
       }
       this.$nextTick(() => {
         const audio = this.$refs.audio;
         newPlaying ? audio.play() : audio.pause();
+        playingFlag=oldlaying;
       });
     },
     fullScreen(newVal) {
@@ -1286,8 +1241,7 @@ export default {
   margin: 0 auto;
   text-align: center;
   border-radius: 5px;
-  background-color #000;
-
+  background-color: #000;
 
   i {
     display: inline-block;
