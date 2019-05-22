@@ -109,7 +109,7 @@ const router = new Router({
           path: ":id",
           component: Disc,
           children: [{
-            path: ":id",
+            path: ":singerId",
             component: SingerDetail,
           }]
         },
@@ -128,7 +128,7 @@ const router = new Router({
             path: ":id",
             component: TopList,
             children: [{
-              path: ":id",
+              path: ":singerId",
               component: SingerDetail,
             }]
           }]
@@ -142,13 +142,13 @@ const router = new Router({
           component: Sort,
           children: [{
             name: "SortDetail",
-            path: "/sort/sortDetail",
+            path: "sortDetail",
             component: SortDetail,
             children: [{
               path: ":id",
               component: Disc,
               children: [{
-                path: ":id",
+                path: ":singerId",
                 component: SingerDetail,
               }]
             

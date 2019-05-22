@@ -1,6 +1,6 @@
 <template>
   <div class="song-list">
-    <mu-list>
+    <ul>
       <mu-list-item
         v-for="(item,index) in songs"
         :key="index"
@@ -24,10 +24,10 @@
           <mu-icon-button icon="more_vert"/>
         </div>
       </mu-list-item>
-    </mu-list>
+    </ul>
   </div>
 </template>
-
+/ul
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import MVplayer from "components/MVplayer/MVplayer";

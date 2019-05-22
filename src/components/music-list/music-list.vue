@@ -34,8 +34,8 @@
       ref="list"
     >
       <div class="song-list-wrapper" v-show="songs.length">
-        <ul class="tab" v-if="!isDisc&&!rank">
-          <li class="tab-item active">单曲 {{ songs.length}}</li>
+        <ul class="tab" v-if="!rank">
+          <li class="tab-item active">歌曲 {{ songs.length}}首</li>
         </ul>
         <ul class="tab" v-if="rank">
           <li

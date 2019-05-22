@@ -3,12 +3,13 @@
     <div class="playlist" @click="hide" v-show="playListVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-header">
-          <h1 class="title">
-            <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text" v-html="this.playModeText()">
-              <span class="text" v-show="mode!=1">({{playlist.length}}首)</span>
+          <h1 class="title" @click="changeMode">
+            <i class="icon" :class="iconMode" ></i>
+            <div class="text">
+            <span  v-html="this.playModeText()">
             </span>
-
+              <span v-show="mode!=1">({{playlist.length}}首)</span>
+              </div>
             <span class="clear" @click="opendialog">
               <i class="icon-clear"></i>
             </span>
@@ -29,6 +30,7 @@
               v-for="(item,index) in sequenceList"
               @click="selectItem(item,index)"
             >
+              <mu-list-item>
                 <mu-flexbox class="flexbox">
                   <mu-flexbox-item class="flexitem1">
                     <i class="current" :class="getCurrentIcon(item)"></i>
@@ -45,6 +47,8 @@
                     </span>
                   </mu-flexbox-item>
                 </mu-flexbox>
+              </mu-list-item>
+
               </li>
           </transition-group>
         </scroll>
@@ -219,12 +223,13 @@ export default {
         }
 
         .text {
-          flex: 1;
+          flex 1;
           font-size: $font-size-medium-x;
           color: $color-theme;
         }
 
         .clear {
+          right:-10px;
           extend-click();
 
           .icon-clear {

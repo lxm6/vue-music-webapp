@@ -124,7 +124,7 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" v-show="!fullScreen" @click="open">
+      <div class="mini-player" v-show="!fullScreen" @click="open" ref="miniPlayer">
         <div class="icon">
           <img :class="cdCls" width="40" height="40" :src="currentSong.image">
         </div>
@@ -300,7 +300,7 @@ export default {
       return this.currentTime / this.currentSong.duration;
     },
     // 传入 vuex 的 state
-    ...mapGetters(["fullScreen", "playing", "currentIndex", "videoVisible","miniPlayerVisible"])
+    ...mapGetters(["fullScreen", "playing", "currentIndex", "videoVisible"])
   },
   created() {
     this.touch = {};
@@ -683,7 +683,6 @@ export default {
     // 数据通过mutations设置到state上
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
-      setMiniPlayerVisible:"SET_MINIPLAYER_VISIBLE"
 
     }),
     ...mapActions(["savePlayHistory", "selectMV"])
@@ -709,9 +708,7 @@ export default {
    
       }
     },
-    // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-        // this.setMiniPlayerVisible(true);
 
       if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
         return;
@@ -777,6 +774,7 @@ export default {
       });
     },
     fullScreen(newVal) {
+
       if (newVal) {
         setTimeout(() => {
           this.$refs.lyricList.refresh();

@@ -59,9 +59,7 @@ const matutaions = {
   [types.SET_MENUBAR_VISIBLE](state, visible) {
     state.menuBarVisible = visible;
   },
-  [types.SET_MINIPLAYER_VISIBLE](state, visible) {
-    state.menuBarVisible = visible;
-  },
+
   [types.SET_VIDEO_VISIBLE](state, visible) {
     state.videoVisible = visible;
   },

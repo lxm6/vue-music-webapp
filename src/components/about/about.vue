@@ -1,10 +1,9 @@
 <template>
   <transition name="slideLeft">
     <div class="wrapper" v-show="showFlag" @click="hide">
-
       <div @click.stop class="leftNav">
-        <div class="cover">
-          <img src="~@/common/image/img1.jpg">
+        <div class="cover" @click.stop="changeImg">
+          <img :src="imgsrc">
         </div>
         <mu-list class="mu-list-class">
           <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
@@ -31,11 +30,11 @@
           </mu-list-item>
         </mu-list>
       </mu-dialog>
-      <mu-dialog :open="dialog"  @close="close">
-      是否清除缓存？
-      <mu-flat-button slot="actions" primary @click="close" label="取消"/>
-      <mu-flat-button slot="actions" primary @click="clear" label="确定"/>
-    </mu-dialog>
+      <mu-dialog :open="dialog" @close="close">
+        是否清除缓存？
+        <mu-flat-button slot="actions" primary @click="close" label="取消"/>
+        <mu-flat-button slot="actions" primary @click="clear" label="确定"/>
+      </mu-dialog>
     </div>
   </transition>
 </template>
@@ -49,17 +48,25 @@ export default {
     return {
       showFlag: false,
       showAboutDialog: false,
-       dialog: false,
+      dialog: false,
+      clickNum: 0
     };
   },
+  computed: {
+    imgsrc() {
+      return `static/cover/cover${this.clickNum%8}.jpg`;
+    }
+  },
   methods: {
+    changeImg() {
+      this.clickNum += 1;
+    },
     show() {
       this.showFlag = true;
     },
     hide() {
       this.showFlag = false;
     },
-    // 强制刷新页面
     refreshPage() {
       window.location.reload();
     },
@@ -76,19 +83,18 @@ export default {
     openGitHub() {
       openUrl("https://github.com/lxm6/vue-music-webapp");
     },
-    open () {
-      this.dialog = true
+    open() {
+      this.dialog = true;
     },
-    close () {
-      this.dialog = false
+    close() {
+      this.dialog = false;
     },
     clear() {
       this.close();
       localStorage.clear();
       this.refreshPage();
     }
-  },
-
+  }
 };
 </script>
 
@@ -131,18 +137,14 @@ export default {
 
 .leftNav {
   background-color: #fff;
-  width: 260px;
+  width: 240px;
   height: 100%;
   box-shadow: 3px 0px 14px 4px rgba(0, 0, 0, 0.2);
 }
 
 .cover {
   width: 100%;
-  height: 260px;
+  height: 240px;
 
-  img {
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>

@@ -50,7 +50,7 @@
             <p>删除</p>
           </li>
         </ul>
-        <mu-flat-button @click="hide" label="取消" class="demo-flat-button"/>
+        <mu-flat-button @click.stop="hide" label="取消" class="demo-flat-button"/>
       </div>
         <toast :title="title" ref="toast1">
         <div class="content">
@@ -148,6 +148,7 @@ export default {
     ...mapActions(["selectMV","insertSong"]),
 
   },
+
   components:{
     Toast
   }
