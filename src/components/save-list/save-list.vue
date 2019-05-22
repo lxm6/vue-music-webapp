@@ -24,12 +24,12 @@
                     @click="selectSong(item)"
                   >
                     <div class="content" slot="title">
-                      <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+                      <h2 class="name" :class="{'current-play':getCurrent(item)}" v-text="item.name"></h2>
                       <p class="desc" :class="{'current-play':getCurrent(item)}">
                         <span class="vip" v-if="item.isPay">VIP</span>
                         <span class="only" v-if="item.isOnly">独家</span>
                         <span class="mv" v-if="item.vid!=''">MV</span>
-                        <span>{{getDesc(item)}}</span>
+                        <span v-text="getDesc(item)"></span>
                       </p>
                     </div>
                     <div @click.stop="showMenu(item)" class="delete" slot="right">
@@ -47,7 +47,7 @@
             :data="favoriteListList"
           >
             <div class="list-inner">
-              <div class="discText" v-html="DiscText"></div>
+              <div class="discText" v-text="DiscText"></div>
               <ul>
                 <mu-list-item
                   @click="selectItem(item)"
@@ -63,8 +63,8 @@
                     </mu-flexbox-item>
                     <mu-flexbox-item class="flexitem2">
                       <div class="text">
-                        <p class="desc" v-html="item.dissname"></p>
-                        <h2 class="name" v-html="item.creator.name"></h2>
+                        <p class="desc" v-text="item.dissname"></p>
+                        <h2 class="name" v-text="item.creator.name"></h2>
                       </div>
                     </mu-flexbox-item>
                   </mu-flexbox>

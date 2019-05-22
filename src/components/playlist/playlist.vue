@@ -6,7 +6,7 @@
           <h1 class="title" @click="changeMode">
             <i class="icon" :class="iconMode" ></i>
             <div class="text">
-            <span  v-html="this.playModeText()">
+            <span  v-text="this.playModeText()">
             </span>
               <span v-show="mode!=1">({{playlist.length}}首)</span>
               </div>
@@ -37,8 +37,8 @@
                   </mu-flexbox-item>
                   <mu-flexbox-item>
                     <div class="text" :class="getCurrent(item)">
-                      <span>{{item.name}} -</span>
-                      <span class="subtext">{{item.singerName}}</span>
+                      <span v-text="item.name"> -</span>
+                      <span class="subtext" v-text="item.singerName"></span>
                     </div>
                   </mu-flexbox-item>
                   <mu-flexbox-item class="flexitem2">
@@ -68,7 +68,7 @@
     </mu-dialog>
       <toast :title="title" ref="toast2">
         <div class="content">
-          <p class="desc">{{title}}</p>
+          <p class="desc" v-text="title"></p>
         </div>
       </toast>
     </div>

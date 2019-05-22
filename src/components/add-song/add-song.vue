@@ -16,7 +16,7 @@
           <scroll
             :refreshDelay="refreshDelay"
             ref="songList"
-            v-if="currentIndex===0"
+            v-show="currentIndex===0"
             class="list-scroll"
             :data="playHistory"
           >
@@ -27,7 +27,7 @@
           <scroll
             :refreshDelay="refreshDelay"
             ref="searchList"
-            v-if="currentIndex===1"
+            v-show="currentIndex===1"
             class="list-scroll"
             :data="searchHistory"
           >

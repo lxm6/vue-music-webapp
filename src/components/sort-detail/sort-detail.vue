@@ -5,11 +5,11 @@
         <mu-icon-button icon="arrow_back"/>
       </div>
       <div class="small-title" ref="smallTitle" v-show="false">
-        <h1 v-html="categoryName"></h1>
+        <h1 v-text="categoryName"></h1>
       </div>
       <div class="bg-image" :style="bgStyle" ref="bgImage">
         <div class="large-title" ref="largeTitle">
-          <h1 v-html="categoryName"></h1>
+          <h1 v-text="categoryName"></h1>
         </div>
 
         <div class="filter" ref="filter"></div>
@@ -38,15 +38,15 @@
                 <img v-lazy="item.imgurl" :key="item.imgurl">
                 <div class="listen">
                   <img src="~@/common/image/earphone.png">
-                  <span>{{formatNum(item.listennum)}}</span>
+                  <span v-text="formatNum(item.listennum)"></span>
                 </div>
                 <div class="creator">
                   <i class="icon-mine"></i>
-                  <span>{{item.creator.name}}</span>
+                  <span v-text="item.creator.name"></span>
                 </div>
               </div>
               <div class="text">
-                <p class="desc" v-html="item.dissname"></p>
+                <p class="desc" v-text="item.dissname"></p>
               </div>
             </li>
           </div>

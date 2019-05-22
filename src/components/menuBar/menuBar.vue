@@ -1,28 +1,28 @@
 <template>
   <transition name="list-fade">
-    <div class="menuBar" @click.stop="hide" v-if="menuBarVisible">
+    <div class="menuBar" @click.stop="hide" v-show="menuBarVisible">
       <div class="list-wrapper">
         <ul v-show="!isDisc">
-          <li @click.stop="nextPlay" v-if="playlist.length>0">
+          <li @click.stop="nextPlay" v-show="playlist.length>0">
             <i>
               <mu-icon-button icon="skip_next"/>
             </i>
             <p >下一首播放</p>
           </li>
-          <li @click.stop="toggleLike" v-if="!isSavelist">
+          <li @click.stop="toggleLike" v-show="!isSavelist">
             <i>
-              <mu-icon-button icon="favorite" v-if="getFavorite(item)"/>
-              <mu-icon-button icon='favorite_border' v-if="!getFavorite(item)"/>
+              <mu-icon-button icon="favorite" v-show="getFavorite(item)"/>
+              <mu-icon-button icon='favorite_border' v-show="!getFavorite(item)"/>
             </i>
             <p >{{getFavorite(item)?'取消喜欢':'我喜欢'}}</p>
           </li>
-          <li @click.stop="playMV" v-if="item.vid">
+          <li @click.stop="playMV" v-show="item.vid">
             <i>
               <mu-icon-button icon="ondemand_video"/>
             </i>
             <p>播放视频</p>
           </li>
-          <li @click.stop="findSinger" v-if="!isSinger">
+          <li @click.stop="findSinger" v-show="!isSinger">
             <i>
               <mu-icon-button icon="person"/>
             </i>
@@ -42,7 +42,7 @@
             <p>下载</p>
           </li>
         </ul>
-        <ul v-show="isDisc">
+        <ul v-if="isDisc">
           <li @click.stop="deleteDisc">
             <i>
               <mu-icon-button icon="delete"/>

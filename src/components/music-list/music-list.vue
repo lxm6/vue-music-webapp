@@ -4,8 +4,8 @@
       <mu-icon-button icon="arrow_back"/>
     </div>
     <div class="title">
-      <h1 v-html="title"></h1>
-      <p v-show="rank" v-html="updateTime" ref="updateTime"></p>
+      <h1 v-text="title"></h1>
+      <p v-show="rank" v-text="updateTime" ref="updateTime"></p>
     </div>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper" v-show="songs.length>0" ref="wrapperBtn">
@@ -15,7 +15,7 @@
         </div>
         <div ref="favorBtn" v-show="isDisc" @click="toggleFavorite" class="favor">
           <i :class="isFavorite?'icon-favorite':'icon-not-favorite'"></i>
-          <span class="text">{{isFavorite?'取消收藏':'收藏歌单'}}</span>
+          <span class="text" v-text="isFavorite?'取消收藏':'收藏歌单'"></span>
         </div>
       </div>
       <div class="filter" ref="filter"></div>
@@ -34,19 +34,20 @@
       ref="list"
     >
       <div class="song-list-wrapper" v-show="songs.length">
-        <ul class="tab" v-if="!rank">
+        <ul class="tab" v-show="!rank">
           <li class="tab-item active">歌曲 {{ songs.length}}首</li>
         </ul>
-        <ul class="tab" v-if="rank">
+        <ul class="tab" v-show="rank">
           <li
             v-for="(item,index) in items"
             class="tab-item"
             :class="{'active':currentIndex === index}"
             @click="currentIndex=index"
             :key="index"
-          >{{ item.name }}</li>
+            v-text="item.name"
+          ></li>
         </ul>
-        <div class="content" v-if="currentIndex===1&&rank" v-html="info"></div>
+        <div class="content" v-if="currentIndex===1&&rank" v-text="info"></div>
         <song-list :rank="rank" :songs="songs" @select="selectItem" @showMenu="showMenu" v-if="currentIndex===0"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">

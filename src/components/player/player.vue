@@ -16,8 +16,8 @@
           <div class="back" @click="back">
             <mu-icon-button icon="arrow_back" slot="left"/>
           </div>
-          <h1 class="title" v-html="currentSong.name"></h1>
-          <h2 class="subtitle" v-html="currentSong.singerName"></h2>
+          <h1 class="title" v-text="currentSong.name"></h1>
+          <h2 class="subtitle" v-text="currentSong.singerName"></h2>
           <div class="mv-icon" @click="selectMV(currentSong.vid)" v-show="currentSong.vid!=''">MV</div>
         </div>
 
@@ -57,7 +57,8 @@
                   :class="[currentLineNum ===index?defaultColor:'']"
                   v-for="(line,index) in currentLyric.lines"
                   :key="index"
-                >{{line.txt}}</p>
+                  v-text="line.txt"
+                ></p>
               </div>
               <div class="pure-music" :style="{fontSize:defaultFontSize + 'px'}" v-if="isPure">
                 <p>此歌曲没有歌词</p>
@@ -101,7 +102,7 @@
                 @percentChanging="onProgressBarChanging"
               ></progress-bar>
             </div>
-            <span class="time time-r">{{format(currentSong.duration)}}</span>
+            <span class="time time-r" v-text="format(currentSong.duration)"></span>
           </div>
           <div class="operators">
             <div class="icon i-left" @click="changeMode">
@@ -129,8 +130,8 @@
           <img :class="cdCls" width="40" height="40" :src="currentSong.image">
         </div>
         <div class="text">
-          <h2 class="name" v-html="currentSong.name"></h2>
-          <p class="desc" v-html="minilyric"></p>
+          <h2 class="name" v-text="currentSong.name"></h2>
+          <p class="desc" v-text="minilyric"></p>
         </div>
         <div class="control">
           <progress-circle :radius="radius" :percent="percent">
@@ -167,18 +168,18 @@
     ></audio>
     <top-tip ref="topTip">
       <div class="tip-title">
-        <span class="text">{{msg}}</span>
+        <span class="text" v-text="msg"></span>
       </div>
     </top-tip>
     <toast :title="title" ref="toast1">
       <div class="content">
         <i class="icon-ok"></i>
-        <p class="desc">{{title}}</p>
+        <p class="desc" v-text="title"></p>
       </div>
     </toast>
     <toast :title="title" ref="toast2">
       <div class="content">
-        <p class="desc">{{title}}</p>
+        <p class="desc" v-text="title"></p>
       </div>
     </toast>
     <mu-dialog :open="dialog" @close="closedialog">

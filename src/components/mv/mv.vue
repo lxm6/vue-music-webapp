@@ -57,15 +57,15 @@
                       <img v-lazy="item.picurl" :key="item.picurl">
                       <div class="info">
                         <img src="~@/common/image/video.png">
-                        <span>{{formatNum(item.listennum)}}</span>
+                        <span v-text="formatNum(item.listennum)"></span>
                       </div>
                     </div>
                   </mu-flexbox-item>
                   <mu-flexbox-item>
                     <div class="text">
-                      <p class="desc" v-html="item.mvtitle"></p>
-                      <p class="name" v-html="filterSinger(item.singers)"></p>
-                      <p class="name" v-html="item.publictime"></p>
+                      <p class="desc" v-text="item.mvtitle"></p>
+                      <p class="name" v-text="filterSinger(item.singers)"></p>
+                      <p class="name" v-text="item.publictime"></p>
                     </div>
                   </mu-flexbox-item>
                 </mu-flexbox>

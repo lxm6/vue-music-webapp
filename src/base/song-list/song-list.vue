@@ -12,12 +12,12 @@
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
         </div>
         <div class="content">
-          <h2 class="name" :class="{'current-play':getCurrent(item)}">{{item.name}}</h2>
+          <h2 class="name" :class="{'current-play':getCurrent(item)}" v-text="item.name"></h2>
           <p class="desc" :class="{'current-play':getCurrent(item)}">
             <span class="vip" v-if="item.isPay">VIP</span>
             <span class="only" v-if="item.isOnly">独家</span>
             <span class="mv" v-if="item.vid!=''">MV</span>
-            <span class="singername">{{getDesc(item)}}</span>
+            <span class="singername" v-text="getDesc(item)"></span>
           </p>
         </div>
         <div @click.stop="showMenu(item)" class="mv-icon" slot="right">

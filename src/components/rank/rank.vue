@@ -17,7 +17,7 @@
                   <img width="100" height="100" v-lazy="item.picUrl">
                   <div class="info">
                     <img src="~@/common/image/earphone.png">
-                    <span>{{Math.round(item.listenCount/1000)/10}}万</span>
+                    <span >{{Math.round(item.listenCount/1000)/10}}万</span>
                   </div>
                 </div>
               </mu-flexbox-item>

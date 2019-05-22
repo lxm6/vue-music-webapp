@@ -24,11 +24,11 @@
                   v-model="checkboxList"
                 >
                 <div class="content">
-                  <h2 class="name">{{item.name}}</h2>
+                  <h2 class="name" v-text="item.name"></h2>
                   <p class="desc">
                     <span class="vip" v-if="item.isPay">VIP</span>
                     <span class="hq">HQ</span>
-                    <span>{{getDesc(item)}}</span>
+                    <span v-text="getDesc(item)"></span>
                   </p>
                 </div>
               </li>

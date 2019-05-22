@@ -1,7 +1,7 @@
 <template>
   <div class="tag-wrapper" ref="tab">
     <ul class="content" ref="tabWrapper">
-      <li ref="tabitem" class="item">{{titleName}}</li>
+      <li ref="tabitem" class="item" v-text="titleName"></li>
       <li
         ref="tabitem"
         class="item"
@@ -9,7 +9,8 @@
         :class="currentId=== item.id? 'active':'' "
         :key="item.id"
         @click="selectItem(item)"
-      >{{item.title}}</li>
+        v-text="item.title"
+      ></li>
     </ul>
   </div>
 </template>

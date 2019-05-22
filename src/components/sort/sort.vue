@@ -6,13 +6,13 @@
         <scroll class="sort-tags-wrapper" ref="scroll" :data="categories">
           <ul>
             <li class="categoriesWrapper" v-for="(item1,indexs) in categories" :key="indexs">
-              <h4 class="title">{{item1.categoryGroupName}}</h4>
+              <h4 class="title" v-text="item1.categoryGroupName"></h4>
               <ul class="item-Wrapper">
                 <li
                   v-for="(item2,index) in item1.items"
                   :key="index"
                   class="items"
-                  v-html="item2.categoryName"
+                  v-text="item2.categoryName"
                   @click="SelectTags(item2)"
                 ></li>
               </ul>

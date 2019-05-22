@@ -45,11 +45,11 @@
                 <img :src="item.imgurl" >
                 <div class="info">
                   <img src="~@/common/image/earphone.png">
-                  <span>{{formatNum(item.listennum)}}</span>
+                  <span v-text="formatNum(item.listennum)"></span>
                 </div>
               </div>
               <div class="text">
-                <p class="desc" v-html="item.dissname"></p>
+                <p class="desc" v-text="item.dissname"></p>
               </div>
             </li>
           </ul>
@@ -74,8 +74,8 @@
                 </mu-flexbox-item>
                 <mu-flexbox-item>
                   <div class="text">
-                    <p class="desc" v-html="item.dissname"></p>
-                    <h2 class="name" v-html="item.creator.name"></h2>
+                    <p class="desc" v-text="item.dissname"></p>
+                    <h2 class="name" v-text="item.creator.name"></h2>
                   </div>
                 </mu-flexbox-item>
               </mu-flexbox>

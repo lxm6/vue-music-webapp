@@ -7,7 +7,7 @@
         :class="{'active':currentIndex === index}"
         @click="switchItem(index)"
       >
-        <span>{{item.name}}</span>
+        <span v-text="item.name"></span>
       </li>
   </ul>
 </template>

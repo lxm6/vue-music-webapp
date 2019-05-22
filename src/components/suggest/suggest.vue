@@ -18,12 +18,12 @@
         <mu-avatar :src="getAvatar(item.singermid)" slot="leftAvatar" v-if="item.singermid"/>
         <!-- <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid"> -->
         <div class="name" slot="title">
-          <p class="text" v-html="getDisplayName(item)"></p>
+          <p class="text" v-text="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
             <span class="vip" v-if="item.isPay">VIP</span>
             <span class="vip" v-if="item.isOnly">独家</span>
             <span class="mv" v-if="item.vid!=''">MV</span>
-            <span>{{getDesc(item)}}</span>
+            <span v-text="getDesc(item)"></span>
           </p>
           <p
             class="subtext"
