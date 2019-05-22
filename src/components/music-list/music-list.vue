@@ -124,7 +124,8 @@ export default {
       showBackTop: false,
       currentIndex: 0,
       items: [{ name: "歌曲" }, { name: "详情" }],
-      item:{}
+      item:{},
+
     };
   },
   computed: {
@@ -242,7 +243,7 @@ export default {
     Loading,
     SongList,
     TopTip,
-    MenuBar
+    MenuBar,
 
   }
 };

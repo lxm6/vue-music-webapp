@@ -134,12 +134,19 @@ export default {
       this.selectMV(this.item.vid);
     },
     toggleLike() {
-      this.hide();
       this.toggleFavorite(this.item);
+      setTimeout(() => {
+      this.hide();
+      }, 700);
     },
     nextPlay() {
+      this.title="已加入到下一首播放"
+      this.$refs.toast1.show();
+      this.insertSong([new Song(this.item), true]);
+      setTimeout(() => {
       this.hide();
-        this.insertSong([new Song(this.item), true]);
+      }, 700);
+
     },
     ...mapMutations({
       setMenuBarVisible: "SET_MENUBAR_VISIBLE",
