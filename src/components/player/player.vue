@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="playing-lyric-wrapper">
-              <div class="playing-lyric">{{playingLyric}}</div>
+              <div class="playing-lyric" v-text="playingLyric"></div>
             </div>
           </div>
           <scroll
@@ -87,13 +87,13 @@
             <li class="setBlur" @click="showSeekBar">
               <img src="./setblur.png" width="24" height="24">
             </li>
-            <li class="setLyric" @click="opendialog">
+            <li class="setLyric" @click="openBottomSheet">
               <img src="./download.png" width="23" height="23">
             </li>
           </ul>
 
           <div class="progress-wrapper">
-            <span class="time time-l">{{format(currentTime)}}</span>
+            <span class="time time-l" v-text="format(currentTime)"></span>
             <div class="progress-bar-wrapper">
               <progress-bar
                 ref="progressBar"
@@ -143,6 +143,14 @@
         </div>
       </div>
     </transition>
+        <audio
+      ref="audio"
+      :src="currentSong.url"
+      @canplay="ready"
+      @error="error"
+      @timeupdate="updateTime"
+      @ended="end"
+    ></audio>
     <playlist ref="playlist"></playlist>
     <lyricset
       ref="lyricset"
@@ -152,20 +160,8 @@
       @setFontSize="setFontSize"
       @setColor="setColor"
     ></lyricset>
-    <seekbar
-      ref="seekBar"
-      :seekBarPercent="seekBarPercent"
-      @percentChange="onSeekBarChange"
-      @percentChanging="onSeekBarChanging"
-    ></seekbar>
-    <audio
-      ref="audio"
-      :src="currentSong.url"
-      @canplay="ready"
-      @error="error"
-      @timeupdate="updateTime"
-      @ended="end"
-    ></audio>
+    <seekbar @changeBlur="changeBlur"></seekbar>
+    <bottom-sheet @download="download"></bottom-sheet>
     <top-tip ref="topTip">
       <div class="tip-title">
         <span class="text" v-text="msg"></span>
@@ -182,11 +178,6 @@
         <p class="desc" v-text="title"></p>
       </div>
     </toast>
-    <mu-dialog :open="dialog" @close="closedialog">
-      是否下载这首歌曲？
-      <mu-flat-button slot="actions" primary @click="closedialog" label="取消"/>
-      <mu-flat-button slot="actions" primary @click="download" label="确定"/>
-    </mu-dialog>
   </div>
 </template>
 <script>
@@ -204,6 +195,7 @@ import Playlist from "components/playlist/playlist";
 import Lyricset from "components/lyricset/lyricset";
 import TopTip from "base/top-tip/top-tip";
 import Toast from "base/toast/toast";
+import BottomSheet from "base/bottom-sheet/bottom-sheet";
 import { playerMixin } from "common/js/mixin";
 import { getMvUrl } from "api/mv";
 import { ERR_OK } from "api/config";
@@ -225,7 +217,6 @@ export default {
   mixins: [playerMixin],
   data() {
     return {
-      dialog: false,
       title: "",
       songReady: false,
       currentTime: 0,
@@ -241,7 +232,6 @@ export default {
       currentSongUrl: "",
       msg: "",
       isPure: false,
-      seekBarPercent: 50,
       defaultFontSize: loadFontsize(),
       defaultColor: loadColor(),
       theme: {
@@ -486,11 +476,8 @@ export default {
         this.togglePlaying();
       }
     },
-    onSeekBarChange(seekBarPercent) {
-      this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;
-    },
-    onSeekBarChanging(seekBarPercent) {
-      this.$refs.bg.style.filter = `blur(${seekBarPercent}px)`;
+    changeBlur(value){
+      this.$refs.bg.style.filter = `blur(${value}px)`;
     },
     // 确保切换模式的时候，当前歌曲是不变的
     resetCurrentIndex(list) {
@@ -553,7 +540,7 @@ export default {
       this.$refs.lyricset.show();
     },
     showSeekBar() {
-      this.$refs.seekBar.show();
+      this.setseekBarVisible(true);
     },
     // 点击唱片部分
     middleTouchStart(e) {
@@ -671,20 +658,17 @@ export default {
       };
     },
 
-    opendialog() {
-      this.dialog = true;
+    openBottomSheet() {
+      this.setBottomSheetVisible(true)
     },
-    closedialog() {
-      this.dialog = false;
-    },
-    download() {
-      this.closedialog();
-      downloadSong(this.currentSong.name, this.currentSong.url);
+      download(quality) {
+      downloadSong( this.currentSong.name,this.currentSong.url,quality);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
+      setseekBarVisible: "SET_SEEKBAR_VISIBLE",
       setFullScreen: "SET_FULL_SCREEN",
-
+      setBottomSheetVisible: "SET_BOTTOMSHEET_VISIBLE",
     }),
     ...mapActions(["savePlayHistory", "selectMV"])
   },
@@ -791,7 +775,8 @@ export default {
     Lyricset,
     TopTip,
     Toast,
-    Seekbar
+    Seekbar,
+    BottomSheet
   }
 };
 </script>

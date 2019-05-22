@@ -59,14 +59,16 @@ const matutaions = {
   [types.SET_MENUBAR_VISIBLE](state, visible) {
     state.menuBarVisible = visible;
   },
-
+  [types.SET_BOTTOMSHEET_VISIBLE](state, visible) {
+    state.bottomSheetVisible = visible;
+  },
   [types.SET_VIDEO_VISIBLE](state, visible) {
     state.videoVisible = visible;
   },
   [types.SET_VID](state,vid ) {
     state.vid = vid;
   },
-
+  
 
 }
 export default matutaions

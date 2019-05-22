@@ -8,7 +8,7 @@
             <div class="text">
             <span  v-text="this.playModeText()">
             </span>
-              <span v-show="mode!=1">({{playlist.length}}首)</span>
+              <span v-show="mode!=1" v-text="playlist.length+'首'"></span>
               </div>
             <span class="clear" @click="opendialog">
               <i class="icon-clear"></i>

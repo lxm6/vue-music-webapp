@@ -208,6 +208,7 @@ router.beforeEach((to, from, next) => {
     lyricsetVisible,
     menuBarVisible,
     seekBarVisible,
+    bottomSheetVisible,
     videoVisible,
   } = store.getters;
 
@@ -217,13 +218,16 @@ router.beforeEach((to, from, next) => {
   } else if (playListVisible) {
     store.commit("SET_PLAY_LIST_VISIBLE", false);
     next(false);
+  }  else if (seekBarVisible) {
+    store.commit("SET_SEEKBAR_VISIBLE", false);
+    next(false);
   } else if (lyricsetVisible) {
     store.commit("SET_LYRICSET_VISIBLE", false);
     next(false);
-  } else if (seekBarVisible) {
-    store.commit("SET_SEEKBAR_VISIBLE", false);
+  }else if (bottomSheetVisible) {
+    store.commit("SET_BOTTOMSHEET_VISIBLE", false);
     next(false);
-  } else if (videoVisible) {
+  }else if (videoVisible) {
     store.commit("SET_VIDEO_VISIBLE", false);
     next(false);
   } else if (fullScreen) {

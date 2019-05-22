@@ -26,18 +26,20 @@ export function debounce(func, delay) {
     }, delay)
   }
 }
-
-export function downloadSong(name, url) {
+//下载歌曲
+export function downloadSong(name,url,quality) {
   setTimeout(() => {
     if (url) {
       const filename = `${name}.mp3`;
       const a = document.createElement("a");
-      a.href = url;
+      url=url.substring(0,url.length-3)
+      a.href = url+quality;
       a.download = filename;
       a.click();
     }
   }, 200);
 }
+//得到随机值
 export function getUid() {
   let _uid = ''
   if (_uid) {

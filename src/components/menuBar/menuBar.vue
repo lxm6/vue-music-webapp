@@ -35,7 +35,7 @@
             </i>
             <p>删除</p>
           </li>
-          <li @click.stop="download">
+          <li @click.stop="openBottomSheet">
             <i>
               <mu-icon-button icon="file_download"/>
             </i>
@@ -58,6 +58,8 @@
           <p class="desc">{{title}}</p>
         </div>
       </toast>
+    <bottom-sheet @download="download"></bottom-sheet>
+
     </div>
   </transition>
 </template>
@@ -68,6 +70,7 @@ import Singer from "common/js/singer";
 import { playerMixin } from "common/js/mixin";
 import Toast from "base/toast/toast";
 import Song from "common/js/song";
+import BottomSheet from "base/bottom-sheet/bottom-sheet";
 
 export default {
   mixins: [playerMixin],
@@ -99,6 +102,7 @@ export default {
     ...mapGetters(["menuBarVisible","playlist"])
   },
   methods: {
+
     show() {
       this.setMenuBarVisible(true);
     },
@@ -121,9 +125,12 @@ export default {
       this.hide();
       this.$emit("deleteOne");
     },
-    download() {
+    openBottomSheet() {
       this.hide();
-      downloadSong(this.item.name, this.item.url);
+      this.setBottomSheetVisible(true);
+    },
+    download(quality) {
+      downloadSong(this.item.name,this.item.url,quality);
     },
     deleteDisc() {
       this.hide();
@@ -151,13 +158,16 @@ export default {
     ...mapMutations({
       setMenuBarVisible: "SET_MENUBAR_VISIBLE",
       setSinger: "SET_SINGER",
+      setBottomSheetVisible: "SET_BOTTOMSHEET_VISIBLE",
+
     }),
     ...mapActions(["selectMV","insertSong"]),
 
   },
 
   components:{
-    Toast
+    Toast,
+    BottomSheet
   }
 };
 </script>
