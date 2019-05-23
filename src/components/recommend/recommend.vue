@@ -1,7 +1,7 @@
 <template>
   <div class="recommend" ref="recommend" v-show="recommends.length">
     <!-- <img src="~@/common/image/paint.png" class="paint"> -->
-    <scroll ref="scroll" class="recommend-content" :data="discList">
+    <scroll ref="scroll" class="recommend-content" :data="discList" :scrollbar="false">
       <div>
         <!-- 注意此处, 必须有v-if, 否则获取不到数据使得slider的DOM出错-->
         <div v-if="recommends.length" class="slider-wrapper">

@@ -19,7 +19,7 @@
             :key="index"
           >
             <img class="avatar" v-lazy="item.avatar">
-            <span class="name">{{item.name}}</span>
+            <span class="name" v-text="item.name"></span>
           </li>
         </uL>
       </li>
@@ -239,7 +239,7 @@ export default {
   .list-shortcut {
     position: absolute;
     z-index: 30;
-    right: 0;
+    right: 2px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;

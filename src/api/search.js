@@ -18,6 +18,9 @@ export function getHotKey() {
   return jsonp(url, data, options)
 }
 
+
+
+
 //搜索结果数据
 export function search(query, page, zhida, perpage) {
   const url = '/api/search';

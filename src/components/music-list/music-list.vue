@@ -352,7 +352,7 @@ export default {
     line-height: 42px;
     font-size: $font-size-medium-x;
     color: #000;
-    background: $color-background;
+    background: #fff;
 
     .tab-item {
       flex: 1;

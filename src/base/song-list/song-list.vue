@@ -199,10 +199,7 @@ export default {
   }
 }
 
-.mv-icon {
-  margin-right: 6px;
-  color: rgba(0, 0, 0, 0.2);
-}
+
 
 .material-icons {
   font-size: 24px;

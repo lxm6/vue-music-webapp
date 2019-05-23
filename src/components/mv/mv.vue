@@ -91,7 +91,7 @@
 import { mapMutations, mapGetters, mapActions } from "vuex";
 
 import TitleBar from "base/title-bar/title-bar";
-import Tags from "base/tags/tags";
+import Tags from "./tags";
 import Loading from "base/loading/loading";
 import Loading2 from "base/loading/loading2";
 import Scroll from "base/scroll/scroll";
@@ -339,7 +339,6 @@ export default {
 
           .desc {
             color: $color-text;
-            limit_lines();
           }
         }
       }

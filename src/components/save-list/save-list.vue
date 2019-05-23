@@ -32,7 +32,7 @@
                         <span v-text="getDesc(item)"></span>
                       </p>
                     </div>
-                    <div @click.stop="showMenu(item)" class="delete" slot="right">
+                    <div @click.stop="showMenu(item)" class="mv-icon" slot="right">
                       <mu-icon-button icon="more_vert"/>
                     </div>
                   </mu-list-item>
@@ -68,7 +68,7 @@
                       </div>
                     </mu-flexbox-item>
                   </mu-flexbox>
-                  <div @click.stop="showMenu(item)" class="delete" slot="right">
+                  <div @click.stop="showMenu(item)" class="mv-icon" slot="right">
                     <mu-icon-button icon="more_vert"/>
                   </div>
                 </mu-list-item>
@@ -343,6 +343,7 @@ export default {
     height: 42px;
     line-height: 42px;
     text-indent: 20px;
+    font-size 14px;
   }
 
   .btn-wrapper {
@@ -393,7 +394,7 @@ export default {
             .content {
               line-height: 20px;
               overflow: hidden;
-              margin-left: 25px;
+              margin-left: 20px;
               padding: 10px 0 2px 0;
               border-bottom: 1px solid $color-border;
 
@@ -440,11 +441,6 @@ export default {
               }
             }
 
-            .delete {
-              extend-click();
-              font-size: $font-size-medium;
-              color: rgba(0, 0, 0, 0.3);
-            }
           }
 
           .current-play-b {
@@ -457,7 +453,7 @@ export default {
         }
 
         .flexitem {
-          flex: 0 0 70px !important;
+          flex: 0 0 80px !important;
         }
 
         .flexitem2 {
@@ -465,11 +461,11 @@ export default {
         }
 
         .item2 {
-          margin: 0 12px;
           border-bottom: 1px solid $color-border;
 
           .ablum {
             width: 60px;
+            margin-left 12px;
           }
 
           .text {
@@ -484,6 +480,7 @@ export default {
             .desc {
               color: $color-text;
               margin-bottom: 10px;
+              no-wrap();
             }
           }
         }

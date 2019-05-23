@@ -96,7 +96,9 @@ export default {
       ]
     };
   },
-
+  beforeMount() {
+    this.$Lazyload.config({ loading: require("common/image/lazyimg1.png") });
+  },
   computed: {
     bgStyle() {
       return `background-image:url(${this.bgImage})`;
