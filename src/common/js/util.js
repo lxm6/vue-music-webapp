@@ -35,7 +35,6 @@ export function downloadSong(name,url,quality) {
       link .href = url+quality;
       link .download = filename;
       link .click();
-      document.body.removeChild(link);
     }
   }, 200);
 }

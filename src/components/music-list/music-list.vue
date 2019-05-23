@@ -32,10 +32,12 @@
       :data="songs"
       class="list"
       ref="list"
+      :pullup="pullup"
+      @scrollToEnd="searchMore"
     >
       <div class="song-list-wrapper" v-show="songs.length">
-        <ul class="tab" v-show="!rank">
-          <li class="tab-item active">歌曲 {{ songs.length}}首</li>
+        <ul class="tab" v-show="isSinger">
+          <li class="tab-item active" v-text="'歌曲: '+totalNum"></li>
         </ul>
         <ul class="tab" v-show="rank">
           <li
@@ -48,7 +50,14 @@
           ></li>
         </ul>
         <div class="content" v-if="currentIndex===1&&rank" v-text="info"></div>
-        <song-list :rank="rank" :songs="songs" @select="selectItem" @showMenu="showMenu" v-if="currentIndex===0"></song-list>
+        <song-list
+          :rank="rank"
+          :songs="songs"
+          @select="selectItem"
+          @showMenu="showMenu"
+          v-if="currentIndex===0"
+          :hasMore="hasMore"
+        ></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">
         <loading></loading>
@@ -59,8 +68,7 @@
         <span class="text">付费歌曲不能播放</span>
       </div>
     </top-tip>
-    <menuBar :item=item :isSinger="isSinger"></menuBar>
-
+    <menuBar :item="item" :isSinger="isSinger"></menuBar>
   </div>
 </template>
 
@@ -69,7 +77,7 @@ import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
 import SongList from "base/song-list/song-list";
 import { prefixStyle } from "common/js/dom";
-import { mapActions,mapGetters,mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { playlistMixin } from "common/js/mixin";
 import TopTip from "base/top-tip/top-tip";
 import MenuBar from "components/menuBar/menuBar";
@@ -109,13 +117,21 @@ export default {
       type: Boolean,
       default: false
     },
-      isSinger: {
+    isSinger: {
       type: Boolean,
       default: false
     },
     isFavorite: {
       type: Boolean,
       default: false
+    },
+    hasMore: {
+      type: Boolean,
+      default: false
+    },
+    totalNum: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -124,8 +140,8 @@ export default {
       showBackTop: false,
       currentIndex: 0,
       items: [{ name: "歌曲" }, { name: "详情" }],
-      item:{},
-
+      item: {},
+      pullup: true
     };
   },
   computed: {
@@ -133,7 +149,6 @@ export default {
       return `background-image:url(${this.bgImage})`;
     },
     ...mapGetters(["menuBarVisible"])
-    
   },
   created() {
     this.probeType = 3;
@@ -148,10 +163,14 @@ export default {
   methods: {
     ...mapMutations({
       setMenuBarVisible: "SET_MENUBAR_VISIBLE"
-
     }),
-    showMenu(item){
-      this.item=item;
+    searchMore() {
+      if (this.isSinger) {
+        this.$emit("searchMore");
+      }
+    },
+    showMenu(item) {
+      this.item = item;
       this.setMenuBarVisible(true);
     },
     backTop() {
@@ -243,8 +262,7 @@ export default {
     Loading,
     SongList,
     TopTip,
-    MenuBar,
-
+    MenuBar
   }
 };
 </script>
@@ -309,7 +327,7 @@ export default {
         border-radius: 100px;
         background-color: rgba(0, 0, 0, 0.1);
         font-size: 0;
-        cursor pointer;
+        cursor: pointer;
 
         &:active {
           background-color: rgba(0, 0, 0, 0.3);
@@ -352,7 +370,7 @@ export default {
     line-height: 42px;
     font-size: $font-size-medium-x;
     color: #000;
-    background: #fff;
+    background: $color-background;
 
     .tab-item {
       flex: 1;

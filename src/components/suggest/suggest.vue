@@ -56,7 +56,7 @@ import { mapMutations, mapActions } from "vuex";
 import Singer from "common/js/singer";
 import TopTip from "base/top-tip/top-tip";
 const TYPE_SINGER = "singer";
-const perpage = 20;
+const perpage = 15;
 let pagenum;
 export default {
   props: {

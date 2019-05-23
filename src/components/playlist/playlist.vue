@@ -3,18 +3,18 @@
     <div class="playlist" @click="hide" v-show="playListVisible">
       <div class="list-wrapper" @click.stop>
         <div class="list-header">
-          <h1 class="title" @click="changeMode">
-            <i class="icon" :class="iconMode" ></i>
-            <div class="text">
-            <span  v-text="this.playModeText()">
+          <h1 class="title">
+            <i class="icon" :class="iconMode" @click="changeMode"></i>
+            <span class="text" v-html="this.playModeText()">
+              <span class="text" v-show="mode!=1" v-text="total"></span>
             </span>
-              <span v-show="mode!=1" v-text="playlist.length+'首'"></span>
-              </div>
+
             <span class="clear" @click="opendialog">
               <i class="icon-clear"></i>
             </span>
           </h1>
         </div>
+
         <scroll
           ref="listContent"
           :data="sequenceList"
@@ -37,7 +37,7 @@
                   </mu-flexbox-item>
                   <mu-flexbox-item>
                     <div class="text" :class="getCurrent(item)">
-                      <span v-text="item.name"> -</span>
+                      <span v-text="item.name+' - '"></span>
                       <span class="subtext" v-text="item.singerName"></span>
                     </div>
                   </mu-flexbox-item>
@@ -48,8 +48,7 @@
                   </mu-flexbox-item>
                 </mu-flexbox>
               </mu-list-item>
-
-              </li>
+            </li>
           </transition-group>
         </scroll>
         <div class="list-operate">
@@ -61,11 +60,11 @@
         <mu-flat-button @click="hide" label="关闭" class="demo-flat-button"/>
       </div>
       <add-song ref="addSong"></add-song>
-    <mu-dialog :open="dialog" @close="closedialog">
-      是否清空播放列表？
-      <mu-flat-button slot="actions" primary @click="closedialog" label="取消"/>
-      <mu-flat-button slot="actions" primary @click="confirmClear" label="确定"/>
-    </mu-dialog>
+      <mu-dialog :open="dialog" @close="closedialog">
+        是否清空播放列表？
+        <mu-flat-button slot="actions" primary @click="closedialog" label="取消"/>
+        <mu-flat-button slot="actions" primary @click="confirmClear" label="确定"/>
+      </mu-dialog>
       <toast :title="title" ref="toast2">
         <div class="content">
           <p class="desc" v-text="title"></p>
@@ -91,6 +90,9 @@ export default {
     };
   },
   computed: {
+    total() {
+      return `(${this.playlist.length})`;
+    },
     ...mapGetters(["playListVisible"])
   },
   methods: {
@@ -208,30 +210,24 @@ export default {
     width: 100%;
     background-color: $color-playlist-bg;
 
-    .list-header {
+ .list-header {
       position: relative;
       padding: 10px 30px 10px 20px;
-
       .title {
         display: flex;
         align-items: center;
-
         .icon {
           margin-right: 10px;
           font-size: 30px;
           color: $color-theme;
         }
-
         .text {
-          flex 1;
+          flex: 1;
           font-size: $font-size-medium-x;
           color: $color-theme;
         }
-
         .clear {
-          right:-10px;
           extend-click();
-
           .icon-clear {
             font-size: $font-size-medium-x;
             color: $color-text-d;
@@ -254,7 +250,7 @@ export default {
       padding: 0 12px;
 
       .item {
-        line-height 45px;
+        line-height: 45px;
         height: 45px;
         overflow: hidden;
         border-top: 1px solid $color-border;
@@ -286,17 +282,6 @@ export default {
 
         .current-play {
           color: $color-theme;
-        }
-
-        .like {
-          extend-click();
-          margin-right: 10px;
-          font-size: $font-size-medium-x;
-          color: $color-theme;
-
-          .icon-favorite {
-            color: $color-sub-theme;
-          }
         }
 
         .delete {
@@ -349,7 +334,7 @@ export default {
     padding: 10px 0;
     margin: 0 auto;
     text-align: center;
-    background-color #000;
+    background-color: #000;
     border-radius: 5px;
 
     i {

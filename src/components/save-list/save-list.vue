@@ -136,10 +136,10 @@ export default {
       }
     },
     palyAll() {
-      return `全部播放（${this.result.length}）`;
+      return `全部播放 (${this.result.length})`;
     },
     DiscText() {
-      return `收藏的歌单（${this.favoriteListList.length}）`;
+      return `收藏的歌单 (${this.favoriteListList.length})`;
     },
     noResult() {
       if (this.currentIndex === 0) {

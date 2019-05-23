@@ -25,12 +25,13 @@
         </div>
       </mu-list-item>
     </ul>
+      <loading2 v-show="hasMore"></loading2>
   </div>
 </template>
-/ul
+
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import MVplayer from "components/MVplayer/MVplayer";
+import Loading2 from "base/loading/loading2";
 
 export default {
   props: {
@@ -41,6 +42,10 @@ export default {
     rank: {
       type: Boolean,
       default: false
+    },
+    hasMore: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -98,7 +103,7 @@ export default {
     }
   },
   components: {
-    MVplayer,
+    Loading2
   }
 };
 </script>
