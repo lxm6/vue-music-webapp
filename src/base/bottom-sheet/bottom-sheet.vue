@@ -3,9 +3,15 @@
     <mu-bottom-sheet :open="bottomSheetVisible" @close="closeBottomSheet">
       <mu-list @itemClick="closeBottomSheet">
         <mu-sub-header>请选择下载品质</mu-sub-header>
-          <mu-list-item title="流畅音质" @click="download(192)" />
-          <mu-list-item title="标准音质" @click="download(128)" />
-          <mu-list-item title="高品音质" @click="download(320)" />
+        <mu-list-item @click="download(192)">
+          <span>流畅音质</span>
+        </mu-list-item>
+        <mu-list-item @click="download(128)">
+          <span>标准音质</span>
+        </mu-list-item>
+        <mu-list-item @click="download(320)">
+          <span>高品音质</span>
+        </mu-list-item>
       </mu-list>
     </mu-bottom-sheet>
   </div>
@@ -31,14 +37,20 @@ export default {
     },
     ...mapMutations({
       setBottomSheetVisible: "SET_BOTTOMSHEET_VISIBLE",
-      setMenuBarVisible: "SET_MENUBAR_VISIBLE",
-
-      
+      setMenuBarVisible: "SET_MENUBAR_VISIBLE"
     })
   }
 };
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+.wrapper {
+  padding-bottom: 20px;
+}
+
+span {
+  display: block;
+  padding: 20px;
+}
 </style>
 
 

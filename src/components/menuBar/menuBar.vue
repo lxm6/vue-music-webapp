@@ -55,7 +55,7 @@
         <toast :title="title" ref="toast1">
         <div class="content">
           <i class="icon-ok"></i>
-          <p class="desc">{{title}}</p>
+          <p class="desc" v-text="title"></p>
         </div>
       </toast>
     <bottom-sheet @download="download"></bottom-sheet>
@@ -126,7 +126,7 @@ export default {
       this.$emit("deleteOne");
     },
     openBottomSheet() {
-      this.hide();
+       this.hide();
       this.setBottomSheetVisible(true);
     },
     download(quality) {

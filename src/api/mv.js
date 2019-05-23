@@ -21,7 +21,7 @@ export function getMvlist(options) {
     area: options.area? options.area:0,
     tag: options.tag? options.tag:0,
     pageno: options.pageno? options.pageno:0,
-    pagecount: 20,
+    pagecount: 10,
     otype: 'json',
     format: 'json',
     taglist: 1,

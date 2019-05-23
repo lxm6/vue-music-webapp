@@ -162,6 +162,7 @@
     ></lyricset>
     <seekbar @changeBlur="changeBlur"></seekbar>
     <bottom-sheet @download="download"></bottom-sheet>
+   
     <top-tip ref="topTip">
       <div class="tip-title">
         <span class="text" v-text="msg"></span>

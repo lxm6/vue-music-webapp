@@ -33,6 +33,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
+      
+
+
       //mvURL
       app.get('/api/getMvUrl', function (req, res) {
         const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'

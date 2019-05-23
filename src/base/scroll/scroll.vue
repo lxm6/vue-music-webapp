@@ -46,6 +46,10 @@ export default {
       type: Boolean,
       default: true
     },
+    momentum:{
+      type: Boolean,
+      default: false
+    }
   },
   mounted() {
     setTimeout(() => {

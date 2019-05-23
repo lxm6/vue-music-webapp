@@ -1,4 +1,3 @@
-
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -31,24 +30,25 @@ export function downloadSong(name,url,quality) {
   setTimeout(() => {
     if (url) {
       const filename = `${name}.mp3`;
-      const a = document.createElement("a");
+      const link  = document.createElement("a");
       url=url.substring(0,url.length-3)
-      a.href = url+quality;
-      a.download = filename;
-      a.click();
+      link .href = url+quality;
+      link .download = filename;
+      link .click();
+      document.body.removeChild(link);
     }
   }, 200);
 }
-//得到随机值
-export function getUid() {
-  let _uid = ''
-  if (_uid) {
+
+  //得到随机值
+  export function getUid() {
+    let _uid = ''
+    if (_uid) {
+      return _uid
+    }
+    if (!_uid) {
+      const t = (new Date).getUTCMilliseconds()
+      _uid = '' + Math.round(2147483647 * Math.random()) * t % 1e10
+    }
     return _uid
   }
-  if (!_uid) {
-    const t = (new Date).getUTCMilliseconds()
-    _uid = '' + Math.round(2147483647 * Math.random()) * t % 1e10
-  }
-  return _uid
-}
-
