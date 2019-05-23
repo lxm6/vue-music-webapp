@@ -33,7 +33,20 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
+   app.get('/api/search2', function (req, res) {
+    const url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
+    axios.get(url, {
+      headers: {
+        referer: 'https://c.y.qq.com/',
+      },
+      params: req.query
+    }).then((response) => {
 
+      res.json(response.data)
+    }).catch((e) => {
+      console.log(e)
+    })
+  })
       //mvURL
       app.get('/api/getMvUrl', function (req, res) {
         const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'

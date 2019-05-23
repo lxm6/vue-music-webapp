@@ -125,3 +125,21 @@ export function filterSingerName(singer) {
   })
   return ret.join('/')
 }
+
+// 工厂方法，创建歌曲对象
+export function createSearchSong(musicData) {
+  return new Song({
+    id: musicData.songid,
+    mid: musicData.songmid,
+    singerName: filterSingerName(musicData.singer),
+    singerMid: musicData.singer[0].mid,
+    name: musicData.songname,
+    album: musicData.albumname,
+    duration: musicData.interval,
+    vid:musicData.vid?musicData.vid:'',
+    isPay: musicData.pay.payplay === 1,
+    isOnly: musicData.isonly===1 ,
+    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
+    url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=192`
+  })
+}

@@ -25,10 +25,7 @@
             <span class="mv" v-if="item.vid!=''">MV</span>
             <span v-text="getDesc(item)"></span>
           </p>
-          <p
-            class="subtext"
-            v-if="item.singermid"
-          >单曲:{{item.songnum}}&nbsp;&nbsp;专辑:{{item.albumnum}}</p>
+          <p class="subtext" v-if="item.singermid" v-text="subtext"></p>
         </div>
       </mu-list-item>
       <loading2 v-show="hasMore"></loading2>
@@ -79,7 +76,13 @@ export default {
       result: []
     };
   },
-
+  computed: {
+    subtext() {
+      return `单曲:${item.songNum}    专辑:${item.albumNum}    MV:${
+        item.mvNum
+      }`;
+    }
+  },
   methods: {
     show() {
       this.showFlag = true;
@@ -96,6 +99,7 @@ export default {
       this.$refs.suggest.scrollTo(0, 0);
       search(this.query, this.page, this.showSinger, perpage).then(res => {
         if (res.code === ERR_OK) {
+          console.log(res.data);
           pagenum = Math.ceil(res.data.song.totalnum / perpage); //总页数
           console.log(pagenum);
           this.result = this._genResult(res.data);
@@ -116,8 +120,8 @@ export default {
       });
     },
     _checkMore(data) {
-      const song = data.song;
-      if (!song.list.length || pagenum == this.page) {
+      const song = data.song.list;
+      if (!song.length || pagenum == this.page) {
         this.hasMore = false;
       }
     },
@@ -161,12 +165,17 @@ export default {
 
     _genResult(data) {
       let ret = [];
-      if (data.zhida && data.zhida.singerid && this.page === 1) {
+      if (
+        data.zhida.zhida_singer &&
+        data.zhida.zhida_singer.singerID &&
+        this.page === 1
+      ) {
         ret.push({
           ...data.zhida,
           ...{ type: TYPE_SINGER },
-          ...data.zhida.songnum,
-          ...data.zhida.albumnum
+          ...data.zhida.zhida_singer.songNum,
+          ...data.zhida.zhida_singer.albumNum,
+          ...data.zhida.zhida_singer.mvNum
         });
       }
       if (data.song) {
