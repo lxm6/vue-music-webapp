@@ -27,11 +27,9 @@ export default {
     is_weixn_qq() {
       var ua = navigator.userAgent.toLowerCase();
       //微信
-      if (ua.match(/MicroMessenger/i) == "micromessenger") {
-        return
-      } else if (ua.match(/QQ/i) == "qq") {
+      if (ua.match(/MicroMessenger/i) == "micromessenger"||ua.match(/QQ/i) == "qq") {
         this.$refs.dplayerd.style.top='35px';
-      }
+      } 
     },
     closeplayer() {
       this.setVideoVisible(false);

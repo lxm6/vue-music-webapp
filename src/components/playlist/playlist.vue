@@ -5,9 +5,10 @@
         <div class="list-header">
           <h1 class="title">
             <i class="icon" :class="iconMode" @click="changeMode"></i>
-            <span class="text" v-html="this.playModeText()">
-              <span class="text" v-show="mode!=1" v-text="total"></span>
-            </span>
+            <div class="text">
+              <span  v-html="this.playModeText()"></span>
+              <span  v-show="mode!=1" v-text="total"></span>
+            </div>
 
             <span class="clear" @click="opendialog">
               <i class="icon-clear"></i>
@@ -210,24 +211,29 @@ export default {
     width: 100%;
     background-color: $color-playlist-bg;
 
- .list-header {
+    .list-header {
       position: relative;
       padding: 10px 30px 10px 20px;
+
       .title {
         display: flex;
         align-items: center;
+
         .icon {
           margin-right: 10px;
           font-size: 30px;
           color: $color-theme;
         }
+
         .text {
           flex: 1;
           font-size: $font-size-medium-x;
           color: $color-theme;
         }
+
         .clear {
           extend-click();
+
           .icon-clear {
             font-size: $font-size-medium-x;
             color: $color-text-d;
