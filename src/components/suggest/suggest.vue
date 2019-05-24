@@ -21,7 +21,7 @@
           <p class="text" v-text="getDisplayName(item)"></p>
           <p class="subtext" v-show="getDesc(item)">
             <span class="vip" v-if="item.isPay">VIP</span>
-            <span class="vip" v-if="item.isOnly">独家</span>
+            <span class="only" v-if="item.isOnly">独家</span>
             <span class="mv" v-if="item.vid!=''">MV</span>
             <span v-text="getDesc(item)"></span>
           </p>
@@ -239,21 +239,26 @@ export default {
         font-size: 16px;
       }
 
-      .vip, .mv {
-        font-size: 9px;
-        padding: 1px 2px;
+    .only, .mv, .vip {
+        font-size: 8px;
+        padding: 2px 2px;
         color: $color-theme;
         border: 1px solid $color-theme;
         border-radius: 3px;
+        margin-right: 1px;
+      }
+
+      .vip {
+        padding: 2px 3px 2px 3px;
+        color: $color-theme;
+        border: 1px solid $color-theme;
       }
 
       .mv {
-        padding: 1px 3px;
+        padding: 2px 3px 2px 3px;
         color: orange;
         border: 1px solid orange;
-        margin-right: 4px;
       }
-
       .subtext {
         font-size: 13px;
         no-wrap();

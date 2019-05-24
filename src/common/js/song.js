@@ -139,7 +139,7 @@ export function createSearchSong(musicData) {
     vid:musicData.mv.vid?musicData.mv.vid:'',
     isPay: musicData.pay.pay_play === 1,
     isOnly: musicData.isonly===1 ,
-    image: musicData.album.mid?`https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.album.mid}.jpg?max_age=2592000`:'',
+    image: musicData.album.mid?`https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.album.mid}.jpg?max_age=2592000`:'static/defaultCD.png',
     url: `https://v1.itooi.cn/tencent/url?id=${musicData.mid}&quality=192`
   })
 }

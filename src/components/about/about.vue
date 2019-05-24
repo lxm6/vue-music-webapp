@@ -3,7 +3,7 @@
     <div class="wrapper" v-show="showFlag" @click="hide">
       <div @click.stop class="leftNav">
         <div class="cover" @click.stop="changeImg">
-          <img :src="imgsrc">
+          <img src="~@/common/image/img1.jpg">
         </div>
         <mu-list class="mu-list-class">
           <mu-list-item title="App下载" @click="download" class="mu-list-item"/>
@@ -49,18 +49,11 @@ export default {
       showFlag: false,
       showAboutDialog: false,
       dialog: false,
-      clickNum: 0
     };
   },
-  computed: {
-    imgsrc() {
-      return `static/cover/cover${this.clickNum%8}.jpg`;
-    }
-  },
+
   methods: {
-    changeImg() {
-      this.clickNum += 1;
-    },
+
     show() {
       this.showFlag = true;
     },
@@ -145,6 +138,10 @@ export default {
 .cover {
   width: 100%;
   height: 240px;
+  img {
+    width 100%;
+    height 100%;
+  }
 
 }
 </style>
