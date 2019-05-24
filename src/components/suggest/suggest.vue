@@ -25,7 +25,10 @@
             <span class="mv" v-if="item.vid!=''">MV</span>
             <span v-text="getDesc(item)"></span>
           </p>
-          <p class="subtext" v-if="item.singerMID" >单曲:{{item.songNum}}&nbsp;&nbsp;专辑:{{item.albumNum}}&nbsp;&nbsp;MV:{{item.mvNum}}</p>
+          <p
+            class="subtext"
+            v-if="item.singerMID"
+          >单曲:{{item.songNum}}&nbsp;&nbsp;专辑:{{item.albumNum}}&nbsp;&nbsp;MV:{{item.mvNum}}</p>
         </div>
       </mu-list-item>
       <loading2 v-show="hasMore"></loading2>
@@ -73,7 +76,7 @@ export default {
       beforeScroll: true,
       hasMore: true,
       first: true,
-      result: [],
+      result: []
     };
   },
 
@@ -146,7 +149,11 @@ export default {
     },
     getDesc(item) {
       if (item.type != TYPE_SINGER) {
-        return `${item.singerName} · ${item.album}`;
+        if (item.album!='') {
+          return `${item.singerName} · ${item.album}`;
+        } else {
+          return item.singerName;
+        }
       }
     },
     getDisplayName(item) {
@@ -166,7 +173,7 @@ export default {
       ) {
         ret.push({
           ...data.zhida.zhida_singer,
-          ...{ type: TYPE_SINGER },
+          ...{ type: TYPE_SINGER }
         });
       }
       if (data.song) {
@@ -180,7 +187,6 @@ export default {
         if (musicData.id) {
           ret.push(createSearchSong(musicData));
         }
-
       });
 
       return ret;

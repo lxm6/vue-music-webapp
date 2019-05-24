@@ -24,7 +24,11 @@
                     @click="selectSong(item)"
                   >
                     <div class="content" slot="title">
-                      <h2 class="name" :class="{'current-play':getCurrent(item)}" v-text="item.name"></h2>
+                      <h2
+                        class="name"
+                        :class="{'current-play':getCurrent(item)}"
+                        v-text="item.name"
+                      ></h2>
                       <p class="desc" :class="{'current-play':getCurrent(item)}">
                         <span class="vip" v-if="item.isPay">VIP</span>
                         <span class="only" v-if="item.isOnly">独家</span>
@@ -87,9 +91,9 @@
           <no-result :title="noResultDesc"></no-result>
         </div>
         <menuBar
-        @deleteOne="deleteOne"
-        @deleteDisc="deleteDisc"
-          :item=item
+          @deleteOne="deleteOne"
+          @deleteDisc="deleteDisc"
+          :item="item"
           :isDisc="currentIndex===2"
           :isSavelist="true"
         ></menuBar>
@@ -119,7 +123,7 @@ export default {
   data() {
     return {
       item: {},
-      currentIndex: 0,
+      currentIndex: 0
     };
   },
   created() {
@@ -179,12 +183,15 @@ export default {
   },
 
   methods: {
-
     getCurrentIndex() {
       this.currentIndex = Number(this.$route.params.index);
     },
     getDesc(song) {
-      return `${song.singerName} · ${song.album}`;
+      if (song.album != "") {
+        return `${song.singerName} · ${song.album}`;
+      } else {
+        return song.singerName;
+      }
     },
     getCurrent(item) {
       if (this.currentSong.id === item.id) {
@@ -343,7 +350,7 @@ export default {
     height: 42px;
     line-height: 42px;
     text-indent: 20px;
-    font-size 14px;
+    font-size: 14px;
   }
 
   .btn-wrapper {
@@ -440,7 +447,6 @@ export default {
                 color: $color-theme;
               }
             }
-
           }
 
           .current-play-b {
@@ -465,7 +471,7 @@ export default {
 
           .ablum {
             width: 60px;
-            margin-left 12px;
+            margin-left: 12px;
           }
 
           .text {

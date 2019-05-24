@@ -76,7 +76,7 @@ export default {
       titleBarName: "搜索",
       hotKey: [],
       query: "",
-      dialog:false
+      dialog: false
     };
   },
   computed: {
@@ -86,6 +86,7 @@ export default {
     ...mapGetters(["searchHistory", "palyHistory"])
   },
   methods: {
+
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.searchResult.style.bottom = bottom;
@@ -93,13 +94,13 @@ export default {
       this.$refs.shortcutWrapper.style.bottom = bottom;
       this.$refs.shortcut.refresh();
     },
-    open () {
-      this.dialog = true
+    open() {
+      this.dialog = true;
     },
-    close () {
-      this.dialog = false
+    close() {
+      this.dialog = false;
     },
-    clear(){
+    clear() {
       this.close();
       this.clearSearchHistory();
     },
