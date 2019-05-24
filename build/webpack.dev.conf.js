@@ -33,7 +33,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
-   app.get('/api/search2', function (req, res) {
+      //搜索结果数据有mv
+   app.get('/api/search', function (req, res) {
     const url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
     axios.get(url, {
       headers: {
@@ -154,20 +155,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       })
-      //搜索结果数据
-      app.get('/api/search', (req, res) => {
-        const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp';
-        axios.get(url, {
-          headers: {
-            referer: 'https://c.y.qq.com/',
-          },
-          params: req.query
-        }).then((response) => {
-          res.json(response.data)
-        }).catch((error) => {
-          console.log(error)
-        })
-      })
+
     },
     clientLogLevel: 'warning',
     historyApiFallback: {

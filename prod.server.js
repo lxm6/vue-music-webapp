@@ -69,20 +69,7 @@ apiRoutes.get('/getSongList', function (req, res) {
     console.log(e)
   })
 })
-//搜索结果数据
-apiRoutes.get('/search', (req, res) => {
-  const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp';
-  axios.get(url, {
-    headers: {
-      referer: 'https://c.y.qq.com/',
-    },
-    params: req.query
-  }).then((response) => {
-    res.json(response.data)
-  }).catch((error) => {
-    console.log(error)
-  })
-})
+
 
 // 分类歌单标签
 apiRoutes.get('/getSortTags', function (req, res) {
@@ -116,6 +103,22 @@ apiRoutes.get('/getMvUrl', function (req, res) {
 //MV列表
 apiRoutes.get('/getMvlist', function (req, res) {
   const url = 'https://c.y.qq.com/mv/fcgi-bin/getmv_by_tag'
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+    },
+    params: req.query
+  }).then((response) => {
+
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+//搜索结果数据有mv
+apiRoutes.get('/search', function (req, res) {
+  const url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',

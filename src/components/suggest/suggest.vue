@@ -15,7 +15,7 @@
         v-for="item in result"
         :key="item.docid"
       >
-        <mu-avatar :src="getAvatar(item.singermid)" slot="leftAvatar" v-if="item.singermid"/>
+        <mu-avatar :src="getAvatar(item.singerMID)" slot="leftAvatar" v-if="item.singerMID"/>
         <!-- <img :src="getAvatar(item.singermid)" class="avatar" v-if="item.singermid"> -->
         <div class="name" slot="title">
           <p class="text" v-text="getDisplayName(item)"></p>
@@ -25,7 +25,7 @@
             <span class="mv" v-if="item.vid!=''">MV</span>
             <span v-text="getDesc(item)"></span>
           </p>
-          <p class="subtext" v-if="item.singermid" v-text="subtext"></p>
+          <p class="subtext" v-if="item.singerMID" >单曲:{{item.songNum}}&nbsp;&nbsp;专辑:{{item.albumNum}}&nbsp;&nbsp;MV:{{item.mvNum}}</p>
         </div>
       </mu-list-item>
       <loading2 v-show="hasMore"></loading2>
@@ -48,7 +48,7 @@ import Loading2 from "base/loading/loading2";
 import NoResult from "base/no-result/no-result";
 import { search } from "api/search";
 import { ERR_OK } from "api/config";
-import { createSong } from "common/js/song";
+import { createSearchSong } from "common/js/song";
 import { mapMutations, mapActions } from "vuex";
 import Singer from "common/js/singer";
 import TopTip from "base/top-tip/top-tip";
@@ -73,16 +73,10 @@ export default {
       beforeScroll: true,
       hasMore: true,
       first: true,
-      result: []
+      result: [],
     };
   },
-  computed: {
-    subtext() {
-      return `单曲:${item.songNum}    专辑:${item.albumNum}    MV:${
-        item.mvNum
-      }`;
-    }
-  },
+
   methods: {
     show() {
       this.showFlag = true;
@@ -99,9 +93,9 @@ export default {
       this.$refs.suggest.scrollTo(0, 0);
       search(this.query, this.page, this.showSinger, perpage).then(res => {
         if (res.code === ERR_OK) {
-          console.log(res.data);
           pagenum = Math.ceil(res.data.song.totalnum / perpage); //总页数
-          console.log(pagenum);
+          // console.log(res.data.song.totalnum)
+          // console.log(pagenum);
           this.result = this._genResult(res.data);
           this._checkMore(res.data);
         }
@@ -120,8 +114,8 @@ export default {
       });
     },
     _checkMore(data) {
-      const song = data.song.list;
-      if (!song.length || pagenum == this.page) {
+      const song = data.song;
+      if (!song.list.length || pagenum == this.page) {
         this.hasMore = false;
       }
     },
@@ -135,8 +129,8 @@ export default {
       // }
       if (item.type === TYPE_SINGER) {
         const singer = new Singer({
-          id: item.singermid,
-          name: item.singername
+          id: item.singerMID,
+          name: item.singerName
         });
         this.$router.push({
           path: `/search/${singer.id}`
@@ -157,7 +151,7 @@ export default {
     },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
-        return item.singername;
+        return item.singerName;
       } else {
         return item.name;
       }
@@ -171,11 +165,8 @@ export default {
         this.page === 1
       ) {
         ret.push({
-          ...data.zhida,
+          ...data.zhida.zhida_singer,
           ...{ type: TYPE_SINGER },
-          ...data.zhida.zhida_singer.songNum,
-          ...data.zhida.zhida_singer.albumNum,
-          ...data.zhida.zhida_singer.mvNum
         });
       }
       if (data.song) {
@@ -186,10 +177,12 @@ export default {
     _normalizeSongs(list) {
       let ret = [];
       list.forEach(musicData => {
-        if (musicData.songid && musicData.albummid) {
-          ret.push(createSong(musicData));
+        if (musicData.id) {
+          ret.push(createSearchSong(musicData));
         }
+
       });
+
       return ret;
     },
 
