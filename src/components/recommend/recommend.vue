@@ -202,6 +202,7 @@ export default {
       position: relative;
       width: 100%;
       overflow: hidden;
+      cursor:pointer;
     }
 
     .nav {
@@ -230,7 +231,7 @@ export default {
       padding: 0 10px 10px 10px;
 
       .changeBtn {
-        width: 108px;
+        width: 106px;
         height: 100%;
         margin: 10px auto 0px;
         border: 1px solid $color-border;

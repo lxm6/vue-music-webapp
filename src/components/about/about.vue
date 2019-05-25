@@ -74,6 +74,7 @@ export default {
       this.showAboutDialog = false;
     },
     openGitHub() {
+      this.close();
       openUrl("https://github.com/lxm6/vue-music-webapp");
     },
     open() {

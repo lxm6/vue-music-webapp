@@ -838,6 +838,7 @@ export default {
         color: #fff;
         border: 1px solid #fff;
         border-radius: 3px;
+        cursor:pointer;
       }
 
       .setlyric {

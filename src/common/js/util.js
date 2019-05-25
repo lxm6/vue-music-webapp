@@ -32,9 +32,9 @@ export function downloadSong(name,url,quality) {
       const filename = `${name}.mp3`;
       const link  = document.createElement("a");
       url=url.substring(0,url.length-3)
-      link .href = url+quality;
-      link .download = filename;
-      link .click();
+      link.href = url+quality;
+      link.download = filename;
+      link.click();
     }
   }, 200);
 }
