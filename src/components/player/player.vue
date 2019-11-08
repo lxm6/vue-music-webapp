@@ -143,9 +143,9 @@
         </div>
       </div>
     </transition>
-        <audio
+    <audio
       ref="audio"
-      :src="currentSong.url"
+      :src="currentSongUrl"
       @canplay="ready"
       @error="error"
       @timeupdate="updateTime"
@@ -162,7 +162,7 @@
     ></lyricset>
     <seekbar @changeBlur="changeBlur"></seekbar>
     <bottom-sheet @download="download"></bottom-sheet>
-   
+
     <top-tip ref="topTip">
       <div class="tip-title">
         <span class="text" v-text="msg"></span>
@@ -477,7 +477,7 @@ export default {
         this.togglePlaying();
       }
     },
-    changeBlur(value){
+    changeBlur(value) {
       this.$refs.bg.style.filter = `blur(${value}px)`;
     },
     // 确保切换模式的时候，当前歌曲是不变的
@@ -660,16 +660,28 @@ export default {
     },
 
     openBottomSheet() {
-      this.setBottomSheetVisible(true)
+      this.setBottomSheetVisible(true);
     },
-      download(quality) {
-      downloadSong( this.currentSong.name,this.currentSong.url,quality);
+    download(quality) {
+      // downloadSong(this.currentSong.name, this.currentSong.url, quality);
+      setTimeout(() => {
+                if (this.url) {
+                    /* eslint-disable */
+                    const a = document.createElement('a');
+                    a.href = this.url;
+                    a.rel = 'nofollow';
+                    a.download = `${this.currentSong.name}${this.url.match(
+                        /^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/
+                    )[1]}`;
+                    a.click();
+                }
+            }, 400);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
       setseekBarVisible: "SET_SEEKBAR_VISIBLE",
       setFullScreen: "SET_FULL_SCREEN",
-      setBottomSheetVisible: "SET_BOTTOMSHEET_VISIBLE",
+      setBottomSheetVisible: "SET_BOTTOMSHEET_VISIBLE"
     }),
     ...mapActions(["savePlayHistory", "selectMV"])
   },
@@ -681,61 +693,39 @@ export default {
           if (this.currentLyric) {
             this.currentLyric.stop();
           }
-        }else{
-          playingFlag=false
+        } else {
+          playingFlag = false;
         }
       } else {
-        if(playingFlag){
-       this.setPlayingState(true);
+        if (playingFlag) {
+          this.setPlayingState(true);
           if (this.currentLyric) {
             this.currentLyric.seek(this.currentTime * 1000);
+          }
         }
-        }
-   
       }
     },
+    // 监听,当currentSong变化时调用
     currentSong(newSong, oldSong) {
-
-      if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
+      if (!newSong || !newSong.id) {
         return;
       }
-      // // 如果是付费歌曲
-      // if (newSong.isPay) {
-      //   this.msg = "已跳过付费歌曲";
-      //   this.$refs.topTip.show();
-      //   this.songReady = true;
-      //   if (nextFlag) {
-      //     this.next();
-      //   } else {
-      //     this.prev();
-      //   }
-      //   return;
-      // }
+      if (newSong.id === oldSong.id) {
+        return;
+      }
+      如果是付费歌曲
+      if (newSong.isPay) {
+        this.msg = "已跳过付费歌曲";
+        this.$refs.topTip.show();
+        this.songReady = true;
+        if (nextFlag) {
+          this.next();
+        } else {
+          this.prev();
+        }
+        return;
+      }
 
-      // setTimeout: 解决DOM异常
-      // $nextTick: 在下次DOM更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
-      // setTimeout: 保证手机从后台切到前台js执行能正常播放
-      // newSong
-      //   .getSongUrl()
-      //   .then(url => {
-      //     this.currentSongUrl = url;
-      //     this.$refs.audio.src = this.currentSongUrl;
-      //     this.$refs.audio.play();
-      //   })
-      //   .then(() => {
-      //     this.getLyric();
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     this.msg = "已跳过无法播放的歌曲";
-      //     this.$refs.topTip.show();
-      //     this.songReady = true;
-      //     if (nextFlag) {
-      //       this.next();
-      //     } else {
-      //       this.prev();
-      //     }
-      //   });
       // 初始化
       if (this.currentLyric) {
         this.currentLyric.stop();
@@ -743,24 +733,44 @@ export default {
         this.playingLyric = "";
         this.currentLineNum = 0;
       }
+      newSong
+        .getSongUrl()
+        .then(url => {
+          this.currentSongUrl = url;
+        })
+        .then(() => {
+          this.getLyric();
+        })
+        .catch(err => {
+          console.log(err);
+          this.msg = "已跳过无法播放的歌曲";
+          this.$refs.topTip.show();
+          this.songReady = true;
+          if (nextFlag) {
+            this.next();
+          } else {
+            this.prev();
+          }
+        });
+    },
+    currentSongUrl() {
       this.$nextTick(() => {
         this.$refs.audio.play();
-        this.getLyric();
       });
     },
 
-    playing(newPlaying,oldlaying) {
+    playing(newPlaying, oldlaying) {
       if (!this.songReady) {
         return;
       }
-      this.$nextTick(() => {
+      setTimeout(() => {
         const audio = this.$refs.audio;
         newPlaying ? audio.play() : audio.pause();
-        playingFlag=oldlaying;
-      });
+        playingFlag = oldlaying;
+      }, 500);
     },
-    fullScreen(newVal) {
 
+    fullScreen(newVal) {
       if (newVal) {
         setTimeout(() => {
           this.$refs.lyricList.refresh();
@@ -768,6 +778,7 @@ export default {
       }
     }
   },
+
   components: {
     ProgressBar,
     ProgressCircle,
@@ -838,7 +849,7 @@ export default {
         color: #fff;
         border: 1px solid #fff;
         border-radius: 3px;
-        cursor:pointer;
+        cursor: pointer;
       }
 
       .setlyric {

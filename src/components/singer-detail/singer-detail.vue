@@ -6,8 +6,6 @@
         :bg-image="bgImage"
         :songs="songs"
         :isSinger="true"
-        @searchMore="searchMore"
-        :hasMore="hasMore"
         :totalNum="totalNum"
       ></music-list>
       <router-view></router-view>
@@ -17,7 +15,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getSingerMusic, getSingerDetail} from "api/singer";
+import {  getSingerDetail} from "api/singer";
 import { ERR_OK } from "api/config";
 import { createSong } from "common/js/song";
 import MusicList from "components/music-list/music-list";
@@ -26,8 +24,6 @@ export default {
   data() {
     return {
       songs: [],
-      page: 1,
-      hasMore:true,
       totalNum:0
     };
   },
@@ -50,33 +46,10 @@ export default {
         this.$router.push("/singer");
         return;
       }
-      //qq音乐接口
       getSingerDetail(this.singer.id).then(res => {
         if (res.code === ERR_OK) {
-         this.totalNum=res.data.total;
-        }
-      });
-
-      getSingerMusic(this.singer.id, this.page).then(res => {
-        if (res.code === 200) {
-          this.songs = this._normalizeSongs(res.data);
-        }
-      });
-    },
-    searchMore() {
-     if (!this.hasMore) {
-        return;
-      }
-      console.log("d");
-      this.page++;
-      getSingerMusic(this.singer.id, this.page).then(res => {
-        if (res.code === 200) {
-          if (res.data.length) {
-            this.songs = this.songs.concat(this._normalizeSongs(res.data));
-          } else {
-            console.log("f");
-            this.hasMore = false;
-          }
+          this.songs = this._normalizeSongs(res.data.list);
+          this.totalNum=this.songs.length;
         }
       });
     },

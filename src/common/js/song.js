@@ -72,7 +72,7 @@ export default class Song {
     });
   }
   //获取歌曲url
-  getSongUrl() {
+  getSongUrl () {
     if (this.url) {
       return Promise.resolve(this.url);
     }
@@ -80,12 +80,8 @@ export default class Song {
       if (res.code === ERR_OK) {
         if (res.data.items.length > 0) {
           let vkey = res.data.items[0].vkey;
-          if (!vkey) {
-            return Promise.reject(new Error('获取vkey失败'));
-          }
-          console.log("dd")
+          if (!vkey) { return Promise.reject(new Error('getSongKey function got vkey is null')); }
           let currentSongUrl = getSongURL(this.mid, vkey);
-          this.url = currentSongUrl;
           return Promise.resolve(currentSongUrl);
         }
       }
@@ -110,7 +106,6 @@ export function createSong(musicData) {
     isPay: musicData.pay.payplay === 1,
     isOnly: musicData.isonly===1 ,
     image: musicData.albummid?`https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`:'',
-    url: `https://v1.itooi.cn/tencent/url?id=${musicData.songmid}&quality=192`
   })
 }
 
@@ -140,6 +135,5 @@ export function createSearchSong(musicData) {
     isPay: musicData.pay.pay_play === 1,
     isOnly: musicData.isonly===1 ,
     image: musicData.album.mid?`https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.album.mid}.jpg?max_age=2592000`:'static/defaultCD.png',
-    url: `https://v1.itooi.cn/tencent/url?id=${musicData.mid}&quality=192`
   })
 }

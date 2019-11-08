@@ -33,22 +33,8 @@ export function getSingerDetail(id) {
     singermid: id,
     order: 'listen',
     begin: 0,
-    num: 1,
+    num: 100,
     songstatus: 1
   });
   return jsonp(url, data, options);
-}
-//获取歌手音乐
-export function getSingerMusic(id, page) {
-  const url = 'https://v1.itooi.cn/tencent/song/artist';
-  const data = {
-    id: id,
-    page: page,
-    pageSize:80
-  };
-  return axios
-    .get(url, {
-      params: data
-    })
-    .then(res => Promise.resolve(res.data));
 }
