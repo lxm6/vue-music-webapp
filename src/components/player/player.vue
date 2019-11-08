@@ -87,7 +87,7 @@
             <li class="setBlur" @click="showSeekBar">
               <img src="./setblur.png" width="24" height="24">
             </li>
-            <li class="setLyric" @click="openBottomSheet">
+            <li class="setLyric" @click="triggerDownload">
               <img src="./download.png" width="23" height="23">
             </li>
           </ul>
@@ -161,7 +161,7 @@
       @setColor="setColor"
     ></lyricset>
     <seekbar @changeBlur="changeBlur"></seekbar>
-    <bottom-sheet @download="download"></bottom-sheet>
+    <!-- <bottom-sheet @download="download"></bottom-sheet> -->
 
     <top-tip ref="topTip">
       <div class="tip-title">
@@ -662,20 +662,18 @@ export default {
     openBottomSheet() {
       this.setBottomSheetVisible(true);
     },
-    download(quality) {
-      // downloadSong(this.currentSong.name, this.currentSong.url, quality);
+    // download(quality) {
+    //   downloadSong(this.currentSong.name, this.currentSong.url, quality);
+    // }
+    triggerDownload() {
       setTimeout(() => {
-                if (this.url) {
-                    /* eslint-disable */
-                    const a = document.createElement('a');
-                    a.href = this.url;
-                    a.rel = 'nofollow';
-                    a.download = `${this.currentSong.name}${this.url.match(
-                        /^https?:\/\/[\w\.\/]+(\.[a-z1-9]{3})\?.+$/
-                    )[1]}`;
-                    a.click();
-                }
-            }, 400);
+        if (this.currentSongUrl) {
+          const a = document.createElement("a");
+          a.href = this.currentSongUrl;
+          a.download = `${this.currentSong.name}.m4a`
+          a.click();
+        }
+      }, 300);
     },
     // 数据通过mutations设置到state上
     ...mapMutations({
@@ -713,7 +711,7 @@ export default {
       if (newSong.id === oldSong.id) {
         return;
       }
-      如果是付费歌曲
+      //如果是付费歌曲
       if (newSong.isPay) {
         this.msg = "已跳过付费歌曲";
         this.$refs.topTip.show();
